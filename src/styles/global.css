@@ -282,6 +282,12 @@ ul, ol {
 .animate-in.visible:nth-child(4) { animation-delay: 0.3s; }
 
 /* --- Responsive — Mobile First --- */
+@media (max-width: 1024px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
 @media (max-width: 768px) {
   .container, .container-wide {
     padding: 0 var(--space-md);
@@ -290,13 +296,9 @@ ul, ol {
   .section-padding {
     padding: var(--space-3xl) 0;
   }
-
-  .hide-mobile {
-    display: none !important;
-  }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1025px) {
   .hide-desktop {
     display: none !important;
   }
