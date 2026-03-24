@@ -103,7 +103,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 9998;
     height: var(--nav-height);
     transition: all var(--duration-normal) var(--ease-default);
     background: rgba(251, 226, 186, 0.85);
@@ -270,10 +270,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     right: 0;
     bottom: 0;
     background: #fbe2ba;
-    z-index: 1001;
+    z-index: 9999;
     transform: translateX(100%);
     transition: transform var(--duration-normal) var(--ease-default);
     padding: var(--space-3xl) var(--space-2xl);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .mobile-drawer.open {
