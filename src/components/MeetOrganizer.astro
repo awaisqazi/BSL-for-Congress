@@ -1,14 +1,15 @@
 ---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<section class="bio section-padding" id="meet">
+<section class="organizer-section section-padding" id="meet-organizer">
   <div class="container">
-    <div class="bio-grid">
+    <div class="organizer-grid">
       <!-- Image -->
-      <div class="bio-image-wrap animate-in">
-        <div class="bio-image-accent"></div>
+      <div class="organizer-photo animate-in">
+        <div class="photo-frame"></div>
         <img 
-          src="/images/bslfamily.jpg" 
+          src={`${base}/images/bslfamily.jpg`} 
           alt="Byron Sigcho-Lopez with family"
           class="bio-image"
           loading="lazy"
@@ -28,7 +29,7 @@
           As 25th Ward Alderman and a proud democratic socialist endorsed by Chicago DSA, Byron has taken on the Chicago political establishment head-on: passing anti-displacement legislation to protect Pilsen and Little Village families, standing with striking workers, and rejecting every dollar of corporate PAC money. He has never been bought, and he never will be.
         </p>
 
-        <a href="/meet" class="btn btn-outline bio-cta animate-in" data-i18n="bio.cta">
+        <a href={`${base}/meet`} class="btn btn-outline bio-cta animate-in" data-i18n="bio.cta">
           Read Byron's Full Story
         </a>
       </div>

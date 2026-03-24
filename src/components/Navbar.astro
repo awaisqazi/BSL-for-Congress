@@ -1,19 +1,20 @@
 ---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <nav class="navbar" id="navbar">
   <div class="nav-inner container-wide">
     <!-- Logo -->
-    <a href="/" class="nav-logo">
-      <img src="/BSL_Official.png" alt="Byron Sigcho-Lopez for Congress" class="logo-img" />
+    <a href={`${base}/`} class="nav-logo">
+      <img src={`${base}/BSL_Official.png`} alt="Byron Sigcho-Lopez for Congress" class="logo-img" />
     </a>
 
     <!-- Desktop Navigation -->
     <ul class="nav-links hide-mobile">
-      <li><a href="/meet" data-i18n="nav.meet">Meet Byron</a></li>
-      <li><a href="/platform" data-i18n="nav.platform">The Platform</a></li>
-      <li><a href="/movement" data-i18n="nav.movement">Machine vs. Movement</a></li>
-      <li><a href="/volunteer" data-i18n="nav.volunteer">Volunteer</a></li>
+      <li><a href={`${base}/meet`} data-i18n="nav.meet">Meet Byron</a></li>
+      <li><a href={`${base}/platform`} data-i18n="nav.platform">The Platform</a></li>
+      <li><a href={`${base}/movement`} data-i18n="nav.movement">Machine vs. Movement</a></li>
+      <li><a href={`${base}/volunteer`} data-i18n="nav.volunteer">Volunteer</a></li>
     </ul>
 
     <!-- Right-side actions -->
@@ -40,10 +41,10 @@
   <!-- Mobile Drawer -->
   <div class="mobile-drawer" id="mobile-drawer">
     <ul class="mobile-links">
-      <li><a href="/meet" data-i18n="nav.meet">Meet Byron</a></li>
-      <li><a href="/platform" data-i18n="nav.platform">The Platform</a></li>
-      <li><a href="/movement" data-i18n="nav.movement">Machine vs. Movement</a></li>
-      <li><a href="/volunteer" data-i18n="nav.volunteer">Volunteer</a></li>
+      <li><a href={`${base}/meet`} data-i18n="nav.meet">Meet Byron</a></li>
+      <li><a href={`${base}/platform`} data-i18n="nav.platform">The Platform</a></li>
+      <li><a href={`${base}/movement`} data-i18n="nav.movement">Machine vs. Movement</a></li>
+      <li><a href={`${base}/volunteer`} data-i18n="nav.volunteer">Volunteer</a></li>
       <li>
         <a href="https://secure.actblue.com/donate/byronfor04web/" class="btn btn-orange mobile-donate" target="_blank" rel="noopener" data-i18n="nav.donate">Donate</a>
       </li>

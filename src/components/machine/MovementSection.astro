@@ -1,4 +1,5 @@
 ---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <section class="movement-section section-padding" id="the-movement">
@@ -38,7 +39,7 @@
       <div class="movement-image-stack animate-in">
         <div class="movement-image-wrap">
           <img
-            src="/images/movement-frontlines.png"
+            src={`${base}/images/movement-frontlines.png`}
             alt="Byron organizing with community members in Pilsen"
             class="movement-image"
             loading="lazy"

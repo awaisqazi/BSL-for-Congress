@@ -1,7 +1,8 @@
 ---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<section class="machine-hero" id="machine-hero">
+<section class="machine-hero" id="machine-hero" style={`background-image: url('${base}/images/machine-hero-split.png')`}>
   <div class="machine-hero-overlay"></div>
   <div class="machine-hero-noise"></div>
 
@@ -25,7 +26,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url('/images/machine-hero-split.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
