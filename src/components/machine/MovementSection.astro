@@ -1,0 +1,179 @@
+---
+---
+
+<section class="movement-section section-padding" id="the-movement">
+  <div class="container">
+    <div class="movement-grid">
+      <div class="movement-text">
+        <span class="section-label animate-in" data-i18n="machine.movement_label">The Movement</span>
+        <h2 class="section-title animate-in" data-i18n="machine.movement_headline">What Makes Byron Different</h2>
+
+        <p class="movement-paragraph animate-in" data-i18n="machine.movement_intro">
+          Byron Sigcho-Lopez is an ideologically committed democratic socialist and a firebrand who has spent his entire career fighting for the multiracial working class. He is not a politician looking for a promotion. He is an organizer who was called to serve by his community.
+        </p>
+
+        <!-- Insurgent Block -->
+        <div class="movement-block animate-in">
+          <h3 class="movement-block-title" data-i18n="machine.unbought_title">
+            <span class="movement-block-icon">🚫</span>
+            The Unbought Insurgent
+          </h3>
+          <p class="movement-block-text" data-i18n="machine.unbought_text">
+            Unlike establishment politicians, Byron completely rejects corporate PAC money and contributions from real estate developers. His campaign is powered entirely by thousands of small-dollar grassroots donations from teachers, nurses, union members, and working families. He has upheld this commitment since his first campaign in 2015 and has never wavered.
+          </p>
+        </div>
+
+        <!-- Tested Record Block -->
+        <div class="movement-block animate-in">
+          <h3 class="movement-block-title" data-i18n="machine.tested_title">
+            <span class="movement-block-icon">✊</span>
+            A Tested Record
+          </h3>
+          <p class="movement-block-text" data-i18n="machine.tested_text">
+            Byron's unique power comes from bottom-up organizing. As 25th Ward Alderperson, he passed anti-displacement legislation to protect homeowners from predatory developers, created over 800 units of affordable housing, stood uncompromisingly with the Chicago Teachers Union, doubled the Affordable Requirements Ordinance minimum, and joined a hunger strike to fight environmental racism. These are not campaign promises. These are receipts.
+          </p>
+        </div>
+      </div>
+
+      <div class="movement-image-stack animate-in">
+        <div class="movement-image-wrap">
+          <img
+            src="/images/movement-frontlines.png"
+            alt="Byron organizing with community members in Pilsen"
+            class="movement-image"
+            loading="lazy"
+          />
+        </div>
+        <div class="movement-pullquote">
+          <blockquote data-i18n="machine.pullquote">
+            "I have never taken a dollar from a corporation or a developer. I never will. My loyalty is to the people of this district, not to the machine."
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .movement-section {
+    background: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .movement-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: var(--space-4xl);
+    align-items: start;
+  }
+
+  .movement-paragraph {
+    font-size: var(--text-lg);
+    line-height: 1.8;
+    color: var(--gray-700);
+    margin-bottom: var(--space-xl);
+  }
+
+  .movement-block {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    border-left: 4px solid var(--orange);
+    margin-bottom: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
+  }
+
+  .movement-block:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .movement-block-title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 800;
+    color: var(--blue);
+    margin-bottom: var(--space-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .movement-block-icon {
+    font-size: 1.4rem;
+  }
+
+  .movement-block-text {
+    font-size: var(--text-sm);
+    line-height: 1.75;
+    color: var(--gray-700);
+  }
+
+  /* Image Stack */
+  .movement-image-stack {
+    position: sticky;
+    top: calc(var(--nav-height) + var(--space-xl));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .movement-image-wrap {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .movement-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .movement-pullquote {
+    background: var(--blue);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    position: relative;
+  }
+
+  .movement-pullquote::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    font-family: var(--font-display);
+    font-size: 5rem;
+    line-height: 1;
+    color: rgba(251, 226, 186, 0.15);
+    pointer-events: none;
+  }
+
+  .movement-pullquote blockquote {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--cream);
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .movement-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .movement-image-stack {
+      position: static;
+    }
+
+    .movement-image {
+      height: 280px;
+    }
+  }
+</style>

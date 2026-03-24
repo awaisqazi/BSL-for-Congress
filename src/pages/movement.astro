@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import MachineHero from '../components/machine/MachineHero.astro';
+import MovementSection from '../components/machine/MovementSection.astro';
+import MachineSection from '../components/machine/MachineSection.astro';
+import BallotFight from '../components/machine/BallotFight.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Machine vs. Movement | Byron Sigcho-Lopez for Congress" description="The corrupt political machine handed a Congressional seat behind closed doors. Byron Sigcho-Lopez is building a grassroots movement to take it back. Learn the full story of the IL-04 fight.">
+  <Navbar />
+  <main>
+    <MachineHero />
+    <MovementSection />
+    <MachineSection />
+    <BallotFight />
+  </main>
+  <Footer />
+</Layout>

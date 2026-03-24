@@ -1,0 +1,272 @@
+---
+---
+
+<section class="machine-section" id="the-machine">
+  <!-- Blue exposé block -->
+  <div class="machine-expose">
+    <div class="machine-expose-bg">
+      <div class="machine-expose-pattern"></div>
+    </div>
+
+    <div class="container machine-expose-content">
+      <span class="machine-expose-label animate-in" data-i18n="machine.expose_label">A Crisis of Democracy</span>
+      <h2 class="machine-expose-headline animate-in" data-i18n="machine.expose_headline">The Machine</h2>
+
+      <!-- Local Subversion -->
+      <div class="subversion-block animate-in">
+        <h3 class="subversion-title" data-i18n="machine.local_title">The Local Subversion</h3>
+        <p class="subversion-text" data-i18n="machine.local_p1">
+          When Rep. Chuy Garcia decided to retire from Congress, he did not announce it publicly and let the voters decide. Instead, he waited until the final hours before the filing deadline. This ensured that only one person, his former Chief of Staff Patty Garcia, could get on the ballot with just 697 signatures. The seat was handed over in a backroom, not won in an election.
+        </p>
+        <p class="subversion-text" data-i18n="machine.local_p2">
+          This maneuver earned a rare reprimand from the U.S. House Ethics Committee for "election subversion." While the machine's candidate relies on institutional inertia, frontline PACs, and a rigged filing system, Byron is building a grassroots base one doorstep at a time, funded entirely by working people.
+        </p>
+      </div>
+
+      <!-- Core Thesis -->
+      <div class="thesis-block animate-in">
+        <p class="thesis-text" data-i18n="machine.thesis">
+          "Democracy cannot be preserved nationally if it is subverted locally."
+        </p>
+      </div>
+
+      <!-- National Pattern Timeline -->
+      <div class="timeline-section animate-in">
+        <h3 class="timeline-title" data-i18n="machine.timeline_title">The National Pattern</h3>
+        <p class="timeline-intro" data-i18n="machine.timeline_intro">
+          What happened in IL-04 is not an isolated incident. It is part of a broader, dangerous pattern of the establishment insulating itself from the working class.
+        </p>
+
+        <div class="timeline">
+          <div class="timeline-item animate-in">
+            <div class="timeline-year">2016</div>
+            <div class="timeline-content">
+              <p data-i18n="machine.timeline_2016">The DNC weaponized the undemocratic superdelegate system to block progressive momentum and override the will of grassroots voters.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item animate-in">
+            <div class="timeline-year">2020</div>
+            <div class="timeline-content">
+              <p data-i18n="machine.timeline_2020">The party establishment swiftly coalesced in a coordinated effort to block Bernie Sanders' grassroots movement, consolidating behind a single candidate overnight.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item animate-in">
+            <div class="timeline-year">2024</div>
+            <div class="timeline-content">
+              <p data-i18n="machine.timeline_2024">The party suppressed primary challenges and skipped debates, culminating in a late Biden drop-out and an uncompetitive process that left voters demoralized and demobilized.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item timeline-item-now animate-in">
+            <div class="timeline-year">NOW</div>
+            <div class="timeline-content">
+              <p data-i18n="machine.timeline_now">In IL-04, the same playbook is being used at the local level, handing a Congressional seat to a handpicked successor without a competitive election.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .machine-expose {
+    position: relative;
+    padding: var(--space-4xl) 0;
+    overflow: hidden;
+  }
+
+  .machine-expose-bg {
+    position: absolute;
+    inset: 0;
+    background: var(--blue);
+    z-index: 0;
+  }
+
+  .machine-expose-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image:
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 30px,
+        rgba(255,255,255,0.05) 30px,
+        rgba(255,255,255,0.05) 31px
+      );
+  }
+
+  .machine-expose-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .machine-expose-label {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--gold-soft);
+    display: block;
+    text-align: center;
+    margin-bottom: var(--space-sm);
+  }
+
+  .machine-expose-headline {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--cream);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+  }
+
+  /* Subversion Block */
+  .subversion-block {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .subversion-title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    color: var(--cream);
+    margin-bottom: var(--space-lg);
+  }
+
+  .subversion-text {
+    font-size: var(--text-base);
+    line-height: 1.8;
+    color: #ffffff;
+    margin-bottom: var(--space-md);
+  }
+
+  .subversion-text:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Thesis Block */
+  .thesis-block {
+    text-align: center;
+    padding: var(--space-2xl) var(--space-xl);
+    margin: var(--space-3xl) 0;
+    border-top: 2px solid rgba(251, 226, 186, 0.15);
+    border-bottom: 2px solid rgba(251, 226, 186, 0.15);
+  }
+
+  .thesis-text {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--cream);
+    margin: 0;
+  }
+
+  /* Timeline */
+  .timeline-title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    color: var(--cream);
+    margin-bottom: var(--space-md);
+  }
+
+  .timeline-intro {
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: #ffffff;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 36px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--gold-soft), rgba(251, 226, 186, 0.2));
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .timeline-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -30px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    background: var(--gold-soft);
+    border-radius: 50%;
+    border: 2px solid var(--blue);
+    box-shadow: 0 0 0 3px rgba(245, 208, 138, 0.3);
+  }
+
+  .timeline-item-now::before {
+    background: var(--orange);
+    width: 14px;
+    height: 14px;
+    left: -31px;
+    top: 5px;
+    box-shadow: 0 0 0 4px rgba(230, 136, 28, 0.3);
+    animation: pulse-dot 2s infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(230, 136, 28, 0.3); }
+    50% { box-shadow: 0 0 0 8px rgba(230, 136, 28, 0.1); }
+  }
+
+  .timeline-year {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 900;
+    color: var(--gold-soft);
+    margin-bottom: 4px;
+  }
+
+  .timeline-item-now .timeline-year {
+    color: var(--orange);
+    font-size: var(--text-xl);
+  }
+
+  .timeline-content p {
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .machine-expose-headline {
+      font-size: var(--text-3xl);
+    }
+
+    .thesis-text {
+      font-size: var(--text-xl);
+    }
+  }
+</style>

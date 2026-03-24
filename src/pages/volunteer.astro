@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import VolunteerHero from '../components/volunteer/VolunteerHero.astro';
+import PetitionBlitz from '../components/volunteer/PetitionBlitz.astro';
+import ActionBlocks from '../components/volunteer/ActionBlocks.astro';
+import SignupForm from '../components/volunteer/SignupForm.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Volunteer | Byron Sigcho-Lopez for Congress" description="Join the multiracial working-class coalition fighting for IL-04. Collect petition signatures, canvass neighborhoods, phonebank, and help build the movement.">
+  <Navbar />
+  <main>
+    <VolunteerHero />
+    <PetitionBlitz />
+    <ActionBlocks />
+    <SignupForm />
+  </main>
+  <Footer />
+</Layout>

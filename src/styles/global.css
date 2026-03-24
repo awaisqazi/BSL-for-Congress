@@ -1,0 +1,303 @@
+/* ============================================
+   BSL FOR CONGRESS — GLOBAL DESIGN SYSTEM
+   Grassroots "Mamdani Model" Aesthetics
+   ============================================ */
+
+/* --- Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
+
+/* --- CSS Custom Properties --- */
+:root {
+  /* Brand Colors */
+  --cream: #fbe2ba;
+  --cream-dark: #f0d49a;
+  --cream-light: #fef5e6;
+  --blue: #05aded;
+  --blue-dark: #0490c8;
+  --blue-deeper: #036d99;
+  --orange: #e6881c;
+  --orange-dark: #c97416;
+  --orange-light: #f0a040;
+  --gold-soft: #f5d08a; /* warm gold for labels/accents on blue backgrounds */
+
+  /* Neutrals */
+  --black: #1a1a1a;
+  --white: #ffffff;
+  --gray-700: #374151;
+  --gray-500: #6b7280;
+  --gray-300: #d1d5db;
+  --gray-100: #f3f4f6;
+
+  /* Typography */
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  /* Font Sizes (fluid) */
+  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1rem + 0.6vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
+  --text-3xl: clamp(1.875rem, 1.4rem + 2.4vw, 2.75rem);
+  --text-4xl: clamp(2.25rem, 1.5rem + 3.75vw, 3.75rem);
+  --text-5xl: clamp(2.75rem, 1.75rem + 5vw, 5rem);
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+  --space-5xl: 8rem;
+
+  /* Layout */
+  --container-max: 1200px;
+  --container-wide: 1400px;
+  --nav-height: 72px;
+
+  /* Transitions */
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+
+  /* Borders & Shadows */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.20);
+  --shadow-xl: 0 16px 50px rgba(0,0,0,0.25);
+}
+
+/* --- Reset --- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--black);
+  background-color: var(--cream);
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* --- Utility Classes --- */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.container-wide {
+  width: 100%;
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.section-label {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--orange);
+  margin-bottom: var(--space-sm);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--blue);
+  margin-bottom: var(--space-lg);
+}
+
+.section-padding {
+  padding: var(--space-4xl) 0;
+}
+
+/* --- Buttons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-lg);
+  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--radius-md);
+  transition: all var(--duration-normal) var(--ease-default);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-orange {
+  background: var(--orange);
+  color: var(--white);
+  box-shadow: var(--shadow-md), 0 0 0 0 rgba(230, 136, 28, 0.4);
+}
+
+.btn-orange:hover {
+  background: var(--orange-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(230, 136, 28, 0.3);
+}
+
+.btn-orange:active {
+  transform: translateY(0);
+}
+
+.btn-massive {
+  font-size: var(--text-xl);
+  padding: var(--space-lg) var(--space-3xl);
+  border-radius: var(--radius-lg);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: var(--shadow-md), 0 0 0 0 rgba(230, 136, 28, 0.4);
+  }
+  50% {
+    box-shadow: var(--shadow-lg), 0 0 40px rgba(230, 136, 28, 0.25);
+  }
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--blue);
+  border: 2px solid var(--blue);
+}
+
+.btn-outline:hover {
+  background: var(--blue);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+.btn-cream {
+  background: var(--cream);
+  color: var(--blue);
+}
+
+.btn-cream:hover {
+  background: var(--cream-dark);
+  transform: translateY(-2px);
+}
+
+/* --- Entrance Animations --- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-in {
+  opacity: 0;
+}
+
+.animate-in.visible {
+  animation: fadeInUp 0.6s var(--ease-default) forwards;
+}
+
+.animate-in.visible:nth-child(2) { animation-delay: 0.1s; }
+.animate-in.visible:nth-child(3) { animation-delay: 0.2s; }
+.animate-in.visible:nth-child(4) { animation-delay: 0.3s; }
+
+/* --- Responsive — Mobile First --- */
+@media (max-width: 768px) {
+  .container, .container-wide {
+    padding: 0 var(--space-md);
+  }
+
+  .section-padding {
+    padding: var(--space-3xl) 0;
+  }
+
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .hide-desktop {
+    display: none !important;
+  }
+}

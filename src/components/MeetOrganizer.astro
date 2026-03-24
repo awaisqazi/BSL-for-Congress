@@ -1,0 +1,143 @@
+---
+---
+
+<section class="bio section-padding" id="meet">
+  <div class="container">
+    <div class="bio-grid">
+      <!-- Image -->
+      <div class="bio-image-wrap animate-in">
+        <div class="bio-image-accent"></div>
+        <img 
+          src="/images/bslfamily.jpg" 
+          alt="Byron Sigcho-Lopez with family"
+          class="bio-image"
+          loading="lazy"
+        />
+      </div>
+
+      <!-- Text -->
+      <div class="bio-text">
+        <span class="section-label animate-in" data-i18n="bio.label">Meet the Organizer</span>
+        <h2 class="section-title animate-in" data-i18n="bio.headline">From Ecuador to the City Council: A Life of Fighting Back</h2>
+        
+        <p class="bio-paragraph animate-in" data-i18n="bio.p1">
+          Byron Sigcho-Lopez emigrated alone from Ecuador at age 17, working his way through school to become a public school teacher in the very communities he would later serve. When the city moved to close 50 public schools in Black and Latino neighborhoods, Byron didn't write a letter. He organized.
+        </p>
+        
+        <p class="bio-paragraph animate-in" data-i18n="bio.p2">
+          As 25th Ward Alderman and a proud democratic socialist endorsed by Chicago DSA, Byron has taken on the Chicago political establishment head-on: passing anti-displacement legislation to protect Pilsen and Little Village families, standing with striking workers, and rejecting every dollar of corporate PAC money. He has never been bought, and he never will be.
+        </p>
+
+        <a href="/meet" class="btn btn-outline bio-cta animate-in" data-i18n="bio.cta">
+          Read Byron's Full Story
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .bio {
+    background: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bio::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    left: -80px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(5, 173, 237, 0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .bio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4xl);
+    align-items: center;
+  }
+
+  /* Image */
+  .bio-image-wrap {
+    position: relative;
+  }
+
+  .bio-image-accent {
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    right: 12px;
+    bottom: 12px;
+    border: 3px solid var(--orange);
+    border-radius: var(--radius-lg);
+    z-index: 0;
+  }
+
+  .bio-image {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .bio-image-tag {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    z-index: 2;
+    background: rgba(26, 26, 26, 0.7);
+    backdrop-filter: blur(8px);
+    color: var(--cream);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 100px;
+    letter-spacing: 0.03em;
+  }
+
+  /* Text */
+  .bio-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .bio-paragraph {
+    font-size: var(--text-base);
+    line-height: 1.75;
+    color: var(--gray-700);
+  }
+
+  .bio-cta {
+    align-self: flex-start;
+    margin-top: var(--space-md);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .bio-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .bio-image {
+      height: 300px;
+    }
+
+    .bio-image-accent {
+      top: -8px;
+      left: -8px;
+      right: 8px;
+      bottom: 8px;
+    }
+  }
+</style>

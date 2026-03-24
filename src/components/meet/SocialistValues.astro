@@ -1,0 +1,203 @@
+---
+---
+
+<section class="socialist-values" id="socialist-values">
+  <div class="socialist-bg">
+    <div class="socialist-pattern"></div>
+  </div>
+  
+  <div class="container socialist-content">
+    <span class="socialist-label animate-in" data-i18n="meet.values_label">Values in Action</span>
+    
+    <h2 class="socialist-headline animate-in" data-i18n="meet.values_headline">
+      The Uncompromising Democratic Socialist
+    </h2>
+    
+    <div class="values-grid">
+      <div class="value-item animate-in">
+        <div class="value-icon">✊</div>
+        <h3 class="value-title" data-i18n="meet.value_frontlines_title">Always on the Front Lines</h3>
+        <p class="value-desc" data-i18n="meet.value_frontlines_desc">
+          Byron is a workhorse, not a show horse. He is an ideologically committed Democratic Socialist who is never afraid to be on the front lines. From hunger strikes for environmental justice to standing with striking workers, he shows up when it counts.
+        </p>
+      </div>
+      
+      <div class="value-item animate-in">
+        <div class="value-icon">🚫</div>
+        <h3 class="value-title" data-i18n="meet.value_nocorpmoney_title">Zero Corporate Money</h3>
+        <p class="value-desc" data-i18n="meet.value_nocorpmoney_desc">
+          Since 2019, Byron has refused to take political contributions from large corporations or real estate developers. He has upheld this commitment every single day in office. His campaign is powered entirely by small-dollar donations from working people.
+        </p>
+      </div>
+      
+      <div class="value-item animate-in">
+        <div class="value-icon">🏠</div>
+        <h3 class="value-title" data-i18n="meet.value_accessible_title">Open Door, Every Week</h3>
+        <p class="value-desc" data-i18n="meet.value_accessible_desc">
+          Every Tuesday night, including throughout the pandemic, Byron hosts Ward Night where any resident can personally meet with him, have their concerns heard, and receive city services. This is what representation looks like.
+        </p>
+      </div>
+      
+      <div class="value-item animate-in">
+        <div class="value-icon">👨‍👩‍👧‍👦</div>
+        <h3 class="value-title" data-i18n="meet.value_family_title">Rooted in Pilsen</h3>
+        <p class="value-desc" data-i18n="meet.value_family_desc">
+          Byron lives in Pilsen with his wife Loreen and their three children. He is not a careerist passing through. He is a neighbor, a father, and a lifelong member of the community he fights for.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Block -->
+<section class="meet-cta-block">
+  <div class="container meet-cta-content">
+    <h2 class="meet-cta-headline animate-in" data-i18n="meet.cta_headline">Send an Unbought Organizer to Congress.</h2>
+    <div class="meet-cta-buttons animate-in">
+      <a href="#petition" class="btn btn-orange btn-massive" data-i18n="meet.cta_petition">Join the Petition Blitz</a>
+      <a href="https://secure.actblue.com/donate/byronfor04web/" class="btn btn-cream" target="_blank" rel="noopener" data-i18n="meet.cta_donate">Donate to the Movement</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Socialist Values Section */
+  .socialist-values {
+    position: relative;
+    padding: var(--space-4xl) 0;
+    overflow: hidden;
+  }
+
+  .socialist-bg {
+    position: absolute;
+    inset: 0;
+    background: var(--blue);
+    z-index: 0;
+  }
+
+  .socialist-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image: 
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(255,255,255,0.06) 0%, transparent 50%);
+  }
+
+  .socialist-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .socialist-label {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--gold-soft);
+    display: block;
+    text-align: center;
+    margin-bottom: var(--space-sm);
+  }
+
+  .socialist-headline {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--cream);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+  }
+
+  .value-item {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(251, 226, 186, 0.12);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    backdrop-filter: blur(4px);
+    transition: background var(--duration-normal) var(--ease-default), transform var(--duration-normal) var(--ease-default);
+  }
+
+  .value-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+  }
+
+  .value-icon {
+    font-size: 2rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .value-title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    color: var(--cream);
+    margin-bottom: var(--space-md);
+  }
+
+  .value-desc {
+    font-size: var(--text-sm);
+    line-height: 1.75;
+    color: #ffffff;
+  }
+
+  /* CTA Block */
+  .meet-cta-block {
+    background: var(--cream);
+    padding: var(--space-4xl) 0;
+  }
+
+  .meet-cta-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2xl);
+  }
+
+  .meet-cta-headline {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 900;
+    color: var(--blue);
+    text-transform: uppercase;
+    max-width: 700px;
+  }
+
+  .meet-cta-buttons {
+    display: flex;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .socialist-headline {
+      font-size: var(--text-3xl);
+    }
+
+    .meet-cta-buttons {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .meet-cta-buttons .btn {
+      width: 100%;
+    }
+  }
+</style>

@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import PlatformHero from '../components/platform/PlatformHero.astro';
+import PolicyGrid from '../components/platform/PolicyGrid.astro';
+import UnboughtBanner from '../components/platform/UnboughtBanner.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="The Platform | Byron Sigcho-Lopez for Congress" description="A working-class agenda for IL-04. Housing, labor rights, public education, environmental justice, and public safety. No corporate PAC money.">
+  <Navbar />
+  <main>
+    <PlatformHero />
+    <PolicyGrid />
+    <UnboughtBanner />
+  </main>
+  <Footer />
+</Layout>

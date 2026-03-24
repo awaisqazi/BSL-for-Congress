@@ -1,0 +1,324 @@
+---
+---
+
+<footer class="site-footer" id="footer">
+  <!-- Fundraising Ticker -->
+  <div class="ticker-strip">
+    <div class="container">
+      <div class="ticker-inner">
+        <div class="ticker-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M16 2L20 12H30L22 18L25 28L16 22L7 28L10 18L2 12H12L16 2Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="ticker-text-wrap">
+          <span class="ticker-label" data-i18n="footer.ticker_label">Powered by the People</span>
+          <span class="ticker-value" data-i18n="footer.ticker_text">Average donation: $27. No corporate PAC money. Ever.</span>
+        </div>
+        <a href="https://secure.actblue.com/donate/byronfor04web/" class="btn btn-orange ticker-donate" target="_blank" rel="noopener" data-i18n="nav.donate">
+          Donate
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Signup + Footer Content -->
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Newsletter Signup -->
+        <div class="footer-signup">
+          <h3 class="footer-signup-headline" data-i18n="footer.signup_headline">Join the Movement</h3>
+          <form class="signup-form" onsubmit="event.preventDefault();">
+            <input 
+              type="email" 
+              class="signup-input" 
+              data-i18n="footer.signup_placeholder"
+              placeholder="Your email address"
+              aria-label="Email address"
+            />
+            <button type="submit" class="btn btn-orange signup-btn" data-i18n="footer.signup_button">
+              Sign Up
+            </button>
+          </form>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-links">
+          <h4 class="footer-links-title">Links</h4>
+          <ul>
+            <li><a href="/meet" data-i18n="nav.meet">Meet Byron</a></li>
+            <li><a href="/platform" data-i18n="nav.platform">The Platform</a></li>
+            <li><a href="/movement" data-i18n="nav.movement">Machine vs. Movement</a></li>
+            <li><a href="/volunteer" data-i18n="nav.volunteer">Volunteer</a></li>
+          </ul>
+        </div>
+
+        <!-- Social -->
+        <div class="footer-social">
+          <h4 class="footer-links-title">Follow Us</h4>
+          <div class="social-icons">
+            <a href="https://x.com/BSLForCongress" class="social-link" aria-label="Twitter/X" target="_blank" rel="noopener">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+            <a href="https://www.instagram.com/bslforcongress/" class="social-link" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="5"/>
+                <circle cx="12" cy="12" r="5"/>
+                <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+            <a href="https://www.facebook.com/BSLForCongress/" class="social-link" aria-label="Facebook" target="_blank" rel="noopener">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+            <a href="https://www.tiktok.com/@sigchofor25" class="social-link" aria-label="TikTok" target="_blank" rel="noopener">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.75a8.23 8.23 0 0 0 4.76 1.51V6.82a4.83 4.83 0 0 1-1-.13z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legal -->
+      <div class="footer-legal">
+        <p class="legal-text" data-i18n="footer.paid_for">Paid for by Byron for IL-04. Not authorized by any candidate or candidate's committee.</p>
+        <p class="legal-copyright" data-i18n="footer.copyright">© 2026 Byron for IL-04. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative;
+  }
+
+  /* Fundraising Ticker */
+  .ticker-strip {
+    background: var(--orange);
+    padding: var(--space-lg) 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ticker-strip::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 40px,
+      rgba(255,255,255,0.05) 40px,
+      rgba(255,255,255,0.05) 41px
+    );
+  }
+
+  .ticker-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    position: relative;
+  }
+
+  .ticker-icon {
+    color: var(--white);
+    flex-shrink: 0;
+    animation: spin-slow 8s linear infinite;
+  }
+
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .ticker-text-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .ticker-label {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .ticker-value {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 800;
+    color: var(--white);
+  }
+
+  .ticker-donate {
+    background: var(--white) !important;
+    color: var(--orange) !important;
+    animation: none !important;
+    flex-shrink: 0;
+    font-size: var(--text-sm) !important;
+    padding: 10px 24px !important;
+  }
+
+  .ticker-donate:hover {
+    background: var(--cream) !important;
+    transform: translateY(-2px);
+  }
+
+  /* Footer Main */
+  .footer-main {
+    background: var(--blue-deeper);
+    padding: var(--space-4xl) 0 var(--space-2xl);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: var(--space-3xl);
+    margin-bottom: var(--space-3xl);
+  }
+
+  /* Signup */
+  .footer-signup-headline {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    color: var(--cream);
+    margin-bottom: var(--space-lg);
+  }
+
+  .signup-form {
+    display: flex;
+    gap: var(--space-sm);
+  }
+
+  .signup-input {
+    flex: 1;
+    padding: 14px 18px;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    border: 2px solid rgba(251, 226, 186, 0.2);
+    border-radius: var(--radius-md);
+    background: rgba(255,255,255,0.08);
+    color: var(--cream);
+    outline: none;
+    transition: border-color var(--duration-fast) var(--ease-default);
+  }
+
+  .signup-input::placeholder {
+    color: rgba(251, 226, 186, 0.5);
+  }
+
+  .signup-input:focus {
+    border-color: var(--orange);
+  }
+
+  .signup-btn {
+    animation: none !important;
+    font-size: var(--text-sm) !important;
+    padding: 14px 24px !important;
+    flex-shrink: 0;
+  }
+
+  /* Links */
+  .footer-links-title {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold-soft);
+    margin-bottom: var(--space-md);
+  }
+
+  .footer-links ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .footer-links a {
+    font-size: var(--text-sm);
+    color: rgba(251, 226, 186, 0.75);
+    transition: color var(--duration-fast) var(--ease-default);
+  }
+
+  .footer-links a:hover {
+    color: var(--cream);
+  }
+
+  /* Social */
+  .social-icons {
+    display: flex;
+    gap: var(--space-md);
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(251, 226, 186, 0.1);
+    color: var(--cream);
+    transition: all var(--duration-fast) var(--ease-default);
+  }
+
+  .social-link:hover {
+    background: var(--orange);
+    color: var(--white);
+    transform: translateY(-2px);
+  }
+
+  /* Legal */
+  .footer-legal {
+    border-top: 1px solid rgba(251, 226, 186, 0.1);
+    padding-top: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    text-align: center;
+  }
+
+  .legal-text {
+    font-size: var(--text-xs);
+    color: rgba(251, 226, 186, 0.5);
+    line-height: 1.5;
+  }
+
+  .legal-copyright {
+    font-size: var(--text-xs);
+    color: rgba(251, 226, 186, 0.35);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .ticker-inner {
+      flex-wrap: wrap;
+    }
+
+    .ticker-donate {
+      width: 100%;
+      text-align: center;
+    }
+
+    .signup-form {
+      flex-direction: column;
+    }
+  }
+</style>

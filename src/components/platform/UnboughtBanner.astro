@@ -1,0 +1,214 @@
+---
+---
+
+<!-- Unbought Representation Banner -->
+<section class="unbought-banner" id="unbought">
+  <div class="unbought-bg">
+    <div class="unbought-pattern"></div>
+  </div>
+  
+  <div class="container unbought-content">
+    <span class="unbought-label animate-in" data-i18n="issues.unbought_label">The Democratic Socialist Commitment</span>
+    <h2 class="unbought-headline animate-in" data-i18n="issues.unbought_headline">Unbought Representation.</h2>
+    <p class="unbought-text animate-in" data-i18n="issues.unbought_text">
+      Byron completely rejects corporate PAC money and contributions from large real estate developers. He only answers to the working-class coalition of the 4th District. His campaign is funded by small-dollar donations from neighbors, teachers, union members, and working families. This is what it means to be truly independent.
+    </p>
+    
+    <div class="unbought-stats animate-in">
+      <div class="stat-item">
+        <span class="stat-number">$0</span>
+        <span class="stat-label" data-i18n="issues.stat_corporate">Corporate PAC Money</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">$0</span>
+        <span class="stat-label" data-i18n="issues.stat_developer">Developer Contributions</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">$27</span>
+        <span class="stat-label" data-i18n="issues.stat_avg">Avg. Donation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Block -->
+<section class="platform-cta-block">
+  <div class="container platform-cta-content">
+    <h2 class="platform-cta-headline animate-in" data-i18n="issues.cta_headline">Fight for This Platform. Sign the Petition.</h2>
+    <div class="platform-cta-buttons animate-in">
+      <a href="#petition" class="btn btn-orange btn-massive" data-i18n="issues.cta_petition">Join the Petition Blitz</a>
+      <a href="https://secure.actblue.com/donate/byronfor04web/" class="btn btn-outline" target="_blank" rel="noopener" data-i18n="issues.cta_donate">Chip in $27 to the Movement</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Unbought Banner */
+  .unbought-banner {
+    position: relative;
+    padding: var(--space-4xl) 0;
+    overflow: hidden;
+  }
+
+  .unbought-bg {
+    position: absolute;
+    inset: 0;
+    background: var(--blue);
+    z-index: 0;
+  }
+
+  .unbought-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    background-image: 
+      radial-gradient(circle at 15% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+      radial-gradient(circle at 85% 50%, rgba(255,255,255,0.08) 0%, transparent 50%),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 60px,
+        rgba(255,255,255,0.03) 60px,
+        rgba(255,255,255,0.03) 61px
+      );
+  }
+
+  .unbought-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    max-width: 850px;
+    margin: 0 auto;
+  }
+
+  .unbought-label {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--gold-soft);
+  }
+
+  .unbought-headline {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--cream);
+    text-transform: uppercase;
+  }
+
+  .unbought-text {
+    font-size: var(--text-lg);
+    line-height: 1.75;
+    color: #ffffff;
+    max-width: 750px;
+  }
+
+  /* Stats */
+  .unbought-stats {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xl);
+    margin-top: var(--space-xl);
+    padding: var(--space-xl) var(--space-2xl);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(251, 226, 186, 0.12);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(4px);
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .stat-number {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 900;
+    color: var(--gold-soft);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(251, 226, 186, 0.7);
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 48px;
+    background: rgba(251, 226, 186, 0.2);
+  }
+
+  /* CTA Block */
+  .platform-cta-block {
+    background: var(--cream);
+    padding: var(--space-4xl) 0;
+  }
+
+  .platform-cta-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2xl);
+  }
+
+  .platform-cta-headline {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 900;
+    color: var(--blue);
+    text-transform: uppercase;
+    max-width: 700px;
+  }
+
+  .platform-cta-buttons {
+    display: flex;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .unbought-stats {
+      flex-direction: column;
+      gap: var(--space-lg);
+      padding: var(--space-lg);
+    }
+
+    .stat-divider {
+      width: 60px;
+      height: 1px;
+    }
+
+    .unbought-headline {
+      font-size: var(--text-3xl);
+    }
+
+    .platform-cta-buttons {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .platform-cta-buttons .btn {
+      width: 100%;
+    }
+  }
+</style>

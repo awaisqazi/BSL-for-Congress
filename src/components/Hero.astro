@@ -1,0 +1,175 @@
+---
+---
+
+<section class="hero" id="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-noise"></div>
+  
+  <div class="hero-content container">
+    <span class="hero-badge animate-in">INDEPENDENT DEMOCRATIC SOCIALIST • CHICAGO DSA • IL-04</span>
+    
+    <h1 class="hero-headline animate-in" data-i18n="hero.headline">
+      Unbought. Unbossed. Unanointed.
+    </h1>
+    
+    <p class="hero-subheadline animate-in" data-i18n="hero.subheadline">
+      Democracy cannot be preserved nationally if it is subverted locally. Join the multiracial working-class coalition to take back IL-04.
+    </p>
+
+    <a href="#petition" class="btn btn-orange btn-massive hero-cta animate-in" data-i18n="hero.cta">
+      Join the Petition Blitz
+    </a>
+
+    <p class="hero-context animate-in" data-i18n="hero.context">
+      When Rep. García retired, party bosses handed his seat to his former chief of staff, who needed just 697 signatures. As an independent democratic socialist backed by the Chicago DSA, Byron must collect over 10,816 valid signatures to even appear on the ballot. We need your help to overcome a system rigged 15-to-1 against independent candidates.
+    </p>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="scroll-indicator">
+    <div class="scroll-arrow">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('/images/hero-rally.jpeg');
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+    overflow: hidden;
+    padding-top: var(--nav-height);
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      background-attachment: scroll;
+    }
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      160deg,
+      rgba(5, 173, 237, 0.88) 0%,
+      rgba(3, 109, 153, 0.82) 40%,
+      rgba(26, 26, 26, 0.75) 100%
+    );
+    z-index: 1;
+  }
+
+  .hero-noise {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    max-width: 900px;
+    padding: var(--space-3xl) var(--space-lg);
+  }
+
+  .hero-badge {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--cream);
+    background: rgba(230, 136, 28, 0.3);
+    border: 1px solid rgba(230, 136, 28, 0.5);
+    padding: 6px 16px;
+    border-radius: 100px;
+    backdrop-filter: blur(4px);
+  }
+
+  .hero-headline {
+    font-family: var(--font-display);
+    font-size: var(--text-5xl);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--cream);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.3);
+  }
+
+  .hero-subheadline {
+    font-family: var(--font-body);
+    font-size: var(--text-xl);
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgba(251, 226, 186, 0.9);
+    max-width: 700px;
+  }
+
+  .hero-cta {
+    margin-top: var(--space-md);
+    font-size: var(--text-2xl) !important;
+    padding: var(--space-lg) var(--space-3xl) !important;
+  }
+
+  .hero-context {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(251, 226, 186, 0.7);
+    max-width: 600px;
+    margin-top: var(--space-sm);
+  }
+
+  /* Scroll Indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: var(--space-xl);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    animation: bounce 2s infinite;
+  }
+
+  .scroll-arrow {
+    color: rgba(251, 226, 186, 0.6);
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(10px); }
+  }
+
+  @media (max-width: 768px) {
+    .hero-headline {
+      font-size: var(--text-4xl);
+    }
+
+    .hero-cta {
+      font-size: var(--text-lg) !important;
+      padding: var(--space-md) var(--space-2xl) !important;
+    }
+
+    .hero-content {
+      padding: var(--space-2xl) var(--space-md);
+    }
+  }
+</style>

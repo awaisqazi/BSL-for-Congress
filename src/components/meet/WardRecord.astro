@@ -1,0 +1,252 @@
+---
+---
+
+<section class="ward-record" id="ward-record">
+  <!-- Blue context banner -->
+  <div class="record-banner">
+    <div class="record-banner-bg">
+      <div class="record-banner-pattern"></div>
+    </div>
+    <div class="container record-banner-content">
+      <div class="record-banner-text">
+        <span class="record-banner-year animate-in">2019</span>
+        <h2 class="record-banner-headline animate-in" data-i18n="meet.record_headline">Taking on the Machine</h2>
+        <p class="record-banner-desc animate-in" data-i18n="meet.record_desc">
+          In 2019, Byron ran a grassroots campaign to unseat the entrenched, corrupt Democratic machine in the 25th Ward. He committed to refuse political contributions from developers and big corporations, a commitment he has upheld to this day. Since taking office, he has transformed the ward office into one that serves all residents with care and dignity.
+        </p>
+      </div>
+      <div class="record-banner-image-wrap animate-in">
+        <img 
+          src="/images/ward-record-placeholder.png" 
+          alt="Community members at a Chicago City Council hearing"
+          class="record-banner-image"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Victory Cards Grid -->
+  <div class="record-cards-section">
+    <div class="container">
+      <span class="section-label animate-in" data-i18n="meet.victories_label" style="text-align:center;display:block;">The 25th Ward Record</span>
+      <div class="record-grid">
+        <!-- Fighting Corruption -->
+        <div class="record-card animate-in">
+          <div class="record-card-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3 class="record-card-title" data-i18n="meet.corruption_title">Fighting Corruption</h3>
+          <p class="record-card-desc" data-i18n="meet.corruption_desc">
+            Took disgraced former Alderman Danny Solis to the Illinois Supreme Court and won changes to campaign finance rules, stopping indicted politicians from using campaign funds for legal defense. Strengthened the Office of Inspector General and continues to advocate for publicly financed elections.
+          </p>
+        </div>
+
+        <!-- Housing for All -->
+        <div class="record-card animate-in">
+          <div class="record-card-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <h3 class="record-card-title" data-i18n="meet.housing_title">Housing for All</h3>
+          <p class="record-card-desc" data-i18n="meet.housing_desc">
+            Directly enabled the creation and preservation of over 800 affordable housing units. Fought to buy the largest vacant site in Pilsen for affordable development, passed legislation protecting homeowners from predatory developers, and doubled the Affordable Requirements Ordinance minimum from 10% to 20%.
+          </p>
+        </div>
+
+        <!-- Environmental Justice -->
+        <div class="record-card animate-in">
+          <div class="record-card-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+              <path d="M2 12h20"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <h3 class="record-card-title" data-i18n="meet.environment_title">Environmental Justice</h3>
+          <p class="record-card-desc" data-i18n="meet.environment_desc">
+            Joined the hunger strike to #StopGeneralIron, fought MAT Asphalt's environmental racism in McKinley Park, and demanded accountability for the disastrous Hilco implosion. Led the effort to include environmental justice impact in city procurement contracts.
+          </p>
+        </div>
+
+        <!-- Workers & Education -->
+        <div class="record-card animate-in">
+          <div class="record-card-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3 class="record-card-title" data-i18n="meet.workers_title">Workers &amp; Education</h3>
+          <p class="record-card-desc" data-i18n="meet.workers_desc">
+            Secured over $1 million in school infrastructure improvements, stood with the CTU for fully funded public schools, and walked picket lines with unionizing workers across the city. Defended teachers facing retaliation for fighting environmental racism and championed the Rudy Lozano Library expansion.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ward-record {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Blue Banner */
+  .record-banner {
+    position: relative;
+    padding: var(--space-4xl) 0;
+    overflow: hidden;
+  }
+
+  .record-banner-bg {
+    position: absolute;
+    inset: 0;
+    background: var(--blue);
+    z-index: 0;
+  }
+
+  .record-banner-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(255,255,255,0.1) 20px,
+      rgba(255,255,255,0.1) 21px
+    );
+  }
+
+  .record-banner-content {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  .record-banner-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .record-banner-year {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold-soft);
+  }
+
+  .record-banner-headline {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--cream);
+    text-transform: uppercase;
+  }
+
+  .record-banner-desc {
+    font-size: var(--text-lg);
+    line-height: 1.75;
+    color: #ffffff;
+  }
+
+  .record-banner-image-wrap {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+  }
+
+  .record-banner-image {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Record Cards */
+  .record-cards-section {
+    background: var(--cream);
+    padding: var(--space-4xl) 0;
+  }
+
+  .record-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    margin-top: var(--space-2xl);
+  }
+
+  .record-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--orange);
+    transition: transform var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
+  }
+
+  .record-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .record-card-icon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(5, 173, 237, 0.08);
+    border-radius: var(--radius-md);
+    color: var(--blue);
+    margin-bottom: var(--space-lg);
+  }
+
+  .record-card-title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    color: var(--blue);
+    margin-bottom: var(--space-md);
+  }
+
+  .record-card-desc {
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: var(--gray-700);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .record-banner-content {
+      grid-template-columns: 1fr;
+    }
+
+    .record-banner-image {
+      height: 250px;
+    }
+
+    .record-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .record-banner-headline {
+      font-size: var(--text-3xl);
+    }
+  }
+</style>

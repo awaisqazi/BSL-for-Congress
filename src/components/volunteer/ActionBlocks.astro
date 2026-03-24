@@ -1,0 +1,119 @@
+---
+---
+
+<section class="action-blocks section-padding" id="ways-to-fight">
+  <div class="container">
+    <span class="section-label animate-in" style="text-align:center;display:block;" data-i18n="volunteer.action_label">Ways to Fight</span>
+    <h2 class="section-title animate-in" style="text-align:center;" data-i18n="volunteer.action_headline">Every Role Matters</h2>
+
+    <div class="action-grid">
+      <!-- Deep Canvassing -->
+      <div class="action-card animate-in">
+        <div class="action-card-header">
+          <span class="action-icon">🚪</span>
+          <h3 class="action-title" data-i18n="volunteer.canvass_title">Deep Canvassing</h3>
+        </div>
+        <p class="action-desc" data-i18n="volunteer.canvass_desc">
+          Knock on doors in Pilsen, Little Village, and the inner-ring suburbs to have meaningful, one-on-one conversations about housing, economic justice, and the fight against the machine. This is how movements are built: at the doorstep.
+        </p>
+        <span class="action-tag" data-i18n="volunteer.canvass_tag">In-Person • Weekends</span>
+      </div>
+
+      <!-- Ticket-Splitting Education -->
+      <div class="action-card animate-in">
+        <div class="action-card-header">
+          <span class="action-icon">🗳️</span>
+          <h3 class="action-title" data-i18n="volunteer.ticket_title">Ticket-Splitting Education</h3>
+        </div>
+        <p class="action-desc" data-i18n="volunteer.ticket_desc">
+          As an independent, Byron will not benefit from the straight-ticket Democratic vote. We need educators to teach voters how to split their ticket in November to defy the machine and cast a vote for a real representative.
+        </p>
+        <span class="action-tag" data-i18n="volunteer.ticket_tag">Critical • Voter Education</span>
+      </div>
+
+      <!-- Digital Organizing -->
+      <div class="action-card animate-in">
+        <div class="action-card-header">
+          <span class="action-icon">📱</span>
+          <h3 class="action-title" data-i18n="volunteer.digital_title">Digital Organizing & Phonebanking</h3>
+        </div>
+        <p class="action-desc" data-i18n="volunteer.digital_desc">
+          Reach voters where they are through rapid-response text campaigns, phone calls, and social media. This work can be done from anywhere, anytime, and is critical for expanding the movement beyond what door-knocking alone can achieve.
+        </p>
+        <span class="action-tag" data-i18n="volunteer.digital_tag">Remote • Flexible Hours</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .action-blocks {
+    background: var(--cream);
+  }
+
+  .action-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+    margin-top: var(--space-2xl);
+  }
+
+  .action-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    box-shadow: var(--shadow-sm);
+    border-top: 4px solid var(--blue);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    transition: transform var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
+  }
+
+  .action-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .action-card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .action-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+
+  .action-title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 800;
+    color: var(--blue);
+  }
+
+  .action-desc {
+    font-size: var(--text-sm);
+    line-height: 1.75;
+    color: var(--gray-700);
+    flex: 1;
+  }
+
+  .action-tag {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--orange);
+    padding-top: var(--space-sm);
+    border-top: 1px solid rgba(5, 173, 237, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    .action-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

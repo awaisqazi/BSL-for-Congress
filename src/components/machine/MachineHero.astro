@@ -1,0 +1,115 @@
+---
+---
+
+<section class="machine-hero" id="machine-hero">
+  <div class="machine-hero-overlay"></div>
+  <div class="machine-hero-noise"></div>
+
+  <div class="machine-hero-content container">
+    <span class="machine-hero-badge animate-in" data-i18n="machine.hero_badge">THE STAKES</span>
+
+    <h1 class="machine-hero-headline animate-in" data-i18n="machine.hero_headline">
+      Machine vs. Movement.
+    </h1>
+
+    <p class="machine-hero-sub animate-in" data-i18n="machine.hero_sub">
+      We are building an independent, working-class movement to defeat a corrupt political machine that believes it can govern without the consent of the people.
+    </p>
+  </div>
+</section>
+
+<style>
+  .machine-hero {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('/images/machine-hero-split.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    overflow: hidden;
+    padding-top: var(--nav-height);
+  }
+
+  @media (max-width: 768px) {
+    .machine-hero {
+      background-attachment: scroll;
+      min-height: 60vh;
+    }
+  }
+
+  .machine-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      160deg,
+      rgba(26, 26, 26, 0.88) 0%,
+      rgba(5, 173, 237, 0.8) 50%,
+      rgba(26, 26, 26, 0.85) 100%
+    );
+    z-index: 1;
+  }
+
+  .machine-hero-noise {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    pointer-events: none;
+  }
+
+  .machine-hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    max-width: 900px;
+    padding: var(--space-4xl) var(--space-lg);
+  }
+
+  .machine-hero-badge {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    color: var(--cream);
+    background: rgba(230, 136, 28, 0.25);
+    border: 1px solid rgba(230, 136, 28, 0.45);
+    padding: 6px 18px;
+    border-radius: 100px;
+    backdrop-filter: blur(4px);
+  }
+
+  .machine-hero-headline {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--cream);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    text-shadow: 0 4px 40px rgba(0,0,0,0.4);
+  }
+
+  .machine-hero-sub {
+    font-family: var(--font-body);
+    font-size: var(--text-xl);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #ffffff;
+    max-width: 750px;
+  }
+
+  @media (max-width: 768px) {
+    .machine-hero-content {
+      padding: var(--space-3xl) var(--space-md);
+    }
+  }
+</style>
