@@ -2,11 +2,18 @@
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<section class="anointment-banner section-padding" id="anointment">
+<section class="anointment" id="anointment">
   <div class="anointment-bg">
     <div class="anointment-pattern"></div>
   </div>
   
+  <div class="container anointment-content">
+    <div class="anointment-inner">
+      <span class="anointment-label animate-in" data-i18n="anointment.label">Why Independent?</span>
+      
+      <h2 class="anointment-headline animate-in" data-i18n="anointment.headline">
+        The Anointment
+      </h2>
       
       <p class="anointment-text animate-in" data-i18n="anointment.text">
         When Rep. Jesús "Chuy" García announced his retirement, he didn't give voters a choice. He filed for a fifth term, then moments before the filing deadline, his former chief of staff filed nominating petitions collected in just days. García withdrew and endorsed her, handing the seat to an uncontested successor. She needed only 697 signatures. Independent candidates must collect over 10,816. This is not democracy. This is an anointment.
@@ -20,7 +27,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <!-- Side image accent -->
     <div class="anointment-image-wrap animate-in">
       <img 
-        src="/images/Chuy Garcia.jpeg" 
+        src={`${base}/images/Chuy Garcia.jpeg`} 
         alt="U.S. Rep. Jesús 'Chuy' García speaks during a press conference at the Illinois Coalition for Immigrant and Refugee Rights headquarters in the Loop on Sept. 28, 2025."
         class="anointment-image"
         loading="lazy"
