@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css';
+
 export interface Props {
   title?: string;
   description?: string;
@@ -37,8 +39,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <link rel="apple-touch-icon" sizes="180x180" href={`${base}/apple-touch-icon.png`} />
     <link rel="manifest" href={`${base}/site.webmanifest`} />
 
-    <!-- Styles -->
-    <link rel="stylesheet" href={`${base}/src/styles/global.css`} />
+    <!-- Styles loaded via import in frontmatter -->
   </head>
   <body data-base={base}>
     <slot />
