@@ -251,10 +251,27 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     font-size: var(--text-sm);
     color: rgba(251, 226, 186, 0.75);
     transition: color var(--duration-fast) var(--ease-default);
+    position: relative;
+    display: inline-block;
+  }
+
+  .footer-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--orange);
+    transition: width var(--duration-normal) var(--ease-default);
   }
 
   .footer-links a:hover {
     color: var(--cream);
+  }
+
+  .footer-links a:hover::after {
+    width: 100%;
   }
 
   /* Social */

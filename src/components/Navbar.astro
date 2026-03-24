@@ -296,6 +296,27 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     display: block;
     padding: var(--space-sm) 0;
     border-bottom: 2px solid rgba(5, 173, 237, 0.1);
+    position: relative;
+    transition: color var(--duration-fast) var(--ease-default);
+  }
+
+  .mobile-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: var(--orange);
+    transition: width var(--duration-normal) var(--ease-default);
+  }
+
+  .mobile-links a:hover {
+    color: var(--orange);
+  }
+
+  .mobile-links a:hover::after {
+    width: 100%;
   }
 
   .mobile-donate {
