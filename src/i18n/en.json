@@ -7,36 +7,46 @@
     "donate": "Donate"
   },
   "hero": {
-    "headline": "Unbought. Unbossed. Unanointed.",
-    "subheadline": "Democracy cannot be preserved nationally if it is subverted locally. Join the multiracial working-class coalition to take back IL-04.",
+    "headline": "Everybody has a home, and everybody eats.",
+    "subheadline": "Byron Sigcho Lopez is a husband, father of little triplets, math teacher & economist, naturalized immigrant, and two-term elected Democratic Socialist Alderman from Chicago's Pilsen neighborhood.",
     "cta": "Join the Petition Blitz",
-    "context": "When Rep. García retired, party bosses handed his seat to his former chief of staff, who needed just 697 signatures. As an independent democratic socialist backed by the Chicago DSA, Byron must collect over 10,816 valid signatures to even appear on the ballot. We need your help to overcome a system rigged 15-to-1 against independent candidates."
+    "context": "The Democratic Primary Election in IL-04's Congressional District was rigged! On March 17th, many of our neighbors across Illinois had 5+ choices on their Democratic Primary ballot. Voters in our district only had ONE because the political establishment chose on our behalf. Byron needs over 10,816 valid petition signatures in order to appear on your ballot on November 3rd. We need your help to overcome a system rigged against unbought candidates!"
   },
   "bio": {
     "label": "Meet the Organizer",
-    "headline": "From Ecuador to the City Council: A Life of Fighting Back",
-    "p1": "Byron Sigcho-Lopez emigrated alone from Ecuador at age 17, working his way through school to become a public school teacher in the very communities he would later serve. When the city moved to close 50 public schools in Black and Latino neighborhoods, Byron didn't write a letter. He organized.",
-    "p2": "As 25th Ward Alderman and a proud democratic socialist endorsed by Chicago DSA, Byron has taken on the Chicago political establishment head-on: passing anti-displacement legislation to protect Pilsen and Little Village families, standing with striking workers, and rejecting every dollar of corporate PAC money. He has never been bought, and he never will be.",
+    "headline": "He wasn't born here, but he followed his heart home as quickly as he could.",
+    "p1": "Byron is an immigrant who came to the United States alone when he was 17 years old. His life is a testament to what happens when strangers become neighbors and family.",
+    "p2": "Byron Sigcho Lopez is the only elected official in this race who has delivered material benefits for the working people of Chicago, with a record of coalition building with every neighbor willing to come together to solve the problems we face, together. He has courageously fought the corruption of the Illinois political machine, helping take down corrupt charter school networks looting from our children's future, and even taking campaign finance corruption all the way to the Illinois Supreme Court.",
+    "p3": "Byron earned his Bachelor's in Mathematics and Business Administration from Cumberland University and his Master's in Economics from the University of Illinois at Chicago.",
+    "p4": "Byron lives in the Pilsen neighborhood with his wife, Loreen, their 3-year-old triplets, a dog, and two cats.",
     "cta": "Read Byron's Full Story"
   },
   "platform": {
     "label": "The Platform",
-    "headline": "A Working-Class Agenda for IL-04",
+    "headline": "Where everybody has a home, and everybody eats.",
     "housing": {
       "title": "Housing as a Human Right",
-      "desc": "Stop displacement. Fight for rent control. Build truly affordable housing, not luxury condos rebranded as 'mixed-income.'"
+      "desc": "Our country can and must provide dignified and safe housing for every veteran and neighbor who needs a helping hand. National tenant bill of rights and expand social housing developments to lower the rent and lower the cost of buying a home."
     },
     "economic": {
-      "title": "Economic Populism",
-      "desc": "Tax the rich. Cap property taxes for working families. End corporate welfare and invest in the neighborhoods that have been disinvested for decades."
+      "title": "An Economy Putting People and Planet First",
+      "desc": "Tax the billionaires and invest our resources in creating sustainable union jobs for every worker in our communities. Raise the minimum wage to $30/hour. No bailouts for banks or tech bubbles. Investments in supporting local entrepreneurs across IL-04. Civilian climate corps jobs for green energy, natural spaces, and community resilience."
     },
-    "labor": {
-      "title": "Labor & Public Education",
-      "desc": "Stand with the CTU and every union fighting for dignity. Fully fund public schools. Stop the privatization pipeline that guts working-class communities."
+    "education": {
+      "title": "Literacy, Curiosity, Creativity, and Inspiration Now",
+      "desc": "Every student, 0 to 100, deserves the opportunity to be inspired, pursue their curiosity, nurture their creativity, and expand their literacy. Fight to restore the U.S. Department of Education. Invest in fully funded public education and provide every student and family with robust wraparound services and extracurricular activities."
     },
-    "environment": {
-      "title": "Environmental Justice",
-      "desc": "Hold toxic polluters accountable. No more sacrifice zones in Black and Brown neighborhoods. Clean air, clean water for everyone, not just the wealthy."
+    "healthcare": {
+      "title": "Healthcare for All",
+      "desc": "Our resources are not endless and not one more dollar should go to greedy middlemen who do not improve the health of our people. We must pass Medicare for All, and exponentially grow our investment in the National Institutes of Health (NIH) to put more of our most curious people spending their time eliminating and curing premature causes of death or chronic illnesses like heart disease, cancer, and mental illness."
+    },
+    "immigration": {
+      "title": "Abolish ICE, Create a Pathway to Citizenship for Our Neighbors",
+      "desc": "No human being is illegal. Abolish ICE and end the militarized deportation machine terrorizing our communities. Ban ICE from operating on public property, shut down detention centers, and end the surveillance state targeting immigrant families. Create a clear, humane pathway to citizenship for the millions of neighbors who build our communities every day."
+    },
+    "foreignpolicy": {
+      "title": "Foreign Policy",
+      "desc": "No taxpayer dollars for apartheid and genocide. End all military aid and weapons shipments sustaining the occupation of Palestine and the genocide of its people. End the illegal, unauthorized war with Iran. Prohibit investment in Israel Bonds and contracts with corporations manufacturing weapons used for ethnic cleansing. Demand an end to U.S. imperialism and redirect those billions toward our communities at home."
     },
     "cta": "Read the Full Platform"
   },
@@ -96,25 +106,19 @@
     "hero_headline": "A Platform for Working People, Not the Billionaire Class.",
     "hero_sub": "Byron is fighting to guarantee a baseline standard of dignity for working families, seniors, teachers, and marginalized groups across IL-04.",
     "grid_label": "The Issues",
-    "grid_headline": "Where Byron Stands",
+    "grid_headline": "Where everybody has a home, and everybody eats.",
     "housing_title": "Housing as a Human Right",
-    "housing_1": "Fight for rent stabilization and lift the ban on rent control in Illinois.",
-    "housing_2": "Protect seniors and longtime residents from predatory developers and property tax spikes.",
-    "housing_3": "Expand the Low Income Housing Trust Fund to be accessible for undocumented residents, as Byron successfully advocated for in Chicago.",
-    "housing_4": "Continue developing community-driven affordable housing, like the 280+ unit site at 18th and Peoria.",
-    "economic_title": "Economic Populism & Labor Rights",
-    "economic_1": "Implement a LaSalle Street tax to ensure the wealthiest financial institutions pay their fair share, ending the subsidy paid by working families.",
-    "economic_2": "Establish a public bank to give small businesses and residents fair access to credit.",
-    "economic_3": "Stand with unionizing workers, including direct support for Amazon distribution workers demanding humane conditions.",
-    "education_title": "Fully Funded Public Education",
-    "education_1": "Stand uncompromisingly with the Chicago Teachers Union and fight for a fully funded, democratically elected school board.",
-    "education_2": "Bring federal dollars to neighborhood schools, expanding on Byron's record of securing over $1 million in infrastructure improvements for schools like Benito Juarez Community Academy.",
-    "environment_title": "Environmental Justice",
-    "environment_1": "Hold toxic polluters accountable for environmental racism in working-class communities, continuing the fight against disasters like the Hilco implosion and MAT Asphalt.",
-    "environment_2": "Reopen the Department of the Environment to institutionalize climate change resiliency and address public health crises like asthma and heart disease.",
-    "safety_title": "Public Safety & Human Rights",
-    "safety_1": "Implement community-driven, block-by-block interventions to address the root causes of violence, rather than relying on failed status-quo models.",
-    "safety_2": "Ensure Chicago remains a reproductive health sanctuary city and expand funding for LGBTQIA+ inclusive social services.",
+    "housing_desc": "Our country can and must provide dignified and safe housing for every veteran and neighbor who needs a helping hand. National tenant bill of rights and expand social housing developments to lower the rent and lower the cost of buying a home.",
+    "economic_title": "An Economy Putting People and Planet First",
+    "economic_desc": "Tax the billionaires and invest our resources in creating jobs that bring sustainable union jobs for every worker in our communities. Raise the minimum wage to $30/hour. No bailouts for banks or tech bubbles. Investments in supporting local entrepreneurs that form the backbone of our economy across IL-04. Civilian climate corps jobs to invest in green energy projects, expansion of natural and recreational spaces, and resilience around storms, floods, heatwaves, and disasters in our communities.",
+    "education_title": "Literacy, Curiosity, Creativity, and Inspiration Now",
+    "education_desc": "Every student, 0 to 100, deserves the opportunity to be inspired, pursue their curiosity, nurture their creativity, and expand their literacy. Fight to restore the U.S. Department of Education and the civil rights benefits for all learners. Invest in fully funded public education based on student need and provide every student and family with robust wraparound services and extracurricular activities.",
+    "healthcare_title": "Healthcare for All",
+    "healthcare_desc": "Our resources are not endless and not one more dollar should go to greedy middlemen who do not improve the health of our people. We must pass Medicare for All, and exponentially grow our investment in the National Institutes of Health (NIH) to put more of our most curious people spending their time eliminating and curing premature causes of death or chronic illnesses like heart disease, cancer, and mental illness.",
+    "immigration_title": "Abolish ICE, Create a Pathway to Citizenship for Our Neighbors",
+    "immigration_desc": "No human being is illegal. Abolish ICE and end the militarized deportation machine terrorizing our communities. Ban ICE from operating on public property, shut down detention centers like the Wyatt Detention Center, and end the sale of surveillance data from Flock, Ring, and other systems to law enforcement. Create a clear, humane pathway to citizenship for the millions of neighbors who build our communities every day. Enforce accountability for police officers and demilitarize law enforcement.",
+    "foreignpolicy_title": "Foreign Policy",
+    "foreignpolicy_desc": "No taxpayer dollars for apartheid and genocide. End all military aid and weapons shipments sustaining the occupation of Palestine and the genocide of its people. End the illegal, unauthorized war with Iran. Prohibit state investment in Israel Bonds and contracting with any corporation that manufactures or ships weapons or technology sustaining genocide, apartheid, ethnic cleansing, and the occupation of Palestine. Demand an end to U.S. imperialism and redirect those billions toward our communities at home.",
     "unbought_label": "The Democratic Socialist Commitment",
     "unbought_headline": "Unbought Representation.",
     "unbought_text": "Byron completely rejects corporate PAC money and contributions from large real estate developers. He only answers to the working-class coalition of the 4th District. His campaign is funded by small-dollar donations from neighbors, teachers, union members, and working families. This is what it means to be truly independent.",

@@ -7,36 +7,46 @@
     "donate": "Donar"
   },
   "hero": {
-    "headline": "Sin Comprar. Sin Jefe. Sin Ungir.",
-    "subheadline": "La democracia no se puede preservar a nivel nacional si se subvierte localmente. Únete a la coalición multirracial de la clase trabajadora para recuperar el IL-04.",
+    "headline": "Todos tienen un hogar, y todos comen.",
+    "subheadline": "Byron Sigcho Lopez es esposo, padre de trillizos, maestro de matemáticas y economista, inmigrante naturalizado y concejal socialista democrático elegido por dos mandatos en el barrio de Pilsen en Chicago.",
     "cta": "Únete a la Campaña de Firmas",
-    "context": "Cuando el Rep. García se retiró, los jefes del partido entregaron su puesto a su ex jefa de personal, quien necesitó solo 697 firmas. Como socialista democrático independiente respaldado por Chicago DSA, Byron debe recolectar más de 10,816 firmas válidas solo para aparecer en la boleta. Necesitamos tu ayuda para superar un sistema manipulado 15 a 1 contra los candidatos independientes."
+    "context": "¡La Elección Primaria Demócrata en el Distrito del Congreso IL-04 fue manipulada! El 17 de marzo, muchos de nuestros vecinos en todo Illinois tuvieron 5+ opciones en su boleta de la Primaria Demócrata. Los votantes de nuestro distrito solo tuvieron UNA porque el establishment político eligió en nuestro nombre. Byron necesita más de 10,816 firmas válidas de petición para aparecer en tu boleta el 3 de noviembre. ¡Necesitamos tu ayuda para superar un sistema amañado contra los candidatos sin comprar!"
   },
   "bio": {
     "label": "Conoce al Organizador",
-    "headline": "De Ecuador al Concejo Municipal: Una Vida de Lucha",
-    "p1": "Byron Sigcho-Lopez emigró solo desde Ecuador a los 17 años, trabajando para terminar sus estudios y convertirse en maestro de escuela pública en las mismas comunidades que luego serviría. Cuando la ciudad intentó cerrar 50 escuelas públicas en barrios negros y latinos, Byron no escribió una carta. Organizó.",
-    "p2": "Como Concejal del Distrito 25 y orgulloso socialista democrático respaldado por Chicago DSA, Byron ha enfrentado directamente al establishment político de Chicago: aprobando legislación contra el desplazamiento para proteger a las familias de Pilsen y La Villita, apoyando a los trabajadores en huelga y rechazando cada dólar de dinero corporativo de los PAC. Nunca ha sido comprado, y nunca lo será.",
+    "headline": "No nació aquí, pero siguió a su corazón a casa tan rápido como pudo.",
+    "p1": "Byron es un inmigrante que vino a los Estados Unidos solo cuando tenía 17 años. Su vida es un testimonio de lo que ocurre cuando los extraños se convierten en vecinos y familia.",
+    "p2": "Byron Sigcho Lopez es el único funcionario electo en esta carrera que ha entregado beneficios concretos para la gente trabajadora de Chicago, con un historial de construcción de coaliciones con cada vecino dispuesto a unirse para resolver los problemas que enfrentamos, juntos. Ha luchado valientemente contra la corrupción de la maquinaria política de Illinois, ayudando a desmantelar redes corruptas de escuelas charter que saquean el futuro de nuestros hijos, e incluso llevando la corrupción en el financiamiento de campañas hasta la Corte Suprema de Illinois.",
+    "p3": "Byron obtuvo su Licenciatura en Matemáticas y Administración de Empresas en Cumberland University y su Maestría en Economía en la Universidad de Illinois en Chicago.",
+    "p4": "Byron vive en el barrio de Pilsen con su esposa, Loreen, sus trillizos de 3 años, un perro y dos gatos.",
     "cta": "Lee la Historia Completa de Byron"
   },
   "platform": {
     "label": "La Plataforma",
-    "headline": "Una Agenda de la Clase Trabajadora para el IL-04",
+    "headline": "Donde todos tienen un hogar, y todos comen.",
     "housing": {
       "title": "La Vivienda como Derecho Humano",
-      "desc": "Detener el desplazamiento. Luchar por el control de rentas. Construir vivienda verdaderamente accesible, no condominios de lujo rebautizados como 'ingresos mixtos.'"
+      "desc": "Nuestro país puede y debe proporcionar vivienda digna y segura para cada veterano y vecino que necesite una mano. Carta nacional de derechos del inquilino y expansión de desarrollos de vivienda social para bajar el alquiler y el costo de comprar una casa."
     },
     "economic": {
-      "title": "Populismo Económico",
-      "desc": "Que los ricos paguen impuestos. Limitar los impuestos de propiedad para las familias trabajadoras. Acabar con el bienestar corporativo e invertir en los barrios que han sido abandonados por décadas."
+      "title": "Una Economía que Pone a las Personas y al Planeta Primero",
+      "desc": "Impuestos a los multimillonarios e invertir nuestros recursos en crear empleos sindicales sostenibles para cada trabajador en nuestras comunidades. Aumentar el salario mínimo a $30/hora. Sin rescates para bancos ni burbujas tecnológicas. Inversiones en apoyar a emprendedores locales en todo IL-04. Empleos del cuerpo civil climático para energía verde, espacios naturales y resiliencia comunitaria."
     },
-    "labor": {
-      "title": "Trabajo y Educación Pública",
-      "desc": "Con la CTU y cada sindicato que lucha por la dignidad. Financiar completamente las escuelas públicas. Detener la privatización que destruye las comunidades de la clase trabajadora."
+    "education": {
+      "title": "Alfabetización, Curiosidad, Creatividad e Inspiración Ahora",
+      "desc": "Cada estudiante, de 0 a 100, merece la oportunidad de ser inspirado, perseguir su curiosidad, nutrir su creatividad y expandir su alfabetización. Luchar por restaurar el Departamento de Educación de EE.UU. Invertir en educación pública completamente financiada y proporcionar a cada estudiante y familia servicios integrales y actividades extracurriculares."
     },
-    "environment": {
-      "title": "Justicia Ambiental",
-      "desc": "Responsabilizar a los contaminadores tóxicos. No más zonas de sacrificio en barrios negros y morenos. Aire limpio, agua limpia para todos, no solo para los ricos."
+    "healthcare": {
+      "title": "Salud para Todos",
+      "desc": "Nuestros recursos no son infinitos y ni un dólar más debería ir a intermediarios codiciosos que no mejoran la salud de nuestro pueblo. Debemos aprobar Medicare para Todos, y crecer exponencialmente nuestra inversión en los Institutos Nacionales de Salud (NIH) para poner a más de nuestras personas más curiosas dedicando su tiempo a eliminar y curar causas prematuras de muerte o enfermedades crónicas como enfermedades del corazón, cáncer y enfermedades mentales."
+    },
+    "immigration": {
+      "title": "Abolir ICE, Crear un Camino a la Ciudadanía para Nuestros Vecinos",
+      "desc": "Ningún ser humano es ilegal. Abolir ICE y terminar con la máquina de deportación militarizada que aterroriza a nuestras comunidades. Prohibir a ICE operar en propiedad pública, cerrar los centros de detención y acabar con el estado de vigilancia que persigue a las familias inmigrantes. Crear un camino claro y humano hacia la ciudadanía para los millones de vecinos que construyen nuestras comunidades cada día."
+    },
+    "foreignpolicy": {
+      "title": "Política Exterior",
+      "desc": "Ni un dólar de los contribuyentes para el apartheid y el genocidio. Terminar con toda la ayuda militar y los envíos de armas que sostienen la ocupación de Palestina y el genocidio de su pueblo. Poner fin a la guerra ilegal y no autorizada con Irán. Prohibir la inversión en Bonos de Israel y los contratos con corporaciones que fabrican armas usadas para la limpieza étnica. Exigir el fin del imperialismo estadounidense y redirigir esos miles de millones hacia nuestras comunidades."
     },
     "cta": "Lee la Plataforma Completa"
   },
@@ -96,25 +106,19 @@
     "hero_headline": "Una Plataforma para los Trabajadores, No para la Clase Multimillonaria.",
     "hero_sub": "Byron lucha por garantizar un estándar básico de dignidad para las familias trabajadoras, los mayores, los maestros y los grupos marginalizados del IL-04.",
     "grid_label": "Los Temas",
-    "grid_headline": "La Posición de Byron",
+    "grid_headline": "Donde todos tienen un hogar, y todos comen.",
     "housing_title": "La Vivienda como Derecho Humano",
-    "housing_1": "Luchar por la estabilización de rentas y eliminar la prohibición del control de rentas en Illinois.",
-    "housing_2": "Proteger a los mayores y residentes de largo plazo de desarrolladores depredadores y alzas en impuestos de propiedad.",
-    "housing_3": "Expandir el Fondo Fiduciario de Vivienda de Bajos Ingresos para que sea accesible a residentes indocumentados, como Byron logró exitosamente en Chicago.",
-    "housing_4": "Continuar desarrollando vivienda asequible impulsada por la comunidad, como el sitio de más de 280 unidades en 18th y Peoria.",
-    "economic_title": "Populismo Económico y Derechos Laborales",
-    "economic_1": "Implementar un impuesto de LaSalle Street para asegurar que las instituciones financieras más ricas paguen su parte justa, terminando el subsidio pagado por las familias trabajadoras.",
-    "economic_2": "Establecer un banco público para dar a las pequeñas empresas y residentes acceso justo al crédito.",
-    "economic_3": "Apoyar a los trabajadores que se sindicalizan, incluyendo apoyo directo a los trabajadores de distribución de Amazon que exigen condiciones humanas.",
-    "education_title": "Educación Pública con Financiamiento Completo",
-    "education_1": "Apoyar sin compromisos al Sindicato de Maestros de Chicago y luchar por una junta escolar completamente financiada y elegida democráticamente.",
-    "education_2": "Traer fondos federales a las escuelas del vecindario, expandiendo el récord de Byron de asegurar más de $1 millón en mejoras de infraestructura para escuelas como Benito Juarez Community Academy.",
-    "environment_title": "Justicia Ambiental",
-    "environment_1": "Responsabilizar a los contaminadores tóxicos por el racismo ambiental en comunidades de clase trabajadora, continuando la lucha contra desastres como la implosión de Hilco y MAT Asphalt.",
-    "environment_2": "Reabrir el Departamento de Medio Ambiente para institucionalizar la resiliencia al cambio climático y abordar crisis de salud pública como el asma y las enfermedades cardíacas.",
-    "safety_title": "Seguridad Pública y Derechos Humanos",
-    "safety_1": "Implementar intervenciones comunitarias cuadra por cuadra para abordar las causas fundamentales de la violencia, en lugar de depender de modelos fallidos del status quo.",
-    "safety_2": "Asegurar que Chicago siga siendo una ciudad santuario de salud reproductiva y expandir el financiamiento para servicios sociales inclusivos LGBTQIA+.",
+    "housing_desc": "Nuestro país puede y debe proporcionar vivienda digna y segura para cada veterano y vecino que necesite una mano. Carta nacional de derechos del inquilino y expansión de desarrollos de vivienda social para bajar el alquiler y el costo de comprar una casa.",
+    "economic_title": "Una Economía que Pone a las Personas y al Planeta Primero",
+    "economic_desc": "Impuestos a los multimillonarios e invertir nuestros recursos en crear empleos que traigan trabajos sindicales sostenibles para cada trabajador en nuestras comunidades. Aumentar el salario mínimo a $30/hora. Sin rescates para bancos ni burbujas tecnológicas. Inversiones en apoyar a emprendedores locales que forman la columna vertebral de nuestra economía en todo IL-04. Empleos del cuerpo civil climático para invertir en proyectos de energía verde, expansión de espacios naturales y recreativos, y resiliencia ante tormentas, inundaciones, olas de calor y desastres en nuestras comunidades.",
+    "education_title": "Alfabetización, Curiosidad, Creatividad e Inspiración Ahora",
+    "education_desc": "Cada estudiante, de 0 a 100, merece la oportunidad de ser inspirado, perseguir su curiosidad, nutrir su creatividad y expandir su alfabetización. Luchar por restaurar el Departamento de Educación de EE.UU. y los beneficios de derechos civiles para todos los estudiantes. Invertir en educación pública completamente financiada basada en la necesidad del estudiante y proporcionar a cada estudiante y familia servicios integrales y actividades extracurriculares.",
+    "healthcare_title": "Salud para Todos",
+    "healthcare_desc": "Nuestros recursos no son infinitos y ni un dólar más debería ir a intermediarios codiciosos que no mejoran la salud de nuestro pueblo. Debemos aprobar Medicare para Todos, y crecer exponencialmente nuestra inversión en los Institutos Nacionales de Salud (NIH) para poner a más de nuestras personas más curiosas dedicando su tiempo a eliminar y curar causas prematuras de muerte o enfermedades crónicas como enfermedades del corazón, cáncer y enfermedades mentales.",
+    "immigration_title": "Abolir ICE, Crear un Camino a la Ciudadanía para Nuestros Vecinos",
+    "immigration_desc": "Ningún ser humano es ilegal. Abolir ICE y terminar con la máquina de deportación militarizada que aterroriza a nuestras comunidades. Prohibir a ICE operar en propiedad pública, cerrar centros de detención como el Centro de Detención Wyatt y acabar con la venta de datos de vigilancia de Flock, Ring y otros sistemas a las fuerzas del orden. Crear un camino claro y humano hacia la ciudadanía para los millones de vecinos que construyen nuestras comunidades cada día. Exigir responsabilidad a los oficiales de policía y desmilitarizar las fuerzas del orden.",
+    "foreignpolicy_title": "Política Exterior",
+    "foreignpolicy_desc": "Ni un dólar de los contribuyentes para el apartheid y el genocidio. Terminar con toda la ayuda militar y los envíos de armas que sostienen la ocupación de Palestina y el genocidio de su pueblo. Poner fin a la guerra ilegal y no autorizada con Irán. Prohibir la inversión estatal en Bonos de Israel y contratar con cualquier corporación que fabrique o envíe armas o tecnología que sostenga el genocidio, el apartheid, la limpieza étnica y la ocupación de Palestina. Exigir el fin del imperialismo estadounidense y redirigir esos miles de millones hacia nuestras comunidades.",
     "unbought_label": "El Compromiso Socialista Democrático",
     "unbought_headline": "Representación sin Comprar.",
     "unbought_text": "Byron rechaza completamente el dinero de PAC corporativos y las contribuciones de grandes desarrolladores inmobiliarios. Solo responde a la coalición de clase trabajadora del 4to Distrito. Su campaña es financiada por pequeñas donaciones de vecinos, maestros, miembros sindicales y familias trabajadoras. Esto es lo que significa ser verdaderamente independiente.",

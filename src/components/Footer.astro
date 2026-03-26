@@ -30,18 +30,28 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <!-- Newsletter Signup -->
         <div class="footer-signup">
           <h3 class="footer-signup-headline" data-i18n="footer.signup_headline">Join the Movement</h3>
-          <form class="signup-form" onsubmit="event.preventDefault();">
+          <form 
+            action="https://docs.google.com/forms/d/e/1FAIpQLSfkUx5rKV3hjNxaWdEsMBUdf5zK0Qt1iD8XRkpdJ0mpxAf2Wg/formResponse" 
+            method="POST" 
+            target="hidden_iframe" 
+            class="signup-form"
+            id="footer-signup-form"
+          >
             <input 
               type="email" 
+              name="entry.444051675"
               class="signup-input" 
               data-i18n="footer.signup_placeholder"
               placeholder="Your email address"
               aria-label="Email address"
+              required
             />
             <button type="submit" class="btn btn-orange signup-btn" data-i18n="footer.signup_button">
               Sign Up
             </button>
           </form>
+          <p class="signup-success" id="signup-success">Thanks for joining the movement! ✊</p>
+          <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
         </div>
 
         <!-- Quick Links -->
@@ -81,6 +91,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                 <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.75a8.23 8.23 0 0 0 4.76 1.51V6.82a4.83 4.83 0 0 1-1-.13z"/>
               </svg>
             </a>
+            <a href="https://www.youtube.com/@BSLforCongress" class="social-link" aria-label="YouTube" target="_blank" rel="noopener">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+            </a>
           </div>
         </div>
       </div>
@@ -93,6 +108,25 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
   </div>
 </footer>
+
+<script>
+  const form = document.getElementById('footer-signup-form') as HTMLFormElement | null;
+  const successMsg = document.getElementById('signup-success');
+
+  if (form) {
+    form.addEventListener('submit', function () {
+      setTimeout(function () {
+        form.reset();
+        if (successMsg) {
+          successMsg.classList.add('visible');
+          setTimeout(function () {
+            successMsg.classList.remove('visible');
+          }, 4000);
+        }
+      }, 500);
+    });
+  }
+</script>
 
 <style>
   .site-footer {
@@ -221,6 +255,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   .signup-input:focus {
     border-color: var(--orange);
+  }
+
+  .signup-success {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--gold-soft);
+    margin-top: var(--space-sm);
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.4s ease, max-height 0.4s ease, margin-top 0.4s ease;
+  }
+
+  .signup-success.visible {
+    opacity: 1;
+    max-height: 40px;
   }
 
   .signup-btn {
