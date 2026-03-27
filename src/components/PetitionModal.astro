@@ -18,7 +18,7 @@
     </div>
 
     <form 
-      action="https://docs.google.com/forms/d/e/PLACEHOLDER_PETITION_FORM/formResponse" 
+      action="https://docs.google.com/forms/d/e/1FAIpQLSeYiVz1TB2tsAFdh1OakH62dM7XGCNBnaJz57Mn1beP0dqE6A/formResponse" 
       method="POST" 
       target="petition_iframe" 
       class="petition-form"
@@ -26,23 +26,23 @@
     >
       <!-- Contact Fields -->
       <div class="petition-fields">
-        <input type="text" name="entry.PLACEHOLDER" class="petition-input" placeholder="Your name" data-i18n-placeholder="petition_modal.name" aria-label="Name" required />
-        <input type="email" name="entry.PLACEHOLDER" class="petition-input" placeholder="Email address" data-i18n-placeholder="petition_modal.email" aria-label="Email" required />
-        <input type="tel" name="entry.PLACEHOLDER" class="petition-input" placeholder="Phone number" data-i18n-placeholder="petition_modal.phone" aria-label="Phone" required />
-        <input type="text" name="entry.PLACEHOLDER" class="petition-input" placeholder="City" data-i18n-placeholder="petition_modal.city" aria-label="City" required />
-        <input type="text" name="entry.PLACEHOLDER" class="petition-input" placeholder="Zip code" data-i18n-placeholder="petition_modal.zip" aria-label="Zip code" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" required />
+        <input type="text" name="entry.1710222697" class="petition-input" placeholder="Your name" data-i18n-placeholder="petition_modal.name" aria-label="Name" required />
+        <input type="email" name="entry.1317557731" class="petition-input" placeholder="Email address" data-i18n-placeholder="petition_modal.email" aria-label="Email" required />
+        <input type="tel" name="entry.2114998122" class="petition-input" placeholder="Phone number" data-i18n-placeholder="petition_modal.phone" aria-label="Phone" required />
+        <input type="text" name="entry.1117716304" class="petition-input" placeholder="City" data-i18n-placeholder="petition_modal.city" aria-label="City" required />
+        <input type="text" name="entry.1494610555" class="petition-input" placeholder="Zip code" data-i18n-placeholder="petition_modal.zip" aria-label="Zip code" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" required />
       </div>
 
       <!-- Interest Checkboxes -->
       <div class="petition-section">
         <p class="petition-section-label" data-i18n="petition_modal.interest_label">I want to:</p>
         <label class="petition-checkbox">
-          <input type="checkbox" name="entry.PLACEHOLDER" value="sign_petition" />
+          <input type="checkbox" name="entry.854369982" value="Sign Byron's petition" />
           <span class="checkbox-mark"></span>
           <span data-i18n="petition_modal.sign_petition">Sign Byron's petition</span>
         </label>
         <label class="petition-checkbox">
-          <input type="checkbox" name="entry.PLACEHOLDER" value="volunteer_signatures" />
+          <input type="checkbox" name="entry.854369982" value="Volunteer to help collect signatures" />
           <span class="checkbox-mark"></span>
           <span data-i18n="petition_modal.volunteer_signatures">Volunteer to help collect signatures</span>
         </label>
@@ -53,22 +53,22 @@
         <p class="petition-section-label" data-i18n="petition_modal.activities_label">I'm comfortable with:</p>
         <div class="petition-activities">
           <label class="petition-checkbox">
-            <input type="checkbox" name="entry.PLACEHOLDER" value="door_knocking" />
+            <input type="checkbox" name="entry.10606465" value="Knocking on doors" />
             <span class="checkbox-mark"></span>
             <span data-i18n="petition_modal.door_knocking">Knocking on doors</span>
           </label>
           <label class="petition-checkbox">
-            <input type="checkbox" name="entry.PLACEHOLDER" value="community_events" />
+            <input type="checkbox" name="entry.10606465" value="Getting signatures at community events" />
             <span class="checkbox-mark"></span>
             <span data-i18n="petition_modal.community_events">Getting signatures at community events</span>
           </label>
           <label class="petition-checkbox">
-            <input type="checkbox" name="entry.PLACEHOLDER" value="phone_banking" />
+            <input type="checkbox" name="entry.10606465" value="Phone banking" />
             <span class="checkbox-mark"></span>
             <span data-i18n="petition_modal.phone_banking">Phone banking</span>
           </label>
           <label class="petition-checkbox">
-            <input type="checkbox" name="entry.PLACEHOLDER" value="social_media" />
+            <input type="checkbox" name="entry.10606465" value="Posting on social media" />
             <span class="checkbox-mark"></span>
             <span data-i18n="petition_modal.social_media">Posting on social media</span>
           </label>
@@ -386,16 +386,16 @@
     font-family: var(--font-body);
     font-size: var(--text-lg);
     color: var(--gold-soft);
-    padding: var(--space-2xl) 0;
+    padding: var(--space-3xl) var(--space-lg);
     opacity: 0;
     max-height: 0;
     overflow: hidden;
-    transition: opacity 0.4s ease, max-height 0.4s ease;
+    transition: opacity 0.4s ease, max-height 0.4s ease, padding 0.4s ease;
   }
 
   .petition-success.visible {
     opacity: 1;
-    max-height: 100px;
+    max-height: 200px;
   }
 
   /* ── Responsive ── */
