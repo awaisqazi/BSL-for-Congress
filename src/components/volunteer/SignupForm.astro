@@ -12,35 +12,35 @@
         </p>
       </div>
 
-      <form class="signup-form animate-in" id="volunteer-form" action="#" method="POST">
+      <form class="signup-form animate-in" id="volunteer-form" action="https://docs.google.com/forms/d/e/1FAIpQLSeUKnQVp4auTqHdFZeDrGlAOYAjmOO0sE19Xm11Pee2ayuuWQ/formResponse" method="POST" target="hidden_iframe_volunteer">
         <div class="form-row">
           <div class="form-group">
             <label for="first-name" data-i18n="volunteer.label_first">First Name *</label>
-            <input type="text" id="first-name" name="first_name" required />
+            <input type="text" id="first-name" name="entry.661274230" required />
           </div>
           <div class="form-group">
             <label for="last-name" data-i18n="volunteer.label_last">Last Name *</label>
-            <input type="text" id="last-name" name="last_name" required />
+            <input type="text" id="last-name" name="entry.449873967" required />
           </div>
         </div>
 
         <div class="form-group">
           <label for="email" data-i18n="volunteer.label_email">Email *</label>
-          <input type="email" id="email" name="email" required />
+          <input type="email" id="email" name="entry.378191335" required />
         </div>
 
         <div class="form-row form-row-3">
           <div class="form-group">
             <label for="phone" data-i18n="volunteer.label_phone">Mobile Phone *</label>
-            <input type="tel" id="phone" name="phone" required />
+            <input type="tel" id="phone" name="entry.763325091" required />
           </div>
           <div class="form-group">
             <label for="city" data-i18n="volunteer.label_city">City *</label>
-            <input type="text" id="city" name="city" required />
+            <input type="text" id="city" name="entry.113002180" required />
           </div>
           <div class="form-group">
             <label for="zip" data-i18n="volunteer.label_zip">ZIP Code *</label>
-            <input type="text" id="zip" name="zip_code" pattern="[0-9]{5}" required />
+            <input type="text" id="zip" name="entry.1587719447" pattern="[0-9]{5}" maxlength="5" required />
           </div>
         </div>
 
@@ -48,57 +48,57 @@
           <legend data-i18n="volunteer.help_legend">How would you like to help?</legend>
 
           <label class="checkbox-label">
-            <input type="checkbox" name="help[]" value="petition" />
+            <input type="checkbox" name="entry.1014527396" value="Collect Petition Signatures" />
             <span class="checkbox-text" data-i18n="volunteer.check_petition">Collect Petition Signatures</span>
           </label>
 
           <label class="checkbox-label">
-            <input type="checkbox" name="help[]" value="canvass" />
+            <input type="checkbox" name="entry.1014527396" value="Knock on Doors" />
             <span class="checkbox-text" data-i18n="volunteer.check_canvass">Knock on Doors</span>
           </label>
 
           <label class="checkbox-label">
-            <input type="checkbox" name="help[]" value="phone" />
+            <input type="checkbox" name="entry.1014527396" value="Phone/Text Banking" />
             <span class="checkbox-text" data-i18n="volunteer.check_phone">Phone/Text Banking</span>
           </label>
 
           <label class="checkbox-label">
-            <input type="checkbox" name="help[]" value="host" />
+            <input type="checkbox" name="entry.1014527396" value="Host a Meet & Greet" />
             <span class="checkbox-text" data-i18n="volunteer.check_host">Host a Meet & Greet</span>
           </label>
 
           <label class="checkbox-label">
-            <input type="checkbox" name="help[]" value="bilingual" />
+            <input type="checkbox" name="entry.1014527396" value="Bilingual Outreach (I speak Spanish / Yo hablo español)" />
             <span class="checkbox-text" data-i18n="volunteer.check_bilingual">Bilingual Outreach (I speak Spanish / Yo hablo español)</span>
           </label>
 
           <label class="checkbox-label">
-            <input type="checkbox" name="help[]" value="social_media" />
+            <input type="checkbox" name="entry.1014527396" value="Post on Social Media" />
             <span class="checkbox-text" data-i18n="volunteer.check_social_media">Post on Social Media</span>
           </label>
 
           <label class="checkbox-label">
-            <input type="checkbox" name="help[]" value="precinct_captain" />
+            <input type="checkbox" name="entry.1014527396" value="Precinct Captain / Volunteer" />
             <span class="checkbox-text" data-i18n="volunteer.check_precinct_captain">Precinct Captain / Volunteer</span>
           </label>
 
           <label class="checkbox-label">
-            <input type="checkbox" name="help[]" value="hs_ambassador" />
+            <input type="checkbox" name="entry.1014527396" value="High School Ambassador" />
             <span class="checkbox-text" data-i18n="volunteer.check_hs_ambassador">High School Ambassador</span>
           </label>
 
           <label class="checkbox-label">
-            <input type="checkbox" name="help[]" value="college_captain" />
+            <input type="checkbox" name="entry.1014527396" value="College Campus Captain / Volunteer" />
             <span class="checkbox-text" data-i18n="volunteer.check_college_captain">College Campus Captain / Volunteer</span>
           </label>
 
           <label class="checkbox-label">
-            <input type="checkbox" name="help[]" value="marketing" />
+            <input type="checkbox" name="entry.1014527396" value="Help Create Marketing Collateral (Graphic Design)" />
             <span class="checkbox-text" data-i18n="volunteer.check_marketing">Help Create Marketing Collateral (Graphic Design)</span>
           </label>
 
           <label class="checkbox-label">
-            <input type="checkbox" name="help[]" value="videos" />
+            <input type="checkbox" name="entry.1014527396" value="Help Create Campaign Videos (Videography / Video Editing)" />
             <span class="checkbox-text" data-i18n="volunteer.check_videos">Help Create Campaign Videos (Videography / Video Editing)</span>
           </label>
         </fieldset>
@@ -110,10 +110,32 @@
         <button type="submit" class="btn btn-orange btn-massive form-submit" data-i18n="volunteer.submit">
           Join the Movement
         </button>
+        
+        <p class="volunteer-success" id="volunteer-success" data-i18n="volunteer.success_msg">Thank you for stepping up! We will be in touch soon. ✊</p>
+        <iframe name="hidden_iframe_volunteer" id="hidden_iframe_volunteer" style="display:none;"></iframe>
       </form>
     </div>
   </div>
 </section>
+
+<script>
+  const form = document.getElementById('volunteer-form') as HTMLFormElement | null;
+  const successMsg = document.getElementById('volunteer-success');
+
+  if (form) {
+    form.addEventListener('submit', function () {
+      setTimeout(function () {
+        form.reset();
+        if (successMsg) {
+          successMsg.classList.add('visible');
+          setTimeout(function () {
+            successMsg.classList.remove('visible');
+          }, 5000);
+        }
+      }, 500);
+    });
+  }
+</script>
 
 <!-- Fund the Fight CTA -->
 <section class="volunteer-cta-block">
@@ -268,6 +290,25 @@
     padding: 18px 32px !important;
     cursor: pointer;
     border: none;
+  }
+
+  /* Success Message */
+  .volunteer-success {
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--blue);
+    margin-top: 0;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.4s ease, max-height 0.4s ease, margin-top 0.4s ease;
+  }
+
+  .volunteer-success.visible {
+    opacity: 1;
+    max-height: 80px;
+    margin-top: var(--space-md);
   }
 
   /* CTA Block */

@@ -233,6 +233,7 @@
     "label_city": "Ciudad *",
     "compliance": "Al enviar, aceptas recibir actualizaciones periódicas de la campaña por SMS. Pueden aplicar tarifas de mensajes y datos. Envía STOP para cancelar.",
     "submit": "Únete al Movimiento",
+    "success_msg": "¡Gracias por dar el paso! Nos pondremos en contacto pronto. ✊",
     "cta_headline": "¿No Puedes Ser Voluntario Hoy? Financia la Lucha.",
     "cta_text": "Cada dólar ayuda a comprar portapapeles, literatura y herramientas digitales para el ejército de voluntarios. Esta campaña es completamente independiente y financiada por personas trabajadoras como tú.",
     "cta_donate": "Contribuye $27"

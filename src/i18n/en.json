@@ -233,6 +233,7 @@
     "label_city": "City *",
     "compliance": "By submitting, you agree to receive periodic campaign updates via SMS. Message and data rates may apply. Text STOP to unsubscribe.",
     "submit": "Join the Movement",
+    "success_msg": "Thank you for stepping up! We will be in touch soon. ✊",
     "cta_headline": "Can't Volunteer Today? Fund the Fight.",
     "cta_text": "Every dollar helps buy clipboards, literature, and digital tools for the volunteer army. This campaign is entirely unbought and funded by working people like you.",
     "cta_donate": "Chip in $27"
