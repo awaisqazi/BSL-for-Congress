@@ -61,6 +61,10 @@
     "ticker_text": "Donación promedio: $27. Sin dinero de PAC corporativos. Nunca.",
     "signup_headline": "Únete al Movimiento",
     "signup_placeholder": "Tu correo electrónico",
+    "signup_name": "Tu nombre",
+    "signup_phone": "Número de teléfono",
+    "signup_zip": "Código postal",
+    "signup_city": "Ciudad",
     "signup_button": "Inscríbete",
     "paid_for": "PAGADO POR BYRON SIGCHO LOPEZ PARA EL CONGRESO",
     "copyright": "© 2026 Byron Sigcho Lopez para el Congreso. Todos los derechos reservados."

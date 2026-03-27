@@ -37,15 +37,53 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             class="signup-form"
             id="footer-signup-form"
           >
-            <input 
-              type="email" 
-              name="entry.444051675"
-              class="signup-input" 
-              data-i18n="footer.signup_placeholder"
-              placeholder="Your email address"
-              aria-label="Email address"
-              required
-            />
+            <div class="signup-fields">
+              <input 
+                type="text" 
+                name="entry.PLACEHOLDER_NAME"
+                class="signup-input" 
+                placeholder="Your name"
+                data-i18n-placeholder="footer.signup_name"
+                aria-label="Name"
+                required
+              />
+              <input 
+                type="email" 
+                name="entry.444051675"
+                class="signup-input" 
+                placeholder="Your email address"
+                data-i18n-placeholder="footer.signup_placeholder"
+                aria-label="Email address"
+                required
+              />
+              <input 
+                type="tel" 
+                name="entry.PLACEHOLDER_PHONE"
+                class="signup-input" 
+                placeholder="Phone number"
+                data-i18n-placeholder="footer.signup_phone"
+                aria-label="Phone number"
+              />
+              <input 
+                type="text" 
+                name="entry.PLACEHOLDER_CITY"
+                class="signup-input" 
+                placeholder="City"
+                data-i18n-placeholder="footer.signup_city"
+                aria-label="City"
+              />
+              <input 
+                type="text" 
+                name="entry.PLACEHOLDER_ZIP"
+                class="signup-input" 
+                placeholder="Zip code"
+                data-i18n-placeholder="footer.signup_zip"
+                aria-label="Zip code"
+                inputmode="numeric"
+                pattern="[0-9]{5}"
+                maxlength="5"
+              />
+            </div>
             <button type="submit" class="btn btn-orange signup-btn" data-i18n="footer.signup_button">
               Sign Up
             </button>
@@ -235,14 +273,34 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   .signup-form {
     display: flex;
+    flex-direction: column;
     gap: var(--space-sm);
   }
 
+  .signup-fields {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: var(--space-sm);
+  }
+
+  /* Row 1: Name + Email (3 cols each) */
+  .signup-fields input:nth-child(1),
+  .signup-fields input:nth-child(2) {
+    grid-column: span 3;
+  }
+
+  /* Row 2: Phone + City + Zip (2 cols each) */
+  .signup-fields input:nth-child(3),
+  .signup-fields input:nth-child(4),
+  .signup-fields input:nth-child(5) {
+    grid-column: span 2;
+  }
+
   .signup-input {
-    flex: 1;
-    padding: 14px 18px;
+    width: 100%;
+    padding: 12px 16px;
     font-family: var(--font-body);
-    font-size: var(--text-base);
+    font-size: var(--text-sm);
     border: 2px solid rgba(251, 226, 186, 0.2);
     border-radius: var(--radius-md);
     background: rgba(255,255,255,0.08);
@@ -279,7 +337,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     animation: none !important;
     font-size: var(--text-sm) !important;
     padding: 14px 24px !important;
-    flex-shrink: 0;
+    width: 100%;
   }
 
   /* Links */
@@ -397,8 +455,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       text-align: center;
     }
 
-    .signup-form {
-      flex-direction: column;
+    .signup-fields {
+      grid-template-columns: 1fr;
+    }
+
+    .signup-fields input {
+      grid-column: span 1 !important;
     }
   }
 </style>
