@@ -41,14 +41,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         The Democratic Primary Election in IL-04's Congressional District was rigged! On March 17th, many of our neighbors across Illinois had 5+ choices on their Democratic Primary ballot. Voters in our district only had ONE because the political establishment chose on our behalf. Byron needs over 10,816 valid petition signatures in order to appear on your ballot on November 3rd. We need your help to overcome a system rigged against unbought candidates!
       </p>
 
-      <!-- Scroll indicator (inside content overlay so it fades with it) -->
-      <div class="scroll-indicator">
-        <div class="scroll-arrow">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 5v14M5 12l7 7 7-7"/>
-          </svg>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -58,7 +50,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <path d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
       <path d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
     </svg>
-    <svg class="sound-icon sound-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <svg class="sound-icon sound-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
       <path d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
       <path d="M15.536 8.464a5 5 0 010 7.072"/>
       <path d="M18.364 5.636a9 9 0 010 12.728"/>
@@ -84,8 +76,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       if (isMuted) {
         // UNMUTE: fade out overlays, switch iframe to controls + unmute, resize to fit
         isMuted = false;
-        iconOff?.classList.add('hidden');
-        iconOn?.classList.remove('hidden');
+        if (iconOff) iconOff.style.display = 'none';
+        if (iconOn) iconOn.style.display = 'block';
         if (label) label.textContent = 'Return to Page';
 
         contentOverlay?.classList.add('faded-out');
@@ -101,8 +93,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       } else {
         // MUTE: restore overlays, switch iframe back to muted bg mode
         isMuted = true;
-        iconOff?.classList.remove('hidden');
-        iconOn?.classList.add('hidden');
+        if (iconOff) iconOff.style.display = 'block';
+        if (iconOn) iconOn.style.display = 'none';
         if (label) label.textContent = 'Watch with Sound';
 
         contentOverlay?.classList.remove('faded-out');
@@ -311,15 +303,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
   }
 
-  .sound-icon-on {
+  .sound-icon {
     display: none;
+  }
+
+  .sound-icon-off {
+    display: block;
   }
 
   .sound-icon.hidden {
-    display: none;
+    display: none !important;
   }
 
-  .sound-icon:not(.hidden) {
+  .sound-icon:not(.hidden).sound-icon-on {
     display: block;
   }
 
