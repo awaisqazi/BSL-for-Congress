@@ -345,27 +345,45 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
 
     .hero-headline {
-      font-size: var(--text-4xl);
+      font-size: clamp(1.8rem, 8vw, 2.5rem);
+    }
+
+    .hero-subheadline {
+      font-size: var(--text-sm);
+      line-height: 1.4;
     }
 
     .hero-cta {
-      font-size: var(--text-lg) !important;
-      padding: var(--space-md) var(--space-2xl) !important;
+      font-size: var(--text-base) !important;
+      padding: var(--space-sm) var(--space-xl) !important;
+    }
+
+    .hero-context {
+      font-size: var(--text-xs);
+      line-height: 1.5;
     }
 
     .hero-content {
-      padding: var(--space-xl) var(--space-md);
+      padding: var(--space-lg) var(--space-md);
+      gap: var(--space-md);
     }
 
     .hero-content-overlay {
-      padding-top: calc(var(--nav-height) + var(--space-md));
+      padding-top: calc(var(--nav-height) + var(--space-sm));
+      padding-bottom: var(--space-xl);
+    }
+
+    .hero-badge {
+      font-size: 9px;
+      padding: 4px 12px;
+      letter-spacing: 0.15em;
     }
 
     .hero-sound-btn {
-      bottom: var(--space-lg);
-      right: var(--space-md);
-      padding: 8px 14px;
-      font-size: 10px;
+      bottom: var(--space-md);
+      right: var(--space-sm);
+      padding: 6px 12px;
+      font-size: 9px;
     }
 
     .hero-video-container.video-watching {

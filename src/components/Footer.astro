@@ -102,8 +102,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <!-- Legal -->
       <div class="footer-legal">
-        <p class="legal-text" data-i18n="footer.paid_for">Paid for by Byron for IL-04. Not authorized by any candidate or candidate's committee.</p>
-        <p class="legal-copyright" data-i18n="footer.copyright">© 2026 Byron for IL-04. All rights reserved.</p>
+        <div class="paid-for-banner">
+          <span class="paid-for-text" data-i18n="footer.paid_for">PAID FOR BY BYRON SIGCHO LOPEZ FOR CONGRESS</span>
+        </div>
+        <p class="legal-copyright" data-i18n="footer.copyright">© 2026 Byron Sigcho Lopez for Congress. All rights reserved.</p>
       </div>
     </div>
   </div>
@@ -348,25 +350,35 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     transform: translateY(-2px);
   }
 
-  /* Legal */
+  /* Legal / Paid For Banner */
   .footer-legal {
     border-top: 1px solid rgba(251, 226, 186, 0.1);
     padding-top: var(--space-xl);
     display: flex;
     flex-direction: column;
-    gap: var(--space-xs);
+    align-items: center;
+    gap: var(--space-md);
     text-align: center;
   }
 
-  .legal-text {
-    font-size: var(--text-xs);
-    color: rgba(251, 226, 186, 0.5);
-    line-height: 1.5;
+  .paid-for-banner {
+    display: inline-block;
+    border: 2px solid rgba(251, 226, 186, 0.6);
+    padding: 12px 32px;
+  }
+
+  .paid-for-text {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--cream);
   }
 
   .legal-copyright {
     font-size: var(--text-xs);
-    color: rgba(251, 226, 186, 0.35);
+    color: rgba(251, 226, 186, 0.4);
   }
 
   /* Responsive */
