@@ -4,53 +4,61 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <section class="early-life section-padding" id="early-life">
   <div class="container">
-    <!-- Ecuador to Chicago -->
+    <!-- Ecuador Origins -->
     <div class="origin-grid">
       <div class="origin-text">
-        <span class="section-label animate-in" data-i18n="meet.origin_label">The Journey</span>
-        <h2 class="section-title animate-in" data-i18n="meet.origin_headline">From Ecuador to Chicago: Forged by Struggle</h2>
+        <h2 class="section-title animate-in" data-i18n="meet.origin_headline">Early Life</h2>
         
         <p class="early-paragraph animate-in" data-i18n="meet.origin_p1">
-          Byron Sigcho-Lopez was born and raised in Quito, Ecuador. At 17, after a tragic car accident left his mother in a coma, his family insisted he leave the country to finish his education. He arrived in Tennessee alone, knowing no one and speaking no English. A generous local family took him in and helped him pursue an education.
+          Byron first came to the United States alone as a teenager, settling in Tennessee and then moving to the Chicago area and Pilsen over 10 years ago. He was born and raised in Quito, Ecuador and came to the US following political instability in the country, and a tragic car accident that left his mother in a coma.
         </p>
         
         <p class="early-paragraph animate-in" data-i18n="meet.origin_p2">
-          Byron earned a soccer scholarship, received an honorable mention for the All-State Tennessee Soccer Team, and graduated from Cumberland University with a B.A. in Mathematics and Business Administration, earning the prestigious President's Award. After graduation, he moved to Chicago and settled in Pilsen to start his life.
+          Emergency services were nearly non-existent during this period, and his family's lives were saved by passing motorists who stopped, rescued his family from the wreckage, and drove them to the hospital. When his mother awoke from the coma, she insisted her eldest leave the country for his last year of high school.
+        </p>
+
+        <p class="early-paragraph animate-in" data-i18n="meet.origin_p3">
+          When Byron arrived in Tennessee at the age of 17, he knew no one in the country and did not speak English. He was taken in by a generous family who gave him a home and helped him pursue an education.
         </p>
       </div>
       
       <div class="origin-image-wrap animate-in">
         <img 
-          src={`${base}/images/early-life-placeholder.png`} 
-          alt="Byron teaching in a community classroom in Pilsen"
+          src={`${base}/images/byron-childhood-ecuador.jpg`} 
+          alt="Byron as a child with his family in Quito, Ecuador"
           class="origin-image"
           loading="lazy"
         />
+        <span class="image-caption" data-i18n="meet.caption_ecuador">Byron with his family in Quito, Ecuador</span>
       </div>
     </div>
 
-    <!-- Political Awakening -->
-    <div class="awakening-section">
-      <div class="awakening-divider">
-        <span class="awakening-year animate-in">2013</span>
-        <div class="awakening-line"></div>
-        <span class="awakening-tag animate-in" data-i18n="meet.awakening_tag">The Turning Point</span>
-      </div>
+    <!-- Education & Chicago Discovery -->
+    <div class="education-section">
+      <div class="education-grid">
+        <div class="education-image-wrap animate-in">
+          <img 
+            src={`${base}/images/byron-cumberland-graduation.jpg`} 
+            alt="Byron receiving the President's Award at Cumberland University graduation"
+            class="education-image"
+            loading="lazy"
+          />
+          <span class="image-caption" data-i18n="meet.caption_cumberland">Receiving the President's Award at Cumberland University</span>
+        </div>
+        
+        <div class="education-text">
+          <h3 class="education-headline animate-in" data-i18n="meet.education_headline">Soccer, Scholarship & the President's Award</h3>
+          
+          <p class="early-paragraph animate-in" data-i18n="meet.education_p1">
+            Byron first visited Chicago with his Tennessee family who had loved ones in the Chicago area. During this first trip, they brought Byron to Pilsen to have dinner at the Nuevo Leon restaurant.
+          </p>
 
-      <div class="awakening-grid">
-        <div class="awakening-text">
-          <h3 class="awakening-headline animate-in" data-i18n="meet.awakening_headline">The Political Awakening</h3>
-          
-          <p class="early-paragraph animate-in" data-i18n="meet.awakening_p1">
-            In Chicago, Byron became an adult education teacher at the University of Illinois at Chicago and founded UIC's Center for Literacy Spanish literacy program, making the GED accessible to Spanish-speaking immigrants. He also volunteered as a youth soccer coach at Pilsen Academy and earned his Master's in Economics from UIC.
+          <p class="early-paragraph animate-in" data-i18n="meet.education_p2">
+            After graduating high school in Tennessee, Byron was able to attend college on a soccer scholarship after receiving an honorable mention for the All-State Tennessee Soccer Team in high school. Byron graduated from Cumberland University with his Bachelors in Mathematics and Business Administration.
           </p>
-          
-          <p class="early-paragraph animate-in" data-i18n="meet.awakening_p2">
-            As a lead researcher at UIC, he collaborated with the Chicago Teachers Union to investigate the financial relationships between charter school networks, school funding, and Chicago's political elite. He organized alongside parents and teachers like Karen Lewis to fight for fully funded public schools.
-          </p>
-          
-          <p class="early-paragraph animate-in" data-i18n="meet.awakening_p3">
-            When Rahm Emanuel announced the closure of over 130 Chicago Public Schools, the largest mass school closing in American history, Byron stepped up. He joined the Pilsen Alliance and eventually served as its director for a decade, organizing community meetings, leading protests, and spearheading referendums to fight gentrification, displacement, and corruption.
+
+          <p class="early-paragraph animate-in" data-i18n="meet.education_p3">
+            He was also awarded the prestigious President's Award for his exceptional academic performance, and many contributions and successes in the school community during his time there. After graduation, Byron returned to Chicago and eventually settled in Pilsen to start his life.
           </p>
         </div>
       </div>
@@ -86,18 +94,33 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     margin-bottom: var(--space-4xl);
   }
 
-  .origin-image-wrap {
+  .origin-image-wrap,
+  .education-image-wrap {
     position: relative;
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-lg);
   }
 
-  .origin-image {
+  .origin-image,
+  .education-image {
     width: 100%;
     height: 420px;
     object-fit: cover;
     display: block;
+  }
+
+  .image-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 16px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    color: var(--cream);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-style: italic;
   }
 
   .early-paragraph {
@@ -111,46 +134,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     margin-bottom: 0;
   }
 
-  /* Awakening Divider */
-  .awakening-section {
+  /* Education Section */
+  .education-section {
     margin-top: var(--space-2xl);
   }
 
-  .awakening-divider {
-    display: flex;
+  .education-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4xl);
     align-items: center;
-    gap: var(--space-lg);
-    margin-bottom: var(--space-3xl);
   }
 
-  .awakening-year {
-    font-family: var(--font-display);
-    font-size: var(--text-4xl);
-    font-weight: 900;
-    color: var(--orange);
-    flex-shrink: 0;
-    line-height: 1;
-  }
-
-  .awakening-line {
-    flex: 1;
-    height: 3px;
-    background: linear-gradient(90deg, var(--orange), transparent);
-    border-radius: 2px;
-  }
-
-  .awakening-tag {
-    font-family: var(--font-display);
-    font-size: var(--text-sm);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--orange);
-    flex-shrink: 0;
-    white-space: nowrap;
-  }
-
-  .awakening-headline {
+  .education-headline {
     font-family: var(--font-display);
     font-size: var(--text-3xl);
     font-weight: 900;
@@ -161,23 +157,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   /* Responsive */
   @media (max-width: 768px) {
-    .origin-grid {
+    .origin-grid,
+    .education-grid {
       grid-template-columns: 1fr;
       gap: var(--space-2xl);
     }
 
-    .origin-image {
+    .origin-image,
+    .education-image {
       height: 280px;
     }
 
-    .awakening-divider {
-      flex-wrap: wrap;
-      gap: var(--space-sm);
-    }
-
-    .awakening-line {
-      order: 3;
-      width: 100%;
+    .education-image-wrap {
+      order: -1;
     }
   }
 </style>

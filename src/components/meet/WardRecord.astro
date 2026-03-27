@@ -10,83 +10,95 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
     <div class="container record-banner-content">
       <div class="record-banner-text">
-        <span class="record-banner-year animate-in">2019</span>
-        <h2 class="record-banner-headline animate-in" data-i18n="meet.record_headline">Taking on the Machine</h2>
+        <span class="record-banner-year animate-in">Making Illinois Home</span>
+        <h2 class="record-banner-headline animate-in" data-i18n="meet.record_headline">Teacher, Researcher, Organizer</h2>
         <p class="record-banner-desc animate-in" data-i18n="meet.record_desc">
-          In 2019, Byron ran a grassroots campaign to unseat the entrenched, corrupt Democratic machine in the 25th Ward. He committed to refuse political contributions from developers and big corporations, a commitment he has upheld to this day. Since taking office, he has transformed the ward office into one that serves all residents with care and dignity.
+          Byron became an adult education teacher at the University of Illinois at Chicago and founded the UIC Center for Literacy's Spanish literacy program, making the GED program at UIC much more widely accessible to Spanish speaking immigrants and residents. Seeing the need for wrap-around services, Byron also brought a case worker into the program to ensure his students' families received resources and needed services.
+        </p>
+        <p class="record-banner-desc animate-in" data-i18n="meet.record_desc2">
+          In addition to Byron's work as a teacher, he also volunteered as a youth soccer coach at Pilsen Academy. Byron earned a Master's Degree in Economics from UIC while also working as a lead researcher. He began collaborating alongside the Chicago Teachers Union in investigating the financial relationships between charter school networks like UNO, school funding, and Chicago's political elite, and organized with parents and teachers like Karen Lewis to fight for fully funded public schools.
         </p>
       </div>
       <div class="record-banner-image-wrap animate-in">
         <img 
-          src={`${base}/images/ward-record-placeholder.png`} 
-          alt="Community members at a Chicago City Council hearing"
+          src={`${base}/images/byron-school-rally.jpg`} 
+          alt="Byron speaking at a press conference demanding investment in neighborhood schools"
           class="record-banner-image"
           loading="lazy"
         />
+        <span class="record-image-caption" data-i18n="meet.caption_schools">Fighting for investment in our neighborhood schools</span>
       </div>
     </div>
   </div>
 
-  <!-- Victory Cards Grid -->
+  <!-- Milestones -->
   <div class="record-cards-section">
     <div class="container">
-      <span class="section-label animate-in" data-i18n="meet.victories_label" style="text-align:center;display:block;">The 25th Ward Record</span>
+      <span class="section-label animate-in" data-i18n="meet.milestones_label" style="text-align:center;display:block;">The Path to Public Service</span>
       <div class="record-grid">
-        <!-- Fighting Corruption -->
+        <!-- School Closings -->
         <div class="record-card animate-in">
           <div class="record-card-icon">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <!-- School Building -->
+              <path d="m4 6 8-4 8 4"/>
+              <path d="m18 10 4 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8l4-2"/>
+              <path d="M14 22v-4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v4"/>
+              <path d="M18 5v17"/>
+              <path d="M6 5v17"/>
+              <circle cx="12" cy="9" r="2"/>
             </svg>
           </div>
-          <h3 class="record-card-title" data-i18n="meet.corruption_title">Fighting Corruption</h3>
-          <p class="record-card-desc" data-i18n="meet.corruption_desc">
-            Took disgraced former Alderman Danny Solis to the Illinois Supreme Court and won changes to campaign finance rules, stopping indicted politicians from using campaign funds for legal defense. Strengthened the Office of Inspector General and continues to advocate for publicly financed elections.
+          <h3 class="record-card-title" data-i18n="meet.schools_title">Fighting School Closures</h3>
+          <p class="record-card-desc" data-i18n="meet.schools_desc">
+            After Rahm Emanuel announced that he would be closing a hundred thirty Chicago Public Schools, Byron became involved in the Pilsen Alliance where he organized with the community to push to keep the schools open.
           </p>
         </div>
 
-        <!-- Housing for All -->
+        <!-- 2015 Alderman Run -->
         <div class="record-card animate-in">
           <div class="record-card-icon">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-              <polyline points="9 22 9 12 15 12 15 22"/>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Voting/Check Square -->
+              <polyline points="9 11 12 14 22 4" />
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
             </svg>
           </div>
-          <h3 class="record-card-title" data-i18n="meet.housing_title">Housing for All</h3>
-          <p class="record-card-desc" data-i18n="meet.housing_desc">
-            Directly enabled the creation and preservation of over 800 affordable housing units. Fought to buy the largest vacant site in Pilsen for affordable development, passed legislation protecting homeowners from predatory developers, and doubled the Affordable Requirements Ordinance minimum from 10% to 20%.
+          <h3 class="record-card-title" data-i18n="meet.first_run_title">First Run for Alderman</h3>
+          <p class="record-card-desc" data-i18n="meet.first_run_desc">
+            In 2015, Byron was encouraged by community leaders Nellie Cotton and Kit Duffy to run for Alderman against the machine - now disgraced former Alderman Danny Solis. Byron came in second in the 5-way race.
           </p>
         </div>
 
-        <!-- Environmental Justice -->
+        <!-- Pilsen Alliance Director -->
         <div class="record-card animate-in">
           <div class="record-card-icon">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
-              <path d="M2 12h20"/>
-              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Map Pin/Neighborhood Defense -->
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+              <circle cx="12" cy="10" r="3"/>
             </svg>
           </div>
-          <h3 class="record-card-title" data-i18n="meet.environment_title">Environmental Justice</h3>
-          <p class="record-card-desc" data-i18n="meet.environment_desc">
-            Joined the hunger strike to #StopGeneralIron, fought MAT Asphalt's environmental racism in McKinley Park, and demanded accountability for the disastrous Hilco implosion. Led the effort to include environmental justice impact in city procurement contracts.
+          <h3 class="record-card-title" data-i18n="meet.alliance_title">Leading the Pilsen Alliance</h3>
+          <p class="record-card-desc" data-i18n="meet.alliance_desc">
+            Byron eventually served as the Director of Pilsen Alliance where he became a leader and an activist in the fight against gentrification, displacement, and corruption.
           </p>
         </div>
 
-        <!-- Workers & Education -->
+        <!-- DSA & Rent Control -->
         <div class="record-card animate-in">
           <div class="record-card-icon">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Movement/Users -->
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
               <circle cx="9" cy="7" r="4"/>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
               <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
             </svg>
           </div>
-          <h3 class="record-card-title" data-i18n="meet.workers_title">Workers &amp; Education</h3>
-          <p class="record-card-desc" data-i18n="meet.workers_desc">
-            Secured over $1 million in school infrastructure improvements, stood with the CTU for fully funded public schools, and walked picket lines with unionizing workers across the city. Defended teachers facing retaliation for fighting environmental racism and championed the Rudy Lozano Library expansion.
+          <h3 class="record-card-title" data-i18n="meet.dsa_title">Joining the Movement</h3>
+          <p class="record-card-desc" data-i18n="meet.dsa_desc">
+            He joined forces with organizers from the Chicago Democratic Socialists of America while partnering on the coalition to Lift the Ban on Rent Control across the state of Illinois, and became a member then and there.
           </p>
         </div>
       </div>
@@ -167,6 +179,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   }
 
   .record-banner-image-wrap {
+    position: relative;
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-xl);
@@ -174,9 +187,23 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   .record-banner-image {
     width: 100%;
-    height: 350px;
+    height: 400px;
     object-fit: cover;
+    object-position: center top;
     display: block;
+  }
+
+  .record-image-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 16px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    color: var(--cream);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-style: italic;
   }
 
   /* Record Cards */
@@ -207,15 +234,23 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   }
 
   .record-card-icon {
-    width: 56px;
-    height: 56px;
+    width: 64px;
+    height: 64px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(5, 173, 237, 0.08);
-    border-radius: var(--radius-md);
     color: var(--blue);
     margin-bottom: var(--space-lg);
+    background: rgba(5, 173, 237, 0.08); /* Transparent blue matches PlatformGrid */
+    border-radius: var(--radius-lg);
+    padding: 8px;
+    transition: all var(--duration-normal) var(--ease-default);
+  }
+
+  .record-card:hover .record-card-icon {
+    background: var(--blue);
+    color: var(--white);
+    transform: scale(1.05);
   }
 
   .record-card-title {
