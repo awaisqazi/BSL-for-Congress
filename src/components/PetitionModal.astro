@@ -1,0 +1,430 @@
+---
+// Petition Blitz Sign-Up Modal
+---
+
+<!-- Modal Overlay -->
+<div class="petition-modal-overlay" id="petitionModal">
+  <div class="petition-modal">
+    <button class="petition-modal-close" id="petitionModalClose" aria-label="Close">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <div class="petition-modal-header">
+      <div class="petition-modal-badge" data-i18n="petition_modal.badge">PETITION BLITZ</div>
+      <h2 class="petition-modal-title" data-i18n="petition_modal.title">Help Byron Get on the Ballot</h2>
+      <p class="petition-modal-subtitle" data-i18n="petition_modal.subtitle">Byron needs over 10,816 valid petition signatures. Sign up below to help make sure voters have a real choice on November 3rd.</p>
+    </div>
+
+    <form 
+      action="https://docs.google.com/forms/d/e/PLACEHOLDER_PETITION_FORM/formResponse" 
+      method="POST" 
+      target="petition_iframe" 
+      class="petition-form"
+      id="petitionForm"
+    >
+      <!-- Contact Fields -->
+      <div class="petition-fields">
+        <input type="text" name="entry.PLACEHOLDER" class="petition-input" placeholder="Your name" data-i18n-placeholder="petition_modal.name" aria-label="Name" required />
+        <input type="email" name="entry.PLACEHOLDER" class="petition-input" placeholder="Email address" data-i18n-placeholder="petition_modal.email" aria-label="Email" required />
+        <input type="tel" name="entry.PLACEHOLDER" class="petition-input" placeholder="Phone number" data-i18n-placeholder="petition_modal.phone" aria-label="Phone" required />
+        <input type="text" name="entry.PLACEHOLDER" class="petition-input" placeholder="City" data-i18n-placeholder="petition_modal.city" aria-label="City" required />
+        <input type="text" name="entry.PLACEHOLDER" class="petition-input" placeholder="Zip code" data-i18n-placeholder="petition_modal.zip" aria-label="Zip code" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" required />
+      </div>
+
+      <!-- Interest Checkboxes -->
+      <div class="petition-section">
+        <p class="petition-section-label" data-i18n="petition_modal.interest_label">I want to:</p>
+        <label class="petition-checkbox">
+          <input type="checkbox" name="entry.PLACEHOLDER" value="sign_petition" />
+          <span class="checkbox-mark"></span>
+          <span data-i18n="petition_modal.sign_petition">Sign Byron's petition</span>
+        </label>
+        <label class="petition-checkbox">
+          <input type="checkbox" name="entry.PLACEHOLDER" value="volunteer_signatures" />
+          <span class="checkbox-mark"></span>
+          <span data-i18n="petition_modal.volunteer_signatures">Volunteer to help collect signatures</span>
+        </label>
+      </div>
+
+      <!-- Volunteer Activities -->
+      <div class="petition-section">
+        <p class="petition-section-label" data-i18n="petition_modal.activities_label">I'm comfortable with:</p>
+        <div class="petition-activities">
+          <label class="petition-checkbox">
+            <input type="checkbox" name="entry.PLACEHOLDER" value="door_knocking" />
+            <span class="checkbox-mark"></span>
+            <span data-i18n="petition_modal.door_knocking">Knocking on doors</span>
+          </label>
+          <label class="petition-checkbox">
+            <input type="checkbox" name="entry.PLACEHOLDER" value="community_events" />
+            <span class="checkbox-mark"></span>
+            <span data-i18n="petition_modal.community_events">Getting signatures at community events</span>
+          </label>
+          <label class="petition-checkbox">
+            <input type="checkbox" name="entry.PLACEHOLDER" value="phone_banking" />
+            <span class="checkbox-mark"></span>
+            <span data-i18n="petition_modal.phone_banking">Phone banking</span>
+          </label>
+          <label class="petition-checkbox">
+            <input type="checkbox" name="entry.PLACEHOLDER" value="social_media" />
+            <span class="checkbox-mark"></span>
+            <span data-i18n="petition_modal.social_media">Posting on social media</span>
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-orange petition-submit">
+        <span data-i18n="petition_modal.submit">Join the Petition Blitz</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </form>
+
+    <p class="petition-success" id="petitionSuccess">Thank you for joining the blitz! We'll be in touch soon. ✊</p>
+    <iframe name="petition_iframe" id="petition_iframe" style="display:none;"></iframe>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('petitionModal') as HTMLElement;
+    const closeBtn = document.getElementById('petitionModalClose');
+    const form = document.getElementById('petitionForm') as HTMLFormElement;
+    const successMsg = document.getElementById('petitionSuccess');
+
+    // Open modal from any link with href="#petition"
+    document.querySelectorAll('a[href="#petition"], a[href*="#petition"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    // Close modal
+    function closeModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    closeBtn?.addEventListener('click', closeModal);
+
+    // Close on overlay click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+    });
+
+    // Form submission
+    if (form) {
+      form.addEventListener('submit', () => {
+        setTimeout(() => {
+          form.style.display = 'none';
+          if (successMsg) successMsg.classList.add('visible');
+          setTimeout(() => {
+            closeModal();
+            form.reset();
+            form.style.display = '';
+            if (successMsg) successMsg.classList.remove('visible');
+          }, 3000);
+        }, 500);
+      });
+    }
+  });
+</script>
+
+<style>
+  /* ── Modal Overlay ── */
+  .petition-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .petition-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* ── Modal Container ── */
+  .petition-modal {
+    position: relative;
+    width: 100%;
+    max-width: 580px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: var(--blue-deeper);
+    border: 1px solid rgba(5, 173, 237, 0.2);
+    border-radius: var(--radius-xl, 16px);
+    padding: var(--space-2xl);
+    transform: translateY(20px) scale(0.97);
+    transition: transform 0.3s ease;
+  }
+
+  .petition-modal-overlay.active .petition-modal {
+    transform: translateY(0) scale(1);
+  }
+
+  /* Scrollbar */
+  .petition-modal::-webkit-scrollbar {
+    width: 6px;
+  }
+  .petition-modal::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .petition-modal::-webkit-scrollbar-thumb {
+    background: rgba(251, 226, 186, 0.2);
+    border-radius: 3px;
+  }
+
+  /* ── Close Button ── */
+  .petition-modal-close {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cream);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .petition-modal-close:hover {
+    background: rgba(230, 136, 28, 0.5);
+    transform: scale(1.1);
+  }
+
+  /* ── Header ── */
+  .petition-modal-header {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .petition-modal-badge {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    border: 1.5px solid var(--orange);
+    border-radius: 100px;
+    padding: 4px 16px;
+    margin-bottom: var(--space-md);
+  }
+
+  .petition-modal-title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 900;
+    color: var(--cream);
+    margin-bottom: var(--space-sm);
+  }
+
+  .petition-modal-subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: rgba(251, 226, 186, 0.7);
+    line-height: 1.5;
+  }
+
+  /* ── Contact Fields ── */
+  .petition-fields {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+  }
+
+  .petition-fields input:nth-child(1),
+  .petition-fields input:nth-child(2) {
+    grid-column: span 3;
+  }
+
+  .petition-fields input:nth-child(3),
+  .petition-fields input:nth-child(4),
+  .petition-fields input:nth-child(5) {
+    grid-column: span 2;
+  }
+
+  .petition-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    border: 2px solid rgba(251, 226, 186, 0.15);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--cream);
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .petition-input::placeholder {
+    color: rgba(251, 226, 186, 0.45);
+  }
+
+  .petition-input:focus {
+    border-color: var(--orange);
+  }
+
+  /* ── Sections & Checkboxes ── */
+  .petition-section {
+    margin-bottom: var(--space-lg);
+  }
+
+  .petition-section-label {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-sm);
+  }
+
+  .petition-activities {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xs);
+  }
+
+  .petition-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background 0.2s ease;
+    color: rgba(251, 226, 186, 0.85);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+  }
+
+  .petition-checkbox:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .petition-checkbox input[type="checkbox"] {
+    display: none;
+  }
+
+  .checkbox-mark {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(251, 226, 186, 0.3);
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.2s ease;
+  }
+
+  .petition-checkbox input:checked + .checkbox-mark {
+    background: var(--orange);
+    border-color: var(--orange);
+  }
+
+  .petition-checkbox input:checked + .checkbox-mark::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 6px;
+    height: 11px;
+    border: solid white;
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg);
+  }
+
+  /* ── Submit ── */
+  .petition-submit {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-display) !important;
+    font-size: var(--text-lg) !important;
+    font-weight: 800 !important;
+    padding: 16px !important;
+    animation: none !important;
+  }
+
+  .petition-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(230, 136, 28, 0.4);
+  }
+
+  /* ── Success ── */
+  .petition-success {
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--gold-soft);
+    padding: var(--space-2xl) 0;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.4s ease, max-height 0.4s ease;
+  }
+
+  .petition-success.visible {
+    opacity: 1;
+    max-height: 100px;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .petition-modal-overlay {
+      padding: var(--space-sm);
+      align-items: flex-end;
+    }
+
+    .petition-modal {
+      max-height: 85vh;
+      padding: var(--space-xl) var(--space-md);
+      border-radius: var(--radius-xl, 16px) var(--radius-xl, 16px) 0 0;
+    }
+
+    .petition-fields {
+      grid-template-columns: 1fr;
+    }
+
+    .petition-fields input {
+      grid-column: span 1 !important;
+    }
+
+    .petition-activities {
+      grid-template-columns: 1fr;
+    }
+
+    .petition-modal-title {
+      font-size: var(--text-xl);
+    }
+  }
+</style>

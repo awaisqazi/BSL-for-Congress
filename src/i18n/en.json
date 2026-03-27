@@ -220,5 +220,24 @@
     "cta_headline": "Can't Volunteer Today? Fund the Fight.",
     "cta_text": "Every dollar helps buy clipboards, literature, and digital tools for the volunteer army. This campaign is entirely unbought and funded by working people like you.",
     "cta_donate": "Chip in $27"
+  },
+  "petition_modal": {
+    "badge": "PETITION BLITZ",
+    "title": "Help Byron Get on the Ballot",
+    "subtitle": "Byron needs over 10,816 valid petition signatures. Sign up below to help make sure voters have a real choice on November 3rd.",
+    "name": "Your name",
+    "email": "Email address",
+    "phone": "Phone number",
+    "city": "City",
+    "zip": "Zip code",
+    "interest_label": "I want to:",
+    "sign_petition": "Sign Byron's petition",
+    "volunteer_signatures": "Volunteer to help collect signatures",
+    "activities_label": "I'm comfortable with:",
+    "door_knocking": "Knocking on doors",
+    "community_events": "Getting signatures at community events",
+    "phone_banking": "Phone banking",
+    "social_media": "Posting on social media",
+    "submit": "Join the Petition Blitz"
   }
 }

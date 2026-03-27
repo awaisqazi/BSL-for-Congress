@@ -220,5 +220,24 @@
     "cta_headline": "¿No Puedes Ser Voluntario Hoy? Financia la Lucha.",
     "cta_text": "Cada dólar ayuda a comprar portapapeles, literatura y herramientas digitales para el ejército de voluntarios. Esta campaña es completamente independiente y financiada por personas trabajadoras como tú.",
     "cta_donate": "Contribuye $27"
+  },
+  "petition_modal": {
+    "badge": "BLITZ DE PETICIONES",
+    "title": "Ayuda a Byron a Aparecer en la Boleta",
+    "subtitle": "Byron necesita más de 10,816 firmas válidas. Regístrate a continuación para asegurar que los votantes tengan una opción real el 3 de noviembre.",
+    "name": "Tu nombre",
+    "email": "Correo electrónico",
+    "phone": "Número de teléfono",
+    "city": "Ciudad",
+    "zip": "Código postal",
+    "interest_label": "Quiero:",
+    "sign_petition": "Firmar la petición de Byron",
+    "volunteer_signatures": "Ser voluntario para recolectar firmas",
+    "activities_label": "Me siento cómodo/a con:",
+    "door_knocking": "Tocar puertas",
+    "community_events": "Recolectar firmas en eventos comunitarios",
+    "phone_banking": "Llamadas telefónicas",
+    "social_media": "Publicar en redes sociales",
+    "submit": "Únete al Blitz de Peticiones"
   }
 }
