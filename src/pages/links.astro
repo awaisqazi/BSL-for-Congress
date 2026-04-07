@@ -1,9 +1,12 @@
 ---
-import Layout from '../layouts/Layout.astro';
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+import Layout from "../layouts/Layout.astro";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<Layout title="Links | Byron Sigcho-Lopez for Congress" description="Quick links to Byron Sigcho-Lopez's campaign: donate, volunteer, and follow on social media.">
+<Layout
+  title="Links | Byron Sigcho-Lopez for Congress"
+  description="Quick links to Byron Sigcho-Lopez's campaign: donate, volunteer, and follow on social media."
+>
   <main class="links-page">
     <div class="links-bg">
       <div class="links-bg-pattern"></div>
@@ -13,7 +16,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <!-- Logo & Identity -->
       <div class="links-header animate-in">
         <a href={`${base}/`}>
-          <img src={`${base}/BSL_Official.png`} alt="Byron Sigcho-Lopez for Congress" class="links-logo" />
+          <img
+            src={`${base}/BSL_Official.png`}
+            alt="Byron Sigcho-Lopez for Congress"
+            class="links-logo"
+          />
         </a>
         <h1 class="links-name">Byron Sigcho-Lopez</h1>
         <p class="links-tagline">Independent Democratic Socialist • IL-04</p>
@@ -27,57 +34,138 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             title="Byron Sigcho-Lopez for Congress"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
+            allowfullscreen></iframe>
         </div>
       </div>
 
       <!-- Primary Links -->
       <div class="links-list">
-        <a href={`${base}/`} class="link-card animate-in" target="_blank" rel="noopener">
+        <a
+          href={`${base}/`}
+          class="link-card animate-in"
+          target="_blank"
+          rel="noopener"
+        >
           <span class="link-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10"></circle><path
+                d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path
+                d="M2 12h20"></path>
             </svg>
           </span>
           <span class="link-text">Visit the Official Website</span>
           <span class="link-arrow">→</span>
         </a>
 
-        <a href="https://secure.actblue.com/donate/byronfor04web/" class="link-card link-card-donate animate-in" target="_blank" rel="noopener">
+        <a
+          href="https://secure.actblue.com/donate/byronfor04web/"
+          class="link-card link-card-donate animate-in"
+          target="_blank"
+          rel="noopener"
+        >
           <span class="link-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+              ></path>
             </svg>
           </span>
           <span class="link-text">Donate: Fund the Fight</span>
           <span class="link-arrow">→</span>
         </a>
 
-        <a href={`${base}/volunteer`} class="link-card animate-in" target="_blank" rel="noopener">
+        <a
+          href={`${base}/volunteer`}
+          class="link-card animate-in"
+          target="_blank"
+          rel="noopener"
+        >
           <span class="link-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle
+                cx="9"
+                cy="7"
+                r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path
+                d="M16 3.13a4 4 0 0 1 0 7.75"></path>
             </svg>
           </span>
           <span class="link-text">Volunteer: Join the Ground Game</span>
           <span class="link-arrow">→</span>
         </a>
 
-        <a href={`${base}/platform`} class="link-card animate-in" target="_blank" rel="noopener">
+        <a
+          href={`${base}/platform`}
+          class="link-card animate-in"
+          target="_blank"
+          rel="noopener"
+        >
           <span class="link-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/>
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
+              ></path><polyline points="14 2 14 8 20 8"></polyline>
             </svg>
           </span>
           <span class="link-text">Read the Full Platform</span>
           <span class="link-arrow">→</span>
         </a>
 
-        <a href={`${base}/machine`} class="link-card animate-in" target="_blank" rel="noopener">
+        <a
+          href={`${base}/movement`}
+          class="link-card animate-in"
+          target="_blank"
+          rel="noopener"
+        >
           <span class="link-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"
+              ></path><path d="M12 9v4"></path><path d="M12 17h.01"></path>
             </svg>
           </span>
           <span class="link-text">Machine vs. Movement</span>
@@ -87,20 +175,81 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <!-- Social Media -->
       <div class="links-socials animate-in">
-        <a href="https://x.com/BSLForCongress" class="social-btn" target="_blank" rel="noopener" aria-label="X (Twitter)">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        <a
+          href="https://x.com/BSLForCongress"
+          class="social-btn"
+          target="_blank"
+          rel="noopener"
+          aria-label="X (Twitter)"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"
+            ><path
+              d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+            ></path></svg
+          >
         </a>
-        <a href="https://www.instagram.com/bslforcongress/" class="social-btn" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        <a
+          href="https://www.instagram.com/bslforcongress/"
+          class="social-btn"
+          target="_blank"
+          rel="noopener"
+          aria-label="Instagram"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path
+              d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line
+              x1="17.5"
+              y1="6.5"
+              x2="17.51"
+              y2="6.5"></line></svg
+          >
         </a>
-        <a href="https://www.facebook.com/BSLForCongress/" class="social-btn" target="_blank" rel="noopener" aria-label="Facebook">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        <a
+          href="https://www.facebook.com/BSLForCongress/"
+          class="social-btn"
+          target="_blank"
+          rel="noopener"
+          aria-label="Facebook"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"
+            ><path
+              d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+            ></path></svg
+          >
         </a>
-        <a href="https://www.tiktok.com/@sigchofor25" class="social-btn" target="_blank" rel="noopener" aria-label="TikTok">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.71a8.35 8.35 0 0 0 4.76 1.49V6.75a4.84 4.84 0 0 1-1-.06z"/></svg>
+        <a
+          href="https://www.tiktok.com/@sigchofor25"
+          class="social-btn"
+          target="_blank"
+          rel="noopener"
+          aria-label="TikTok"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"
+            ><path
+              d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.71a8.35 8.35 0 0 0 4.76 1.49V6.75a4.84 4.84 0 0 1-1-.06z"
+            ></path></svg
+          >
         </a>
-        <a href="https://www.youtube.com/@BSLforCongress" class="social-btn" target="_blank" rel="noopener" aria-label="YouTube">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        <a
+          href="https://www.youtube.com/@BSLforCongress"
+          class="social-btn"
+          target="_blank"
+          rel="noopener"
+          aria-label="YouTube"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"
+            ><path
+              d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+            ></path></svg
+          >
         </a>
       </div>
 
@@ -111,65 +260,175 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <!-- Volunteer Signup Form -->
       <div class="links-form-wrap animate-in">
-        <form class="links-form" id="links-volunteer-form" action="https://docs.google.com/forms/d/e/1FAIpQLSeUKnQVp4auTqHdFZeDrGlAOYAjmOO0sE19Xm11Pee2ayuuWQ/formResponse" method="POST" target="hidden_iframe_links">
+        <form
+          class="links-form"
+          id="links-volunteer-form"
+          action="https://docs.google.com/forms/d/e/1FAIpQLSeUKnQVp4auTqHdFZeDrGlAOYAjmOO0sE19Xm11Pee2ayuuWQ/formResponse"
+          method="POST"
+          target="hidden_iframe_links"
+        >
           <div class="links-form-row">
             <div class="links-form-group">
               <label for="links-first-name">First Name *</label>
-              <input type="text" id="links-first-name" name="entry.661274230" required />
+              <input
+                type="text"
+                id="links-first-name"
+                name="entry.661274230"
+                required
+              />
             </div>
             <div class="links-form-group">
               <label for="links-last-name">Last Name *</label>
-              <input type="text" id="links-last-name" name="entry.449873967" required />
+              <input
+                type="text"
+                id="links-last-name"
+                name="entry.449873967"
+                required
+              />
             </div>
           </div>
 
           <div class="links-form-group">
             <label for="links-email">Email *</label>
-            <input type="email" id="links-email" name="entry.378191335" required />
+            <input
+              type="email"
+              id="links-email"
+              name="entry.378191335"
+              required
+            />
           </div>
 
           <div class="links-form-row links-form-row-3">
             <div class="links-form-group">
               <label for="links-phone">Mobile Phone *</label>
-              <input type="tel" id="links-phone" name="entry.763325091" required />
+              <input
+                type="tel"
+                id="links-phone"
+                name="entry.763325091"
+                required
+              />
             </div>
             <div class="links-form-group">
               <label for="links-city">City *</label>
-              <input type="text" id="links-city" name="entry.113002180" required />
+              <input
+                type="text"
+                id="links-city"
+                name="entry.113002180"
+                required
+              />
             </div>
             <div class="links-form-group">
               <label for="links-zip">ZIP Code *</label>
-              <input type="text" id="links-zip" name="entry.1587719447" pattern="[0-9]{5}" maxlength="5" required />
+              <input
+                type="text"
+                id="links-zip"
+                name="entry.1587719447"
+                pattern="[0-9]{5}"
+                maxlength="5"
+                required
+              />
             </div>
           </div>
 
           <fieldset class="links-checkboxes">
             <legend>How would you like to help?</legend>
             <div class="links-checkbox-grid">
-              <label class="links-cb"><input type="checkbox" name="entry.1014527396" value="Collect Petition Signatures" /><span>Collect Petition Signatures</span></label>
-              <label class="links-cb"><input type="checkbox" name="entry.1014527396" value="Knock on Doors" /><span>Knock on Doors</span></label>
-              <label class="links-cb"><input type="checkbox" name="entry.1014527396" value="Phone/Text Banking" /><span>Phone/Text Banking</span></label>
-              <label class="links-cb"><input type="checkbox" name="entry.1014527396" value="Host a Meet & Greet" /><span>Host a Meet & Greet</span></label>
-              <label class="links-cb"><input type="checkbox" name="entry.1014527396" value="Bilingual Outreach (I speak Spanish / Yo hablo español)" /><span>Bilingual Outreach</span></label>
-              <label class="links-cb"><input type="checkbox" name="entry.1014527396" value="Post on Social Media" /><span>Post on Social Media</span></label>
-              <label class="links-cb"><input type="checkbox" name="entry.1014527396" value="Precinct Captain / Volunteer" /><span>Precinct Captain / Volunteer</span></label>
-              <label class="links-cb"><input type="checkbox" name="entry.1014527396" value="High School Ambassador" /><span>High School Ambassador</span></label>
-              <label class="links-cb"><input type="checkbox" name="entry.1014527396" value="College Campus Captain / Volunteer" /><span>College Campus Captain / Volunteer</span></label>
-              <label class="links-cb"><input type="checkbox" name="entry.1014527396" value="Help Create Marketing Collateral (Graphic Design)" /><span>Marketing / Graphic Design</span></label>
-              <label class="links-cb"><input type="checkbox" name="entry.1014527396" value="Help Create Campaign Videos (Videography / Video Editing)" /><span>Videography / Video Editing</span></label>
+              <label class="links-cb"
+                ><input
+                  type="checkbox"
+                  name="entry.1014527396"
+                  value="Collect Petition Signatures"
+                /><span>Collect Petition Signatures</span></label
+              >
+              <label class="links-cb"
+                ><input
+                  type="checkbox"
+                  name="entry.1014527396"
+                  value="Knock on Doors"
+                /><span>Knock on Doors</span></label
+              >
+              <label class="links-cb"
+                ><input
+                  type="checkbox"
+                  name="entry.1014527396"
+                  value="Phone/Text Banking"
+                /><span>Phone/Text Banking</span></label
+              >
+              <label class="links-cb"
+                ><input
+                  type="checkbox"
+                  name="entry.1014527396"
+                  value="Host a Meet & Greet"
+                /><span>Host a Meet & Greet</span></label
+              >
+              <label class="links-cb"
+                ><input
+                  type="checkbox"
+                  name="entry.1014527396"
+                  value="Bilingual Outreach (I speak Spanish / Yo hablo español)"
+                /><span>Bilingual Outreach</span></label
+              >
+              <label class="links-cb"
+                ><input
+                  type="checkbox"
+                  name="entry.1014527396"
+                  value="Post on Social Media"
+                /><span>Post on Social Media</span></label
+              >
+              <label class="links-cb"
+                ><input
+                  type="checkbox"
+                  name="entry.1014527396"
+                  value="Precinct Captain / Volunteer"
+                /><span>Precinct Captain / Volunteer</span></label
+              >
+              <label class="links-cb"
+                ><input
+                  type="checkbox"
+                  name="entry.1014527396"
+                  value="High School Ambassador"
+                /><span>High School Ambassador</span></label
+              >
+              <label class="links-cb"
+                ><input
+                  type="checkbox"
+                  name="entry.1014527396"
+                  value="College Campus Captain / Volunteer"
+                /><span>College Campus Captain / Volunteer</span></label
+              >
+              <label class="links-cb"
+                ><input
+                  type="checkbox"
+                  name="entry.1014527396"
+                  value="Help Create Marketing Collateral (Graphic Design)"
+                /><span>Marketing / Graphic Design</span></label
+              >
+              <label class="links-cb"
+                ><input
+                  type="checkbox"
+                  name="entry.1014527396"
+                  value="Help Create Campaign Videos (Videography / Video Editing)"
+                /><span>Videography / Video Editing</span></label
+              >
             </div>
           </fieldset>
 
           <p class="links-compliance">
-            By submitting, you agree to receive periodic campaign updates via SMS. Message and data rates may apply. Text STOP to unsubscribe.
+            By submitting, you agree to receive periodic campaign updates via
+            SMS. Message and data rates may apply. Text STOP to unsubscribe.
           </p>
 
           <button type="submit" class="btn btn-orange links-submit">
             Join the Movement ✊
           </button>
 
-          <p class="links-success" id="links-success">Thank you for stepping up! We'll be in touch soon. ✊</p>
-          <iframe name="hidden_iframe_links" id="hidden_iframe_links" style="display:none;"></iframe>
+          <p class="links-success" id="links-success">
+            Thank you for stepping up! We'll be in touch soon. ✊
+          </p>
+          <iframe
+            name="hidden_iframe_links"
+            id="hidden_iframe_links"
+            style="display:none;"></iframe>
         </form>
       </div>
 
@@ -182,17 +441,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 </Layout>
 
 <script>
-  const form = document.getElementById('links-volunteer-form') as HTMLFormElement | null;
-  const successMsg = document.getElementById('links-success');
+  const form = document.getElementById(
+    "links-volunteer-form",
+  ) as HTMLFormElement | null;
+  const successMsg = document.getElementById("links-success");
 
   if (form) {
-    form.addEventListener('submit', function () {
+    form.addEventListener("submit", function () {
       setTimeout(function () {
         form.reset();
         if (successMsg) {
-          successMsg.classList.add('visible');
+          successMsg.classList.add("visible");
           setTimeout(function () {
-            successMsg.classList.remove('visible');
+            successMsg.classList.remove("visible");
           }, 5000);
         }
       }, 500);
@@ -294,7 +555,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
-    transition: box-shadow var(--duration-normal) var(--ease-default), border-color var(--duration-normal) var(--ease-default);
+    transition:
+      box-shadow var(--duration-normal) var(--ease-default),
+      border-color var(--duration-normal) var(--ease-default);
   }
 
   .links-video-wrap:hover {
@@ -345,12 +608,20 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   }
 
   .link-card-donate {
-    background: linear-gradient(135deg, rgba(230, 136, 28, 0.2) 0%, rgba(230, 136, 28, 0.08) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(230, 136, 28, 0.2) 0%,
+      rgba(230, 136, 28, 0.08) 100%
+    );
     border-color: rgba(230, 136, 28, 0.35);
   }
 
   .link-card-donate:hover {
-    background: linear-gradient(135deg, rgba(230, 136, 28, 0.35) 0%, rgba(230, 136, 28, 0.15) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(230, 136, 28, 0.35) 0%,
+      rgba(230, 136, 28, 0.15) 100%
+    );
     border-color: rgba(230, 136, 28, 0.55);
     box-shadow: 0 8px 24px rgba(230, 136, 28, 0.15);
   }
@@ -378,7 +649,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   .link-arrow {
     font-size: var(--text-lg);
     opacity: 0.4;
-    transition: opacity var(--duration-fast) var(--ease-default), transform var(--duration-fast) var(--ease-default);
+    transition:
+      opacity var(--duration-fast) var(--ease-default),
+      transform var(--duration-fast) var(--ease-default);
   }
 
   .link-card:hover .link-arrow {
@@ -427,7 +700,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   .links-divider::before,
   .links-divider::after {
-    content: '';
+    content: "";
     flex: 1;
     height: 1px;
     background: rgba(255, 255, 255, 0.12);
@@ -490,7 +763,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     border-radius: var(--radius-md);
     background: rgba(255, 255, 255, 0.06);
     color: #ffffff;
-    transition: border-color var(--duration-fast) var(--ease-default), box-shadow var(--duration-fast) var(--ease-default);
+    transition:
+      border-color var(--duration-fast) var(--ease-default),
+      box-shadow var(--duration-fast) var(--ease-default);
     box-sizing: border-box;
   }
 
@@ -579,7 +854,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     opacity: 0;
     max-height: 0;
     overflow: hidden;
-    transition: opacity 0.4s ease, max-height 0.4s ease, margin-top 0.4s ease;
+    transition:
+      opacity 0.4s ease,
+      max-height 0.4s ease,
+      margin-top 0.4s ease;
   }
 
   .links-success.visible {
