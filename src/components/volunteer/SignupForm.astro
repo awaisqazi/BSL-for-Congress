@@ -359,10 +359,28 @@
   }
 
   /* Responsive */
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .signup-grid {
       grid-template-columns: 1fr;
       gap: var(--space-2xl);
+    }
+
+    .signup-text {
+      position: static;
+    }
+
+    .signup-form {
+      padding: var(--space-2xl) var(--space-xl);
+    }
+
+    .form-row-3 {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .signup-form {
+      padding: var(--space-xl);
     }
 
     .form-row,

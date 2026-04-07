@@ -117,8 +117,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     position: relative;
     width: 100%;
     height: 100vh;
-    min-height: 600px;
-    max-height: 1000px;
+    min-height: 620px;
     overflow: hidden;
     background: #0a0a0a;
   }
@@ -198,7 +197,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     align-items: center;
     justify-content: center;
     height: 100%;
-    padding: calc(var(--nav-height) + var(--space-xl)) var(--space-lg) var(--space-xl);
+    padding: calc(var(--nav-height) + var(--space-2xl)) var(--space-lg) var(--space-2xl);
     text-align: center;
     transition: opacity 0.5s ease;
   }
@@ -212,9 +211,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-lg);
+    gap: var(--space-md);
     max-width: 900px;
-    padding: var(--space-2xl) var(--space-lg);
+    padding: var(--space-lg) var(--space-lg);
   }
 
   .hero-badge {
@@ -267,8 +266,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     font-weight: 400;
     line-height: 1.6;
     color: rgba(251, 226, 186, 0.85);
-    max-width: 600px;
-    margin-top: var(--space-sm);
+    max-width: 1100px;
+    margin-top: 0;
     text-shadow: 0 1px 4px rgba(0,0,0,0.4);
   }
 
@@ -338,6 +337,34 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   }
 
   /* ── Responsive ── */
+  @media (max-width: 1024px) {
+    .hero-content {
+      padding: var(--space-3xl) var(--space-xl);
+      gap: var(--space-lg);
+    }
+
+    .hero-content-overlay {
+      padding: calc(var(--nav-height) + var(--space-2xl)) var(--space-xl) var(--space-2xl);
+    }
+
+    .hero-headline {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+    }
+
+    .hero-subheadline {
+      font-size: var(--text-lg);
+    }
+
+    .hero-cta {
+      font-size: var(--text-xl) !important;
+      padding: var(--space-md) var(--space-2xl) !important;
+    }
+
+    .hero-context {
+      font-size: var(--text-xs);
+    }
+  }
+
   @media (max-width: 768px) {
     .hero {
       min-height: 100vh;

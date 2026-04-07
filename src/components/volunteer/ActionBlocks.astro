@@ -147,9 +147,24 @@
     border-top: 1px solid rgba(5, 173, 237, 0.1);
   }
 
+  @media (max-width: 1024px) {
+    .action-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .action-card {
+      padding: var(--space-xl);
+    }
+  }
+
   @media (max-width: 768px) {
     .action-grid {
       grid-template-columns: 1fr;
+    }
+
+    .action-card {
+      padding: var(--space-2xl);
     }
   }
 </style>

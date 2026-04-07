@@ -286,11 +286,15 @@ ul, ol {
   .hide-mobile {
     display: none !important;
   }
+
+  .container, .container-wide {
+    padding: 0 var(--space-xl);
+  }
 }
 
 @media (max-width: 768px) {
   .container, .container-wide {
-    padding: 0 var(--space-md);
+    padding: 0 var(--space-lg);
   }
 
   .section-padding {

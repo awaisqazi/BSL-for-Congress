@@ -200,6 +200,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   }
 
   /* Responsive */
+  @media (max-width: 1024px) {
+    .platform-card {
+      padding: var(--space-xl) var(--space-xl);
+    }
+
+    .platform-grid {
+      gap: var(--space-lg);
+    }
+  }
+
   @media (max-width: 768px) {
     .platform-grid {
       grid-template-columns: 1fr;
