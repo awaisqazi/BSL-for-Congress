@@ -7,6 +7,7 @@
     "donate": "Donar"
   },
   "hero": {
+    "badge": "SOCIALISTA DEMOCRÁTICO INDEPENDIENTE • IL-04",
     "headline": "Todos tienen un hogar, y todos comen.",
     "subheadline": "Byron Sigcho Lopez es esposo, padre de trillizos, maestro de matemáticas y economista, inmigrante naturalizado y concejal socialista democrático elegido por dos mandatos en el barrio de Pilsen en Chicago.",
     "cta": "Únete a la Campaña de Firmas",
@@ -14,7 +15,7 @@
   },
   "bio": {
     "label": "Conoce al Organizador",
-    "headline": "No nació aquí, pero siguió a su corazón a casa tan rápido como pudo.",
+    "headline": "No nació aquí, pero siguió su corazón a casa tan rápido como pudo.",
     "p1": "Byron es un inmigrante que vino a los Estados Unidos solo cuando tenía 17 años. Su vida es un testimonio de lo que ocurre cuando los extraños se convierten en vecinos y familia.",
     "p2": "Byron Sigcho Lopez es el único funcionario electo en esta carrera que ha entregado beneficios concretos para la gente trabajadora de Chicago, con un historial de construcción de coaliciones con cada vecino dispuesto a unirse para resolver los problemas que enfrentamos, juntos. Ha luchado valientemente contra la corrupción de la maquinaria política de Illinois, ayudando a desmantelar redes corruptas de escuelas charter que saquean el futuro de nuestros hijos, e incluso llevando la corrupción en el financiamiento de campañas hasta la Corte Suprema de Illinois.",
     "p3": "Byron obtuvo su Licenciatura en Matemáticas y Administración de Empresas en Cumberland University y su Maestría en Economía en la Universidad de Illinois en Chicago.",
@@ -25,54 +26,43 @@
     "label": "La Plataforma",
     "headline": "Donde todos tienen un hogar, y todos comen.",
     "housing": {
-      "title": "La Vivienda como Derecho Humano",
-      "desc": "Nuestro país puede y debe proporcionar vivienda digna y segura para cada veterano y vecino que necesite una mano. Carta nacional de derechos del inquilino y expansión de desarrollos de vivienda social para bajar el alquiler y el costo de comprar una casa."
+      "title": "Vivienda para cada veterano y todos nuestros vecinos",
+      "desc": "Más de 10,000 veteranos perdieron sus hogares por ejecución hipotecaria y 90,000 más están en riesgo. Byron luchará por una carta nacional de derechos del inquilino, vivienda social expandida y estructuras reales de poder para llevar dignidad de vivienda a cada vecino."
     },
     "economic": {
-      "title": "Una Economía que Pone a las Personas y al Planeta Primero",
-      "desc": "Impuestos a los multimillonarios e invertir nuestros recursos en crear empleos sindicales sostenibles para cada trabajador en nuestras comunidades. Aumentar el salario mínimo a $30/hora. Sin rescates para bancos ni burbujas tecnológicas. Inversiones en apoyar a emprendedores locales en todo IL-04. Empleos del cuerpo civil climático para energía verde, espacios naturales y resiliencia comunitaria."
-    },
-    "education": {
-      "title": "Alfabetización, Curiosidad, Creatividad e Inspiración Ahora",
-      "desc": "Cada estudiante, de 0 a 100, merece la oportunidad de ser inspirado, perseguir su curiosidad, nutrir su creatividad y expandir su alfabetización. Luchar por restaurar el Departamento de Educación de EE.UU. Invertir en educación pública completamente financiada y proporcionar a cada estudiante y familia servicios integrales y actividades extracurriculares."
+      "title": "Empleos verdes. Economías locales. Un futuro habitable.",
+      "desc": "Cobrar impuestos a los multimillonarios e invertir en economías locales. Aumentar el salario mínimo a $30/hora. Apoyar a emprendedores locales. Empleos del cuerpo civil climático para energía verde, transporte público y resiliencia comunitaria ante tormentas, inundaciones y desastres."
     },
     "healthcare": {
-      "title": "Salud para Todos",
-      "desc": "Nuestros recursos no son infinitos y ni un dólar más debería ir a intermediarios codiciosos que no mejoran la salud de nuestro pueblo. Debemos aprobar Medicare para Todos, y crecer exponencialmente nuestra inversión en los Institutos Nacionales de Salud (NIH) para poner a más de nuestras personas más curiosas dedicando su tiempo a eliminar y curar causas prematuras de muerte o enfermedades crónicas como enfermedades del corazón, cáncer y enfermedades mentales."
+      "title": "Medicare para todos",
+      "desc": "Ni un dólar más a intermediarios codiciosos. Byron aprobará Medicare para Todos, aumentará la inversión en los NIH, expandirá los hospitales universitarios, eliminará las disparidades en mortalidad materno-infantil y asegurará que la atención médica incluya salud reproductiva, salud mental y tiempo parental."
     },
-    "immigration": {
-      "title": "Abolir ICE, Crear un Camino a la Ciudadanía para Nuestros Vecinos",
-      "desc": "Ningún ser humano es ilegal. Abolir ICE y terminar con la máquina de deportación militarizada que aterroriza a nuestras comunidades. Prohibir a ICE operar en propiedad pública, cerrar los centros de detención y acabar con el estado de vigilancia que persigue a las familias inmigrantes. Crear un camino claro y humano hacia la ciudadanía para los millones de vecinos que construyen nuestras comunidades cada día."
-    },
-    "foreignpolicy": {
-      "title": "Política Exterior",
-      "desc": "Ni un dólar de los contribuyentes para el apartheid y el genocidio. Terminar con toda la ayuda militar y los envíos de armas que sostienen la ocupación de Palestina y el genocidio de su pueblo. Poner fin a la guerra ilegal y no autorizada con Irán. Prohibir la inversión en Bonos de Israel y los contratos con corporaciones que fabrican armas usadas para la limpieza étnica. Exigir el fin del imperialismo estadounidense y redirigir esos miles de millones hacia nuestras comunidades."
+    "democracy": {
+      "title": "Democracia para el pueblo, no para multimillonarios y corporaciones",
+      "desc": "Acabar con el dinero oscuro, prohibir el comercio de acciones del Congreso, aprobar el registro automático de votantes, hacer del Día de Elecciones un feriado nacional, restaurar la Ley de Derechos de Voto y perseguir los Archivos Epstein. Sin PAC corporativos. La democracia nos pertenece a todos."
     },
     "cta": "Lee la Plataforma Completa"
   },
   "anointment": {
     "label": "¿Por Qué Independiente?",
-    "headline": "La Imposición",
-    "text": "Cuando el Rep. Jesús \"Chuy\" García anunció su retiro, no le dio a los votantes la oportunidad de elegir. Se postuló para un quinto mandato, y momentos antes de la fecha límite de presentación, su ex jefa de personal presentó peticiones de nominación recolectadas en solo días. García se retiró y la respaldó, entregando el puesto a una sucesora sin oposición. Ella necesitó solo 697 firmas. Los candidatos independientes deben recolectar más de 10,816. Esto no es democracia. Esto es una imposición.",
+    "headline": "La Designación",
+    "text": "Cuando el Rep. Jesús \"Chuy\" García anunció su retiro, no le dio a los votantes la oportunidad de elegir. Se postuló para un quinto mandato, y momentos antes de la fecha límite de presentación, su ex jefa de personal presentó peticiones de nominación recolectadas en solo días. García se retiró y la respaldó, entregando el puesto a una sucesora sin oposición. Ella necesitó solo 697 firmas. Los candidatos independientes deben recolectar más de 10,816. Esto no es democracia. Esto es una designación.",
     "cta": "Conoce la Subversión"
   },
   "footer": {
     "ticker_label": "Impulsado por el Pueblo",
     "ticker_text": "Donación promedio: $27. Sin dinero de PAC corporativos. Nunca.",
     "signup_headline": "Únete al Movimiento",
-    "signup_placeholder": "Tu correo electrónico",
-    "signup_name": "Tu nombre",
-    "signup_phone": "Número de teléfono",
-    "signup_zip": "Código postal",
-    "signup_city": "Ciudad",
-    "signup_button": "Inscríbete",
+    "signup_paper_title": "✊ Inscripción de Voluntarios",
+    "links_title": "Enlaces",
+    "follow_us_title": "Síguenos",
     "paid_for": "PAGADO POR BYRON SIGCHO LOPEZ PARA EL CONGRESO",
     "copyright": "© 2026 Byron Sigcho Lopez para el Congreso. Todos los derechos reservados."
   },
   "meet": {
+    "hero_badge": "SOCIALISTA DEMOCRÁTICO INDEPENDIENTE • CHICAGO DSA • IL-04",
     "hero_headline": "Un Organizador, No un Político.",
     "hero_sub": "De Ecuador a Tennessee a Pilsen. Byron Sigcho-Lopez llegó a este país solo a los 17 años y ha dedicado su vida a luchar junto a la clase trabajadora como maestro, investigador, organizador y socialista democrático sin disculpas.",
-    "origin_label": "Primeros Años",
     "origin_headline": "Primeros Años",
     "origin_p1": "Byron llegó por primera vez a los Estados Unidos solo siendo adolescente, estableciéndose en Tennessee y luego mudándose al área de Chicago y Pilsen hace más de 10 años. Nació y creció en Quito, Ecuador y vino a los EE.UU. tras la inestabilidad política en el país, y un trágico accidente automovilístico que dejó a su madre en coma.",
     "origin_p2": "Los servicios de emergencia eran casi inexistentes durante este período, y las vidas de su familia fueron salvadas por automovilistas que pasaban, se detuvieron, rescataron a su familia de los restos y los llevaron al hospital. Cuando su madre despertó del coma, insistió en que su hijo mayor dejara el país para su último año de preparatoria.",
@@ -81,6 +71,7 @@
     "education_p1": "Byron visitó Chicago por primera vez con su familia de Tennessee que tenía seres queridos en el área de Chicago. Durante este primer viaje, llevaron a Byron a Pilsen a cenar en el restaurante Nuevo León.",
     "education_p2": "Después de graduarse de la preparatoria en Tennessee, Byron pudo asistir a la universidad con una beca de fútbol después de recibir una mención honorífica del equipo All-State de Fútbol de Tennessee en la preparatoria. Byron se graduó de Cumberland University con su Licenciatura en Matemáticas y Administración de Empresas.",
     "education_p3": "También recibió el prestigioso Premio del Presidente por su excepcional rendimiento académico y sus muchas contribuciones y éxitos en la comunidad escolar durante su tiempo allí. Después de graduarse, Byron regresó a Chicago y finalmente se estableció en Pilsen para comenzar su vida.",
+    "record_kicker": "Haciendo de Illinois Mi Hogar",
     "record_headline": "Maestro, Investigador, Organizador",
     "record_desc": "Byron se convirtió en profesor de educación para adultos en la Universidad de Illinois en Chicago y fundó el programa de alfabetización en español del Centro de Alfabetización de UIC, haciendo el programa de GED en UIC mucho más accesible para los inmigrantes y residentes hispanohablantes. Viendo la necesidad de servicios integrales, Byron también incorporó a un trabajador social al programa para asegurar que las familias de sus estudiantes recibieran recursos y servicios necesarios.",
     "record_desc2": "Además del trabajo de Byron como maestro, también fue voluntario como entrenador de fútbol juvenil en Pilsen Academy. Byron obtuvo una Maestría en Economía de UIC mientras también trabajaba como investigador principal. Comenzó a colaborar junto al Sindicato de Maestros de Chicago en la investigación de las relaciones financieras entre las redes de escuelas charter como UNO, el financiamiento escolar y la élite política de Chicago, y organizó con padres y maestros como Karen Lewis para luchar por escuelas públicas con financiamiento completo.",
@@ -117,22 +108,29 @@
     "cta_donate": "Dona al Movimiento"
   },
   "issues": {
+    "hero_badge": "LA AGENDA DE LA CLASE TRABAJADORA • IL-04",
     "hero_headline": "Una Plataforma para los Trabajadores, No para la Clase Multimillonaria.",
     "hero_sub": "Byron lucha por garantizar un estándar básico de dignidad para las familias trabajadoras, los mayores, los maestros y los grupos marginalizados del IL-04.",
     "grid_label": "Los Temas",
-    "grid_headline": "Donde todos tienen un hogar, y todos comen.",
-    "housing_title": "La Vivienda como Derecho Humano",
-    "housing_desc": "Nuestro país puede y debe proporcionar vivienda digna y segura para cada veterano y vecino que necesite una mano. Carta nacional de derechos del inquilino y expansión de desarrollos de vivienda social para bajar el alquiler y el costo de comprar una casa.",
-    "economic_title": "Una Economía que Pone a las Personas y al Planeta Primero",
-    "economic_desc": "Impuestos a los multimillonarios e invertir nuestros recursos en crear empleos que traigan trabajos sindicales sostenibles para cada trabajador en nuestras comunidades. Aumentar el salario mínimo a $30/hora. Sin rescates para bancos ni burbujas tecnológicas. Inversiones en apoyar a emprendedores locales que forman la columna vertebral de nuestra economía en todo IL-04. Empleos del cuerpo civil climático para invertir en proyectos de energía verde, expansión de espacios naturales y recreativos, y resiliencia ante tormentas, inundaciones, olas de calor y desastres en nuestras comunidades.",
+    "grid_headline": "La posición de Byron",
+    "housing_title": "Vivienda para cada veterano y todos nuestros vecinos",
+    "housing_desc": "Entre mayo de 2025 y abril de 2026, más de 10,000 veteranos perdieron sus hogares por ejecución hipotecaria después de que el régimen de Trump cerrara una red de seguridad clave en el programa de préstamos hipotecarios del VA - y 90,000 más veteranos están en riesgo de ejecución hipotecaria ahora.",
+    "housing_desc2": "Nuestro país puede y debe proveer vivienda digna y segura para cada veterano y vecino que necesite una mano amiga. Byron luchará por una carta nacional de derechos del inquilino y desarrollos de vivienda social expandida para bajar el alquiler y bajar el costo de comprar una casa.",
+    "housing_desc3": "Llevará sus servicios al constituyente en alianza con la organización comunitaria y laboral para construir estructuras reales de poder que traigan compasión e intervención para cada persona que necesite dignidad en su vivienda.",
+    "healthcare_title": "Medicare para todos",
+    "healthcare_desc": "Nuestros recursos no son infinitos y ni un dólar más debería ir a intermediarios codiciosos que no mejoran la salud de nuestro pueblo. Byron organizará y aprobará Medicare para Todos, y crecerá exponencialmente nuestra inversión en los Institutos Nacionales de Salud (NIH) para dirigir a más de nuestros estudiantes y científicos más curiosos hacia dedicar su tiempo a eliminar y curar causas prematuras de muerte o enfermedades crónicas como enfermedades del corazón, cáncer y enfermedades mentales. Debemos expandir los hospitales universitarios y el apoyo para estudiantes de comunidades desatendidas para convertirse en trabajadores de la salud, para que podamos eliminar las disparidades de mortalidad materno-infantil incluyendo entre nuestras madres y bebés negros, y tener mejores resultados de salud para todas las comunidades en IL-04.",
+    "healthcare_desc2": "La atención médica para todos incluye atención de salud reproductiva, servicios de aborto, tratamientos de fertilidad, cuidado de mayores y asistencia domiciliaria, apoyo de salud mental, y tiempo parental para asegurar que las familias reciban apoyo en cada etapa de la vida.",
+    "economic_title": "Empleos verdes. Economías locales. Un futuro habitable.",
+    "economic_desc": "Nuestros dólares de impuestos han sido mal utilizados por ambos partidos políticos - en guerras, en rescates para bancos y la burbuja tecnológica, para corporaciones que ni siquiera pagan impuestos. Mientras tanto, las personas en nuestros vecindarios que trabajan todos los días nunca ven sus dólares de impuestos regresar para servir su propio futuro.",
+    "economic_desc2": "Byron aumentará la tasa impositiva a los multimillonarios e invertirá nuestros recursos en nuestras economías locales, creando empleos sostenibles con salarios dignos para cada trabajador en nuestras comunidades. Aumentar el salario mínimo a $30/hora. Inversiones para apoyar a los emprendedores locales que forman la columna vertebral de nuestra economía en todo IL-04. Empleos del cuerpo civil climático para invertir en proyectos de energía verde, expansión de espacios naturales y recreativos, y resiliencia ante tormentas, inundaciones, olas de calor y desastres en nuestras comunidades. Esto también incluirá expandir opciones de transporte verde y público para aumentar la seguridad peatonal y de los viajeros, e invertir en el desarrollo de energía renovable para que no dependamos de combustibles fósiles para movernos de un punto a otro.",
+    "democracy_title": "Democracia para el pueblo, no para multimillonarios y corporaciones",
+    "democracy_desc": "Nuestra democracia se supone que funciona para todos nosotros, pero hoy está amañada para los que tienen más dinero en detrimento del alma de nuestra nación. Los multimillonarios y las corporaciones vierten millones en campañas, los lobistas escriben legislación a puertas cerradas, y las familias trabajadoras se quedan con la cuenta. Byron nunca aceptará un centavo de PAC corporativos ni de la maquinaria política. En el Congreso, Byron luchará para acabar con la influencia del dinero oscuro, prohibir el comercio de acciones para los miembros del Congreso, aprobar el registro automático de votantes, hacer del Día de Elecciones un feriado nacional y restaurar la Ley de Derechos de Voto. Byron perseguirá enérgicamente los cargos contra los criminales en los Archivos Epstein. La democracia no debería ser algo que los ricos puedan comprar. Debería pertenecer a cada uno de nosotros.",
+    "immigration_title": "Abolir ICE y descriminalizar la migración",
+    "immigration_desc": "Ningún ser humano es ilegal. Byron luchará para abolir ICE y terminar con la máquina de deportación militarizada que aterroriza a nuestras comunidades. Prohibirá a ICE operar en propiedad pública, cerrará centros de detención como el Centro de Detención Wyatt y acabará con la venta de datos de vigilancia de Flock, Ring y otros sistemas para resistir la consolidación de un estado de vigilancia. Creará un camino claro y humano hacia la ciudadanía para los millones de vecinos que construyen nuestras comunidades cada día. Y exigirá responsabilidad a los oficiales de policía y desmilitarizará las fuerzas del orden.",
     "education_title": "Alfabetización, Curiosidad, Creatividad e Inspiración Ahora",
-    "education_desc": "Cada estudiante, de 0 a 100, merece la oportunidad de ser inspirado, perseguir su curiosidad, nutrir su creatividad y expandir su alfabetización. Luchar por restaurar el Departamento de Educación de EE.UU. y los beneficios de derechos civiles para todos los estudiantes. Invertir en educación pública completamente financiada basada en la necesidad del estudiante y proporcionar a cada estudiante y familia servicios integrales y actividades extracurriculares.",
-    "healthcare_title": "Salud para Todos",
-    "healthcare_desc": "Nuestros recursos no son infinitos y ni un dólar más debería ir a intermediarios codiciosos que no mejoran la salud de nuestro pueblo. Debemos aprobar Medicare para Todos, y crecer exponencialmente nuestra inversión en los Institutos Nacionales de Salud (NIH) para poner a más de nuestras personas más curiosas dedicando su tiempo a eliminar y curar causas prematuras de muerte o enfermedades crónicas como enfermedades del corazón, cáncer y enfermedades mentales.",
-    "immigration_title": "Abolir ICE, Crear un Camino a la Ciudadanía para Nuestros Vecinos",
-    "immigration_desc": "Ningún ser humano es ilegal. Abolir ICE y terminar con la máquina de deportación militarizada que aterroriza a nuestras comunidades. Prohibir a ICE operar en propiedad pública, cerrar centros de detención como el Centro de Detención Wyatt y acabar con la venta de datos de vigilancia de Flock, Ring y otros sistemas a las fuerzas del orden. Crear un camino claro y humano hacia la ciudadanía para los millones de vecinos que construyen nuestras comunidades cada día. Exigir responsabilidad a los oficiales de policía y desmilitarizar las fuerzas del orden.",
-    "foreignpolicy_title": "Política Exterior",
-    "foreignpolicy_desc": "Ni un dólar de los contribuyentes para el apartheid y el genocidio. Terminar con toda la ayuda militar y los envíos de armas que sostienen la ocupación de Palestina y el genocidio de su pueblo. Poner fin a la guerra ilegal y no autorizada con Irán. Prohibir la inversión estatal en Bonos de Israel y contratar con cualquier corporación que fabrique o envíe armas o tecnología que sostenga el genocidio, el apartheid, la limpieza étnica y la ocupación de Palestina. Exigir el fin del imperialismo estadounidense y redirigir esos miles de millones hacia nuestras comunidades.",
+    "education_desc": "Cada estudiante, de 0 a 100, merece la oportunidad de ser inspirado, perseguir su curiosidad, nutrir su creatividad y expandir su alfabetización. Byron luchará por restaurar el Departamento de Educación de EE.UU. y los beneficios de derechos civiles para todos los estudiantes. Invertirá en educación pública completamente financiada basada en la necesidad del estudiante y proporcionará a cada estudiante y familia servicios integrales y actividades extracurriculares. Como maestro de educación para adultos, Byron apoya la educación como una búsqueda de por vida e invertirá en programas educativos para todos, más allá de la adolescencia hasta la edad adulta.",
+    "foreignpolicy_title": "No más dólares de impuestos para la guerra en Irán y el genocidio en Israel",
+    "foreignpolicy_desc": "Ni un dólar de los contribuyentes para guerras sin fin, apartheid y genocidio. Byron exigirá el fin del imperialismo estadounidense financiado por los contribuyentes y redirigirá esos miles de millones hacia nuestras comunidades. Martin Luther King Jr. advirtió sobre el flagelo de los tres males - pobreza, racismo y militarismo. Invertir en cooperación global, sostenibilidad global y la educación y salud de nuestro pueblo es el camino hacia un futuro brillante y sano y construiremos la coalición para ganar ese futuro ahora.",
     "unbought_label": "El Compromiso Socialista Democrático",
     "unbought_headline": "Representación sin Comprar.",
     "unbought_text": "Byron rechaza completamente el dinero de PAC corporativos y las contribuciones de grandes desarrolladores inmobiliarios. Solo responde a la coalición de clase trabajadora del 4to Distrito. Su campaña es financiada por pequeñas donaciones de vecinos, maestros, miembros sindicales y familias trabajadoras. Esto es lo que significa ser verdaderamente independiente.",
@@ -239,7 +237,7 @@
     "cta_donate": "Contribuye $27"
   },
   "petition_modal": {
-    "badge": "BLITZ DE PETICIONES",
+    "badge": "CAMPAÑA DE FIRMAS",
     "title": "Ayuda a Byron a Aparecer en la Boleta",
     "subtitle": "Byron necesita más de 10,816 firmas válidas. Regístrate a continuación para asegurar que los votantes tengan una opción real el 3 de noviembre.",
     "name": "Tu nombre",
@@ -255,6 +253,7 @@
     "community_events": "Recolectar firmas en eventos comunitarios",
     "phone_banking": "Llamadas telefónicas",
     "social_media": "Publicar en redes sociales",
-    "submit": "Únete al Blitz de Peticiones"
+    "submit": "Únete a la Campaña de Firmas",
+    "success": "¡Gracias por unirte a la campaña! Pronto nos comunicaremos contigo. ✊"
   }
 }

@@ -27,77 +27,34 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <div class="footer-main">
     <div class="container">
       <div class="footer-grid">
-        <!-- Newsletter Signup -->
+        <!-- Volunteer Signup — Clipboard Embed -->
         <div class="footer-signup">
           <h3 class="footer-signup-headline" data-i18n="footer.signup_headline">Join the Movement</h3>
-          <form 
-            action="https://docs.google.com/forms/d/e/1FAIpQLSfTS7DaOgK5HRMYgmWLjXGsJ0aRE_sl_Fz9S_bEH96gn9GPuQ/formResponse" 
-            method="POST" 
-            target="hidden_iframe" 
-            class="signup-form"
-            id="footer-signup-form"
-          >
-            <div class="signup-fields">
-              <input 
-                type="text" 
-                name="entry.824661353"
-                class="signup-input" 
-                placeholder="Your name"
-                data-i18n-placeholder="footer.signup_name"
-                aria-label="Name"
-                required
-              />
-              <input 
-                type="email" 
-                name="entry.377338253"
-                class="signup-input" 
-                placeholder="Your email address"
-                data-i18n-placeholder="footer.signup_placeholder"
-                aria-label="Email address"
-                required
-              />
-              <input 
-                type="tel" 
-                name="entry.51795344"
-                class="signup-input" 
-                placeholder="Phone number"
-                data-i18n-placeholder="footer.signup_phone"
-                aria-label="Phone number"
-                required
-              />
-              <input 
-                type="text" 
-                name="entry.599314438"
-                class="signup-input" 
-                placeholder="City"
-                data-i18n-placeholder="footer.signup_city"
-                aria-label="City"
-                required
-              />
-              <input 
-                type="text" 
-                name="entry.708379395"
-                class="signup-input" 
-                placeholder="Zip code"
-                data-i18n-placeholder="footer.signup_zip"
-                aria-label="Zip code"
-                inputmode="numeric"
-                pattern="[0-9]{5}"
-                maxlength="5"
-                required
-              />
+          <div class="clipboard">
+            <!-- Metal Clip -->
+            <div class="clipboard-clip">
+              <div class="clip-body"></div>
+              <div class="clip-ring"></div>
             </div>
-            <button type="submit" class="btn btn-orange signup-btn" data-i18n="footer.signup_button">
-              Sign Up
-            </button>
-          </form>
-          <p class="signup-success" id="signup-success">Thanks for joining the movement! ✊</p>
-          <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+            <!-- Paper -->
+            <div class="clipboard-paper">
+              <div class="paper-header">
+                <span class="paper-title" data-i18n="footer.signup_paper_title">✊ Volunteer Sign-Up</span>
+              </div>
+              <iframe
+                src="https://www.raisemore.app/forms/signup/org_3CzwGfMfnK1106k0fBTvwYbnDKI?horizontal=false"
+                class="signup-embed-iframe"
+                title="Campaign Signup Form"
+                allowTransparency="true"
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
         </div>
 
         <!-- Quick Links -->
         <div class="footer-links">
-          <h4 class="footer-links-title">Links</h4>
+          <h4 class="footer-links-title" data-i18n="footer.links_title">Links</h4>
           <ul>
             <li><a href={`${base}/meet`} data-i18n="nav.meet">Meet Byron</a></li>
             <li><a href={`${base}/platform`} data-i18n="nav.platform">The Platform</a></li>
@@ -108,7 +65,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
         <!-- Social -->
         <div class="footer-social">
-          <h4 class="footer-links-title">Follow Us</h4>
+          <h4 class="footer-links-title" data-i18n="footer.follow_us_title">Follow Us</h4>
           <div class="social-icons">
             <a href="https://x.com/BSLForCongress" class="social-link" aria-label="Twitter/X" target="_blank" rel="noopener">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -139,6 +96,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             </a>
           </div>
         </div>
+
+        <!-- Decorative Sketch Illustration -->
+        <div class="footer-sketch-wrap">
+          <img
+            id="footer-sketch-img"
+            src={`${base}/images/sketch.png`}
+            data-src-en={`${base}/images/sketch.png`}
+            data-src-es={`${base}/images/sketch_es.png`}
+            alt="Everybody has a home, and Everybody eats — illustration by Christina Seo"
+            class="footer-sketch"
+            loading="lazy"
+          />
+        </div>
       </div>
 
       <!-- Legal -->
@@ -153,23 +123,29 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 </footer>
 
 <script>
-  const form = document.getElementById('footer-signup-form') as HTMLFormElement | null;
-  const successMsg = document.getElementById('signup-success');
-
-  if (form) {
-    form.addEventListener('submit', function () {
-      setTimeout(function () {
-        form.reset();
-        if (successMsg) {
-          successMsg.classList.add('visible');
-          setTimeout(function () {
-            successMsg.classList.remove('visible');
-          }, 4000);
-        }
-      }, 500);
-    });
+  function updateSketchLang() {
+    const img = document.getElementById('footer-sketch-img');
+    if (!img) return;
+    const lang = localStorage.getItem('bsl-lang') || 'en';
+    const src = lang === 'es' ? img.dataset.srcEs : img.dataset.srcEn;
+    if (src && img.getAttribute('src') !== src) {
+      img.setAttribute('src', src);
+    }
   }
+
+  // Set on load
+  updateSketchLang();
+
+  // Listen for lang toggle clicks
+  document.querySelectorAll('[data-lang-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Small delay to let i18n.js update localStorage first
+      setTimeout(updateSketchLang, 50);
+    });
+  });
 </script>
+
+
 
 <style>
   .site-footer {
@@ -263,9 +239,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     grid-template-columns: 2fr 1fr 1fr;
     gap: var(--space-3xl);
     margin-bottom: var(--space-3xl);
+    position: relative;
+    z-index: 1;
   }
 
-  /* Signup */
+  /* Signup — Clipboard Design */
+  .footer-signup {
+    grid-row: 1 / 3;
+  }
+
   .footer-signup-headline {
     font-family: var(--font-display);
     font-size: var(--text-2xl);
@@ -274,73 +256,124 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     margin-bottom: var(--space-lg);
   }
 
-  .signup-form {
+  .clipboard {
+    position: relative;
+    background: linear-gradient(145deg, #6B4226, #8B5E3C, #5C3317);
+    border-radius: var(--radius-lg) var(--radius-lg) var(--radius-md) var(--radius-md);
+    padding: 40px 16px 16px;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    transition: transform var(--duration-normal) var(--ease-default);
+  }
+
+  .clipboard::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0,0,0,0.02) 3px,
+        rgba(0,0,0,0.02) 4px
+      );
+    pointer-events: none;
+  }
+
+  .clipboard:hover {
+    transform: rotate(-0.5deg) translateY(-2px);
+  }
+
+  /* Metal Clip */
+  .clipboard-clip {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
+    align-items: center;
   }
 
-  .signup-fields {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: var(--space-sm);
+  .clip-ring {
+    width: 28px;
+    height: 16px;
+    border: 3px solid #b0b8c4;
+    border-bottom: none;
+    border-radius: 14px 14px 0 0;
+    background: transparent;
+    position: relative;
+    top: -2px;
+    box-shadow: 0 -1px 2px rgba(0,0,0,0.15);
   }
 
-  /* Row 1: Name + Email (3 cols each) */
-  .signup-fields input:nth-child(1),
-  .signup-fields input:nth-child(2) {
-    grid-column: span 3;
+  .clip-body {
+    width: 72px;
+    height: 20px;
+    background: linear-gradient(180deg, #d4dae0, #a8b2bc, #c0c8d0);
+    border-radius: 4px 4px 2px 2px;
+    box-shadow:
+      0 2px 6px rgba(0,0,0,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.5),
+      inset 0 -1px 0 rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1;
   }
 
-  /* Row 2: Phone + City + Zip (2 cols each) */
-  .signup-fields input:nth-child(3),
-  .signup-fields input:nth-child(4),
-  .signup-fields input:nth-child(5) {
-    grid-column: span 2;
-  }
-
-  .signup-input {
-    width: 100%;
-    padding: 12px 16px;
-    font-family: var(--font-body);
-    font-size: var(--text-sm);
-    border: 2px solid rgba(251, 226, 186, 0.2);
-    border-radius: var(--radius-md);
-    background: rgba(255,255,255,0.08);
-    color: var(--cream);
-    outline: none;
-    transition: border-color var(--duration-fast) var(--ease-default);
-  }
-
-  .signup-input::placeholder {
-    color: rgba(251, 226, 186, 0.5);
-  }
-
-  .signup-input:focus {
-    border-color: var(--orange);
-  }
-
-  .signup-success {
-    font-family: var(--font-body);
-    font-size: var(--text-sm);
-    color: var(--gold-soft);
-    margin-top: var(--space-sm);
-    opacity: 0;
-    max-height: 0;
+  /* Paper */
+  .clipboard-paper {
+    background: #ffffff;
+    border-radius: var(--radius-sm);
     overflow: hidden;
-    transition: opacity 0.4s ease, max-height 0.4s ease, margin-top 0.4s ease;
+    padding-bottom: 40px;
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.08),
+      inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+    position: relative;
   }
 
-  .signup-success.visible {
-    opacity: 1;
-    max-height: 40px;
+  /* Faint ruled lines */
+  .clipboard-paper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      180deg,
+      transparent,
+      transparent 27px,
+      rgba(173, 216, 255, 0.15) 27px,
+      rgba(173, 216, 255, 0.15) 28px
+    );
+    pointer-events: none;
+    z-index: 1;
   }
 
-  .signup-btn {
-    animation: none !important;
-    font-size: var(--text-sm) !important;
-    padding: 14px 24px !important;
+  .paper-header {
+    padding: 12px 16px 8px;
+    border-bottom: 1px solid #eee;
+    background: linear-gradient(180deg, #fafafa, #ffffff);
+  }
+
+  .paper-title {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--blue-deeper);
+  }
+
+  .signup-embed-iframe {
+    border: none;
     width: 100%;
+    height: 540px;
+    display: block;
+    background: #ffffff;
   }
 
   /* Links */
@@ -442,6 +475,31 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     color: rgba(251, 226, 186, 0.4);
   }
 
+  /* Color-cycling Sketch */
+  .footer-sketch-wrap {
+    grid-column: 2 / 4;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow: visible;
+    margin-top: calc(-1 * var(--space-lg));
+  }
+
+  .footer-sketch {
+    width: 115%;
+    max-width: 115%;
+    object-fit: contain;
+    filter: invert(1) sepia(1) saturate(10) hue-rotate(0deg) brightness(0.85);
+    animation: sketch-color-cycle 10s linear infinite;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  @keyframes sketch-color-cycle {
+    0%     { filter: invert(1) sepia(1) saturate(10) hue-rotate(0deg) brightness(0.85); }
+    100%   { filter: invert(1) sepia(1) saturate(10) hue-rotate(360deg) brightness(0.85); }
+  }
+
   /* Responsive */
   @media (max-width: 768px) {
     .footer-grid {
@@ -458,12 +516,26 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       text-align: center;
     }
 
-    .signup-fields {
-      grid-template-columns: 1fr;
+    .clipboard {
+      padding: 36px 10px 10px;
     }
 
-    .signup-fields input {
-      grid-column: span 1 !important;
+    .clipboard:hover {
+      transform: none;
+    }
+
+    .signup-embed-iframe {
+      height: 560px;
+    }
+
+    .footer-sketch-wrap {
+      grid-column: 1;
+      margin-top: 0;
+    }
+
+    .footer-sketch {
+      width: 100%;
+      max-width: 100%;
     }
   }
 </style>

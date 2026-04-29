@@ -7,6 +7,7 @@
     "donate": "Donate"
   },
   "hero": {
+    "badge": "INDEPENDENT DEMOCRATIC SOCIALIST • IL-04",
     "headline": "Everybody has a home, and everybody eats.",
     "subheadline": "Byron Sigcho Lopez is a husband, father of little triplets, math teacher & economist, naturalized immigrant, and two-term elected Democratic Socialist Alderman from Chicago's Pilsen neighborhood.",
     "cta": "Join the Petition Blitz",
@@ -25,28 +26,20 @@
     "label": "The Platform",
     "headline": "Where everybody has a home, and everybody eats.",
     "housing": {
-      "title": "Housing as a Human Right",
-      "desc": "Our country can and must provide dignified and safe housing for every veteran and neighbor who needs a helping hand. National tenant bill of rights and expand social housing developments to lower the rent and lower the cost of buying a home."
+      "title": "Housing for every veteran and all our neighbors",
+      "desc": "More than 10,000 veterans lost their homes to foreclosure and 90,000 more are at risk. Byron will fight for a national tenant bill of rights, expanded social housing, and real power structures to bring housing dignity to every neighbor."
     },
     "economic": {
-      "title": "An Economy Putting People and Planet First",
-      "desc": "Tax the billionaires and invest our resources in creating sustainable union jobs for every worker in our communities. Raise the minimum wage to $30/hour. No bailouts for banks or tech bubbles. Investments in supporting local entrepreneurs across IL-04. Civilian climate corps jobs for green energy, natural spaces, and community resilience."
-    },
-    "education": {
-      "title": "Literacy, Curiosity, Creativity, and Inspiration Now",
-      "desc": "Every student, 0 to 100, deserves the opportunity to be inspired, pursue their curiosity, nurture their creativity, and expand their literacy. Fight to restore the U.S. Department of Education. Invest in fully funded public education and provide every student and family with robust wraparound services and extracurricular activities."
+      "title": "Green jobs. Local economies. A livable future.",
+      "desc": "Tax billionaires and invest in local economies. Raise the minimum wage to $30/hour. Support local entrepreneurs. Civilian climate corp jobs for green energy, public transit, and community resilience against storms, floods, and disasters."
     },
     "healthcare": {
-      "title": "Healthcare for All",
-      "desc": "Our resources are not endless and not one more dollar should go to greedy middlemen who do not improve the health of our people. We must pass Medicare for All, and exponentially grow our investment in the National Institutes of Health (NIH) to put more of our most curious people spending their time eliminating and curing premature causes of death or chronic illnesses like heart disease, cancer, and mental illness."
+      "title": "Medicare for all",
+      "desc": "Not one more dollar to greedy middlemen. Byron will pass Medicare for All, grow NIH investment, expand teaching hospitals, eliminate maternal infant mortality disparities, and ensure healthcare includes reproductive care, mental health, and parental time off."
     },
-    "immigration": {
-      "title": "Abolish ICE, Create a Pathway to Citizenship for Our Neighbors",
-      "desc": "No human being is illegal. Abolish ICE and end the militarized deportation machine terrorizing our communities. Ban ICE from operating on public property, shut down detention centers, and end the surveillance state targeting immigrant families. Create a clear, humane pathway to citizenship for the millions of neighbors who build our communities every day."
-    },
-    "foreignpolicy": {
-      "title": "Foreign Policy",
-      "desc": "No taxpayer dollars for apartheid and genocide. End all military aid and weapons shipments sustaining the occupation of Palestine and the genocide of its people. End the illegal, unauthorized war with Iran. Prohibit investment in Israel Bonds and contracts with corporations manufacturing weapons used for ethnic cleansing. Demand an end to U.S. imperialism and redirect those billions toward our communities at home."
+    "democracy": {
+      "title": "Democracy for the people, not for billionaires and corporations",
+      "desc": "End dark money, ban congressional stock trading, pass automatic voter registration, make Election Day a holiday, restore the Voting Rights Act, and pursue the Epstein Files. No corporate PACs. Democracy belongs to every single one of us."
     },
     "cta": "Read the Full Platform"
   },
@@ -60,19 +53,16 @@
     "ticker_label": "Powered by the People",
     "ticker_text": "Average donation: $27. No corporate PAC money. Ever.",
     "signup_headline": "Join the Movement",
-    "signup_placeholder": "Your email address",
-    "signup_name": "Your name",
-    "signup_phone": "Phone number",
-    "signup_zip": "Zip code",
-    "signup_city": "City",
-    "signup_button": "Sign Up",
+    "signup_paper_title": "✊ Volunteer Sign-Up",
+    "links_title": "Links",
+    "follow_us_title": "Follow Us",
     "paid_for": "PAID FOR BY BYRON SIGCHO LOPEZ FOR CONGRESS",
     "copyright": "© 2026 Byron Sigcho Lopez for Congress. All rights reserved."
   },
   "meet": {
+    "hero_badge": "INDEPENDENT DEMOCRATIC SOCIALIST • CHICAGO DSA • IL-04",
     "hero_headline": "An Organizer, Not a Politician.",
     "hero_sub": "From Ecuador to Tennessee to Pilsen. Byron Sigcho-Lopez came to this country alone at 17 and has spent his life fighting alongside the working class as a teacher, researcher, organizer, and unapologetic democratic socialist.",
-    "origin_label": "Early Life",
     "origin_headline": "Early Life",
     "origin_p1": "Byron first came to the United States alone as a teenager, settling in Tennessee and then moving to the Chicago area and Pilsen over 10 years ago. He was born and raised in Quito, Ecuador and came to the US following political instability in the country, and a tragic car accident that left his mother in a coma.",
     "origin_p2": "Emergency services were nearly non-existent during this period, and his family's lives were saved by passing motorists who stopped, rescued his family from the wreckage, and drove them to the hospital. When his mother awoke from the coma, she insisted her eldest leave the country for his last year of high school.",
@@ -81,6 +71,7 @@
     "education_p1": "Byron first visited Chicago with his Tennessee family who had loved ones in the Chicago area. During this first trip, they brought Byron to Pilsen to have dinner at the Nuevo Leon restaurant.",
     "education_p2": "After graduating high school in Tennessee, Byron was able to attend college on a soccer scholarship after receiving an honorable mention for the All-State Tennessee Soccer Team in high school. Byron graduated from Cumberland University with his Bachelors in Mathematics and Business Administration.",
     "education_p3": "He was also awarded the prestigious President's Award for his exceptional academic performance, and many contributions and successes in the school community during his time there. After graduation, Byron returned to Chicago and eventually settled in Pilsen to start his life.",
+    "record_kicker": "Making Illinois Home",
     "record_headline": "Teacher, Researcher, Organizer",
     "record_desc": "Byron became an adult education teacher at the University of Illinois at Chicago and founded the UIC Center for Literacy's Spanish literacy program, making the GED program at UIC much more widely accessible to Spanish speaking immigrants and residents. Seeing the need for wrap-around services, Byron also brought a case worker into the program to ensure his students' families received resources and needed services.",
     "record_desc2": "In addition to Byron's work as a teacher, he also volunteered as a youth soccer coach at Pilsen Academy. Byron earned a Master's Degree in Economics from UIC while also working as a lead researcher. He began collaborating alongside the Chicago Teachers Union in investigating the financial relationships between charter school networks like UNO, school funding, and Chicago's political elite, and organized with parents and teachers like Karen Lewis to fight for fully funded public schools.",
@@ -117,22 +108,29 @@
     "cta_donate": "Donate to the Movement"
   },
   "issues": {
+    "hero_badge": "THE WORKING-CLASS AGENDA • IL-04",
     "hero_headline": "A Platform for Working People, Not the Billionaire Class.",
     "hero_sub": "Byron is fighting to guarantee a baseline standard of dignity for working families, seniors, teachers, and marginalized groups across IL-04.",
     "grid_label": "The Issues",
-    "grid_headline": "Where everybody has a home, and everybody eats.",
-    "housing_title": "Housing as a Human Right",
-    "housing_desc": "Our country can and must provide dignified and safe housing for every veteran and neighbor who needs a helping hand. National tenant bill of rights and expand social housing developments to lower the rent and lower the cost of buying a home.",
-    "economic_title": "An Economy Putting People and Planet First",
-    "economic_desc": "Tax the billionaires and invest our resources in creating jobs that bring sustainable union jobs for every worker in our communities. Raise the minimum wage to $30/hour. No bailouts for banks or tech bubbles. Investments in supporting local entrepreneurs that form the backbone of our economy across IL-04. Civilian climate corps jobs to invest in green energy projects, expansion of natural and recreational spaces, and resilience around storms, floods, heatwaves, and disasters in our communities.",
+    "grid_headline": "Where Byron Stands",
+    "housing_title": "Housing for every veteran and all our neighbors",
+    "housing_desc": "Between May of 2025 and April of 2026, more than 10,000 veterans lost their homes to foreclosure after the Trump regime shut down a key safety net in the VA home loan program - and 90,000 more veterans are at risk of foreclosure now.",
+    "housing_desc2": "Our country can and must provide dignified and safe housing for every veteran and neighbor who needs a helping hand. Byron will fight for a national tenant bill of rights and expanded social housing developments to lower the rent and lower the cost of buying a home.",
+    "housing_desc3": "He will bring his constituent services in partnership with community and labor organizing to build real power structures to bring compassion and intervention for everyone who is in need of housing dignity.",
+    "healthcare_title": "Medicare for all",
+    "healthcare_desc": "Our resources are not endless and not one more dollar should go to greedy middlemen who do not improve the health of our people. Byron will organize for and pass Medicare for All, and exponentially grow our investment in the National Institute of Health (NIH) to direct more of our most curious students and scientists towards spending their time eliminating and curing premature causes of death or chronic illnesses like heart disease, cancer, and mental illness. We must expand teaching hospitals and support for students from underserved communities to become healthcare workers, so we can eliminate maternal infant mortality disparities including among our Black mothers and babies, and have improved health outcomes for all communities across IL-04.",
+    "healthcare_desc2": "Healthcare for all includes reproductive health care, abortion services, fertility treatments, elder care and home assistance, mental health support, and parental time off to ensure families are supported in every stage of life.",
+    "economic_title": "Green jobs. Local economies. A livable future.",
+    "economic_desc": "Our tax dollars have been misused by both political parties - on wars, on bailouts for banks and the tech bubble, for corporations that don't even pay taxes. Meanwhile the people in our neighborhoods who work every day never see their tax dollars they earned come back to serve their own future.",
+    "economic_desc2": "Byron will raise the tax rate on billionaires and invest our resources in our local economies and creating jobs that bring sustainable living-wage jobs for every worker in our communities. Raise the minimum wage to $30/hour. Investments in supporting local entrepreneurs that form the backbone of our economy across IL-04. Civilian climate corp jobs to invest in green energy projects, expansion of natural and recreational spaces, and resilience around storms, floods, heatwaves, and disasters in our communities. This will also include expanding green and public transportation options to increase pedestrian and commuter safety, and investing in renewable energy development so that we don't depend on fossil fuels to move from A to B.",
+    "democracy_title": "Democracy for the people, not for billionaires and corporations",
+    "democracy_desc": "Our democracy is supposed to work for all of us, but today it's rigged for those with the most money to the detriment to the soul of our nation. Billionaires and corporations pour millions into campaigns, lobbyists write legislation behind closed doors, and working families are left with the bill. Byron will never take a dime from corporate PACs or the political machine. In Congress, Byron will fight to end the influence of dark money, ban stock trading for members of Congress, pass automatic voter registration, make Election Day a national holiday, and restore the Voting Rights Act. Byron will forcefully pursue charges against the criminals in the Epstein Files. Democracy shouldn't be something the wealthy can buy. It should belong to every single one of us.",
+    "immigration_title": "Abolishing ICE & decriminalization of migration",
+    "immigration_desc": "No human being is illegal. Byron will fight to abolish ICE and end the militarized deportation machine terrorizing our communities. He will ban ICE from operating on public property, shut down detention centers like the Wyatt Detention Center, and end the sale of surveillance data from Flock, Ring, and other systems to resist the consolidation of a surveillance state. He will create a clear, humane pathway to citizenship for the millions of neighbors who build our communities every day. And he will enforce accountability for police officers and demilitarize law enforcement.",
     "education_title": "Literacy, Curiosity, Creativity, and Inspiration Now",
-    "education_desc": "Every student, 0 to 100, deserves the opportunity to be inspired, pursue their curiosity, nurture their creativity, and expand their literacy. Fight to restore the U.S. Department of Education and the civil rights benefits for all learners. Invest in fully funded public education based on student need and provide every student and family with robust wraparound services and extracurricular activities.",
-    "healthcare_title": "Healthcare for All",
-    "healthcare_desc": "Our resources are not endless and not one more dollar should go to greedy middlemen who do not improve the health of our people. We must pass Medicare for All, and exponentially grow our investment in the National Institutes of Health (NIH) to put more of our most curious people spending their time eliminating and curing premature causes of death or chronic illnesses like heart disease, cancer, and mental illness.",
-    "immigration_title": "Abolish ICE, Create a Pathway to Citizenship for Our Neighbors",
-    "immigration_desc": "No human being is illegal. Abolish ICE and end the militarized deportation machine terrorizing our communities. Ban ICE from operating on public property, shut down detention centers like the Wyatt Detention Center, and end the sale of surveillance data from Flock, Ring, and other systems to law enforcement. Create a clear, humane pathway to citizenship for the millions of neighbors who build our communities every day. Enforce accountability for police officers and demilitarize law enforcement.",
-    "foreignpolicy_title": "Foreign Policy",
-    "foreignpolicy_desc": "No taxpayer dollars for apartheid and genocide. End all military aid and weapons shipments sustaining the occupation of Palestine and the genocide of its people. End the illegal, unauthorized war with Iran. Prohibit state investment in Israel Bonds and contracting with any corporation that manufactures or ships weapons or technology sustaining genocide, apartheid, ethnic cleansing, and the occupation of Palestine. Demand an end to U.S. imperialism and redirect those billions toward our communities at home.",
+    "education_desc": "Every student, 0–100, deserves the opportunity to be inspired, pursue their curiosity, nurture their creativity, and expand their literacy. Byron will fight to restore the U.S. Department of Education and the civil rights benefits for all learners. He will invest in fully funded public education based on student need and provide every student and family with robust wrap around services and extracurricular activities. As an adult education teacher, Byron supports education as a lifelong pursuit and will invest in education programs for all, beyond adolescence into adulthood.",
+    "foreignpolicy_title": "No more tax dollars for war in Iran and genocide in Israel",
+    "foreignpolicy_desc": "No taxpayer dollars for forever war, apartheid and genocide. Byron will demand an end to taxpayer funded U.S. imperialism and redirect those billions toward our communities at home. Martin Luther King Jr. warned of the scourge of the three evils - poverty, racism, and militarism. Investing in global cooperation, global sustainability, and the education and health of our people is the pathway to a bright and sane future and we will build the coalition to win that future now.",
     "unbought_label": "The Democratic Socialist Commitment",
     "unbought_headline": "Unbought Representation.",
     "unbought_text": "Byron completely rejects corporate PAC money and contributions from large real estate developers. He only answers to the working-class coalition of the 4th District. His campaign is funded by small-dollar donations from neighbors, teachers, union members, and working families. This is what it means to be truly independent.",
@@ -255,6 +253,7 @@
     "community_events": "Getting signatures at community events",
     "phone_banking": "Phone banking",
     "social_media": "Posting on social media",
-    "submit": "Join the Petition Blitz"
+    "submit": "Join the Petition Blitz",
+    "success": "Thank you for joining the blitz! We'll be in touch soon. ✊"
   }
 }
