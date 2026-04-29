@@ -527,6 +527,8 @@ The clipboard look (used in Footer **and** Links page) is pure CSS — multi-dir
 
 The clipboard tilts and deepens its shadow on hover (`rotate(-1deg) translateY(-4px)`), while the paper independently rotates (`rotate(0.5deg)`). Disabled on mobile (no hover state).
 
+**Note on z-index**: The `.clipboard-paper` (and `.links-clipboard-paper`) explicitly requires `z-index: 1` to establish a local stacking context. Without this, its child `.paper-header` (`z-index: 2`) would bleed into the parent's stacking context and incorrectly render on top of the `.clipboard-clip` (`z-index: 2`) in the non-hover state.
+
 ### Footer Social Icons
 
 Five accounts in this exact order: X, Instagram, Facebook, TikTok, YouTube. Each is an inline SVG with `aria-label`. Hover background goes orange. See **Social Media Accounts** section for URLs.
