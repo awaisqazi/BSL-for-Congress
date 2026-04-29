@@ -523,9 +523,9 @@ Don't simplify this filter chain — every step is load-bearing.
 
 ### Clipboard Signup Component
 
-The clipboard look (used in Footer **and** Links page) is pure CSS — wood-grain gradient, repeating 3px stripes for grain, metal clip with ring + body, paper with faint blue ruled lines, sticker header. The form itself is a **RaiseMore iframe** at `https://www.raisemore.app/forms/signup/org_3CzwGfMfnK1106k0fBTvwYbnDKI?horizontal=false`. To swap the form, change the `src` only — clipboard styling is decorative wrapper.
+The clipboard look (used in Footer **and** Links page) is pure CSS — multi-directional wood-grain gradient, metal clip with ring + body + rivets (which physically overlaps the paper), a yellow pencil tucked underneath, and paper with faint blue ruled lines, red margin line, and 3D stack shadow. The form itself is a **RaiseMore iframe** at `https://www.raisemore.app/forms/signup/org_3CzwGfMfnK1106k0fBTvwYbnDKI?horizontal=false`. To swap the form, change the `src` only — clipboard styling is decorative wrapper.
 
-The clipboard tilts on hover (`rotate(-0.5deg) translateY(-2px)`), disabled on mobile (no hover state).
+The clipboard tilts and deepens its shadow on hover (`rotate(-1deg) translateY(-4px)`), while the paper independently rotates (`rotate(0.5deg)`). Disabled on mobile (no hover state).
 
 ### Footer Social Icons
 

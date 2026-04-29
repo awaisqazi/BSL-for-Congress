@@ -263,8 +263,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
         <div class="links-clipboard">
           <!-- Metal Clip -->
           <div class="links-clip">
-            <div class="links-clip-body"></div>
             <div class="links-clip-ring"></div>
+            <div class="links-clip-body">
+              <div class="links-clip-rivet"></div>
+              <div class="links-clip-rivet"></div>
+            </div>
+            <!-- Fun Pencil -->
+            <div class="links-clip-pencil">
+              <div class="links-pencil-eraser"></div>
+              <div class="links-pencil-ferrule"></div>
+              <div class="links-pencil-body"></div>
+              <div class="links-pencil-wood"></div>
+            </div>
           </div>
           <!-- Paper -->
           <div class="links-clipboard-paper">
@@ -554,13 +564,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
   .links-clipboard {
     position: relative;
-    background: linear-gradient(145deg, #6B4226, #8B5E3C, #5C3317);
+    background: linear-gradient(160deg, #8B5E3C 0%, #6B4226 50%, #4A2711 100%);
     border-radius: 12px 12px 8px 8px;
-    padding: 40px 14px 14px;
+    padding: 24px 12px 12px;
     box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      inset 0 2px 0 rgba(255, 255, 255, 0.15),
+      inset 0 -2px 0 rgba(0, 0, 0, 0.3),
+      inset 0 0 10px rgba(0,0,0,0.5);
+    transition: transform var(--duration-normal) var(--ease-default),
+                box-shadow var(--duration-normal) var(--ease-default);
   }
 
   .links-clipboard::before {
@@ -568,20 +581,37 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 3px,
-      rgba(0,0,0,0.02) 3px,
-      rgba(0,0,0,0.02) 4px
-    );
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.04) 2px,
+        rgba(0,0,0,0.04) 4px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 20px,
+        rgba(0,0,0,0.02) 20px,
+        rgba(0,0,0,0.02) 22px
+      );
     pointer-events: none;
+  }
+
+  .links-clipboard:hover {
+    transform: rotate(-1deg) translateY(-4px);
+    box-shadow:
+      0 16px 48px rgba(0, 0, 0, 0.5),
+      inset 0 2px 0 rgba(255, 255, 255, 0.15),
+      inset 0 -2px 0 rgba(0, 0, 0, 0.3),
+      inset 0 0 10px rgba(0,0,0,0.5);
   }
 
   /* Clip */
   .links-clip {
     position: absolute;
-    top: -10px;
+    top: -12px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
@@ -591,40 +621,105 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   }
 
   .links-clip-ring {
-    width: 28px;
-    height: 16px;
-    border: 3px solid #b0b8c4;
+    width: 40px;
+    height: 24px;
+    border: 5px solid #cbd5e1;
     border-bottom: none;
-    border-radius: 14px 14px 0 0;
+    border-radius: 20px 20px 0 0;
     background: transparent;
     position: relative;
-    top: -2px;
-    box-shadow: 0 -1px 2px rgba(0,0,0,0.15);
+    margin-bottom: -6px;
+    box-shadow: 
+      0 -2px 4px rgba(0,0,0,0.2),
+      inset 0 2px 2px rgba(255,255,255,0.8);
+    z-index: 0;
   }
 
   .links-clip-body {
-    width: 72px;
-    height: 20px;
-    background: linear-gradient(180deg, #d4dae0, #a8b2bc, #c0c8d0);
-    border-radius: 4px 4px 2px 2px;
+    width: 120px;
+    height: 36px;
+    background: linear-gradient(180deg, #f1f5f9 0%, #cbd5e1 40%, #94a3b8 100%);
+    border-radius: 6px 6px 3px 3px;
     box-shadow:
-      0 2px 6px rgba(0,0,0,0.25),
-      inset 0 1px 0 rgba(255,255,255,0.5),
-      inset 0 -1px 0 rgba(0,0,0,0.1);
+      0 6px 12px rgba(0,0,0,0.4),
+      inset 0 1px 1px rgba(255,255,255,0.9),
+      inset 0 -1px 2px rgba(0,0,0,0.2);
     position: relative;
     z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .links-clip-rivet {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #f8fafc, #64748b);
+    box-shadow: inset 0 -1px 2px rgba(0,0,0,0.4), 0 1px 1px rgba(255,255,255,0.5);
+  }
+
+  /* Pencil */
+  .links-clip-pencil {
+    position: absolute;
+    top: 24px;
+    left: -80px;
+    width: 280px;
+    height: 16px;
+    display: flex;
+    transform: rotate(2deg);
+    z-index: 0;
+    filter: drop-shadow(2px 6px 4px rgba(0,0,0,0.3));
+  }
+  
+  .links-pencil-eraser {
+    width: 16px;
+    background: linear-gradient(180deg, #fca5a5, #f87171, #ef4444);
+    border-radius: 4px 0 0 4px;
+  }
+
+  .links-pencil-ferrule {
+    width: 16px;
+    background: 
+      repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px),
+      linear-gradient(180deg, #e2e8f0, #94a3b8, #64748b);
+    border-left: 1px solid rgba(0,0,0,0.1);
+    border-right: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .links-pencil-body {
+    flex: 1;
+    background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 40%, #d97706 100%);
+    border-top: 1px solid rgba(255,255,255,0.4);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+  }
+
+  .links-pencil-wood {
+    width: 24px;
+    background: linear-gradient(90deg, #fde68a 60%, #333 60%, #333 100%);
+    clip-path: polygon(0 0, 100% 40%, 100% 60%, 0 100%);
   }
 
   /* Paper */
   .links-clipboard-paper {
-    background: #ffffff;
+    background: #fcfbf9;
     border-radius: 4px;
     overflow: hidden;
     padding-bottom: 40px;
     box-shadow:
-      0 1px 3px rgba(0, 0, 0, 0.08),
-      inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+      0 4px 12px rgba(0, 0, 0, 0.15),
+      inset 0 0 0 1px rgba(0, 0, 0, 0.04),
+      -2px 0 8px rgba(0,0,0,0.05);
     position: relative;
+    z-index: 1;
+    transform-origin: top center;
+    transition: transform var(--duration-normal) var(--ease-default);
+  }
+
+  .links-clipboard:hover .links-clipboard-paper {
+    transform: rotate(0.5deg);
   }
 
   .links-clipboard-paper::before {
@@ -635,17 +730,31 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       180deg,
       transparent,
       transparent 27px,
-      rgba(173, 216, 255, 0.15) 27px,
-      rgba(173, 216, 255, 0.15) 28px
+      rgba(173, 216, 255, 0.25) 27px,
+      rgba(173, 216, 255, 0.25) 28px
     );
     pointer-events: none;
     z-index: 1;
   }
 
+  .links-clipboard-paper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 24px;
+    width: 1px;
+    background: rgba(239, 68, 68, 0.2);
+    z-index: 1;
+    pointer-events: none;
+  }
+
   .links-paper-header {
-    padding: 12px 16px 8px;
-    border-bottom: 1px solid #eee;
-    background: linear-gradient(180deg, #fafafa, #ffffff);
+    padding: 24px 16px 12px 36px; /* Increased top padding so text clears the clip */
+    border-bottom: 2px solid rgba(0,0,0,0.03);
+    background: linear-gradient(180deg, #f8f9fa, #fcfbf9);
+    position: relative;
+    z-index: 2;
   }
 
   .links-paper-title {
