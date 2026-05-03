@@ -153,7 +153,7 @@ If you add a new paragraph to one of these blocks, **also add the matching `_des
 ```
 nav.*                  → Navigation labels (also used in Footer + Mobile drawer)
 hero.*                 → Homepage hero (Hero.astro)
-bio.*                  → Homepage "Meet the Organizer" (MeetOrganizer.astro)
+bio.*                  → Homepage "Meet Byron" bio block (MeetOrganizer.astro)
 platform.*             → Homepage platform cards (PlatformGrid.astro) + section header
 anointment.*           → Homepage "The Anointment" banner (AnointmentBanner.astro)
 footer.*               → Footer ticker, signup headline, paid-for, copyright
@@ -166,7 +166,7 @@ petition_modal.*       → Global petition modal overlay
 
 ### Dead i18n Keys
 
-**As of the last audit, there are zero dead keys.** Every translation key in `en.json` / `es.json` is referenced by exactly one or more `data-i18n` attributes in the components, and every `data-i18n` resolves on both sides (223 keys / 223 keys / 223 references). If a future audit shows drift, run the script in [Verification](#verifying-i18n-parity) below.
+**Aim for zero dead keys.** Every translation key in `en.json` / `es.json` should be referenced by one or more `data-i18n` attributes in the components, and every `data-i18n` should resolve on both sides. The exact count drifts as copy evolves — if a future audit shows drift, run the script in [Verification](#verifying-i18n-parity) below.
 
 ### Verifying i18n Parity
 
@@ -370,12 +370,16 @@ Search for `ouSFDZfJu-E` (appears twice — once in the iframe `src`, once in th
 ### Hero Text Hierarchy
 
 ```
-.hero-badge           — hero.badge          (i18n)
-.hero-headline        — hero.headline       (i18n)
-.hero-subheadline     — hero.subheadline    (i18n)
-.btn .hero-cta        — hero.cta → opens petition modal via href="#petition"
-.hero-context         — hero.context        (i18n, the long paragraph)
+.hero-badge                — hero.badge           (i18n)
+.hero-narrative            — wraps two i18n spans:
+  ├── <span data-i18n="hero.narrative_lead">  (intro sentences ending with "…safer when")
+  └── <strong .hero-tagline-highlight data-i18n="hero.tagline">  (orange uppercase callout, "everybody has a home and everybody eats.")
+.hero-narrative-secondary  — hero.narrative_run   (i18n, the November 3rd Independent run paragraph)
+.btn .hero-cta             — hero.cta → opens petition modal via href="#petition"
+.hero-context              — hero.context         (i18n, the long paragraph)
 ```
+
+**Why the headline is split into two i18n spans:** the iconic phrase "everybody has a home and everybody eats." needs to render with different typography (display font, uppercase, orange) inside the same paragraph as the surrounding narrative. Because `i18n.js` overwrites `textContent` (and would wipe any nested `<strong>` inside a single `data-i18n` element — see Gotcha #3), the lead sentences and the highlighted phrase live on two sibling elements that each carry their own `data-i18n` key. Keep this split if you edit the copy; merging into one key will lose the styling.
 
 ---
 
