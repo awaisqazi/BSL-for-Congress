@@ -25,6 +25,8 @@ export function setLang(lang) {
   document.querySelectorAll('[data-lang-toggle]').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.langToggle === lang);
   });
+
+  document.dispatchEvent(new CustomEvent('bsl:langchange', { detail: { lang } }));
 }
 
 export function applyTranslations(lang) {

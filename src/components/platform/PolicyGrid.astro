@@ -159,7 +159,8 @@
     border: 3px solid var(--orange);
     border-radius: 3px;
     padding: 4px 14px;
-    transform: rotate(-2deg);
+    --tilt: -2deg;
+    rotate: var(--tilt);
     mix-blend-mode: multiply;
   }
 
@@ -300,12 +301,16 @@
      doesn't clobber the tilt. */
   @media (min-width: 769px) {
     .policy-block:nth-child(odd) {
-      rotate: -0.6deg;
+      --tilt: -0.6deg;
     }
 
     .policy-block:nth-child(even) {
-      rotate: 0.5deg;
+      --tilt: 0.5deg;
       margin-top: var(--space-xl);
+    }
+
+    .policy-block {
+      rotate: var(--tilt, 0deg);
     }
 
     .policy-block:hover {
@@ -316,7 +321,7 @@
 
     /* Doubled class beats the nth-child stagger rules above */
     .policy-block.policy-block-wide {
-      rotate: -0.3deg;
+      --tilt: -0.3deg;
       margin-top: 0;
     }
   }

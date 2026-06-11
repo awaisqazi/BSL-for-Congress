@@ -87,7 +87,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     outline-offset: 3px;
     padding: 6px 16px;
     border-radius: 4px;
-    rotate: -1.5deg;
+    --tilt: -1.5deg;
+    rotate: var(--tilt);
     backdrop-filter: blur(4px);
   }
 

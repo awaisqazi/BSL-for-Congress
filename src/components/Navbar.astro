@@ -97,7 +97,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     } else {
       navbar?.classList.remove('scrolled');
     }
-  });
+  }, { passive: true });
 </script>
 
 <style>
