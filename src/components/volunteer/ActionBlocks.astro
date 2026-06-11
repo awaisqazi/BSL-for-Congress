@@ -1,4 +1,7 @@
 ---
+// Volunteer roles as assignment sheets pinned to the organizing wall:
+// square paper, tape, placard titles, a stamped duty line, and a
+// tear-off "Count me in" strip. No icons, no rounded cards.
 ---
 
 <section class="action-blocks section-padding" id="ways-to-fight">
@@ -8,81 +11,63 @@
 
     <div class="action-grid">
       <!-- Deep Canvassing -->
-      <div class="action-card animate-in" id="action-canvass">
-        <div class="action-card-header">
-          <span class="action-icon">🚪</span>
-          <h3 class="action-title" data-i18n="volunteer.canvass_title">Deep Canvassing</h3>
-        </div>
+      <div class="action-card animate-in anim-pin" id="action-canvass" style="--tilt: -0.7deg">
+        <h3 class="action-placard-wrap"><span class="action-placard" data-i18n="volunteer.canvass_title">Deep Canvassing</span></h3>
         <p class="action-desc" data-i18n="volunteer.canvass_desc">
           Knock on doors in Pilsen, Little Village, and the inner-ring suburbs to have meaningful, one-on-one conversations about housing, economic justice, and the fight against the machine. This is how movements are built: at the doorstep.
         </p>
         <span class="action-tag" data-i18n="volunteer.canvass_tag">In-Person • Weekends</span>
-        <button type="button" class="action-join" data-join-checks="Knock on Doors|Collect Petition Signatures"><span data-i18n="volunteer.action_join">Count me in</span> →</button>
+        <button type="button" class="action-join" data-join-checks="Knock on Doors|Collect Petition Signatures"><span data-i18n="volunteer.action_join">Count me in</span> <span class="action-join-arrow" aria-hidden="true">→</span></button>
       </div>
 
       <!-- Precinct Captains -->
-      <div class="action-card animate-in" id="action-precinct">
-        <div class="action-card-header">
-          <span class="action-icon">📋</span>
-          <h3 class="action-title" data-i18n="volunteer.precinct_title">Precinct Captains</h3>
-        </div>
+      <div class="action-card animate-in anim-pin" id="action-precinct" style="--tilt: 0.6deg; --reveal-delay: 0.08s">
+        <h3 class="action-placard-wrap"><span class="action-placard" data-i18n="volunteer.precinct_title">Precinct Captains</span></h3>
         <p class="action-desc" data-i18n="volunteer.precinct_desc">
           Lead the ground game in your neighborhood. Precinct captains coordinate local volunteers, organize neighbors to defend Byron's place on the ballot, and serve as the backbone of the campaign at the block level. Not selected? Support your captain however you can.
         </p>
         <span class="action-tag" data-i18n="volunteer.precinct_tag">Leadership • Community</span>
-        <button type="button" class="action-join" data-join-checks="Precinct Captain / Volunteer"><span data-i18n="volunteer.action_join">Count me in</span> →</button>
+        <button type="button" class="action-join" data-join-checks="Precinct Captain / Volunteer"><span data-i18n="volunteer.action_join">Count me in</span> <span class="action-join-arrow" aria-hidden="true">→</span></button>
       </div>
 
       <!-- Ticket-Splitting Education -->
-      <div class="action-card animate-in" id="action-ticket">
-        <div class="action-card-header">
-          <span class="action-icon">🗳️</span>
-          <h3 class="action-title" data-i18n="volunteer.ticket_title">Ticket-Splitting Education</h3>
-        </div>
+      <div class="action-card animate-in anim-pin" id="action-ticket" style="--tilt: -0.5deg; --reveal-delay: 0.16s">
+        <h3 class="action-placard-wrap"><span class="action-placard" data-i18n="volunteer.ticket_title">Ticket-Splitting Education</span></h3>
         <p class="action-desc" data-i18n="volunteer.ticket_desc">
           As an independent, Byron will not benefit from the straight-ticket Democratic vote. We need educators to teach voters how to split their ticket in November to defy the machine and cast a vote for a real representative.
         </p>
         <span class="action-tag" data-i18n="volunteer.ticket_tag">Critical • Voter Education</span>
-        <button type="button" class="action-join" data-join-checks="Knock on Doors|Phone/Text Banking"><span data-i18n="volunteer.action_join">Count me in</span> →</button>
+        <button type="button" class="action-join" data-join-checks="Knock on Doors|Phone/Text Banking"><span data-i18n="volunteer.action_join">Count me in</span> <span class="action-join-arrow" aria-hidden="true">→</span></button>
       </div>
 
       <!-- Digital Organizing -->
-      <div class="action-card animate-in" id="action-digital">
-        <div class="action-card-header">
-          <span class="action-icon">📱</span>
-          <h3 class="action-title" data-i18n="volunteer.digital_title">Digital Organizing & Phonebanking</h3>
-        </div>
+      <div class="action-card animate-in anim-pin" id="action-digital" style="--tilt: 0.7deg">
+        <h3 class="action-placard-wrap"><span class="action-placard" data-i18n="volunteer.digital_title">Digital Organizing & Phonebanking</span></h3>
         <p class="action-desc" data-i18n="volunteer.digital_desc">
           Reach voters where they are through rapid-response text campaigns, phone calls, and social media. This work can be done from anywhere, anytime, and is critical for expanding the movement beyond what door-knocking alone can achieve.
         </p>
         <span class="action-tag" data-i18n="volunteer.digital_tag">Remote • Flexible Hours</span>
-        <button type="button" class="action-join" data-join-checks="Phone/Text Banking|Post on Social Media"><span data-i18n="volunteer.action_join">Count me in</span> →</button>
+        <button type="button" class="action-join" data-join-checks="Phone/Text Banking|Post on Social Media"><span data-i18n="volunteer.action_join">Count me in</span> <span class="action-join-arrow" aria-hidden="true">→</span></button>
       </div>
 
       <!-- Social Media & Creative -->
-      <div class="action-card animate-in" id="action-creative">
-        <div class="action-card-header">
-          <span class="action-icon">🎨</span>
-          <h3 class="action-title" data-i18n="volunteer.creative_title">Social Media & Creative</h3>
-        </div>
+      <div class="action-card animate-in anim-pin" id="action-creative" style="--tilt: -0.6deg; --reveal-delay: 0.08s">
+        <h3 class="action-placard-wrap"><span class="action-placard" data-i18n="volunteer.creative_title">Social Media & Creative</span></h3>
         <p class="action-desc" data-i18n="volunteer.creative_desc">
           Design flyers, create campaign videos, and push content across social media. From graphic design to videography and video editing, your creative skills can amplify Byron's message to thousands of voters.
         </p>
         <span class="action-tag" data-i18n="volunteer.creative_tag">Remote • Graphic Design • Video</span>
-        <button type="button" class="action-join" data-join-checks="Help Create Marketing Collateral (Graphic Design)|Help Create Campaign Videos (Videography / Video Editing)"><span data-i18n="volunteer.action_join">Count me in</span> →</button>
+        <button type="button" class="action-join" data-join-checks="Help Create Marketing Collateral (Graphic Design)|Help Create Campaign Videos (Videography / Video Editing)"><span data-i18n="volunteer.action_join">Count me in</span> <span class="action-join-arrow" aria-hidden="true">→</span></button>
       </div>
 
       <!-- Campus & Youth Organizing -->
-      <div class="action-card animate-in" id="action-campus">
-        <div class="action-card-header">
-          <span class="action-icon">🎓</span>
-          <h3 class="action-title" data-i18n="volunteer.campus_title">Campus & Youth Organizing</h3>
-        </div>
+      <div class="action-card animate-in anim-pin" id="action-campus" style="--tilt: 0.5deg; --reveal-delay: 0.16s">
+        <h3 class="action-placard-wrap"><span class="action-placard" data-i18n="volunteer.campus_title">Campus & Youth Organizing</span></h3>
         <p class="action-desc" data-i18n="volunteer.campus_desc">
           High school ambassadors and college campus captains help mobilize the next generation. Organize voter registration drives, host campus events, and build a youth coalition that fights for affordable education and a livable future.
         </p>
         <span class="action-tag" data-i18n="volunteer.campus_tag">Students • Young Voters</span>
-        <button type="button" class="action-join" data-join-checks="High School Ambassador|College Campus Captain / Volunteer"><span data-i18n="volunteer.action_join">Count me in</span> →</button>
+        <button type="button" class="action-join" data-join-checks="High School Ambassador|College Campus Captain / Volunteer"><span data-i18n="volunteer.action_join">Count me in</span> <span class="action-join-arrow" aria-hidden="true">→</span></button>
       </div>
     </div>
   </div>
@@ -97,106 +82,140 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-xl);
-    margin-top: var(--space-2xl);
+    margin-top: var(--space-3xl);
+    align-items: start;
   }
 
+  /* Assignment sheets: square paper, taped, slightly crooked */
   .action-card {
-    background: var(--white);
-    border-radius: var(--radius-lg);
-    padding: var(--space-2xl);
-    box-shadow: var(--shadow-sm);
-    border-top: 4px solid var(--blue);
+    position: relative;
+    overflow: visible;
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
-    transition: transform var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
+    background: var(--cream-light);
+    padding: var(--space-xl) var(--space-xl) 0;
+    box-shadow: var(--shadow-md);
+    rotate: var(--tilt, 0deg);
+    transition: rotate var(--duration-normal) var(--ease-default), translate var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
+  }
+
+  .action-card::before {
+    content: '';
+    position: absolute;
+    width: 72px;
+    height: 22px;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    background: rgba(245, 208, 138, 0.65);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
   }
 
   .action-card:hover {
-    transform: translateY(-5px);
+    rotate: 0deg;
+    translate: 0 -4px;
     box-shadow: var(--shadow-lg);
-  }
-
-  .action-card-header {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-  }
-
-  .action-icon {
-    font-size: 1.8rem;
-    flex-shrink: 0;
-  }
-
-  .action-title {
-    font-family: var(--font-display);
-    font-size: var(--text-lg);
-    font-weight: 800;
-    color: var(--blue);
-  }
-
-  .action-desc {
-    font-size: var(--text-sm);
-    line-height: 1.75;
-    color: var(--gray-700);
-    flex: 1;
-  }
-
-  .action-tag {
-    font-family: var(--font-display);
-    font-size: var(--text-xs);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--orange);
-    padding-top: var(--space-sm);
-    border-top: 1px solid rgba(5, 173, 237, 0.1);
-  }
-
-  .action-join {
-    align-self: flex-start;
-    margin-top: var(--space-sm);
-    padding: 0;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-family: var(--font-display);
-    font-size: var(--text-sm);
-    font-weight: 800;
-    color: var(--blue-dark);
-    transition: color var(--duration-fast) var(--ease-default), translate var(--duration-fast) var(--ease-default);
-  }
-
-  .action-join:hover {
-    color: var(--orange-dark);
-    translate: 3px 0;
   }
 
   /* Lit up by the role picker */
   .action-card.role-highlight {
-    border: 2px solid var(--orange);
-    box-shadow: 0 0 0 5px rgba(230, 136, 28, 0.18), var(--shadow-lg);
-    translate: 0 -4px;
+    outline: 3px solid var(--orange);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 7px rgba(230, 136, 28, 0.15), var(--shadow-lg);
+  }
+
+  /* Mini placard title, painted strips */
+  .action-placard-wrap {
+    margin: calc(-1 * var(--space-2xl)) 0 var(--space-md);
+    rotate: -1deg;
+  }
+
+  .action-placard {
+    display: inline;
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 900;
+    line-height: 1.55;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--cream-light);
+    background: var(--blue-deeper);
+    padding: 0.14em 0.5em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .action-card:nth-child(even) .action-placard {
+    background: var(--orange-dark);
+  }
+
+  .action-desc {
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: var(--gray-700);
+    margin-bottom: var(--space-md);
+  }
+
+  /* Stamped duty line */
+  .action-tag {
+    align-self: flex-start;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--orange-dark);
+    border: 2px dashed rgba(230, 136, 28, 0.55);
+    border-radius: 3px;
+    padding: 3px 10px;
+    rotate: -1deg;
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Tear-off strip */
+  .action-join {
+    margin: auto calc(-1 * var(--space-xl)) 0;
+    padding: var(--space-md) var(--space-xl);
+    background: none;
+    border: none;
+    border-top: 2px dashed var(--cream-dark);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue-dark);
+    transition: background var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
+  }
+
+  .action-join:hover {
+    background: rgba(230, 136, 28, 0.12);
+    color: var(--orange-dark);
+  }
+
+  .action-join-arrow {
+    transition: translate var(--duration-fast) var(--ease-default);
+  }
+
+  .action-join:hover .action-join-arrow {
+    translate: 5px 0;
   }
 
   @media (max-width: 1024px) {
     .action-grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-lg);
-    }
-
-    .action-card {
-      padding: var(--space-xl);
     }
   }
 
   @media (max-width: 768px) {
     .action-grid {
       grid-template-columns: 1fr;
-    }
-
-    .action-card {
-      padding: var(--space-2xl);
+      gap: var(--space-2xl);
     }
   }
 </style>

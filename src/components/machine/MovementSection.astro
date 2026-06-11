@@ -13,39 +13,42 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           Byron Sigcho-Lopez is an ideologically committed democratic socialist and a firebrand who has spent his entire career fighting for the multiracial working class. He is not a politician looking for a promotion. He is an organizer who was called to serve by his community.
         </p>
 
-        <!-- Insurgent Block -->
-        <div class="movement-block animate-in">
-          <h3 class="movement-block-title" data-i18n="machine.unbought_title">
-            <span class="movement-block-icon">🚫</span>
-            The Unbought Insurgent
-          </h3>
-          <p class="movement-block-text" data-i18n="machine.unbought_text">
+        <!-- Insurgent receipt -->
+        <div class="movement-sheet animate-in anim-pin" style="--tilt: -0.7deg">
+          <span class="movement-stamp" data-i18n="machine.unbought_title">The Unbought Insurgent</span>
+          <p class="movement-sheet-text" data-i18n="machine.unbought_text">
             Unlike establishment politicians, Byron completely rejects corporate PAC money and contributions from real estate developers. His campaign is powered entirely by thousands of small-dollar grassroots donations from teachers, nurses, union members, and working families. He has upheld this commitment since his first campaign in 2015 and has never wavered.
           </p>
         </div>
 
-        <!-- Tested Record Block -->
-        <div class="movement-block animate-in">
-          <h3 class="movement-block-title" data-i18n="machine.tested_title">
-            <span class="movement-block-icon">✊</span>
-            A Tested Record
-          </h3>
-          <p class="movement-block-text" data-i18n="machine.tested_text">
+        <!-- Receipts receipt -->
+        <div class="movement-sheet animate-in anim-pin" style="--tilt: 0.6deg">
+          <span class="movement-stamp" data-i18n="machine.tested_title">A Tested Record</span>
+          <p class="movement-sheet-text" data-i18n="machine.tested_text">
             Byron's unique power comes from bottom-up organizing. As 25th Ward Alderperson, he passed anti-displacement legislation to protect homeowners from predatory developers, created over 800 units of affordable housing, stood uncompromisingly with the Chicago Teachers Union, doubled the Affordable Requirements Ordinance minimum, and joined a hunger strike to fight environmental racism. These are not campaign promises. These are receipts.
           </p>
         </div>
       </div>
 
       <div class="movement-image-stack animate-in">
-        <div class="movement-image-wrap">
+        <figure class="movement-print" style="--tilt: 0.8deg">
           <img
             src={`${base}/images/movement-frontlines.png`}
             alt="Byron organizing with community members in Pilsen"
             class="movement-image"
             loading="lazy"
           />
-        </div>
-        <div class="movement-pullquote">
+        </figure>
+        <figure class="movement-print movement-print-office" style="--tilt: -1.1deg">
+          <img
+            src={`${base}/images/issues/office.jpg`}
+            alt="Byron at a folding table in the campaign office, a hand-painted Byron for Congress poster behind him"
+            class="movement-image movement-image-office"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+        <div class="movement-pullquote" style="--tilt: -0.5deg">
           <blockquote data-i18n="machine.pullquote">
             "I have never taken a dollar from a corporation or a developer. I never will. My loyalty is to the people of this district, not to the machine."
           </blockquote>
@@ -76,69 +79,109 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     margin-bottom: var(--space-xl);
   }
 
-  .movement-block {
-    background: var(--white);
-    border-radius: var(--radius-lg);
+  /* Receipt sheets pinned to the wall: square paper, tape, a stamped title */
+  .movement-sheet {
+    position: relative;
+    overflow: visible;
+    background: var(--cream-light);
     padding: var(--space-xl);
-    border-left: 4px solid var(--orange);
-    margin-bottom: var(--space-lg);
-    box-shadow: var(--shadow-sm);
-    transition: transform var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
-  }
-
-  .movement-block:hover {
-    transform: translateY(-3px);
+    margin-bottom: var(--space-xl);
     box-shadow: var(--shadow-md);
+    rotate: var(--tilt, 0deg);
+    transition: rotate var(--duration-normal) var(--ease-default), translate var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
   }
 
-  .movement-block-title {
+  .movement-sheet::before {
+    content: '';
+    position: absolute;
+    width: 76px;
+    height: 22px;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    background: rgba(245, 208, 138, 0.65);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+  }
+
+  .movement-sheet:hover {
+    rotate: 0deg;
+    translate: 0 -3px;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .movement-stamp {
+    display: inline-block;
     font-family: var(--font-display);
-    font-size: var(--text-lg);
-    font-weight: 800;
-    color: var(--blue);
-    margin-bottom: var(--space-sm);
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
+    font-size: var(--text-sm);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--orange-dark);
+    border: 3px solid var(--orange-dark);
+    border-radius: 3px;
+    padding: 3px 12px;
+    rotate: -1.5deg;
+    margin-bottom: var(--space-md);
+    mix-blend-mode: multiply;
   }
 
-  .movement-block-icon {
-    font-size: 1.4rem;
-  }
-
-  .movement-block-text {
+  .movement-sheet-text {
     font-size: var(--text-sm);
     line-height: 1.75;
     color: var(--gray-700);
+    margin: 0;
   }
 
-  /* Image Stack */
+  /* Image stack: prints with white borders, taped up */
   .movement-image-stack {
     position: sticky;
     top: calc(var(--nav-height) + var(--space-xl));
     display: flex;
     flex-direction: column;
-    gap: var(--space-lg);
+    gap: var(--space-xl);
   }
 
-  .movement-image-wrap {
-    border-radius: var(--radius-lg);
-    overflow: hidden;
+  .movement-print {
+    position: relative;
+    margin: 0;
+    background: var(--white);
+    padding: 10px 10px 12px;
     box-shadow: var(--shadow-lg);
+    rotate: var(--tilt, 0deg);
+  }
+
+  .movement-print::before {
+    content: '';
+    position: absolute;
+    width: 84px;
+    height: 24px;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    background: rgba(245, 208, 138, 0.6);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    z-index: 1;
   }
 
   .movement-image {
     width: 100%;
-    height: 400px;
+    height: 330px;
     object-fit: cover;
     display: block;
   }
 
+  .movement-image-office {
+    height: 280px;
+    object-position: 50% 30%;
+  }
+
   .movement-pullquote {
-    background: var(--blue);
-    border-radius: var(--radius-lg);
+    background: var(--blue-deeper);
     padding: var(--space-xl);
     position: relative;
+    rotate: var(--tilt, 0deg);
+    box-shadow: var(--shadow-md);
   }
 
   .movement-pullquote::before {
@@ -149,7 +192,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     font-family: var(--font-display);
     font-size: 5rem;
     line-height: 1;
-    color: rgba(251, 226, 186, 0.15);
+    color: rgba(251, 226, 186, 0.18);
     pointer-events: none;
   }
 
@@ -175,6 +218,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     .movement-image {
       height: 280px;
+    }
+
+    .movement-image-office {
+      height: 240px;
     }
   }
 </style>
