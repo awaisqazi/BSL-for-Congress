@@ -174,7 +174,6 @@
     "stat_corporate": "Dinero de PAC Corporativos",
     "stat_developer": "Contribuciones de Desarrolladores",
     "stat_avg": "Donación Promedio",
-    "stat_donors": "Donantes de base. Esa es la meta.",
     "unbought_kicker": "\"Se necesita gente, y el pueblo vence al dinero.\""
   },
   "machine": {
@@ -279,7 +278,7 @@
     "share_btn": "Copia el Enlace y Envíalo a un Vecino",
     "cta_headline": "¿No Puedes Ser Voluntario Hoy? Financia la Defensa Legal.",
     "cta_text": "La maquinaria está pagando abogados para invalidar 22,788 firmas. Cada dólar nos ayuda a defender las peticiones del pueblo ante la Junta Electoral del Estado de Illinois y mantener tu opción en la boleta de noviembre. Esta campaña es completamente independiente y financiada por personas trabajadoras como tú.",
-    "cta_goal": "Sé uno de los 1,000 donantes de base que ponen este movimiento en plena marcha.",
+    "cta_goal": "Únete a los donantes de base que mantienen este movimiento en plena marcha.",
     "cta_donate": "Contribuye $27"
   },
   "petition_modal": {
@@ -325,7 +324,7 @@
     "r4_machine_title": "Veinte Millones de Dólares",
     "r4_machine_text": "Este ciclo en Illinois, $20 millones de AIPAC, oligarcas tecnológicos e intereses corporativos le negaron a la gente de todo el estado la oportunidad de elecciones justas.",
     "r4_movement_title": "Mil Vecinos",
-    "r4_movement_text": "Esta campaña funciona con 1,000 donaciones de base. Donación promedio: $27. Sin PAC corporativos, sin cabilderos, sin AIPAC. Nunca.",
+    "r4_movement_text": "Byron pidió 1,000 donaciones de base para poner esta campaña en plena marcha. El movimiento sigue respondiendo con más. Donación promedio: $27. Sin PAC corporativos, sin cabilderos, sin AIPAC. Nunca.",
     "r4_movement_quote": "\"Se necesita gente, y el pueblo vence al dinero.\"",
     "r4_cta": "Sé Uno de los 1,000",
     "r5_stamp": "OBJECIÓN PRESENTADA",

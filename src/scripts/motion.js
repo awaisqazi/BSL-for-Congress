@@ -68,7 +68,7 @@ function initTickers() {
 function initUrgency() {
   document.querySelectorAll('[data-days-since]').forEach((el) => {
     const since = new Date(el.dataset.daysSince + 'T00:00:00');
-    const days = Math.max(1, Math.floor((Date.now() - since.getTime()) / 86400000) + 1);
+    const days = Math.max(1, Math.floor((Date.now() - since.getTime()) / 86400000));
     el.textContent = String(days);
   });
 }

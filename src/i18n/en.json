@@ -174,7 +174,6 @@
     "stat_corporate": "Corporate PAC Money",
     "stat_developer": "Developer Contributions",
     "stat_avg": "Avg. Donation",
-    "stat_donors": "Grassroots donors. That's the goal.",
     "unbought_kicker": "\"It takes people and people defeats money.\""
   },
   "machine": {
@@ -279,7 +278,7 @@
     "share_btn": "Copy the Link, Send It to a Neighbor",
     "cta_headline": "Can't Volunteer Today? Fund the Legal Defense.",
     "cta_text": "The machine is paying lawyers to throw out 22,788 signatures. Every dollar helps us defend the people's petitions at the Illinois State Board of Elections and keep your choice on the November ballot. This campaign is entirely unbought and funded by working people like you.",
-    "cta_goal": "Be one of the 1,000 grassroots donors who put this movement in full swing.",
+    "cta_goal": "Join the grassroots donors who keep this movement in full swing.",
     "cta_donate": "Chip in $27"
   },
   "petition_modal": {
@@ -325,7 +324,7 @@
     "r4_machine_title": "Twenty Million Dollars",
     "r4_machine_text": "This cycle in Illinois, $20 million from AIPAC, big tech oligarchs, and corporate interests denied people across the state the chance for fair elections.",
     "r4_movement_title": "A Thousand Neighbors",
-    "r4_movement_text": "This campaign runs on 1,000 grassroots donations. Average gift: $27. No corporate PACs, no lobbyists, no AIPAC. Ever.",
+    "r4_movement_text": "Byron asked for 1,000 grassroots donations to put this campaign in full swing. The movement keeps answering with more. Average gift: $27. No corporate PACs, no lobbyists, no AIPAC. Ever.",
     "r4_movement_quote": "\"It takes people and people defeats money.\"",
     "r4_cta": "Be One of the 1,000",
     "r5_stamp": "OBJECTION FILED",

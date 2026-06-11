@@ -1,35 +1,38 @@
 ---
-// The Promise Kept arc: 697 (their bar) -> 10,816 (the law's bar) ->
-// 20,000 (the room's promise) -> 22,788 (the movement's answer).
-// Numbers are literals outside data-i18n; labels translate.
+// The Promise Kept, drawn as four bars: their candidate's 697, the law's
+// 10,816, the room's promised 20,000 (dashed outline), and the movement's
+// 22,788 sweeping past them all. Numbers are literals outside data-i18n;
+// labels translate.
 export interface Props {
   variant?: 'full' | 'compact';
 }
 const { variant = 'full' } = Astro.props;
 
 const MAX = 22788;
-const markers = [
-  { value: 697, key: 'counter.marker_machine', label: "Their candidate's bar" },
-  { value: 10816, key: 'counter.marker_law', label: "The law's bar for Byron" },
-  { value: 20000, key: 'counter.marker_promise', label: "The room's promise" },
-  { value: 22788, key: 'counter.marker_delivered', label: "The movement's answer" },
+const rows = [
+  { value: 697, key: 'counter.marker_machine', label: "Their candidate's bar", kind: 'machine' },
+  { value: 10816, key: 'counter.marker_law', label: "The law's bar for Byron", kind: 'law' },
+  { value: 20000, key: 'counter.marker_promise', label: "The room's promise", kind: 'promise' },
+  { value: 22788, key: 'counter.marker_delivered', label: "The movement's answer", kind: 'delivered' },
 ];
 ---
 
 <div class={`promise-counter animate-in ${variant === 'compact' ? 'pc-compact' : ''}`}>
-  <div class="pc-readout">
-    <span class="pc-number stat-tabular" data-countup="22788" data-countup-duration="2500">22,788</span>
-    <span class="pc-readout-label" data-i18n="counter.readout_label">valid signatures filed with the State Board of Elections</span>
-  </div>
+  {variant === 'full' && (
+    <div class="pc-readout">
+      <span class="pc-number stat-tabular" data-countup="22788" data-countup-duration="2500">22,788</span>
+      <span class="pc-readout-label" data-i18n="counter.readout_label">valid signatures filed with the State Board of Elections</span>
+    </div>
+  )}
 
-  <div class="pc-road" role="img" aria-label="Progress bar showing 22,788 signatures filed, passing the 697 their candidate needed, the 10,816 the law demanded, and the 20,000 the room promised.">
-    <div class="pc-track"></div>
-    <div class="pc-fill"></div>
-    {markers.map((m) => (
-      <div class="pc-marker" style={`left: ${(m.value / MAX) * 100}%`}>
-        <span class="pc-marker-tick"></span>
-        <span class="pc-marker-value stat-tabular">{m.value.toLocaleString('en-US')}</span>
-        <span class="pc-marker-label" data-i18n={m.key}>{m.label}</span>
+  <div class="pc-chart" role="img" aria-label="Bar chart: their candidate needed 697 signatures, the law demanded 10,816 from Byron, the room promised 20,000, and the movement delivered 22,788.">
+    {rows.map((row, i) => (
+      <div class={`pc-row pc-row-${row.kind}`}>
+        <span class="pc-row-label" data-i18n={row.key}>{row.label}</span>
+        <div class="pc-row-track">
+          <div class="pc-row-bar" style={`--bar: ${(row.value / MAX) * 100}%; --bar-delay: ${0.15 + i * 0.3}s`}></div>
+          <span class="pc-row-value stat-tabular" style={`--bar-delay: ${0.15 + i * 0.3}s`} data-countup={row.value} data-countup-duration="1100">{row.value.toLocaleString('en-US')}</span>
+        </div>
       </div>
     ))}
   </div>
@@ -44,15 +47,15 @@ const markers = [
     width: 100%;
     max-width: 860px;
     margin: 0 auto;
-    text-align: center;
   }
 
   .pc-readout {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
+    gap: 4px;
     margin-bottom: var(--space-2xl);
+    text-align: center;
   }
 
   .pc-number {
@@ -74,138 +77,150 @@ const markers = [
     opacity: 0.85;
   }
 
-  .pc-road {
+  .pc-chart {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .pc-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .pc-row-label {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.35;
+    text-align: right;
+    color: inherit;
+    opacity: 0.85;
+  }
+
+  .pc-row-track {
     position: relative;
-    height: 10px;
-    margin: 0 var(--space-xl) var(--space-3xl);
+    display: flex;
+    align-items: center;
+    height: 34px;
   }
 
-  .pc-track {
-    position: absolute;
-    inset: 0;
-    background: rgba(3, 109, 153, 0.18);
-    border-radius: 100px;
-  }
-
-  .pc-fill {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, var(--orange-dark), var(--orange), var(--orange-light));
-    border-radius: 100px;
+  .pc-row-bar {
+    width: var(--bar);
+    height: 100%;
+    border-radius: 6px;
     transform: scaleX(0);
     transform-origin: left;
   }
 
-  .visible .pc-fill {
-    animation: pc-fill-grow 2.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  .visible .pc-row-bar {
+    animation: pc-bar-grow 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--bar-delay) forwards;
   }
 
-  @keyframes pc-fill-grow {
+  @keyframes pc-bar-grow {
     to { transform: scaleX(1); }
   }
 
-  .pc-marker {
-    position: absolute;
-    top: 50%;
-    width: 0;
-  }
-
-  .pc-marker-tick {
-    position: absolute;
-    left: -1.5px;
-    top: -14px;
-    width: 3px;
-    height: 28px;
-    border-radius: 2px;
-    background: var(--blue-deeper);
-    opacity: 0;
-    scale: 0.4;
-  }
-
-  .visible .pc-marker-tick {
-    animation: pc-pop 0.4s var(--ease-out-back) forwards;
-  }
-
-  .pc-marker-value {
-    position: absolute;
-    top: -42px;
-    left: 0;
-    translate: -50% 0;
+  .pc-row-value {
     font-family: var(--font-display);
-    font-size: var(--text-xs);
+    font-size: var(--text-lg);
     font-weight: 900;
+    line-height: 1;
+    margin-left: var(--space-md);
     color: inherit;
     opacity: 0;
   }
 
-  .pc-marker-label {
-    position: absolute;
-    top: 20px;
-    left: 0;
-    translate: -50% 0;
-    width: 110px;
-    font-family: var(--font-display);
-    font-size: 0.65rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    line-height: 1.3;
-    color: inherit;
-    opacity: 0;
+  .visible .pc-row-value {
+    animation: pc-value-in 0.4s var(--ease-default) var(--bar-delay) forwards;
   }
 
-  .visible .pc-marker-value,
-  .visible .pc-marker-label {
-    animation: pc-fade 0.5s var(--ease-default) forwards;
+  @keyframes pc-value-in {
+    to { opacity: 1; }
   }
 
-  @keyframes pc-pop {
-    to { opacity: 1; scale: 1; }
+  /* Bar treatments */
+  .pc-row-machine .pc-row-bar {
+    background: var(--gray-500);
+    min-width: 10px;
   }
 
-  @keyframes pc-fade {
-    to { opacity: 0.9; }
+  .pc-row-law .pc-row-bar {
+    background: var(--blue-deeper);
   }
 
-  /* Stagger the marker reveals to ride the fill sweep */
-  .pc-marker:nth-child(3) .pc-marker-tick,
-  .pc-marker:nth-child(3) .pc-marker-value,
-  .pc-marker:nth-child(3) .pc-marker-label { animation-delay: 0.15s; }
-  .pc-marker:nth-child(4) .pc-marker-tick,
-  .pc-marker:nth-child(4) .pc-marker-value,
-  .pc-marker:nth-child(4) .pc-marker-label { animation-delay: 1.2s; }
-  .pc-marker:nth-child(5) .pc-marker-tick,
-  .pc-marker:nth-child(5) .pc-marker-value,
-  .pc-marker:nth-child(5) .pc-marker-label { animation-delay: 2.0s; }
-  .pc-marker:nth-child(6) .pc-marker-tick,
-  .pc-marker:nth-child(6) .pc-marker-value,
-  .pc-marker:nth-child(6) .pc-marker-label { animation-delay: 2.35s; }
+  .pc-row-promise .pc-row-bar {
+    background: transparent;
+    border: 2.5px dashed rgba(230, 136, 28, 0.75);
+  }
 
-  .pc-marker:nth-child(6) .pc-marker-tick { background: var(--orange-dark); }
-  .pc-marker:nth-child(6) .pc-marker-value { font-size: var(--text-sm); }
+  .pc-row-promise .pc-row-label,
+  .pc-row-promise .pc-row-value {
+    color: var(--orange-dark);
+    opacity: 1;
+  }
+
+  .pc-row-delivered .pc-row-bar {
+    background: linear-gradient(90deg, var(--orange-dark), var(--orange), var(--orange-light));
+    box-shadow: 0 2px 16px rgba(230, 136, 28, 0.35);
+  }
+
+  .pc-row-delivered .pc-row-label {
+    opacity: 1;
+    font-weight: 900;
+  }
+
+  .pc-row-delivered .pc-row-value {
+    font-size: var(--text-2xl);
+    color: var(--orange);
+  }
 
   .pc-caption {
+    margin-top: var(--space-2xl);
     font-family: var(--font-display);
     font-size: var(--text-lg);
     font-weight: 800;
+    text-align: center;
     color: inherit;
   }
 
-  .pc-compact .pc-number { font-size: var(--text-4xl); }
-  .pc-compact .pc-road { margin-bottom: var(--space-2xl); }
-  .pc-compact .pc-readout { margin-bottom: var(--space-xl); }
+  .pc-compact .pc-chart {
+    gap: var(--space-md);
+  }
+
+  .pc-compact .pc-row-track {
+    height: 26px;
+  }
 
   @media (max-width: 768px) {
-    .pc-road { margin-left: var(--space-md); margin-right: var(--space-md); }
-    .pc-marker-label { width: 72px; font-size: 0.55rem; }
-    /* The two left markers crowd on small screens; keep ticks, hide their text */
-    .pc-marker:nth-child(3) .pc-marker-value,
-    .pc-marker:nth-child(3) .pc-marker-label { display: none; }
+    .pc-row {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    .pc-row-label {
+      text-align: left;
+    }
+
+    .pc-row-track {
+      height: 28px;
+    }
+
+    .pc-row-value {
+      font-size: var(--text-base);
+    }
+
+    .pc-row-delivered .pc-row-value {
+      font-size: var(--text-lg);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .pc-fill { transform: scaleX(1); }
-    .pc-marker-tick { opacity: 1; scale: 1; }
-    .pc-marker-value, .pc-marker-label { opacity: 0.9; }
+    .pc-row-bar { transform: scaleX(1); }
+    .pc-row-value { opacity: 1; }
   }
 </style>
