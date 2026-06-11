@@ -1,154 +1,170 @@
 ---
+// The issues as a march: eight full-bleed campaign photographs in union
+// duotone, each with a placard headline and the platform copy on a taped
+// flyer. Bands mirror left/right; hover develops the photo into color.
+// Campaign-authored copy is frozen; only the presentation changed.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const img = (name) => `${base}/images/issues/${name}`;
 ---
 
-<section class="policy-grid-section section-padding" id="issues">
-  <div class="container">
+<section class="march" id="issues">
+  <div class="container march-intro">
     <div class="stamp-label-wrap">
       <span class="section-label stamp-label animate-in anim-stamp" data-i18n="issues.grid_label">The Issues</span>
     </div>
     <h2 class="section-title animate-in" style="text-align:center;" data-i18n="issues.grid_headline">Where Byron Stands</h2>
+  </div>
 
-    <div class="policy-grid">
-      <!-- Row 1: Housing (long, 3 paragraphs) + Medicare (long, 2 paragraphs) -->
+  <div class="march-bands">
 
-      <!-- Housing -->
-      <div class="policy-block animate-in anim-pin" id="housing">
-        <div class="policy-icon-wrap">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-            <polyline points="9 22 9 12 15 12 15 22"/>
-          </svg>
-        </div>
-        <h3 class="policy-title" data-i18n="issues.housing_title">Housing for every veteran and all our neighbors</h3>
-        <p class="policy-desc" data-i18n="issues.housing_desc">Between May of 2025 and April of 2026, more than 10,000 veterans lost their homes to foreclosure after the Trump regime shut down a key safety net in the VA home loan program - and 90,000 more veterans are at risk of foreclosure now.</p>
-        <p class="policy-desc" data-i18n="issues.housing_desc2">Our country can and must provide dignified and safe housing for every veteran and neighbor who needs a helping hand. Byron will fight for a national tenant bill of rights and expanded social housing developments to lower the rent and lower the cost of buying a home.</p>
-        <p class="policy-desc" data-i18n="issues.housing_desc3">He will bring his constituent services in partnership with community and labor organizing to build real power structures to bring compassion and intervention for everyone who is in need of housing dignity.</p>
+    <!-- 01 Housing -->
+    <article class="band" id="housing">
+      <div class="band-photo animate-in anim-left">
+        <img src={img('housing.jpg')} width="1400" height="1050" alt="Byron speaking with a living room full of neighbors at a Hyde Park meet and greet" loading="lazy" decoding="async" style="object-position: 50% 35%" />
+        <div class="band-wash" aria-hidden="true"></div>
+        <span class="band-num" aria-hidden="true">01</span>
+        <span class="band-caption"><span data-i18n="issues.housing_caption">A living room full of neighbors, Hyde Park</span></span>
       </div>
-
-      <!-- Medicare for All -->
-      <div class="policy-block animate-in anim-pin" id="healthcare">
-        <div class="policy-icon-wrap">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
-            <path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/>
-          </svg>
+      <div class="container band-inner">
+        <div class="band-flyer animate-in anim-pin" style="--tilt: -0.6deg; --reveal-delay: 0.15s">
+          <h3 class="band-placard-wrap animate-in anim-stamp" style="--tilt: -1.2deg; --reveal-delay: 0.3s"><span class="band-placard" data-i18n="issues.housing_title">Housing for every veteran and all our neighbors</span></h3>
+          <p class="band-lede" data-i18n="issues.housing_desc">Between May of 2025 and April of 2026, more than 10,000 veterans lost their homes to foreclosure after the Trump regime shut down a key safety net in the VA home loan program - and 90,000 more veterans are at risk of foreclosure now.</p>
+          <p class="band-text" data-i18n="issues.housing_desc2">Our country can and must provide dignified and safe housing for every veteran and neighbor who needs a helping hand. Byron will fight for a national tenant bill of rights and expanded social housing developments to lower the rent and lower the cost of buying a home.</p>
+          <p class="band-text" data-i18n="issues.housing_desc3">He will bring his constituent services in partnership with community and labor organizing to build real power structures to bring compassion and intervention for everyone who is in need of housing dignity.</p>
         </div>
-        <h3 class="policy-title" data-i18n="issues.healthcare_title">Medicare for all</h3>
-        <p class="policy-desc" data-i18n="issues.healthcare_desc">Our resources are not endless and not one more dollar should go to greedy middlemen who do not improve the health of our people. Byron will organize for and pass Medicare for All, and exponentially grow our investment in the National Institutes of Health (NIH) to direct more of our most curious students and scientists towards spending their time eliminating and curing premature causes of death or chronic illnesses like heart disease, cancer, and mental illness. We must expand teaching hospitals and support for students from underserved communities to become healthcare workers, so we can eliminate maternal and infant mortality disparities including among our Black mothers and babies, and have improved health outcomes for all communities across IL-04.</p>
-        <p class="policy-desc" data-i18n="issues.healthcare_desc2">Healthcare for all includes reproductive health care, abortion services, fertility treatments, elder care and home assistance, mental health support, and parental time off to ensure families are supported in every stage of life.</p>
       </div>
+    </article>
 
-      <!-- Row 2: Green Jobs (long, 2 paragraphs) + Democracy (medium-long, 1 paragraph) -->
-
-      <!-- Green Jobs -->
-      <div class="policy-block animate-in anim-pin" id="economic">
-        <div class="policy-icon-wrap">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 20h10"/>
-            <path d="M10 20c5.5-2.5.8-6.4 3-10"/>
-            <path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/>
-            <path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>
-          </svg>
+    <!-- 02 Medicare for All -->
+    <article class="band" id="healthcare">
+      <div class="band-photo animate-in anim-right">
+        <img src={img('healthcare.jpg')} width="1400" height="1050" alt="Byron with union nurses holding a Union Nurses Build Healthy Communities sign" loading="lazy" decoding="async" style="object-position: 50% 40%" />
+        <div class="band-wash" aria-hidden="true"></div>
+        <span class="band-num" aria-hidden="true">02</span>
+        <span class="band-caption"><span data-i18n="issues.healthcare_caption">With Chicago's union nurses</span></span>
+      </div>
+      <div class="container band-inner">
+        <div class="band-flyer animate-in anim-pin" style="--tilt: 0.5deg; --reveal-delay: 0.15s">
+          <h3 class="band-placard-wrap animate-in anim-stamp" style="--tilt: 1deg; --reveal-delay: 0.3s"><span class="band-placard" data-i18n="issues.healthcare_title">Medicare for all</span></h3>
+          <p class="band-lede" data-i18n="issues.healthcare_desc">Our resources are not endless and not one more dollar should go to greedy middlemen who do not improve the health of our people. Byron will organize for and pass Medicare for All, and exponentially grow our investment in the National Institutes of Health (NIH) to direct more of our most curious students and scientists towards spending their time eliminating and curing premature causes of death or chronic illnesses like heart disease, cancer, and mental illness. We must expand teaching hospitals and support for students from underserved communities to become healthcare workers, so we can eliminate maternal and infant mortality disparities including among our Black mothers and babies, and have improved health outcomes for all communities across IL-04.</p>
+          <p class="band-text" data-i18n="issues.healthcare_desc2">Healthcare for all includes reproductive health care, abortion services, fertility treatments, elder care and home assistance, mental health support, and parental time off to ensure families are supported in every stage of life.</p>
         </div>
-        <h3 class="policy-title" data-i18n="issues.economic_title">Green jobs. Local economies. A livable future.</h3>
-        <p class="policy-desc" data-i18n="issues.economic_desc">Our tax dollars have been misused by both political parties - on wars, on bailouts for banks and the tech bubble, for corporations that don't even pay taxes. Meanwhile the people in our neighborhoods who work every day never see their tax dollars they earned come back to serve their own future.</p>
-        <p class="policy-desc" data-i18n="issues.economic_desc2">Byron will raise the tax rate on billionaires and invest our resources in our local economies, creating sustainable living-wage jobs for every worker in our communities. Raise the minimum wage to $30/hour. Investments in supporting local entrepreneurs that form the backbone of our economy across IL-04. Civilian climate corps jobs to invest in green energy projects, expansion of natural and recreational spaces, and resilience around storms, floods, heatwaves, and disasters in our communities. This will also include expanding green and public transportation options to increase pedestrian and commuter safety, and investing in renewable energy development so that we don't depend on fossil fuels to move from A to B.</p>
       </div>
+    </article>
 
-      <!-- Democracy -->
-      <div class="policy-block animate-in anim-pin" id="democracy">
-        <div class="policy-icon-wrap">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
-            <line x1="4" x2="4" y1="22" y2="15"/>
-          </svg>
+    <!-- 03 Green Jobs (warm band) -->
+    <article class="band band-warm" id="economic">
+      <div class="band-photo animate-in anim-left">
+        <img src={img('economic.jpg')} width="1400" height="787" alt="Byron speaking through a megaphone on a picket line with striking workers" loading="lazy" decoding="async" style="object-position: 60% 50%" />
+        <div class="band-wash" aria-hidden="true"></div>
+        <span class="band-num" aria-hidden="true">03</span>
+        <span class="band-caption"><span data-i18n="issues.economic_caption">On the picket line with striking workers</span></span>
+      </div>
+      <div class="container band-inner">
+        <div class="band-flyer animate-in anim-pin" style="--tilt: -0.5deg; --reveal-delay: 0.15s">
+          <h3 class="band-placard-wrap animate-in anim-stamp" style="--tilt: -1deg; --reveal-delay: 0.3s"><span class="band-placard" data-i18n="issues.economic_title">Green jobs. Local economies. A livable future.</span></h3>
+          <p class="band-lede" data-i18n="issues.economic_desc">Our tax dollars have been misused by both political parties - on wars, on bailouts for banks and the tech bubble, for corporations that don't even pay taxes. Meanwhile the people in our neighborhoods who work every day never see their tax dollars they earned come back to serve their own future.</p>
+          <p class="band-text" data-i18n="issues.economic_desc2">Byron will raise the tax rate on billionaires and invest our resources in our local economies, creating sustainable living-wage jobs for every worker in our communities. Raise the minimum wage to $30/hour. Investments in supporting local entrepreneurs that form the backbone of our economy across IL-04. Civilian climate corps jobs to invest in green energy projects, expansion of natural and recreational spaces, and resilience around storms, floods, heatwaves, and disasters in our communities. This will also include expanding green and public transportation options to increase pedestrian and commuter safety, and investing in renewable energy development so that we don't depend on fossil fuels to move from A to B.</p>
         </div>
-        <h3 class="policy-title" data-i18n="issues.democracy_title">Democracy for the people, not for billionaires and corporations</h3>
-        <p class="policy-desc" data-i18n="issues.democracy_desc">Our democracy is supposed to work for all of us, but today it's rigged for those with the most money to the detriment of the soul of our nation. Billionaires and corporations pour millions into campaigns, lobbyists write legislation behind closed doors, and working families are left with the bill. Byron will never take a dime from corporate PACs or the political machine. In Congress, Byron will fight to end the influence of dark money, ban stock trading for members of Congress, pass automatic voter registration, make Election Day a national holiday, and restore the Voting Rights Act. Byron will forcefully pursue charges against the criminals in the Epstein Files. Democracy shouldn't be something the wealthy can buy. It should belong to every single one of us.</p>
       </div>
+    </article>
 
-      <!-- Row 3: ICE (medium) + Education (medium) -->
-
-      <!-- Immigration -->
-      <div class="policy-block animate-in anim-pin" id="immigration">
-        <div class="policy-icon-wrap">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
+    <!-- 04 Democracy -->
+    <article class="band" id="democracy">
+      <div class="band-photo animate-in anim-right">
+        <img src={img('democracy.jpg')} width="1400" height="1050" alt="Press conference on the Illinois Capitol steps beneath the Lincoln statue" loading="lazy" decoding="async" style="object-position: 50% 28%" />
+        <div class="band-wash" aria-hidden="true"></div>
+        <span class="band-num" aria-hidden="true">04</span>
+        <span class="band-caption"><span data-i18n="issues.democracy_caption">Taking the fight to Springfield</span></span>
+      </div>
+      <div class="container band-inner">
+        <div class="band-flyer animate-in anim-pin" style="--tilt: 0.6deg; --reveal-delay: 0.15s">
+          <h3 class="band-placard-wrap animate-in anim-stamp" style="--tilt: 1.2deg; --reveal-delay: 0.3s"><span class="band-placard" data-i18n="issues.democracy_title">Democracy for the people, not for billionaires and corporations</span></h3>
+          <p class="band-lede" data-i18n="issues.democracy_desc">Our democracy is supposed to work for all of us, but today it's rigged for those with the most money to the detriment of the soul of our nation. Billionaires and corporations pour millions into campaigns, lobbyists write legislation behind closed doors, and working families are left with the bill. Byron will never take a dime from corporate PACs or the political machine. In Congress, Byron will fight to end the influence of dark money, ban stock trading for members of Congress, pass automatic voter registration, make Election Day a national holiday, and restore the Voting Rights Act. Byron will forcefully pursue charges against the criminals in the Epstein Files. Democracy shouldn't be something the wealthy can buy. It should belong to every single one of us.</p>
         </div>
-        <h3 class="policy-title" data-i18n="issues.immigration_title">Abolishing ICE &amp; decriminalization of migration</h3>
-        <p class="policy-desc" data-i18n="issues.immigration_desc">No human being is illegal. Byron will fight to abolish ICE and end the militarized deportation machine terrorizing our communities. He will ban ICE from operating on public property, shut down detention centers like the Wyatt Detention Center, and end the sale of surveillance data from Flock, Ring, and other systems to resist the consolidation of a surveillance state. He will create a clear, humane pathway to citizenship for the millions of neighbors who build our communities every day. And he will enforce accountability for police officers and demilitarize law enforcement.</p>
       </div>
+    </article>
 
-      <!-- Education -->
-      <div class="policy-block animate-in anim-pin" id="education">
-        <div class="policy-icon-wrap">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-          </svg>
+    <!-- 05 Immigration -->
+    <article class="band" id="immigration">
+      <div class="band-photo animate-in anim-left">
+        <img src={img('immigration.jpg')} width="1400" height="1050" alt="Byron beside neighbors holding No ICE and immigrants rights signs at a May Day rally" loading="lazy" decoding="async" style="object-position: 50% 40%" />
+        <div class="band-wash" aria-hidden="true"></div>
+        <span class="band-num" aria-hidden="true">05</span>
+        <span class="band-caption"><span data-i18n="issues.immigration_caption">May Day, side by side with our neighbors</span></span>
+      </div>
+      <div class="container band-inner">
+        <div class="band-flyer animate-in anim-pin" style="--tilt: -0.6deg; --reveal-delay: 0.15s">
+          <h3 class="band-placard-wrap animate-in anim-stamp" style="--tilt: -1.1deg; --reveal-delay: 0.3s"><span class="band-placard" data-i18n="issues.immigration_title">Abolishing ICE &amp; decriminalization of migration</span></h3>
+          <p class="band-lede" data-i18n="issues.immigration_desc">No human being is illegal. Byron will fight to abolish ICE and end the militarized deportation machine terrorizing our communities. He will ban ICE from operating on public property, shut down detention centers like the Wyatt Detention Center, and end the sale of surveillance data from Flock, Ring, and other systems to resist the consolidation of a surveillance state. He will create a clear, humane pathway to citizenship for the millions of neighbors who build our communities every day. And he will enforce accountability for police officers and demilitarize law enforcement.</p>
         </div>
-        <h3 class="policy-title" data-i18n="issues.education_title">Literacy, Curiosity, Creativity, and Inspiration Now</h3>
-        <p class="policy-desc" data-i18n="issues.education_desc">Every student, 0–100, deserves the opportunity to be inspired, pursue their curiosity, nurture their creativity, and expand their literacy. Byron will fight to restore the U.S. Department of Education and the civil rights benefits for all learners. He will invest in fully funded public education based on student need and provide every student and family with robust wraparound services and extracurricular activities. As an adult education teacher, Byron supports education as a lifelong pursuit and will invest in education programs for all, beyond adolescence into adulthood.</p>
       </div>
+    </article>
 
-      <!-- Row 4: Family & Childcare (full-width) -->
-
-      <!-- Family & Childcare -->
-      <div class="policy-block policy-block-wide animate-in anim-pin" id="family">
-        <div class="policy-icon-wrap">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 12h.01"/>
-            <path d="M15 12h.01"/>
-            <path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"/>
-            <path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1"/>
-          </svg>
+    <!-- 06 Education -->
+    <article class="band" id="education">
+      <div class="band-photo animate-in anim-right">
+        <img src={img('education.jpg')} width="1400" height="1050" alt="Byron holding a bat with a dozen young players at 312 Baseball Lab" loading="lazy" decoding="async" style="object-position: 50% 45%" />
+        <div class="band-wash" aria-hidden="true"></div>
+        <span class="band-num" aria-hidden="true">06</span>
+        <span class="band-caption"><span data-i18n="issues.education_caption">With the next generation at 312 Baseball Lab</span></span>
+      </div>
+      <div class="container band-inner">
+        <div class="band-flyer animate-in anim-pin" style="--tilt: 0.5deg; --reveal-delay: 0.15s">
+          <h3 class="band-placard-wrap animate-in anim-stamp" style="--tilt: 1deg; --reveal-delay: 0.3s"><span class="band-placard" data-i18n="issues.education_title">Literacy, Curiosity, Creativity, and Inspiration Now</span></h3>
+          <p class="band-lede" data-i18n="issues.education_desc">Every student, 0–100, deserves the opportunity to be inspired, pursue their curiosity, nurture their creativity, and expand their literacy. Byron will fight to restore the U.S. Department of Education and the civil rights benefits for all learners. He will invest in fully funded public education based on student need and provide every student and family with robust wraparound services and extracurricular activities. As an adult education teacher, Byron supports education as a lifelong pursuit and will invest in education programs for all, beyond adolescence into adulthood.</p>
         </div>
-        <h3 class="policy-title" data-i18n="issues.family_title">No-cost childcare and a strong start for every family</h3>
-        <p class="policy-desc" data-i18n="issues.family_desc">Byron is a former Head Start teacher and a father of triplets, so he knows both sides of this fight. Childcare in Chicagoland now costs as much as rent, and parents are holding down two and three jobs with barely enough time to breathe, let alone be with their children. The billionaire class has put a paywall on family life. Byron will fight for universal, no-cost childcare for every child from 6 weeks to 5 years old, and for wages that pay childcare workers, too many of whom live in poverty today, at parity with public school teachers.</p>
-        <p class="policy-desc" data-i18n="issues.family_desc2">Byron will also fight to guarantee paid family leave, restore the expanded Child Tax Credit that cut child poverty nearly in half before Washington let it expire, and bring home federal investment for newborn essentials: diapers, wipes, swaddles, books, and a guide of resources for every new parent, modeled on more than 90 baby basket programs around the world. Every family in IL-04 deserves a baseline standard of dignity, where parents have time to help with homework and make their kids feel safe and loved, and where everybody has a home and everybody eats.</p>
       </div>
+    </article>
 
-      <!-- Row 5: Foreign Policy (short, full-width) -->
-
-      <!-- Foreign Policy -->
-      <div class="policy-block policy-block-wide animate-in anim-pin" id="foreign-policy">
-        <div class="policy-icon-wrap">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
-            <path d="M2 12h20"/>
-          </svg>
+    <!-- 07 Family (warm band) -->
+    <article class="band band-warm" id="family">
+      <div class="band-photo animate-in anim-left">
+        <img src={img('family.jpg')} width="1050" height="1400" alt="Byron with his fist raised among children holding hand-drawn May Day posters" loading="lazy" decoding="async" style="object-position: 50% 22%" />
+        <div class="band-wash" aria-hidden="true"></div>
+        <span class="band-num" aria-hidden="true">07</span>
+        <span class="band-caption"><span data-i18n="issues.family_caption">Kids lead the May Day march</span></span>
+      </div>
+      <div class="container band-inner">
+        <div class="band-flyer animate-in anim-pin" style="--tilt: -0.5deg; --reveal-delay: 0.15s">
+          <h3 class="band-placard-wrap animate-in anim-stamp" style="--tilt: -1deg; --reveal-delay: 0.3s"><span class="band-placard" data-i18n="issues.family_title">No-cost childcare and a strong start for every family</span></h3>
+          <p class="band-lede" data-i18n="issues.family_desc">Byron is a former Head Start teacher and a father of triplets, so he knows both sides of this fight. Childcare in Chicagoland now costs as much as rent, and parents are holding down two and three jobs with barely enough time to breathe, let alone be with their children. The billionaire class has put a paywall on family life. Byron will fight for universal, no-cost childcare for every child from 6 weeks to 5 years old, and for wages that pay childcare workers, too many of whom live in poverty today, at parity with public school teachers.</p>
+          <p class="band-text" data-i18n="issues.family_desc2">Byron will also fight to guarantee paid family leave, restore the expanded Child Tax Credit that cut child poverty nearly in half before Washington let it expire, and bring home federal investment for newborn essentials: diapers, wipes, swaddles, books, and a guide of resources for every new parent, modeled on more than 90 baby basket programs around the world. Every family in IL-04 deserves a baseline standard of dignity, where parents have time to help with homework and make their kids feel safe and loved, and where everybody has a home and everybody eats.</p>
         </div>
-        <h3 class="policy-title" data-i18n="issues.foreignpolicy_title">No more tax dollars for war in Iran and genocide in Israel</h3>
-        <p class="policy-desc" data-i18n="issues.foreignpolicy_desc">No taxpayer dollars for forever war, apartheid and genocide. Byron will demand an end to taxpayer funded U.S. imperialism and redirect those billions toward our communities at home. Martin Luther King Jr. warned of the scourge of the three evils - poverty, racism, and militarism. Investing in global cooperation, global sustainability, and the education and health of our people is the pathway to a bright and sane future and we will build the coalition to win that future now.</p>
       </div>
-    </div>
+    </article>
+
+    <!-- 08 Foreign Policy -->
+    <article class="band" id="foreign-policy">
+      <div class="band-photo animate-in anim-right">
+        <img src={img('foreignpolicy.jpg')} width="1050" height="1400" alt="Byron speaking on a stage beneath a Free Salah Sarsour Take Action Now billboard" loading="lazy" decoding="async" style="object-position: 50% 25%" />
+        <div class="band-wash" aria-hidden="true"></div>
+        <span class="band-num" aria-hidden="true">08</span>
+        <span class="band-caption"><span data-i18n="issues.foreignpolicy_caption">Standing up at the Free Salah rally</span></span>
+      </div>
+      <div class="container band-inner">
+        <div class="band-flyer animate-in anim-pin" style="--tilt: 0.6deg; --reveal-delay: 0.15s">
+          <h3 class="band-placard-wrap animate-in anim-stamp" style="--tilt: 1.1deg; --reveal-delay: 0.3s"><span class="band-placard" data-i18n="issues.foreignpolicy_title">No more tax dollars for war in Iran and genocide in Israel</span></h3>
+          <p class="band-lede" data-i18n="issues.foreignpolicy_desc">No taxpayer dollars for forever war, apartheid and genocide. Byron will demand an end to taxpayer funded U.S. imperialism and redirect those billions toward our communities at home. Martin Luther King Jr. warned of the scourge of the three evils - poverty, racism, and militarism. Investing in global cooperation, global sustainability, and the education and health of our people is the pathway to a bright and sane future and we will build the coalition to win that future now.</p>
+        </div>
+      </div>
+    </article>
+
   </div>
 </section>
 
 <style>
-  .policy-grid-section {
+  .march {
     background: var(--cream);
     position: relative;
+    overflow-x: clip;
   }
 
-  /* Torn-paper top edge, like a flyer ripped off a stack */
-  .policy-grid-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 14px;
-    background: var(--white);
-    clip-path: polygon(0 0, 100% 0, 100% 30%, 96% 90%, 91% 25%, 86% 75%, 81% 35%, 76% 95%, 70% 30%, 64% 70%, 58% 20%, 52% 85%, 46% 40%, 40% 90%, 34% 25%, 28% 70%, 22% 35%, 16% 95%, 10% 30%, 5% 75%, 0 40%);
+  .march-intro {
+    padding-top: var(--space-4xl);
+    padding-bottom: var(--space-3xl);
   }
 
-  /* Inked-stamp section label */
   .stamp-label-wrap {
     text-align: center;
   }
@@ -164,188 +180,276 @@
     mix-blend-mode: multiply;
   }
 
-  .policy-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-xl);
-    margin-top: var(--space-2xl);
-  }
-
-  /* Flyers taped up at a community meeting */
-  .policy-block {
+  /* ── The bands ── */
+  .band {
     position: relative;
-    overflow: visible;
-    background: var(--white);
-    border-radius: var(--radius-lg);
-    padding: var(--space-2xl) var(--space-xl);
-    box-shadow: var(--shadow-sm);
-    transition: rotate var(--duration-normal) var(--ease-default), translate var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
+    min-height: clamp(440px, 58vh, 660px);
+    display: flex;
+    align-items: center;
   }
 
-  /* Tape corners */
-  .policy-block::before,
-  .policy-block::after {
+  /* Torn cream seam at the top of every band */
+  .band::before {
     content: '';
     position: absolute;
-    width: 92px;
-    height: 26px;
-    top: -12px;
-    background: rgba(245, 208, 138, 0.55);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 18px;
+    background: var(--cream);
+    clip-path: polygon(0 0, 100% 0, 100% 30%, 96% 90%, 91% 25%, 86% 75%, 81% 35%, 76% 95%, 70% 30%, 64% 70%, 58% 20%, 52% 85%, 46% 40%, 40% 90%, 34% 25%, 28% 70%, 22% 35%, 16% 95%, 10% 30%, 5% 75%, 0 40%);
+    z-index: 3;
+  }
+
+  /* ── Duotone photo layer ── */
+  .band-photo {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: var(--cream);
+  }
+
+  .band-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.12) brightness(1.05);
+    mix-blend-mode: multiply;
+    transition: filter 0.45s var(--ease-default);
+  }
+
+  .band-wash {
+    position: absolute;
+    inset: 0;
+    background: var(--blue-deeper);
+    mix-blend-mode: screen;
+    transition: opacity 0.45s var(--ease-default);
     pointer-events: none;
   }
 
-  .policy-block::before {
-    left: 18%;
-    transform: rotate(-4deg);
+  /* Halftone print texture riding the wash */
+  .band-wash::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.5) 1px, transparent 1.4px);
+    background-size: 4px 4px;
+    mix-blend-mode: overlay;
+    opacity: 0.25;
   }
 
-  .policy-block::after {
-    right: 18%;
-    transform: rotate(3deg);
+  .band-warm .band-wash {
+    background: var(--orange-dark);
   }
 
-  .policy-block:hover {
-    translate: 0 -4px;
-    box-shadow: var(--shadow-lg);
+  /* The photo develops into full color on attention */
+  .band:hover .band-photo img,
+  .band:focus-within .band-photo img {
+    filter: none;
+    mix-blend-mode: normal;
   }
 
-  .policy-block-wide {
-    grid-column: 1 / -1;
+  .band:hover .band-wash,
+  .band:focus-within .band-wash {
+    opacity: 0.12;
   }
 
-  /* One centered piece of tape on the wide flyer */
-  .policy-block-wide::after {
-    display: none;
-  }
-
-  .policy-block-wide::before {
-    left: 50%;
-    transform: translateX(-50%) rotate(-2deg);
-  }
-
-  /* Sticker-style icon chips */
-  .policy-icon-wrap {
-    width: 64px;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(5, 173, 237, 0.08);
-    border-radius: var(--radius-sm);
-    color: var(--blue);
-    margin-bottom: var(--space-lg);
-    rotate: -3deg;
-  }
-
-  .policy-title {
+  /* ── WPA stencil numeral + tape caption on the open side ── */
+  .band-num {
+    position: absolute;
+    top: var(--space-lg);
+    right: var(--space-xl);
     font-family: var(--font-display);
-    font-size: var(--text-xl);
-    font-weight: 800;
-    color: var(--blue);
-    margin-bottom: var(--space-lg);
+    font-weight: 900;
+    font-size: clamp(4rem, 11vw, 8.5rem);
+    line-height: 1;
+    color: var(--cream);
+    mix-blend-mode: overlay;
+    opacity: 0.55;
+    z-index: 1;
   }
 
-  /* Highlighter swipe under each title (clones across wrapped lines) */
-  .policy-title {
+  .band-caption {
+    position: absolute;
+    bottom: var(--space-xl);
+    right: var(--space-xl);
+    background: rgba(245, 208, 138, 0.78);
+    padding: 4px 14px;
+    rotate: -2deg;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue-deeper);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+    z-index: 2;
+  }
+
+  .band:nth-child(even) .band-num {
+    right: auto;
+    left: var(--space-xl);
+  }
+
+  .band:nth-child(even) .band-caption {
+    right: auto;
+    left: var(--space-xl);
+    rotate: 2deg;
+  }
+
+  /* ── Flyer panel, mirrored band to band ── */
+  .band-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  .band-flyer {
+    grid-column: 1 / 7;
+    position: relative;
+    overflow: visible;
+    background: var(--cream-light);
+    padding: var(--space-xl) var(--space-xl) var(--space-2xl);
+    box-shadow: var(--shadow-lg);
+    rotate: var(--tilt, 0deg);
+    margin-block: var(--space-4xl);
+  }
+
+  .band:nth-child(even) .band-flyer {
+    grid-column: 7 / 13;
+  }
+
+  /* Tape strip pinning the flyer */
+  .band-flyer::before {
+    content: '';
+    position: absolute;
+    width: 84px;
+    height: 24px;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    background: rgba(245, 208, 138, 0.65);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+  }
+
+  /* ── Placard headline: painted strips that break out of the flyer ── */
+  .band-placard-wrap {
+    margin: calc(-1 * var(--space-3xl)) 0 var(--space-lg);
+    rotate: var(--tilt, 0deg);
+    max-width: 120%;
+  }
+
+  .band-placard {
     display: inline;
-    background-image: linear-gradient(100deg, rgba(230, 136, 28, 0) 1%, rgba(230, 136, 28, 0.35) 4%, rgba(230, 136, 28, 0.3) 96%, rgba(230, 136, 28, 0) 99%);
-    background-size: 100% 0.4em;
-    background-position: 0 92%;
-    background-repeat: no-repeat;
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 900;
+    line-height: 1.45;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    color: var(--cream-light);
+    background: var(--blue-deeper);
+    padding: 0.12em 0.45em;
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
   }
 
-  /* display:inline drops the title's margin; restore spacing on the next paragraph */
-  .policy-title + .policy-desc {
-    margin-top: var(--space-lg);
+  .band-warm .band-placard {
+    background: var(--orange-dark);
   }
 
-  .policy-desc {
+  .band-lede {
+    font-size: var(--text-base);
+    font-weight: 500;
+    line-height: 1.7;
+    color: var(--gray-700);
+    margin-bottom: var(--space-md);
+  }
+
+  .band-text {
     font-size: var(--text-sm);
     line-height: 1.7;
     color: var(--gray-700);
+    margin-bottom: var(--space-md);
   }
 
-  .policy-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    list-style: none;
+  .band-text:last-child,
+  .band-lede:last-child {
+    margin-bottom: 0;
   }
 
-  .policy-item {
-    position: relative;
-    padding-left: 24px;
-    font-size: var(--text-sm);
-    line-height: 1.7;
-    color: var(--gray-700);
-  }
-
-  .policy-item::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 8px;
-    width: 10px;
-    height: 10px;
-    background: var(--orange);
-    border-radius: 2px;
-    transform: rotate(45deg);
-  }
-
-  /* Crooked, hand-pinned stagger, desktop only.
-     Uses the independent rotate/translate properties so the global
-     .animate-in fadeInUp animation (fill: forwards on transform)
-     doesn't clobber the tilt. */
-  @media (min-width: 769px) {
-    .policy-block:nth-child(odd) {
-      --tilt: -0.6deg;
+  /* ── Tablet ── */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    .band {
+      min-height: clamp(380px, 50vh, 560px);
     }
 
-    .policy-block:nth-child(even) {
-      --tilt: 0.5deg;
-      margin-top: var(--space-xl);
+    .band-flyer {
+      grid-column: 1 / 8;
     }
 
-    .policy-block {
-      rotate: var(--tilt, 0deg);
-    }
-
-    .policy-block:hover {
-      rotate: 0deg;
-      translate: 0 -4px;
-      box-shadow: var(--shadow-lg);
-    }
-
-    /* Doubled class beats the nth-child stagger rules above */
-    .policy-block.policy-block-wide {
-      --tilt: -0.3deg;
-      margin-top: 0;
+    .band:nth-child(even) .band-flyer {
+      grid-column: 6 / 13;
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .policy-block {
-      transition: none;
-    }
-  }
-
+  /* ── Mobile: photo block, flyer pulled up over its edge ── */
   @media (max-width: 768px) {
-    .policy-grid {
-      grid-template-columns: 1fr;
+    .band {
+      min-height: auto;
+      display: block;
     }
 
-    .policy-block-wide {
-      grid-column: auto;
+    .band-photo {
+      position: relative;
+      inset: auto;
+      aspect-ratio: 4 / 3;
     }
 
-    .policy-block::before,
-    .policy-block::after {
-      width: 64px;
-      height: 20px;
-      top: -9px;
+    .band-photo img {
+      position: absolute;
+      inset: 0;
+    }
+
+    .band-inner {
+      display: block;
+    }
+
+    .band-flyer,
+    .band:nth-child(even) .band-flyer {
+      width: calc(100% - 2 * var(--space-md));
+      margin: calc(-1 * var(--space-2xl)) auto var(--space-2xl);
+    }
+
+    .band-placard {
+      font-size: var(--text-xl);
+    }
+
+    .band-placard-wrap {
+      margin-top: calc(-1 * var(--space-2xl));
+    }
+
+    .band-num {
+      font-size: clamp(3rem, 15vw, 5rem);
+    }
+
+    .band-caption {
+      bottom: var(--space-3xl);
+    }
+
+    .band::before {
+      height: 10px;
+    }
+
+    /* Horizontal slides become rises when stacked */
+    .band-photo.anim-left.visible,
+    .band-photo.anim-right.visible {
+      animation-name: fadeInUp;
     }
   }
 </style>
