@@ -1,0 +1,101 @@
+---
+// Pure-CSS marquee of movement phrases. The track holds two identical
+// sequences; both carry the same data-i18n keys so an EN/ES swap changes
+// both copies at once and the -50% loop point stays seamless.
+const phrases = [
+  { key: 'ticker.p1', text: 'Let the people decide.' },
+  { key: 'ticker.p2', text: 'People defeats money.' },
+  { key: 'ticker.p3', text: '22,788 signatures filed. 10,816 required.' },
+  { key: 'ticker.p4', text: "Don't turn on each other. Uplift each other." },
+  { key: 'ticker.p5', text: 'Another world is not only possible. It is necessary.' },
+  { key: 'ticker.p6', text: 'People before party.' },
+  { key: 'ticker.p7', text: 'Solidarity!' },
+];
+---
+
+<div class="ticker" data-ticker>
+  <div class="ticker-track">
+    <ul class="ticker-seq">
+      {phrases.map((p) => (
+        <>
+          <li class="ticker-item"><span data-i18n={p.key}>{p.text}</span></li>
+          <li class="ticker-sep" aria-hidden="true">✦</li>
+        </>
+      ))}
+    </ul>
+    <ul class="ticker-seq" aria-hidden="true">
+      {phrases.map((p) => (
+        <>
+          <li class="ticker-item"><span data-i18n={p.key}>{p.text}</span></li>
+          <li class="ticker-sep" aria-hidden="true">✦</li>
+        </>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .ticker {
+    overflow: hidden;
+    background: var(--blue-deeper);
+    border-block: 3px solid var(--gold-soft);
+    padding: var(--space-md) 0;
+  }
+
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+    animation: ticker-scroll 36s linear infinite;
+  }
+
+  .ticker-seq {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--space-2xl);
+    padding-right: var(--space-2xl);
+    margin: 0;
+    list-style: none;
+  }
+
+  .ticker-item {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--cream);
+    white-space: nowrap;
+  }
+
+  .ticker-sep {
+    color: var(--orange-light);
+    font-size: var(--text-sm);
+  }
+
+  @keyframes ticker-scroll {
+    to { transform: translateX(-50%); }
+  }
+
+  .ticker:hover .ticker-track,
+  .ticker:focus-within .ticker-track,
+  .ticker.is-offscreen .ticker-track {
+    animation-play-state: paused;
+  }
+
+  @media (max-width: 768px) {
+    .ticker-track { animation-duration: 28s; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track {
+      animation: none;
+      width: auto;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .ticker-seq[aria-hidden] { display: none; }
+    .ticker-seq { flex-wrap: wrap; justify-content: center; padding: 0 var(--space-lg); }
+  }
+</style>

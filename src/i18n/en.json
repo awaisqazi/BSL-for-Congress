@@ -260,5 +260,45 @@
     "social_media": "Posting on social media",
     "submit": "Join the Fight",
     "success": "Thank you for joining the fight! We'll be in touch soon. ✊"
+  },
+  "counter": {
+    "readout_label": "valid signatures filed with the State Board of Elections",
+    "marker_machine": "Their candidate's bar",
+    "marker_law": "The law's bar for Byron",
+    "marker_promise": "The room's promise",
+    "marker_delivered": "The movement's answer",
+    "caption": "Promise made. Promise kept. More than double the law's demand."
+  },
+  "voices": {
+    "label": "From the Announcement",
+    "headline": "The People Vouch",
+    "victoria_quote": "Boogie lives within Byron. We need him to take us to a grander scale.",
+    "victoria_role": "President, Gonzalez Foundation",
+    "mariam_quote": "A real leader shows up when you need them the most.",
+    "mariam_role": "Pilsen small business owner",
+    "robert_quote": "A guy helping you that does not know you at all says something about the person. Trust the heart.",
+    "robert_role": "Chinatown community leader",
+    "jesse_quote": "He will look out for you. He will not sell you out. His door is always open.",
+    "jesse_role": "Tenant organization president",
+    "farah_quote": "He does not just talk the talk. He embodies the struggle of his community and the promise of what it can be.",
+    "farah_role": "Human rights attorney",
+    "lee_quote": "People before party. It will always be like that, and he is the man.",
+    "lee_role": "High school student organizer",
+    "cta": "Add your voice. Join the 22,788."
+  },
+  "road": {
+    "quote": "Justice is not a destination. It is the road that is traveled.",
+    "lead": "Walk it with us. Then bring a neighbor.",
+    "cta_join": "Join the Fight",
+    "cta_donate": "Chip in $27"
+  },
+  "ticker": {
+    "p1": "Let the people decide.",
+    "p2": "People defeats money.",
+    "p3": "22,788 signatures filed. 10,816 required.",
+    "p4": "Don't turn on each other. Uplift each other.",
+    "p5": "Another world is not only possible. It is necessary.",
+    "p6": "People before party.",
+    "p7": "Solidarity!"
   }
 }

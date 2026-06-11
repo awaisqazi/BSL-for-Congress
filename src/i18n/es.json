@@ -260,5 +260,45 @@
     "social_media": "Publicar en redes sociales",
     "submit": "Únete a la Lucha",
     "success": "¡Gracias por unirte a la lucha! Pronto nos comunicaremos contigo. ✊"
+  },
+  "counter": {
+    "readout_label": "firmas válidas presentadas ante la Junta Electoral del Estado",
+    "marker_machine": "La barra de su candidata",
+    "marker_law": "La barra de la ley para Byron",
+    "marker_promise": "La promesa de la sala",
+    "marker_delivered": "La respuesta del movimiento",
+    "caption": "Promesa hecha. Promesa cumplida. Más del doble de lo que exigía la ley."
+  },
+  "voices": {
+    "label": "Desde el Anuncio",
+    "headline": "El Pueblo Responde por Él",
+    "victoria_quote": "Boogie vive dentro de Byron. Necesitamos que nos lleve a una escala más grande.",
+    "victoria_role": "Presidenta, Fundación González",
+    "mariam_quote": "Un líder de verdad aparece cuando más lo necesitas.",
+    "mariam_role": "Dueña de pequeño negocio en Pilsen",
+    "robert_quote": "Que alguien que no te conoce de nada te ayude dice mucho de la persona. Confía en el corazón.",
+    "robert_role": "Líder comunitario de Chinatown",
+    "jesse_quote": "Él va a cuidar de ti. No te va a traicionar. Su puerta siempre está abierta.",
+    "jesse_role": "Presidenta de organización de inquilinos",
+    "farah_quote": "No solo habla por hablar. Encarna la lucha de su comunidad y la promesa de lo que puede ser.",
+    "farah_role": "Abogada de derechos humanos",
+    "lee_quote": "El pueblo antes que el partido. Siempre será así, y él es el indicado.",
+    "lee_role": "Estudiante organizador de secundaria",
+    "cta": "Suma tu voz. Únete a las 22,788."
+  },
+  "road": {
+    "quote": "La justicia no es un destino. Es el camino que se recorre.",
+    "lead": "Camínalo con nosotros. Y trae a un vecino.",
+    "cta_join": "Únete a la Lucha",
+    "cta_donate": "Contribuye $27"
+  },
+  "ticker": {
+    "p1": "Que decida el pueblo.",
+    "p2": "El pueblo vence al dinero.",
+    "p3": "22,788 firmas presentadas. 10,816 requeridas.",
+    "p4": "No se ataquen entre sí. Levántense unos a otros.",
+    "p5": "Otro mundo no solo es posible. Es necesario.",
+    "p6": "El pueblo antes que el partido.",
+    "p7": "¡Solidaridad!"
   }
 }
