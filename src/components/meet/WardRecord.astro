@@ -37,18 +37,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <span class="section-label animate-in" data-i18n="meet.milestones_label" style="text-align:center;display:block;">The Path to Public Service</span>
       <div class="record-grid">
         <!-- School Closings -->
-        <div class="record-card animate-in">
-          <div class="record-card-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <!-- School Building -->
-              <path d="m4 6 8-4 8 4"/>
-              <path d="m18 10 4 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8l4-2"/>
-              <path d="M14 22v-4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v4"/>
-              <path d="M18 5v17"/>
-              <path d="M6 5v17"/>
-              <circle cx="12" cy="9" r="2"/>
-            </svg>
-          </div>
+        <div class="record-card animate-in anim-pin" style="--tilt: -0.7deg">
+          <span class="record-stop" aria-hidden="true">01</span>
           <h3 class="record-card-title" data-i18n="meet.schools_title">Fighting School Closures</h3>
           <p class="record-card-desc" data-i18n="meet.schools_desc">
             After Rahm Emanuel announced that he would be closing a hundred thirty Chicago Public Schools, Byron became involved in the Pilsen Alliance where he organized with the community to push to keep the schools open.
@@ -56,14 +46,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </div>
 
         <!-- 2015 Alderman Run -->
-        <div class="record-card animate-in">
-          <div class="record-card-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <!-- Voting/Check Square -->
-              <polyline points="9 11 12 14 22 4" />
-              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-            </svg>
-          </div>
+        <div class="record-card animate-in anim-pin" style="--tilt: 0.6deg; --reveal-delay: 0.08s">
+          <span class="record-stop" aria-hidden="true">02</span>
           <h3 class="record-card-title" data-i18n="meet.first_run_title">First Run for Alderman</h3>
           <p class="record-card-desc" data-i18n="meet.first_run_desc">
             In 2015, Byron was encouraged by community leaders Nellie Cotton and Kit Duffy to run for Alderman against the machine - now disgraced former Alderman Danny Solis. Byron came in second in the 5-way race.
@@ -71,14 +55,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </div>
 
         <!-- Pilsen Alliance Director -->
-        <div class="record-card animate-in">
-          <div class="record-card-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <!-- Map Pin/Neighborhood Defense -->
-              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
-          </div>
+        <div class="record-card animate-in anim-pin" style="--tilt: 0.5deg">
+          <span class="record-stop" aria-hidden="true">03</span>
           <h3 class="record-card-title" data-i18n="meet.alliance_title">Leading the Pilsen Alliance</h3>
           <p class="record-card-desc" data-i18n="meet.alliance_desc">
             Byron eventually served as the Director of Pilsen Alliance where he became a leader and an activist in the fight against gentrification, displacement, and corruption.
@@ -86,16 +64,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </div>
 
         <!-- DSA & Rent Control -->
-        <div class="record-card animate-in">
-          <div class="record-card-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <!-- Movement/Users -->
-              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-              <circle cx="9" cy="7" r="4"/>
-              <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-            </svg>
-          </div>
+        <div class="record-card animate-in anim-pin" style="--tilt: -0.6deg; --reveal-delay: 0.08s">
+          <span class="record-stop" aria-hidden="true">04</span>
           <h3 class="record-card-title" data-i18n="meet.dsa_title">Joining the Movement</h3>
           <p class="record-card-desc" data-i18n="meet.dsa_desc">
             He joined forces with organizers from the Chicago Democratic Socialists of America while partnering on the coalition to Lift the Ban on Rent Control across the state of Illinois, and became a member then and there.
@@ -219,46 +189,71 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     margin-top: var(--space-2xl);
   }
 
+  /* Route stops on the path: taped sheets with stencil numerals */
   .record-card {
-    background: var(--white);
-    border-radius: var(--radius-lg);
-    padding: var(--space-2xl);
-    box-shadow: var(--shadow-sm);
-    border-left: 4px solid var(--orange);
-    transition: transform var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
+    position: relative;
+    overflow: visible;
+    background: var(--cream-light);
+    padding: var(--space-xl) var(--space-2xl);
+    box-shadow: var(--shadow-md);
+    rotate: var(--tilt, 0deg);
+    transition: rotate var(--duration-normal) var(--ease-default), translate var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
+  }
+
+  .record-card::before {
+    content: '';
+    position: absolute;
+    width: 76px;
+    height: 22px;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    background: rgba(245, 208, 138, 0.65);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
   }
 
   .record-card:hover {
-    transform: translateY(-4px);
+    rotate: 0deg;
+    translate: 0 -4px;
     box-shadow: var(--shadow-lg);
   }
 
-  .record-card-icon {
-    width: 64px;
-    height: 64px;
+  .record-stop {
+    position: absolute;
+    top: -14px;
+    right: var(--space-lg);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--blue);
-    margin-bottom: var(--space-lg);
-    background: rgba(5, 173, 237, 0.08); /* Transparent blue matches PlatformGrid */
-    border-radius: var(--radius-lg);
-    padding: 8px;
-    transition: all var(--duration-normal) var(--ease-default);
-  }
-
-  .record-card:hover .record-card-icon {
-    background: var(--blue);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--orange);
     color: var(--white);
-    transform: scale(1.05);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 900;
+    box-shadow: 0 0 0 4px rgba(230, 136, 28, 0.25), var(--shadow-sm);
+    rotate: -4deg;
   }
 
   .record-card-title {
+    display: inline;
     font-family: var(--font-display);
     font-size: var(--text-xl);
-    font-weight: 800;
-    color: var(--blue);
-    margin-bottom: var(--space-md);
+    font-weight: 900;
+    color: var(--blue-deeper);
+    background-image: linear-gradient(100deg, rgba(230, 136, 28, 0) 1%, rgba(230, 136, 28, 0.35) 4%, rgba(230, 136, 28, 0.3) 96%, rgba(230, 136, 28, 0) 99%);
+    background-size: 100% 0.4em;
+    background-position: 0 92%;
+    background-repeat: no-repeat;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .record-card-title + .record-card-desc {
+    margin-top: var(--space-md);
   }
 
   .record-card-desc {
