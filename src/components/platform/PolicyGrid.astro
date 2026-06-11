@@ -3,7 +3,9 @@
 
 <section class="policy-grid-section section-padding" id="issues">
   <div class="container">
-    <span class="section-label animate-in" style="text-align:center;display:block;" data-i18n="issues.grid_label">The Issues</span>
+    <div class="stamp-label-wrap animate-in">
+      <span class="section-label stamp-label" data-i18n="issues.grid_label">The Issues</span>
+    </div>
     <h2 class="section-title animate-in" style="text-align:center;" data-i18n="issues.grid_headline">Where Byron Stands</h2>
 
     <div class="policy-grid">
@@ -114,6 +116,34 @@
 <style>
   .policy-grid-section {
     background: var(--cream);
+    position: relative;
+  }
+
+  /* Torn-paper top edge — like a flyer ripped off a stack */
+  .policy-grid-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 14px;
+    background: var(--white);
+    clip-path: polygon(0 0, 100% 0, 100% 30%, 96% 90%, 91% 25%, 86% 75%, 81% 35%, 76% 95%, 70% 30%, 64% 70%, 58% 20%, 52% 85%, 46% 40%, 40% 90%, 34% 25%, 28% 70%, 22% 35%, 16% 95%, 10% 30%, 5% 75%, 0 40%);
+  }
+
+  /* Inked-stamp section label */
+  .stamp-label-wrap {
+    text-align: center;
+  }
+
+  .stamp-label {
+    display: inline-block;
+    font-weight: 900;
+    border: 3px solid var(--orange);
+    border-radius: 3px;
+    padding: 4px 14px;
+    transform: rotate(-2deg);
+    mix-blend-mode: multiply;
   }
 
   .policy-grid {
@@ -123,17 +153,42 @@
     margin-top: var(--space-2xl);
   }
 
+  /* Flyers taped up at a community meeting */
   .policy-block {
+    position: relative;
+    overflow: visible;
     background: var(--white);
     border-radius: var(--radius-lg);
     padding: var(--space-2xl) var(--space-xl);
     box-shadow: var(--shadow-sm);
-    border-top: 4px solid var(--blue);
-    transition: transform var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
+    transition: rotate var(--duration-normal) var(--ease-default), translate var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
+  }
+
+  /* Tape corners */
+  .policy-block::before,
+  .policy-block::after {
+    content: '';
+    position: absolute;
+    width: 92px;
+    height: 26px;
+    top: -12px;
+    background: rgba(245, 208, 138, 0.55);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    pointer-events: none;
+  }
+
+  .policy-block::before {
+    left: 18%;
+    transform: rotate(-4deg);
+  }
+
+  .policy-block::after {
+    right: 18%;
+    transform: rotate(3deg);
   }
 
   .policy-block:hover {
-    transform: translateY(-4px);
+    translate: 0 -4px;
     box-shadow: var(--shadow-lg);
   }
 
@@ -141,6 +196,17 @@
     grid-column: 1 / -1;
   }
 
+  /* One centered piece of tape on the wide flyer */
+  .policy-block-wide::after {
+    display: none;
+  }
+
+  .policy-block-wide::before {
+    left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+  }
+
+  /* Sticker-style icon chips */
   .policy-icon-wrap {
     width: 64px;
     height: 64px;
@@ -148,9 +214,10 @@
     align-items: center;
     justify-content: center;
     background: rgba(5, 173, 237, 0.08);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-sm);
     color: var(--blue);
     margin-bottom: var(--space-lg);
+    rotate: -3deg;
   }
 
   .policy-title {
@@ -159,6 +226,22 @@
     font-weight: 800;
     color: var(--blue);
     margin-bottom: var(--space-lg);
+  }
+
+  /* Highlighter swipe under each title (clones across wrapped lines) */
+  .policy-title {
+    display: inline;
+    background-image: linear-gradient(100deg, rgba(230, 136, 28, 0) 1%, rgba(230, 136, 28, 0.35) 4%, rgba(230, 136, 28, 0.3) 96%, rgba(230, 136, 28, 0) 99%);
+    background-size: 100% 0.4em;
+    background-position: 0 92%;
+    background-repeat: no-repeat;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* display:inline drops the title's margin — restore spacing on the next paragraph */
+  .policy-title + .policy-desc {
+    margin-top: var(--space-lg);
   }
 
   .policy-desc {
@@ -194,6 +277,38 @@
     transform: rotate(45deg);
   }
 
+  /* Crooked, hand-pinned stagger — desktop only.
+     Uses the independent rotate/translate properties so the global
+     .animate-in fadeInUp animation (fill: forwards on transform)
+     doesn't clobber the tilt. */
+  @media (min-width: 769px) {
+    .policy-block:nth-child(odd) {
+      rotate: -0.6deg;
+    }
+
+    .policy-block:nth-child(even) {
+      rotate: 0.5deg;
+      margin-top: var(--space-xl);
+    }
+
+    .policy-block:hover {
+      rotate: 0deg;
+      translate: 0 -4px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .policy-block-wide {
+      rotate: -0.3deg;
+      margin-top: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .policy-block {
+      transition: none;
+    }
+  }
+
   @media (max-width: 768px) {
     .policy-grid {
       grid-template-columns: 1fr;
@@ -201,6 +316,13 @@
 
     .policy-block-wide {
       grid-column: auto;
+    }
+
+    .policy-block::before,
+    .policy-block::after {
+      width: 64px;
+      height: 20px;
+      top: -9px;
     }
   }
 </style>
