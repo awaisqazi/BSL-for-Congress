@@ -8,12 +8,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <!-- Image -->
       <div class="bio-image-wrap animate-in">
         <div class="bio-image-accent"></div>
-        <img 
-          src={`${base}/images/bslfamily.jpg`} 
+        <img
+          src={`${base}/images/bslfamily.jpg`}
           alt="Byron Sigcho-Lopez with family"
           class="bio-image"
           loading="lazy"
         />
+        <p class="bio-quote-card animate-in anim-pin" style="--tilt: -2deg; --reveal-delay: 0.3s" data-i18n="bio.quote_card">
+          "It takes people and people defeats money."
+        </p>
       </div>
 
       <!-- Text -->
@@ -74,6 +77,45 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   /* Image */
   .bio-image-wrap {
     position: relative;
+  }
+
+  /* Taped quote card over the photo corner */
+  .bio-quote-card {
+    position: absolute;
+    right: -14px;
+    bottom: 22px;
+    max-width: 240px;
+    margin: 0;
+    padding: var(--space-md) var(--space-lg);
+    background: var(--cream-light);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-md);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 800;
+    line-height: 1.4;
+    color: var(--blue-deeper);
+  }
+
+  .bio-quote-card::before {
+    content: '';
+    position: absolute;
+    width: 64px;
+    height: 20px;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    background: rgba(245, 208, 138, 0.6);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  }
+
+  @media (max-width: 768px) {
+    .bio-quote-card {
+      right: 4px;
+      bottom: 10px;
+      max-width: 200px;
+      font-size: var(--text-xs);
+    }
   }
 
   .bio-image-accent {

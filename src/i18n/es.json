@@ -12,7 +12,21 @@
     "tagline": "una opción.",
     "narrative_run": "Conoce cómo fue subvertida la democracia, y cómo un movimiento del poder popular está contraatacando.",
     "cta": "Únete a la Lucha",
-    "context": "El movimiento cumplió. Byron necesitaba 10,816 firmas válidas para aparecer en tu boleta del 3 de noviembre. Los voluntarios recolectaron y presentaron 22,788, más del doble del requisito. La candidata elegida a dedo por la maquinaria necesitó solo 697. Ahora los abogados de la maquinaria presentaron una objeción (9 de junio de 2026) ante la Junta Electoral del Estado de Illinois para invalidar tus firmas y sacar a Byron de la boleta. Ellos tuvieron su coronación el 17 de marzo, cuando los votantes de IL-04 solo tuvieron UNA opción. No dejaremos que borren tu voz en noviembre. Que decida el pueblo."
+    "summary": "Ellos tuvieron su coronación en marzo, cuando los votantes de IL-04 tuvieron exactamente una opción. Tú respondiste con 22,788 firmas. Ahora sus abogados intentan borrarlas. No lo permitiremos.",
+    "chip_machine": "necesitó su candidata",
+    "chip_law": "exigió la ley",
+    "chip_delivered": "entregaste tú",
+    "urgency_label": "Objeción presentada el 9 de junio. Día",
+    "urgency_label2": "de la impugnación."
+  },
+  "promise": {
+    "label": "La Promesa Cumplida",
+    "headline": "Dijeron Que No Se Podía.",
+    "beat1": "La ley de Illinois exigía 10,816 firmas válidas de un independiente. La candidata de la maquinaria necesitó 697.",
+    "beat2": "En el anuncio, un reportero preguntó si era siquiera posible. La sala levantó las manos antes de que Byron pudiera responder.",
+    "quote": "\"Superaremos las 10,000. Fácilmente. Al menos 20,000.\"",
+    "cite": "Byron, en el anuncio",
+    "cta": "Defiende las 22,788"
   },
   "bio": {
     "label": "Conoce a Byron",
@@ -21,6 +35,7 @@
     "p2": "Byron Sigcho Lopez es el único funcionario electo en esta carrera que ha entregado beneficios concretos para la gente trabajadora de Chicagoland, con un historial de construcción de coaliciones con cada vecino dispuesto a unirse para resolver los problemas que enfrentamos, juntos. Ha luchado valientemente contra la corrupción de la maquinaria política de Illinois, ayudando a desmantelar redes corruptas de escuelas charter que saquean el futuro de nuestros hijos, e incluso llevando la corrupción en el financiamiento de campañas hasta la Corte Suprema de Illinois.",
     "p3": "Byron obtuvo su Licenciatura en Matemáticas y Administración de Empresas en Cumberland University y su Maestría en Economía en la Universidad de Illinois en Chicago.",
     "p4": "Byron vive en el barrio de Pilsen con su esposa, Loreen, sus trillizos de 3 años, un perro y dos gatos.",
+    "quote_card": "\"Se necesita gente, y el pueblo vence al dinero.\"",
     "cta": "Lee la Historia Completa de Byron"
   },
   "platform": {
@@ -47,7 +62,11 @@
   "anointment": {
     "label": "¿Por Qué Independiente?",
     "headline": "La Designación",
-    "text": "Cuando el Rep. Jesús \"Chuy\" García anunció su retiro, no le dio a los votantes la oportunidad de elegir. Se postuló para un quinto mandato, y momentos antes de la fecha límite de presentación, su ex jefa de personal presentó peticiones de nominación recolectadas en solo días. García se retiró y la respaldó, entregando el puesto a una sucesora sin oposición. Ella necesitó solo 697 firmas. Los candidatos independientes deben recolectar más de 10,816. Esto no es democracia. Esto es una designación. Y cuando 22,788 votantes firmaron peticiones para poner una opción en la boleta de todos modos, la respuesta de la maquinaria fue enviar abogados: el 9 de junio de 2026, un objetor respaldado por la maquinaria presentó una impugnación para invalidar tus firmas. No elijas a su sucesora designada. Que decida el pueblo.",
+    "step1": "El Rep. Chuy García se inscribió para un quinto mandato, sin decirle a nadie que planeaba retirarse.",
+    "step2": "Momentos antes del plazo, su ex jefa de personal presentó peticiones recolectadas en solo días. Él se retiró y la respaldó. Ella necesitó solo 697 firmas.",
+    "step3": "El 17 de marzo, los votantes de IL-04 tuvieron exactamente una opción. Los independientes deben recolectar más de 10,816 firmas para noviembre.",
+    "step4": "22,788 de tus vecinos respondieron. Así que el 9 de junio, la maquinaria envió abogados para invalidar tus firmas.",
+    "kicker": "Esto no es democracia. Esto es una designación. Que decida el pueblo.",
     "cta": "Conoce la Subversión"
   },
   "footer": {

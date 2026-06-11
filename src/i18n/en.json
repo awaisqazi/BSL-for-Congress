@@ -12,7 +12,21 @@
     "tagline": "a choice.",
     "narrative_run": "Learn more about how democracy was subverted, and how a people-power movement is fighting back.",
     "cta": "Join the Fight",
-    "context": "The movement delivered. Byron needed 10,816 valid signatures to appear on your November 3rd ballot. Volunteers collected and filed 22,788, more than double the requirement. The machine's handpicked candidate needed just 697. Now machine lawyers have filed an objection (June 9, 2026) with the Illinois State Board of Elections to throw out your signatures and kick Byron off the ballot. They had their coronation on March 17th, when IL-04 voters had only ONE choice. We won't let them erase your voice in November. Let the people decide."
+    "summary": "They had their coronation in March, when IL-04 voters got exactly one choice. You answered with 22,788 signatures. Now their lawyers are trying to erase them. We won't let them.",
+    "chip_machine": "their candidate needed",
+    "chip_law": "the law demanded",
+    "chip_delivered": "you delivered",
+    "urgency_label": "Objection filed June 9. Day",
+    "urgency_label2": "of the challenge."
+  },
+  "promise": {
+    "label": "The Promise Kept",
+    "headline": "They Said It Couldn't Be Done.",
+    "beat1": "Illinois law demanded 10,816 valid signatures from an independent. The machine's candidate needed 697.",
+    "beat2": "At the announcement, a reporter asked if it was even possible. The room raised its hands before Byron could answer.",
+    "quote": "\"We'll exceed the 10,000. Easily. At least 20,000.\"",
+    "cite": "Byron, at the announcement",
+    "cta": "Defend the 22,788"
   },
   "bio": {
     "label": "Meet Byron",
@@ -21,6 +35,7 @@
     "p2": "Byron Sigcho Lopez is the only elected official in this race who has delivered material benefits for the working people of Chicagoland, with a record of coalition building with every neighbor willing to come together to solve the problems we face, together. He has courageously fought the corruption of the Illinois political machine, helping take down corrupt charter school networks looting from our children's future, and even taking campaign finance corruption all the way to the Illinois Supreme Court.",
     "p3": "Byron earned his Bachelor's in Mathematics and Business Administration from Cumberland University and his Master's in Economics from the University of Illinois at Chicago.",
     "p4": "Byron lives in the Pilsen neighborhood with his wife, Loreen, their 3-year-old triplets, a dog, and two cats.",
+    "quote_card": "\"It takes people and people defeats money.\"",
     "cta": "Read Byron's Full Story"
   },
   "platform": {
@@ -47,7 +62,11 @@
   "anointment": {
     "label": "Why Independent?",
     "headline": "The Anointment",
-    "text": "When Rep. Jesús \"Chuy\" García announced his retirement, he didn't give voters a choice. He filed for a fifth term, then moments before the filing deadline, his former chief of staff filed nominating petitions collected in just days. García withdrew and endorsed her, handing the seat to an uncontested successor. She needed only 697 signatures. Independent candidates must collect over 10,816. This is not democracy. This is an anointment. And when 22,788 voters signed petitions to put a choice on the ballot anyway, the machine's answer was to send lawyers: on June 9, 2026, a machine-backed objector filed a challenge to throw out your signatures. Don't elect their successor. Let the people decide.",
+    "step1": "Rep. Chuy García filed for a fifth term, telling no one he planned to retire.",
+    "step2": "Moments before the deadline, his former chief of staff filed petitions collected in just days. He withdrew and endorsed her. She needed only 697 signatures.",
+    "step3": "On March 17, IL-04 voters got exactly one choice. Independents must collect over 10,816 signatures for November.",
+    "step4": "22,788 of your neighbors answered. So on June 9, the machine sent lawyers to throw your signatures out.",
+    "kicker": "This is not democracy. This is an anointment. Let the people decide.",
     "cta": "Learn About the Subversion"
   },
   "footer": {
