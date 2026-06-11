@@ -38,136 +38,29 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
       </div>
 
-      <!-- Primary Links -->
+      <!-- Primary Links: taped flyer strips -->
       <div class="links-list">
-        <a
-          href={`${base}/`}
-          class="link-card animate-in"
-          target="_blank"
-          rel="noopener"
-        >
-          <span class="link-icon">
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="12" cy="12" r="10"></circle><path
-                d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path
-                d="M2 12h20"></path>
-            </svg>
-          </span>
+        <a href={`${base}/`} class="link-strip animate-in anim-pin" style="--tilt: -0.8deg" target="_blank" rel="noopener">
           <span class="link-text">Visit the Official Website</span>
           <span class="link-arrow">→</span>
         </a>
 
-        <a
-          href="https://secure.actblue.com/donate/byronfor04web/"
-          class="link-card link-card-donate animate-in"
-          target="_blank"
-          rel="noopener"
-        >
-          <span class="link-icon">
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-              ></path>
-            </svg>
-          </span>
+        <a href="https://secure.actblue.com/donate/byronfor04web/" class="link-strip link-strip-donate animate-in anim-pin" style="--tilt: 0.7deg" target="_blank" rel="noopener">
           <span class="link-text">Donate: Fund the Fight</span>
           <span class="link-arrow">→</span>
         </a>
 
-        <a
-          href={`${base}/volunteer`}
-          class="link-card animate-in"
-          target="_blank"
-          rel="noopener"
-        >
-          <span class="link-icon">
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle
-                cx="9"
-                cy="7"
-                r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path
-                d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-            </svg>
-          </span>
+        <a href={`${base}/volunteer`} class="link-strip animate-in anim-pin" style="--tilt: -0.6deg" target="_blank" rel="noopener">
           <span class="link-text">Volunteer: Join the Ground Game</span>
           <span class="link-arrow">→</span>
         </a>
 
-        <a
-          href={`${base}/platform`}
-          class="link-card animate-in"
-          target="_blank"
-          rel="noopener"
-        >
-          <span class="link-icon">
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
-              ></path><polyline points="14 2 14 8 20 8"></polyline>
-            </svg>
-          </span>
+        <a href={`${base}/platform`} class="link-strip animate-in anim-pin" style="--tilt: 0.8deg" target="_blank" rel="noopener">
           <span class="link-text">Read the Full Platform</span>
           <span class="link-arrow">→</span>
         </a>
 
-        <a
-          href={`${base}/movement`}
-          class="link-card animate-in"
-          target="_blank"
-          rel="noopener"
-        >
-          <span class="link-icon">
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"
-              ></path><path d="M12 9v4"></path><path d="M12 17h.01"></path>
-            </svg>
-          </span>
+        <a href={`${base}/movement`} class="link-strip animate-in anim-pin" style="--tilt: -0.7deg" target="_blank" rel="noopener">
           <span class="link-text">Machine vs. Movement</span>
           <span class="link-arrow">→</span>
         </a>
@@ -258,7 +151,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
         <span class="links-divider-text">Join the Movement</span>
       </div>
 
-      <!-- Volunteer Signup — Clipboard Embed -->
+      <!-- Volunteer Signup: Clipboard Embed -->
       <div class="links-form-wrap animate-in">
         <div class="links-clipboard">
           <!-- Metal Clip -->
@@ -383,27 +276,34 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     color: var(--gold-soft);
   }
 
-  /* ── Video Player ── */
+  /* ── Video: a taped print ── */
   .links-video {
     width: 100%;
+    position: relative;
+    background: var(--white);
+    padding: 8px 8px 10px;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.45);
+    rotate: -0.7deg;
+  }
+
+  .links-video::before {
+    content: '';
+    position: absolute;
+    width: 84px;
+    height: 24px;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    background: rgba(245, 208, 138, 0.7);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    z-index: 1;
   }
 
   .links-video-wrap {
     position: relative;
     width: 100%;
     padding-bottom: 56.25%; /* 16:9 */
-    border-radius: var(--radius-lg);
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
-    transition:
-      box-shadow var(--duration-normal) var(--ease-default),
-      border-color var(--duration-normal) var(--ease-default);
-  }
-
-  .links-video-wrap:hover {
-    border-color: rgba(230, 136, 28, 0.4);
-    box-shadow: 0 8px 32px rgba(230, 136, 28, 0.12);
   }
 
   .links-video-wrap iframe {
@@ -414,73 +314,58 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     height: 100%;
   }
 
-  /* ── Link Cards ── */
+  /* ── Link strips: flyers taped to the night wall ── */
   .links-list {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
+    gap: var(--space-md);
   }
 
-  .link-card {
+  .link-strip {
+    position: relative;
+    overflow: visible;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: var(--space-md);
     width: 100%;
-    padding: 16px 20px;
-    background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-lg);
-    color: #ffffff;
+    padding: 15px 20px;
+    background: var(--cream-light);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    color: var(--blue-deeper);
     font-family: var(--font-display);
     font-size: var(--text-sm);
-    font-weight: 600;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
     text-decoration: none;
-    transition: all var(--duration-normal) var(--ease-default);
+    rotate: var(--tilt, 0deg);
+    transition: rotate var(--duration-normal) var(--ease-default), translate var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
   }
 
-  .link-card:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  .link-strip::before {
+    content: '';
+    position: absolute;
+    width: 58px;
+    height: 18px;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    background: rgba(245, 208, 138, 0.7);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    pointer-events: none;
   }
 
-  .link-card-donate {
-    background: linear-gradient(
-      135deg,
-      rgba(230, 136, 28, 0.2) 0%,
-      rgba(230, 136, 28, 0.08) 100%
-    );
-    border-color: rgba(230, 136, 28, 0.35);
+  .link-strip:hover {
+    rotate: 0deg;
+    translate: 0 -3px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
   }
 
-  .link-card-donate:hover {
-    background: linear-gradient(
-      135deg,
-      rgba(230, 136, 28, 0.35) 0%,
-      rgba(230, 136, 28, 0.15) 100%
-    );
-    border-color: rgba(230, 136, 28, 0.55);
-    box-shadow: 0 8px 24px rgba(230, 136, 28, 0.15);
-  }
-
-  .link-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    flex-shrink: 0;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: var(--radius-md);
-    color: var(--gold-soft);
-  }
-
-  .link-card-donate .link-icon {
-    color: var(--orange-light);
+  .link-strip-donate {
+    background: var(--orange);
+    color: var(--white);
   }
 
   .link-text {
@@ -489,18 +374,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
   .link-arrow {
     font-size: var(--text-lg);
-    opacity: 0.4;
+    opacity: 0.55;
     transition:
       opacity var(--duration-fast) var(--ease-default),
-      transform var(--duration-fast) var(--ease-default);
+      translate var(--duration-fast) var(--ease-default);
   }
 
-  .link-card:hover .link-arrow {
-    opacity: 0.8;
-    transform: translateX(3px);
+  .link-strip:hover .link-arrow {
+    opacity: 1;
+    translate: 4px 0;
   }
 
-  /* ── Social Media Row ── */
+  /* ── Social Media Row: inspection stamps ── */
   .links-socials {
     display: flex;
     justify-content: center;
@@ -514,21 +399,26 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     justify-content: center;
     width: 48px;
     height: 48px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: rgba(255, 255, 255, 0.75);
+    border-radius: 4px;
+    border: 2px dashed rgba(245, 208, 138, 0.55);
+    color: var(--gold-soft);
     text-decoration: none;
+    rotate: -1.5deg;
     transition: all var(--duration-normal) var(--ease-default);
   }
 
+  .social-btn:nth-child(even) {
+    rotate: 1.5deg;
+  }
+
   .social-btn:hover {
-    background: rgba(230, 136, 28, 0.3);
-    border-color: rgba(230, 136, 28, 0.6);
+    background: rgba(230, 136, 28, 0.25);
+    border-color: var(--orange-light);
+    border-style: solid;
     color: #ffffff;
-    transform: translateY(-3px) scale(1.08);
-    box-shadow: 0 6px 20px rgba(230, 136, 28, 0.2);
+    rotate: 0deg;
+    translate: 0 -3px;
+    box-shadow: 0 6px 20px rgba(230, 136, 28, 0.25);
   }
 
   /* ── Divider ── */

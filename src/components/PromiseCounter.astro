@@ -10,29 +10,29 @@ const { variant = 'full' } = Astro.props;
 
 const MAX = 22788;
 const rows = [
-  { value: 697, key: 'counter.marker_machine', label: "Their candidate's bar", kind: 'machine' },
-  { value: 10816, key: 'counter.marker_law', label: "The law's bar for Byron", kind: 'law' },
-  { value: 20000, key: 'counter.marker_promise', label: "The room's promise", kind: 'promise' },
-  { value: 22788, key: 'counter.marker_delivered', label: "The movement's answer", kind: 'delivered' },
+  { value: 697, display: '697', key: 'counter.marker_machine', label: "Their candidate's bar", kind: 'machine' },
+  { value: 10816, display: '10,816', key: 'counter.marker_law', label: "The law's bar for Byron", kind: 'law' },
+  { value: 20000, display: '20,000+', key: 'counter.marker_promise', label: "The room's promise", kind: 'promise' },
+  { value: 22788, display: '22,788', key: 'counter.marker_delivered', label: "The movement's answer", kind: 'delivered' },
 ];
 ---
 
 <div class={`promise-counter animate-in ${variant === 'compact' ? 'pc-compact' : ''}`}>
   {variant === 'full' && (
     <div class="pc-readout">
-      <span class="pc-number stat-tabular" data-countup="22788" data-countup-duration="2500">22,788</span>
+      <span class="pc-number stat-tabular">22,788</span>
       <span class="pc-readout-label" data-i18n="counter.readout_label">valid signatures filed with the State Board of Elections</span>
     </div>
   )}
 
-  <div class="pc-chart" role="img" aria-label="Bar chart: their candidate needed 697 signatures, the law demanded 10,816 from Byron, the room promised 20,000, and the movement delivered 22,788.">
+  <div class="pc-chart" role="img" aria-label="Bar chart: their candidate needed 697 signatures, the law demanded 10,816 from Byron, the room promised at least 20,000, and the movement delivered 22,788.">
     {rows.map((row, i) => (
       <div class={`pc-row pc-row-${row.kind}`}>
         <span class="pc-row-label" data-i18n={row.key}>{row.label}</span>
         <div class="pc-row-track">
           <div class="pc-row-bar" style={`--bar: ${(row.value / MAX) * 100}%; --bar-delay: ${0.15 + i * 0.3}s`}></div>
-          <span class="pc-row-value stat-tabular" style={`--bar-delay: ${0.15 + i * 0.3}s`} data-countup={row.value} data-countup-duration="1100">{row.value.toLocaleString('en-US')}</span>
         </div>
+        <span class="pc-row-value stat-tabular" style={`--bar-delay: ${0.15 + i * 0.3}s`}>{row.display}</span>
       </div>
     ))}
   </div>
@@ -83,11 +83,13 @@ const rows = [
     gap: var(--space-lg);
   }
 
+  /* Label | track | value as separate grid columns so bar widths stay
+     mathematically true (a flex row let wide value text shrink its bar) */
   .pc-row {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 200px 1fr 84px;
     align-items: center;
-    gap: var(--space-lg);
+    gap: var(--space-md);
   }
 
   .pc-row-label {
@@ -103,9 +105,6 @@ const rows = [
   }
 
   .pc-row-track {
-    position: relative;
-    display: flex;
-    align-items: center;
     height: 34px;
   }
 
@@ -130,9 +129,9 @@ const rows = [
     font-size: var(--text-lg);
     font-weight: 900;
     line-height: 1;
-    margin-left: var(--space-md);
     color: inherit;
     opacity: 0;
+    white-space: nowrap;
   }
 
   .visible .pc-row-value {
@@ -198,11 +197,12 @@ const rows = [
 
   @media (max-width: 768px) {
     .pc-row {
-      grid-template-columns: 1fr;
-      gap: 6px;
+      grid-template-columns: 1fr 72px;
+      gap: 6px var(--space-sm);
     }
 
     .pc-row-label {
+      grid-column: 1 / -1;
       text-align: left;
     }
 

@@ -1,9 +1,7 @@
-// Shared motion engine: one reveal observer for .animate-in, count-ups,
-// the scroll-linked ballot timeline, marquee offscreen pausing, and the
+// Shared motion engine: one reveal observer for .animate-in, the
+// scroll-linked ballot timeline, marquee offscreen pausing, and the
 // day-counter chip. The signature wall is code-split and only loads on
 // pages that contain [data-sigwall].
-import { initCountups } from './countup.js';
-
 export const REDUCED = matchMedia('(prefers-reduced-motion: reduce)');
 
 const reveal = new IntersectionObserver(
@@ -75,7 +73,6 @@ function initUrgency() {
 
 export function initMotion() {
   document.querySelectorAll('.animate-in').forEach((el) => reveal.observe(el));
-  initCountups(REDUCED);
   initTimeline(REDUCED);
   initTickers();
   initUrgency();
