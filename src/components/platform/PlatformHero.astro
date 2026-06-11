@@ -14,7 +14,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </h1>
     
     <p class="platform-hero-sub animate-in" data-i18n="issues.hero_sub">
-      Byron is fighting to guarantee a baseline standard of dignity for working families, seniors, teachers, and marginalized groups across IL-04.
+      A baseline, a standard of dignity for the people in our community. Working families, seniors, teachers, federal workers, all working people.
     </p>
   </div>
 </section>
@@ -105,7 +105,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     padding-bottom: var(--space-md);
   }
 
-  /* Hand-drawn marker squiggle under the headline */
+  /* Hand-drawn marker squiggle under the headline, wiped in left to right
+     once the headline reveals */
   .platform-hero-headline::after {
     content: '';
     position: absolute;
@@ -117,6 +118,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8 C 40 2, 80 11, 120 6 S 200 2, 240 8 S 300 4, 318 7' fill='none' stroke='%23e6881c' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E");
     background-size: 100% 100%;
     background-repeat: no-repeat;
+    clip-path: inset(0 100% 0 0);
+  }
+
+  .platform-hero-headline.visible::after {
+    animation: squiggle-wipe 0.7s cubic-bezier(0.65, 0, 0.35, 1) 0.55s forwards;
+  }
+
+  @keyframes squiggle-wipe {
+    to { clip-path: inset(0 0 0 0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .platform-hero-headline::after { clip-path: inset(0 0 0 0); }
   }
 
   .platform-hero-sub {

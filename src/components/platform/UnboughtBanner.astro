@@ -26,21 +26,17 @@
       </div>
       <div class="stat-divider"></div>
       <div class="stat-item">
-        <span class="stat-number">$27</span>
+        <span class="stat-number stat-tabular" data-countup="27" data-countup-prefix="$">$27</span>
         <span class="stat-label" data-i18n="issues.stat_avg">Avg. Donation</span>
       </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item stat-item-goal">
+        <span class="stat-number stat-tabular" data-countup="1000">1,000</span>
+        <span class="stat-label" data-i18n="issues.stat_donors">Grassroots donors. That's the goal.</span>
+      </div>
     </div>
-  </div>
-</section>
 
-<!-- CTA Block -->
-<section class="platform-cta-block">
-  <div class="container platform-cta-content">
-    <h2 class="platform-cta-headline animate-in" data-i18n="issues.cta_headline">Fight for This Platform. Defend Your Choice.</h2>
-    <div class="platform-cta-buttons animate-in">
-      <a href="#petition" class="btn btn-orange btn-massive" data-i18n="issues.cta_petition">Join the Fight</a>
-      <a href="https://secure.actblue.com/donate/byronfor04web/" class="btn btn-outline" target="_blank" rel="noopener" data-i18n="issues.cta_donate">Chip in $27 to the Movement</a>
-    </div>
+    <p class="unbought-kicker animate-in" data-i18n="issues.unbought_kicker">"It takes people and people defeats money."</p>
   </div>
 </section>
 
@@ -137,11 +133,29 @@
   }
 
   .stat-item:first-child {
-    transform: rotate(-1.5deg);
+    rotate: -1.5deg;
   }
 
   .stat-item:last-child {
-    transform: rotate(1.5deg);
+    rotate: 1.5deg;
+  }
+
+  .stat-item-goal {
+    border-color: rgba(230, 136, 28, 0.75);
+    border-style: solid;
+  }
+
+  .stat-item-goal .stat-number {
+    color: var(--orange-light);
+  }
+
+  .unbought-kicker {
+    margin-top: var(--space-xl);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 900;
+    color: var(--cream);
+    rotate: -1deg;
   }
 
   .stat-number {
@@ -167,36 +181,6 @@
     background: rgba(251, 226, 186, 0.2);
   }
 
-  /* CTA Block */
-  .platform-cta-block {
-    background: var(--cream);
-    padding: var(--space-4xl) 0;
-  }
-
-  .platform-cta-content {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-2xl);
-  }
-
-  .platform-cta-headline {
-    font-family: var(--font-display);
-    font-size: var(--text-3xl);
-    font-weight: 900;
-    color: var(--blue);
-    text-transform: uppercase;
-    max-width: 700px;
-  }
-
-  .platform-cta-buttons {
-    display: flex;
-    gap: var(--space-lg);
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
   /* Responsive */
   @media (max-width: 768px) {
     .unbought-stats {
@@ -212,15 +196,6 @@
 
     .unbought-headline {
       font-size: var(--text-3xl);
-    }
-
-    .platform-cta-buttons {
-      flex-direction: column;
-      width: 100%;
-    }
-
-    .platform-cta-buttons .btn {
-      width: 100%;
     }
   }
 </style>

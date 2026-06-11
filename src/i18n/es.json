@@ -142,7 +142,9 @@
   "issues": {
     "hero_badge": "LA AGENDA DE LA CLASE TRABAJADORA • IL-04",
     "hero_headline": "Una Plataforma para los Trabajadores, No para la Clase Multimillonaria.",
-    "hero_sub": "Byron lucha por garantizar un estándar básico de dignidad para las familias trabajadoras, los mayores, los maestros y los grupos marginalizados del IL-04.",
+    "hero_sub": "Un estándar básico, un estándar de dignidad para la gente de nuestra comunidad. Familias trabajadoras, personas mayores, maestros, trabajadores federales, toda la gente trabajadora.",
+    "another_world": "Otro mundo no solo es posible. Es necesario.",
+    "another_world_sub": "Esto es lo que construimos cuando el pueblo vence al dinero.",
     "grid_label": "Los Temas",
     "grid_headline": "La posición de Byron",
     "housing_title": "Vivienda para cada veterano y todos nuestros vecinos",
@@ -172,9 +174,8 @@
     "stat_corporate": "Dinero de PAC Corporativos",
     "stat_developer": "Contribuciones de Desarrolladores",
     "stat_avg": "Donación Promedio",
-    "cta_headline": "Lucha por Esta Plataforma. Defiende Tu Opción.",
-    "cta_petition": "Únete a la Lucha",
-    "cta_donate": "Contribuye $27 al Movimiento"
+    "stat_donors": "Donantes de base. Esa es la meta.",
+    "unbought_kicker": "\"Se necesita gente, y el pueblo vence al dinero.\""
   },
   "machine": {
     "hero_badge": "LO QUE ESTÁ EN JUEGO",
@@ -210,9 +211,6 @@
     "blitz_headline": "Defiende las 22,788",
     "blitz_p1": "Lo lograron. La ley exigía 10,816 firmas válidas de un independiente, mientras que la candidata de la maquinaria necesitó solo 697. Este movimiento recolectó y presentó 22,788, más del doble del requisito. Los votantes de IL-04 se ganaron una opción el 3 de noviembre.",
     "blitz_p2": "Ahora la maquinaria intenta quitárselas. El 9 de junio de 2026, los abogados de la maquinaria presentaron una objeción ante la Junta Electoral del Estado de Illinois para invalidar tus firmas y sacar a Byron de la boleta, un proceso que podría extenderse hasta la primera semana de agosto. Les ganamos en las puertas. Ahora necesitamos que corras la voz: cuéntales a tus vecinos, publica las pruebas y expón lo que la maquinaria le está haciendo a nuestra democracia.",
-    "blitz_machine": "La candidata de la maquinaria necesitó",
-    "blitz_required": "Requeridas por ley",
-    "blitz_needed": "Entregadas por el movimiento",
     "blitz_download": "✊ Únete a la Lucha: Corre la Voz",
     "blitz_promise": "La sala prometió 20,000. Tú entregaste 22,788. Ahora defiéndelas.",
     "status_filed": "Presentadas 22,788",

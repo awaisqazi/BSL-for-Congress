@@ -142,7 +142,9 @@
   "issues": {
     "hero_badge": "THE WORKING-CLASS AGENDA • IL-04",
     "hero_headline": "A Platform for Working People, Not the Billionaire Class.",
-    "hero_sub": "Byron is fighting to guarantee a baseline standard of dignity for working families, seniors, teachers, and marginalized groups across IL-04.",
+    "hero_sub": "A baseline, a standard of dignity for the people in our community. Working families, seniors, teachers, federal workers, all working people.",
+    "another_world": "Another world is not only possible. It is necessary.",
+    "another_world_sub": "This is what we build when people defeat money.",
     "grid_label": "The Issues",
     "grid_headline": "Where Byron Stands",
     "housing_title": "Housing for every veteran and all our neighbors",
@@ -172,9 +174,8 @@
     "stat_corporate": "Corporate PAC Money",
     "stat_developer": "Developer Contributions",
     "stat_avg": "Avg. Donation",
-    "cta_headline": "Fight for This Platform. Defend Your Choice.",
-    "cta_petition": "Join the Fight",
-    "cta_donate": "Chip in $27 to the Movement"
+    "stat_donors": "Grassroots donors. That's the goal.",
+    "unbought_kicker": "\"It takes people and people defeats money.\""
   },
   "machine": {
     "hero_badge": "THE STAKES",
@@ -210,9 +211,6 @@
     "blitz_headline": "Defend the 22,788",
     "blitz_p1": "You did it. The law demanded 10,816 valid signatures from an independent, while the machine's candidate needed just 697. This movement collected and filed 22,788, more than double the requirement. The voters of IL-04 earned a choice on November 3rd.",
     "blitz_p2": "Now the machine is trying to take it away. On June 9, 2026, machine lawyers filed an objection with the Illinois State Board of Elections to invalidate your signatures and kick Byron off the ballot, a process that could run into the first week of August. We beat them at the doors. Now we need you to spread the word: tell your neighbors, post the receipts, and expose what the machine is doing to our democracy.",
-    "blitz_machine": "The machine's candidate needed",
-    "blitz_required": "Required by law",
-    "blitz_needed": "Delivered by the movement",
     "blitz_download": "✊ Join the Fight: Spread the Word",
     "blitz_promise": "The room promised 20,000. You delivered 22,788. Now defend them.",
     "status_filed": "Filed 22,788",
