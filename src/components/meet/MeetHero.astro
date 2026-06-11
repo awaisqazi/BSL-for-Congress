@@ -16,6 +16,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <p class="meet-hero-sub animate-in" data-i18n="meet.hero_sub">
       From Ecuador to Tennessee to Pilsen. Byron Sigcho-Lopez came to this country alone at 17 and has spent his life fighting alongside the working class as a teacher, researcher, organizer, and unapologetic democratic socialist.
     </p>
+
+    <p class="meet-hero-thesis animate-in" data-i18n="meet.hero_thesis">
+      "Justice is not a destination. It is the road that is traveled." This is the road that made Byron.
+    </p>
   </div>
 </section>
 
@@ -105,6 +109,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     line-height: 1.6;
     color: #ffffff;
     max-width: 720px;
+  }
+
+  .meet-hero-thesis {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 800;
+    line-height: 1.45;
+    color: var(--gold-soft);
+    max-width: 640px;
   }
 
   @media (max-width: 768px) {

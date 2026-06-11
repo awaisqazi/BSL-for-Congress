@@ -2,9 +2,13 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import MeetHero from '../components/meet/MeetHero.astro';
+import RoadMarker from '../components/meet/RoadMarker.astro';
 import EarlyLife from '../components/meet/EarlyLife.astro';
 import WardRecord from '../components/meet/WardRecord.astro';
+import Lineage from '../components/meet/Lineage.astro';
 import SocialistValues from '../components/meet/SocialistValues.astro';
+import VoicesWall from '../components/VoicesWall.astro';
+import RoadCTA from '../components/RoadCTA.astro';
 import Footer from '../components/Footer.astro';
 ---
 
@@ -12,9 +16,16 @@ import Footer from '../components/Footer.astro';
   <Navbar />
   <main>
     <MeetHero />
+    <RoadMarker i18nKey="meet.road_quito" label="Quito, Ecuador" icon="🌎" />
     <EarlyLife />
+    <RoadMarker i18nKey="meet.road_pilsen" label="Pilsen, Chicago" icon="🏘️" />
     <WardRecord />
+    <RoadMarker i18nKey="meet.road_cityhall" label="City Hall, 25th Ward" icon="🏛️" />
+    <Lineage />
     <SocialistValues />
+    <VoicesWall />
+    <RoadMarker i18nKey="meet.road_congress" label="Congress: November 3" icon="🗳️" />
+    <RoadCTA />
   </main>
   <Footer />
 </Layout>

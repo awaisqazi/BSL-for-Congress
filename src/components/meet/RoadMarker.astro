@@ -1,0 +1,62 @@
+---
+// A milestone pin on the road that runs through the Meet page.
+export interface Props {
+  i18nKey: string;
+  label: string;
+  icon?: string;
+}
+const { i18nKey, label, icon = '📍' } = Astro.props;
+---
+
+<div class="road-marker" aria-hidden="false">
+  <span class="road-marker-line" aria-hidden="true"></span>
+  <span class="road-marker-pin animate-in anim-pin" style="--tilt: -2deg">
+    <span class="road-marker-icon" aria-hidden="true">{icon}</span>
+    <span class="road-marker-label" data-i18n={i18nKey}>{label}</span>
+  </span>
+  <span class="road-marker-line" aria-hidden="true"></span>
+</div>
+
+<style>
+  .road-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--cream);
+  }
+
+  .road-marker-line {
+    width: 4px;
+    height: 38px;
+    background: repeating-linear-gradient(180deg, var(--orange) 0 10px, transparent 10px 18px);
+    border-radius: 2px;
+    opacity: 0.7;
+  }
+
+  .road-marker-pin {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    margin: 6px 0;
+    background: var(--white);
+    border: 2.5px solid var(--orange);
+    border-radius: 100px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .road-marker-icon {
+    font-size: var(--text-base);
+    line-height: 1;
+  }
+
+  .road-marker-label {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--blue-deeper);
+    white-space: nowrap;
+  }
+</style>

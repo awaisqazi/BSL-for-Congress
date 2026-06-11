@@ -83,6 +83,11 @@
     "hero_badge": "INDEPENDENT DEMOCRATIC SOCIALIST • CHICAGO DSA • IL-04",
     "hero_headline": "An Organizer, Not a Politician.",
     "hero_sub": "From Ecuador to Tennessee to Pilsen. Byron Sigcho-Lopez came to this country alone at 17 and has spent his life fighting alongside the working class as a teacher, researcher, organizer, and unapologetic democratic socialist.",
+    "hero_thesis": "\"Justice is not a destination. It is the road that is traveled.\" This is the road that made Byron.",
+    "road_quito": "Quito, Ecuador",
+    "road_pilsen": "Pilsen, Chicago",
+    "road_cityhall": "City Hall, 25th Ward",
+    "road_congress": "Congress: November 3",
     "origin_headline": "Early Life",
     "origin_p1": "Byron first came to the United States alone as a teenager, settling in Tennessee and then moving to the Chicago area and Pilsen over 10 years ago. He was born and raised in Quito, Ecuador and came to the US following political instability in the country, and a tragic car accident that left his mother in a coma.",
     "origin_p2": "Emergency services were nearly non-existent during this period, and his family's lives were saved by passing motorists who stopped, rescued his family from the wreckage, and drove them to the hospital. When his mother awoke from the coma, she insisted her eldest leave the country for his last year of high school.",
@@ -123,9 +128,16 @@
     "caption_ecuador": "Byron with his family in Quito, Ecuador",
     "caption_cumberland": "Receiving the President's Award at Cumberland University",
     "caption_schools": "Fighting for investment in our neighborhood schools",
-    "cta_headline": "Send an Unbought Organizer to Congress.",
-    "cta_petition": "Join the Fight",
-    "cta_donate": "Donate to the Movement"
+    "cta_headline": "Send an Unbought Organizer to Congress."
+  },
+  "lineage": {
+    "label": "The Lineage",
+    "headline": "He Walks a Road Others Paved.",
+    "hampton": "Chairman of the Illinois Black Panther Party. Built the original Rainbow Coalition.",
+    "teal": "Matriarch of Chicago movement organizing whose example Byron carries.",
+    "lewis": "Chicago Teachers Union president who taught a generation how to fight and win.",
+    "boogie": "Pilsen peacemaker and pioneer, assassinated at 23. His mural reads: I heard my people calling.",
+    "kicker": "\"Boogie lives. I heard my people calling.\""
   },
   "issues": {
     "hero_badge": "THE WORKING-CLASS AGENDA • IL-04",

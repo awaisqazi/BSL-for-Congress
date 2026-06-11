@@ -1,0 +1,135 @@
+---
+// "He Walks a Road Others Paved": a quiet strip honoring the movement
+// lineage Byron invoked at his announcement.
+const torches = [
+  { key: 'hampton', name: 'Fred Hampton', line: 'Chairman of the Illinois Black Panther Party. Built the original Rainbow Coalition.' },
+  { key: 'teal', name: 'Mama Teal', line: 'Matriarch of Chicago movement organizing whose example Byron carries.' },
+  { key: 'lewis', name: 'Karen Lewis', line: 'Chicago Teachers Union president who taught a generation how to fight and win.' },
+  { key: 'boogie', name: 'Boogie Gonzalez', line: 'Pilsen peacemaker and pioneer, assassinated at 23. His mural reads: I heard my people calling.' },
+];
+---
+
+<section class="lineage" id="lineage">
+  <div class="container lineage-content">
+    <span class="lineage-label animate-in" data-i18n="lineage.label">The Lineage</span>
+    <h2 class="lineage-headline animate-in" data-i18n="lineage.headline">He Walks a Road Others Paved.</h2>
+
+    <div class="lineage-road" aria-hidden="true"></div>
+
+    <ul class="lineage-list">
+      {torches.map((t, i) => (
+        <li class="lineage-item animate-in" style={`--reveal-delay: ${i * 0.12}s`}>
+          <span class="lineage-flame" aria-hidden="true">🔥</span>
+          <span class="lineage-name">{t.name}</span>
+          <span class="lineage-line" data-i18n={`lineage.${t.key}`}>{t.line}</span>
+        </li>
+      ))}
+    </ul>
+
+    <p class="lineage-kicker animate-in" data-i18n="lineage.kicker">"Boogie lives. I heard my people calling."</p>
+  </div>
+</section>
+
+<style>
+  .lineage {
+    background: var(--blue-deeper);
+    padding: var(--space-4xl) 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lineage-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .lineage-label {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--gold-soft);
+  }
+
+  .lineage-headline {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 900;
+    color: var(--cream);
+    margin: var(--space-sm) 0 var(--space-2xl);
+  }
+
+  .lineage-road {
+    position: absolute;
+    top: 52%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, rgba(245, 208, 138, 0.4) 0 18px, transparent 18px 32px);
+  }
+
+  .lineage-list {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-xl);
+    width: 100%;
+  }
+
+  .lineage-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(245, 208, 138, 0.25);
+    border-radius: var(--radius-md);
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .lineage-flame {
+    font-size: var(--text-2xl);
+    line-height: 1;
+  }
+
+  .lineage-name {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 900;
+    color: var(--cream);
+  }
+
+  .lineage-line {
+    font-size: var(--text-xs);
+    line-height: 1.55;
+    color: rgba(254, 245, 230, 0.8);
+  }
+
+  .lineage-kicker {
+    margin-top: var(--space-2xl);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 900;
+    color: var(--gold-soft);
+  }
+
+  @media (max-width: 1024px) {
+    .lineage-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .lineage-road { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .lineage-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

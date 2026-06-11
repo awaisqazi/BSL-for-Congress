@@ -82,6 +82,11 @@
   "meet": {
     "hero_badge": "SOCIALISTA DEMOCRÁTICO INDEPENDIENTE • CHICAGO DSA • IL-04",
     "hero_headline": "Un Organizador, No un Político.",
+    "hero_thesis": "\"La justicia no es un destino. Es el camino que se recorre.\" Este es el camino que formó a Byron.",
+    "road_quito": "Quito, Ecuador",
+    "road_pilsen": "Pilsen, Chicago",
+    "road_cityhall": "Ayuntamiento, Distrito 25",
+    "road_congress": "Congreso: 3 de noviembre",
     "hero_sub": "De Ecuador a Tennessee a Pilsen. Byron Sigcho-Lopez llegó a este país solo a los 17 años y ha dedicado su vida a luchar junto a la clase trabajadora como maestro, investigador, organizador y socialista democrático sin disculpas.",
     "origin_headline": "Primeros Años",
     "origin_p1": "Byron llegó por primera vez a los Estados Unidos solo siendo adolescente, estableciéndose en Tennessee y luego mudándose al área de Chicago y Pilsen hace más de 10 años. Nació y creció en Quito, Ecuador y vino a los EE.UU. tras la inestabilidad política en el país, y un trágico accidente automovilístico que dejó a su madre en coma.",
@@ -123,9 +128,16 @@
     "caption_ecuador": "Byron con su familia en Quito, Ecuador",
     "caption_cumberland": "Recibiendo el Premio del Presidente en Cumberland University",
     "caption_schools": "Luchando por la inversión en nuestras escuelas del barrio",
-    "cta_headline": "Envía un Organizador sin Comprar al Congreso.",
-    "cta_petition": "Únete a la Lucha",
-    "cta_donate": "Dona al Movimiento"
+    "cta_headline": "Envía un Organizador sin Comprar al Congreso."
+  },
+  "lineage": {
+    "label": "El Linaje",
+    "headline": "Camina un Camino Que Otros Pavimentaron.",
+    "hampton": "Presidente del Partido Pantera Negra de Illinois. Construyó la Coalición Arcoíris original.",
+    "teal": "Matriarca de la organización de movimientos en Chicago cuyo ejemplo Byron lleva consigo.",
+    "lewis": "Presidenta del Sindicato de Maestros de Chicago que le enseñó a una generación a luchar y ganar.",
+    "boogie": "Pacificador y pionero de Pilsen, asesinado a los 23 años. Su mural dice: Escuché el llamado de mi gente.",
+    "kicker": "\"Boogie vive. Escuché el llamado de mi gente.\""
   },
   "issues": {
     "hero_badge": "LA AGENDA DE LA CLASE TRABAJADORA • IL-04",
