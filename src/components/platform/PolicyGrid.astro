@@ -95,7 +95,24 @@
         <p class="policy-desc" data-i18n="issues.education_desc">Every student, 0–100, deserves the opportunity to be inspired, pursue their curiosity, nurture their creativity, and expand their literacy. Byron will fight to restore the U.S. Department of Education and the civil rights benefits for all learners. He will invest in fully funded public education based on student need and provide every student and family with robust wrap around services and extracurricular activities. As an adult education teacher, Byron supports education as a lifelong pursuit and will invest in education programs for all, beyond adolescence into adulthood.</p>
       </div>
 
-      <!-- Row 4: Foreign Policy (short, full-width) -->
+      <!-- Row 4: Family & Childcare (full-width) -->
+
+      <!-- Family & Childcare -->
+      <div class="policy-block policy-block-wide animate-in" id="family">
+        <div class="policy-icon-wrap">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 12h.01"/>
+            <path d="M15 12h.01"/>
+            <path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"/>
+            <path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1"/>
+          </svg>
+        </div>
+        <h3 class="policy-title" data-i18n="issues.family_title">No-cost childcare and a strong start for every family</h3>
+        <p class="policy-desc" data-i18n="issues.family_desc">Childcare in Chicagoland now costs as much as rent, and it is pushing working families out of the neighborhoods they built. The burden falls heaviest on mothers, who are forced to give up paying jobs to do unpaid care work. Byron will fight for universal, no-cost childcare for every child from 6 weeks to 5 years old, and for wages that pay childcare workers, too many of whom live in poverty today, at parity with public school teachers.</p>
+        <p class="policy-desc" data-i18n="issues.family_desc2">Byron will also fight to guarantee paid family leave, restore the expanded Child Tax Credit that cut child poverty nearly in half before Washington let it expire, and bring home federal investment for newborn essentials programs modeled on more than 90 baby basket initiatives around the world: diapers, wipes, swaddles, books, and a guide to resources for every new parent. Raising a family in Pilsen, Little Village, Cicero, and across IL-04 should be a joy, not a luxury.</p>
+      </div>
+
+      <!-- Row 5: Foreign Policy (short, full-width) -->
 
       <!-- Foreign Policy -->
       <div class="policy-block policy-block-wide animate-in" id="foreign-policy">
@@ -119,7 +136,7 @@
     position: relative;
   }
 
-  /* Torn-paper top edge — like a flyer ripped off a stack */
+  /* Torn-paper top edge, like a flyer ripped off a stack */
   .policy-grid-section::before {
     content: '';
     position: absolute;
@@ -239,7 +256,7 @@
     box-decoration-break: clone;
   }
 
-  /* display:inline drops the title's margin — restore spacing on the next paragraph */
+  /* display:inline drops the title's margin; restore spacing on the next paragraph */
   .policy-title + .policy-desc {
     margin-top: var(--space-lg);
   }
@@ -277,7 +294,7 @@
     transform: rotate(45deg);
   }
 
-  /* Crooked, hand-pinned stagger — desktop only.
+  /* Crooked, hand-pinned stagger, desktop only.
      Uses the independent rotate/translate properties so the global
      .animate-in fadeInUp animation (fill: forwards on transform)
      doesn't clobber the tilt. */
@@ -297,7 +314,8 @@
       box-shadow: var(--shadow-lg);
     }
 
-    .policy-block-wide {
+    /* Doubled class beats the nth-child stagger rules above */
+    .policy-block.policy-block-wide {
       rotate: -0.3deg;
       margin-top: 0;
     }
