@@ -10,6 +10,22 @@
         <p class="signup-desc animate-in" data-i18n="volunteer.signup_desc">
           Fill out the form and our team will reach out with next steps. Whether you have one hour or one hundred, there is a role for you in this movement.
         </p>
+
+        <ol class="signup-steps animate-in">
+          <li class="signup-step">
+            <span class="signup-step-num" aria-hidden="true">1</span>
+            <span data-i18n="volunteer.next_step1">You sign up. We reach out within a few days.</span>
+          </li>
+          <li class="signup-step">
+            <span class="signup-step-num" aria-hidden="true">2</span>
+            <span data-i18n="volunteer.next_step2">You get a post: your block, your phone, your campus, your craft.</span>
+          </li>
+          <li class="signup-step">
+            <span class="signup-step-num" aria-hidden="true">3</span>
+            <span data-i18n="volunteer.next_step3">We defend the 22,788 together and win in November.</span>
+          </li>
+        </ol>
+        <p class="signup-solidarity animate-in" data-i18n="volunteer.signoff">Solidarity!</p>
       </div>
 
       <form class="signup-form animate-in" id="volunteer-form" action="https://docs.google.com/forms/d/e/1FAIpQLSeUKnQVp4auTqHdFZeDrGlAOYAjmOO0sE19Xm11Pee2ayuuWQ/formResponse" method="POST" target="hidden_iframe_volunteer">
@@ -111,7 +127,13 @@
           Join the Movement
         </button>
         
-        <p class="volunteer-success" id="volunteer-success" data-i18n="volunteer.success_msg">Thank you for stepping up! We will be in touch soon. ✊</p>
+        <div class="volunteer-success" id="volunteer-success">
+          <p data-i18n="volunteer.success_msg">Welcome to the movement. Solidarity! Now bring one neighbor with you. ✊</p>
+          <button type="button" class="btn btn-outline volunteer-share" id="volunteer-share">
+            <span data-i18n="volunteer.share_btn">Copy the Link, Send It to a Neighbor</span>
+            <span class="share-check" aria-hidden="true">✓</span>
+          </button>
+        </div>
         <iframe name="hidden_iframe_volunteer" id="hidden_iframe_volunteer" style="display:none;"></iframe>
       </form>
     </div>
@@ -130,11 +152,24 @@
           successMsg.classList.add('visible');
           setTimeout(function () {
             successMsg.classList.remove('visible');
-          }, 5000);
+          }, 12000);
         }
       }, 500);
     });
   }
+
+  const shareBtn = document.getElementById('volunteer-share');
+  shareBtn?.addEventListener('click', async () => {
+    const url = location.origin + (document.body.dataset.base || '') + '/';
+    try {
+      await navigator.clipboard.writeText(url);
+      shareBtn.classList.add('copied');
+      setTimeout(() => shareBtn.classList.remove('copied'), 2000);
+    } catch {
+      // Clipboard unavailable: select-free fallback, show the URL via prompt
+      window.prompt('Copy this link:', url);
+    }
+  });
 </script>
 
 <!-- Fund the Fight CTA -->
@@ -146,6 +181,9 @@
     <h2 class="volunteer-cta-headline animate-in" data-i18n="volunteer.cta_headline">Can't Volunteer Today? Fund the Legal Defense.</h2>
     <p class="volunteer-cta-text animate-in" data-i18n="volunteer.cta_text">
       The machine is paying lawyers to throw out 22,788 signatures. Every dollar helps us defend the people's petitions at the Illinois State Board of Elections and keep your choice on the November ballot. This campaign is entirely unbought and funded by working people like you.
+    </p>
+    <p class="volunteer-cta-goal animate-in" data-i18n="volunteer.cta_goal">
+      Be one of the 1,000 grassroots donors who put this movement in full swing.
     </p>
     <div class="volunteer-cta-buttons animate-in">
       <a href="https://secure.actblue.com/donate/byronfor04web/" class="btn btn-orange btn-massive" target="_blank" rel="noopener" data-i18n="volunteer.cta_donate">Chip in $27</a>
@@ -307,8 +345,73 @@
 
   .volunteer-success.visible {
     opacity: 1;
-    max-height: 80px;
+    max-height: 220px;
     margin-top: var(--space-md);
+  }
+
+  .volunteer-success p {
+    font-family: var(--font-display);
+    font-weight: 800;
+    margin-bottom: var(--space-sm);
+  }
+
+  .volunteer-share {
+    position: relative;
+  }
+
+  .volunteer-share .share-check {
+    display: none;
+    color: #1b7a3d;
+    font-weight: 900;
+    margin-left: 6px;
+  }
+
+  .volunteer-share.copied .share-check {
+    display: inline;
+  }
+
+  /* What happens next */
+  .signup-steps {
+    list-style: none;
+    margin: var(--space-xl) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .signup-step {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--gray-700);
+  }
+
+  .signup-step-num {
+    flex: none;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 900;
+    color: var(--white);
+    background: var(--orange);
+    border-radius: 50%;
+    rotate: -4deg;
+  }
+
+  .signup-solidarity {
+    margin-top: var(--space-lg);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 900;
+    color: var(--orange-dark);
+    rotate: -1.5deg;
   }
 
   /* CTA Block */
@@ -355,6 +458,16 @@
     font-size: var(--text-lg);
     line-height: 1.7;
     color: #ffffff;
+    max-width: 650px;
+  }
+
+  .volunteer-cta-goal {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gold-soft);
     max-width: 650px;
   }
 

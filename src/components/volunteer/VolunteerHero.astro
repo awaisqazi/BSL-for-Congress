@@ -10,12 +10,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <span class="volunteer-hero-badge animate-in" data-i18n="volunteer.hero_badge">TAKE ACTION</span>
 
     <h1 class="volunteer-hero-headline animate-in" data-i18n="volunteer.hero_headline">
-      We Are The Machine's Worst Nightmare.
+      We Are Essential Workers. And We Are Going to Fight Back.
     </h1>
 
     <p class="volunteer-hero-sub animate-in" data-i18n="volunteer.hero_sub">
       We don't have corporate PAC money or backroom bosses. We have you. Join the multiracial working-class coalition to take back IL-04.
     </p>
+
+    <span class="volunteer-hero-status animate-in anim-stamp" style="--tilt: -1.5deg" data-i18n="volunteer.hero_status">
+      SIGNATURE DEFENSE UNDERWAY. DECISION EXPECTED BY EARLY AUGUST.
+    </span>
   </div>
 </section>
 
@@ -105,6 +109,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     line-height: 1.6;
     color: #ffffff;
     max-width: 750px;
+  }
+
+  .volunteer-hero-status {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    color: #ffd9c9;
+    border: 2.5px solid rgba(255, 130, 92, 0.85);
+    border-radius: 4px;
+    background: rgba(20, 10, 8, 0.3);
+    backdrop-filter: blur(4px);
+    padding: 6px 16px;
   }
 
   @media (max-width: 768px) {

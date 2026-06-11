@@ -1,4 +1,6 @@
 ---
+import PromiseCounter from '../PromiseCounter.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <section class="petition-blitz" id="petition-blitz">
@@ -20,22 +22,26 @@
         <p class="blitz-text animate-in" data-i18n="volunteer.blitz_p2">
           Now the machine is trying to take it away. On June 9, 2026, machine lawyers filed an objection with the Illinois State Board of Elections to invalidate your signatures and kick Byron off the ballot, a process that could run into the first week of August. We beat them at the doors. Now we need you to spread the word: tell your neighbors, post the receipts, and expose what the machine is doing to our democracy.
         </p>
+        <p class="blitz-promise animate-in" data-i18n="volunteer.blitz_promise">
+          The room promised 20,000. You delivered 22,788. Now defend them.
+        </p>
       </div>
 
-      <div class="blitz-stats animate-in">
-        <div class="blitz-stat">
-          <span class="blitz-stat-number">697</span>
-          <span class="blitz-stat-label" data-i18n="volunteer.blitz_machine">The machine's candidate needed</span>
-        </div>
-        <div class="blitz-stat-arrow">vs.</div>
-        <div class="blitz-stat">
-          <span class="blitz-stat-number">10,816</span>
-          <span class="blitz-stat-label" data-i18n="volunteer.blitz_required">Required by law</span>
-        </div>
-        <div class="blitz-stat-arrow">→</div>
-        <div class="blitz-stat blitz-stat-target">
-          <span class="blitz-stat-number">22,788</span>
-          <span class="blitz-stat-label" data-i18n="volunteer.blitz_needed">Delivered by the movement</span>
+      <div class="blitz-counter-card animate-in">
+        <PromiseCounter variant="compact" />
+        <div class="blitz-status">
+          <span class="blitz-status-chip blitz-status-done">
+            <span aria-hidden="true">✓</span>
+            <span data-i18n="volunteer.status_filed">Filed 22,788</span>
+          </span>
+          <a class="blitz-status-chip blitz-status-alert" href={`${base}/movement#ballot-fight`}>
+            <span aria-hidden="true">⚠</span>
+            <span data-i18n="volunteer.status_objection">Objection June 9</span>
+          </a>
+          <a class="blitz-status-chip" href={`${base}/movement#ballot-fight`}>
+            <span aria-hidden="true">⏳</span>
+            <span data-i18n="volunteer.status_ruling">Decision by early August</span>
+          </a>
         </div>
       </div>
     </div>
@@ -122,53 +128,65 @@
     margin-bottom: 0;
   }
 
-  /* Stats */
-  .blitz-stats {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-lg);
-    padding: var(--space-2xl);
-    background: rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: var(--radius-lg);
-    backdrop-filter: blur(4px);
-  }
-
-  .blitz-stat {
-    text-align: center;
-  }
-
-  .blitz-stat-number {
+  .blitz-promise {
     font-family: var(--font-display);
-    font-size: var(--text-4xl);
+    font-size: var(--text-lg);
     font-weight: 900;
+    line-height: 1.4;
     color: #ffffff;
-    display: block;
-    line-height: 1;
+    margin-top: var(--space-md);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
   }
 
-  .blitz-stat-target .blitz-stat-number {
-    font-size: var(--text-5xl);
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  /* Counter card: cream flyer pinned inside the orange band */
+  .blitz-counter-card {
+    background: var(--cream-light);
+    color: var(--blue-deeper);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl) var(--space-lg) var(--space-xl);
+    box-shadow: var(--shadow-lg);
   }
 
-  .blitz-stat-label {
+  .blitz-status {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+
+  .blitz-status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
     font-family: var(--font-display);
     font-size: var(--text-xs);
-    font-weight: 600;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: rgba(255, 255, 255, 0.75);
-    display: block;
-    margin-top: 4px;
+    color: var(--blue-deeper);
+    background: rgba(3, 109, 153, 0.08);
+    border: 1.5px solid rgba(3, 109, 153, 0.3);
+    border-radius: 100px;
+    text-decoration: none;
   }
 
-  .blitz-stat-arrow {
-    font-family: var(--font-display);
-    font-size: var(--text-2xl);
-    font-weight: 900;
-    color: rgba(255, 255, 255, 0.5);
+  a.blitz-status-chip:hover {
+    border-color: var(--blue-deeper);
+  }
+
+  .blitz-status-done {
+    color: #1b7a3d;
+    background: rgba(27, 122, 61, 0.1);
+    border-color: rgba(27, 122, 61, 0.35);
+  }
+
+  .blitz-status-alert {
+    color: var(--orange-dark);
+    background: rgba(230, 136, 28, 0.12);
+    border-color: rgba(230, 136, 28, 0.45);
   }
 
   /* CTA */
@@ -193,8 +211,8 @@
       font-size: var(--text-3xl);
     }
 
-    .blitz-stat-target .blitz-stat-number {
-      font-size: var(--text-4xl);
+    .blitz-counter-card {
+      padding: var(--space-xl) var(--space-md);
     }
   }
 </style>

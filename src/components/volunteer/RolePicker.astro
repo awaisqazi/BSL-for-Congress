@@ -1,0 +1,169 @@
+---
+// "Find Your Post": situation chips that highlight the matching action card
+// and pre-check the matching boxes on the EXISTING signup form (values and
+// entry IDs untouched), then scroll to #signup.
+const roles = [
+  { key: 'neighbors', icon: '🏘️', card: 'action-canvass', checks: 'Knock on Doors|Collect Petition Signatures', label: 'I know my neighbors' },
+  { key: 'phone', icon: '📱', card: 'action-digital', checks: 'Phone/Text Banking|Post on Social Media|Collect Petition Signatures', label: 'I live on my phone' },
+  { key: 'espanol', icon: '🗣️', card: 'action-canvass', checks: 'Bilingual Outreach (I speak Spanish / Yo hablo español)|Collect Petition Signatures', label: 'Hablo español' },
+  { key: 'student', icon: '🎓', card: 'action-campus', checks: 'High School Ambassador|College Campus Captain / Volunteer', label: "I'm a student" },
+  { key: 'maker', icon: '🎨', card: 'action-creative', checks: 'Help Create Marketing Collateral (Graphic Design)|Help Create Campaign Videos (Videography / Video Editing)', label: 'I make things' },
+  { key: 'leader', icon: '📋', card: 'action-precinct', checks: 'Precinct Captain / Volunteer|Knock on Doors', label: 'I can lead my block' },
+];
+---
+
+<section class="role-picker section-padding" id="find-your-post">
+  <div class="container role-picker-content">
+    <span class="section-label animate-in" data-i18n="volunteer.picker_label">Find Your Post</span>
+    <h2 class="section-title animate-in" data-i18n="volunteer.picker_headline">Where Do You Stand?</h2>
+    <p class="role-picker-sub animate-in" data-i18n="volunteer.picker_sub">
+      Don't turn on each other. Uplift each other. Help each other. Show solidarity. Pick what sounds like you and we'll point you to your post.
+    </p>
+
+    <div class="role-chips animate-in">
+      {roles.map((role) => (
+        <button type="button" class="role-chip" data-role-card={role.card} data-role-checks={role.checks}>
+          <span class="role-chip-icon" aria-hidden="true">{role.icon}</span>
+          <span data-i18n={`volunteer.picker_${role.key}`}>{role.label}</span>
+        </button>
+      ))}
+    </div>
+
+    <button type="button" class="btn btn-orange btn-massive role-lock animate-in" id="roleLock" disabled>
+      <span data-i18n="volunteer.picker_lock">Lock In My Post</span>
+    </button>
+    <p class="role-hint animate-in" data-i18n="volunteer.picker_hint">Pick one or more. We'll check the boxes for you below.</p>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const chips = [...document.querySelectorAll('.role-chip')] as HTMLButtonElement[];
+    const lock = document.getElementById('roleLock') as HTMLButtonElement | null;
+    if (!chips.length || !lock) return;
+
+    const selectedChecks = new Set<string>();
+
+    function applyHighlights() {
+      const activeCards = new Set(chips.filter(c => c.classList.contains('active')).map(c => c.dataset.roleCard));
+      document.querySelectorAll('.action-card[id]').forEach((card) => {
+        card.classList.toggle('role-highlight', activeCards.has(card.id));
+      });
+    }
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        chip.classList.toggle('active');
+        selectedChecks.clear();
+        chips.filter(c => c.classList.contains('active')).forEach(c => {
+          (c.dataset.roleChecks || '').split('|').forEach(v => selectedChecks.add(v));
+        });
+        lock.disabled = selectedChecks.size === 0;
+        applyHighlights();
+      });
+    });
+
+    function checkAndScroll(values: Set<string>) {
+      values.forEach((value) => {
+        const input = document.querySelector(`#signup input[type="checkbox"][value="${CSS.escape(value)}"]`) as HTMLInputElement | null;
+        if (input) input.checked = true;
+      });
+      document.getElementById('signup')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    lock.addEventListener('click', () => checkAndScroll(selectedChecks));
+
+    // Per-card "Count me in" links in ActionBlocks reuse the same mechanism
+    document.querySelectorAll('[data-join-checks]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        checkAndScroll(new Set(((btn as HTMLElement).dataset.joinChecks || '').split('|')));
+      });
+    });
+  });
+</script>
+
+<style>
+  .role-picker {
+    background: var(--blue-deeper);
+  }
+
+  .role-picker-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .role-picker .section-label {
+    color: var(--gold-soft);
+  }
+
+  .role-picker .section-title {
+    color: var(--cream);
+  }
+
+  .role-picker-sub {
+    max-width: 680px;
+    font-size: var(--text-lg);
+    line-height: 1.65;
+    color: rgba(254, 245, 230, 0.9);
+    margin-top: var(--space-md);
+  }
+
+  .role-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-md);
+    margin: var(--space-2xl) 0 var(--space-xl);
+    max-width: 760px;
+  }
+
+  .role-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 800;
+    color: var(--cream);
+    background: rgba(255, 255, 255, 0.07);
+    border: 2px solid rgba(245, 208, 138, 0.4);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background var(--duration-fast) var(--ease-default), border-color var(--duration-fast) var(--ease-default), translate var(--duration-fast) var(--ease-default);
+  }
+
+  .role-chip:hover {
+    translate: 0 -2px;
+    border-color: var(--gold-soft);
+  }
+
+  .role-chip.active {
+    background: var(--orange);
+    border-color: var(--orange-light);
+    color: var(--white);
+    box-shadow: 0 4px 18px rgba(230, 136, 28, 0.4);
+  }
+
+  .role-chip-icon {
+    font-size: var(--text-lg);
+  }
+
+  .role-lock:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    animation: none;
+  }
+
+  .role-hint {
+    margin-top: var(--space-md);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(245, 208, 138, 0.75);
+  }
+</style>
