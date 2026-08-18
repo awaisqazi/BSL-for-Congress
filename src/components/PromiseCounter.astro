@@ -10,10 +10,10 @@ const { variant = 'full' } = Astro.props;
 
 const MAX = 22788;
 const rows = [
-  { value: 697, display: '697', key: 'counter.marker_machine', label: "Their candidate's bar", kind: 'machine' },
-  { value: 10816, display: '10,816', key: 'counter.marker_law', label: "The law's bar for Byron", kind: 'law' },
+  { value: 697, display: '697', key: 'counter.marker_machine', label: "What their candidate needed", kind: 'machine' },
+  { value: 10816, display: '10,816', key: 'counter.marker_law', label: "What the law demanded of Byron", kind: 'law' },
   { value: 20000, display: '20,000+', key: 'counter.marker_promise', label: "The room's promise", kind: 'promise' },
-  { value: 22788, display: '22,788', key: 'counter.marker_delivered', label: "The movement's answer", kind: 'delivered' },
+  { value: 22788, display: '22,788', key: 'counter.marker_delivered', label: "What the movement delivered", kind: 'delivered' },
 ];
 ---
 
@@ -21,7 +21,7 @@ const rows = [
   {variant === 'full' && (
     <div class="pc-readout">
       <span class="pc-number stat-tabular">22,788</span>
-      <span class="pc-readout-label" data-i18n="counter.readout_label">valid signatures filed with the State Board of Elections</span>
+      <span class="pc-readout-label" data-i18n="counter.readout_label">valid signatures filed with the Illinois State Board of Elections. The record stands.</span>
     </div>
   )}
 
@@ -38,7 +38,7 @@ const rows = [
   </div>
 
   {variant === 'full' && (
-    <p class="pc-caption" data-i18n="counter.caption">Promise made. Promise kept. More than double the law's demand.</p>
+    <p class="pc-caption" data-i18n="counter.caption">Promise made. Promise kept. Then erased by lawyers, never by voters.</p>
   )}
 </div>
 

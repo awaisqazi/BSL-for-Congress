@@ -16,7 +16,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <span class="ticker-label" data-i18n="footer.ticker_label">Powered by the People</span>
           <span class="ticker-value" data-i18n="footer.ticker_text">Average donation: $27. No corporate PAC money. Ever.</span>
         </div>
-        <a href="https://secure.actblue.com/donate/byronfor04web/" class="btn btn-orange ticker-donate" target="_blank" rel="noopener" data-i18n="nav.donate">
+        <a href="https://secure.actblue.com/donate/byron-sigcho-1" class="btn btn-orange ticker-donate" target="_blank" rel="noopener" data-i18n="nav.donate">
           Donate
         </a>
       </div>
@@ -67,7 +67,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <h4 class="footer-links-title" data-i18n="footer.links_title">Links</h4>
           <ul>
             <li><a href={`${base}/meet`} data-i18n="nav.meet">Meet Byron</a></li>
-            <li><a href={`${base}/platform`} data-i18n="nav.platform">The Platform</a></li>
+            <li><a href={`${base}/platform`} data-i18n="nav.platform">The Record</a></li>
             <li><a href={`${base}/movement`} data-i18n="nav.movement">Machine vs. Movement</a></li>
             <li><a href={`${base}/volunteer`} data-i18n="nav.volunteer">Volunteer</a></li>
           </ul>
@@ -124,9 +124,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <!-- Legal -->
       <div class="footer-legal">
         <div class="paid-for-banner">
-          <span class="paid-for-text" data-i18n="footer.paid_for">PAID FOR BY BYRON SIGCHO LOPEZ FOR CONGRESS</span>
+          <span class="paid-for-text" data-i18n="footer.paid_for">PAID FOR BY FRIENDS OF BYRON SIGCHO LOPEZ</span>
         </div>
-        <p class="legal-copyright" data-i18n="footer.copyright">© 2026 Byron Sigcho Lopez for Congress. All rights reserved.</p>
+        <p class="legal-copyright" data-i18n="footer.copyright">© 2026 Friends of Byron Sigcho Lopez. All rights reserved.</p>
+        <p class="legal-disclosure" data-i18n="footer.disclosure">A copy of our report filed with the Illinois State Board of Elections is (or will be) available on the Board's official website (elections.il.gov) or for purchase from the State Board of Elections, Springfield, Illinois.</p>
       </div>
     </div>
   </div>
@@ -576,6 +577,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   .legal-copyright {
     font-size: var(--text-xs);
     color: rgba(251, 226, 186, 0.4);
+  }
+
+  .legal-disclosure {
+    font-size: var(--text-xs);
+    color: rgba(251, 226, 186, 0.3);
+    max-width: 560px;
   }
 
   /* Color-cycling Sketch */

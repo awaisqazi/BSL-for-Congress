@@ -7,18 +7,20 @@ import SignatureWall from '../SignatureWall.astro';
 const stages = [
   { date: 'timeline.s1_date', dateText: 'March 17', title: 'timeline.s1_title', titleText: 'Their coronation', desc: 'timeline.s1_desc', descText: 'IL-04 voters got exactly one choice on the primary ballot. The machine chose on our behalf.' },
   { date: 'timeline.s2_date', dateText: 'Spring', title: 'timeline.s2_title', titleText: 'The promise', desc: 'timeline.s2_desc', descText: 'Byron announces in Pilsen. A reporter asks if 10,816 signatures is even possible. The room raises its hands and promises 20,000.' },
-  { date: 'timeline.s3_date', dateText: 'Early June', title: 'timeline.s3_title', titleText: 'The promise kept', desc: 'timeline.s3_desc', descText: 'The movement files 22,788 valid signatures with the Illinois State Board of Elections, more than double the law’s demand.' },
+  { date: 'timeline.s3_date', dateText: 'Early June', title: 'timeline.s3_title', titleText: 'The promise kept', desc: 'timeline.s3_desc', descText: 'The movement files 22,788 valid signatures with the Illinois State Board of Elections, more than double the law\'s demand.' },
   { date: 'timeline.s4_date', dateText: 'June 9', title: 'timeline.s4_title', titleText: 'The objection', desc: 'timeline.s4_desc', descText: 'A machine-backed objector files a challenge to throw out your signatures and erase your choice.' },
-  { date: 'timeline.s5_date', dateText: 'NOW', title: 'timeline.s5_title', titleText: 'The defense', desc: 'timeline.s5_desc', descText: 'Records exams and hearings at the State Board of Elections. The movement defends every line while machine lawyers try to strike them.', now: true, cta: { href: '#petition', key: 'timeline.s5_cta', text: 'Join the Defense' } },
-  { date: 'timeline.s6_date', dateText: 'By early August', title: 'timeline.s6_title', titleText: 'The ruling', desc: 'timeline.s6_desc', descText: 'The Board rules on the challenge. This is the day we keep your choice alive.', cta: { href: 'https://secure.actblue.com/donate/byronfor04web/', key: 'timeline.s6_cta', text: 'Fund the Legal Defense', external: true } },
-  { date: 'timeline.s7_date', dateText: 'November 3', title: 'timeline.s7_title', titleText: 'You decide', desc: 'timeline.s7_desc', descText: 'Not the machine. Not the lawyers. You.' },
+  { date: 'timeline.s5_date', dateText: 'June to July', title: 'timeline.s5_title', titleText: 'The defense', desc: 'timeline.s5_desc', descText: 'Records exams and hearings at the State Board of Elections. The movement defends every line while machine lawyers work to strike them.' },
+  { date: 'timeline.s6_date', dateText: 'July 2026', title: 'timeline.s6_title', titleText: 'The erasure', desc: 'timeline.s6_desc', descText: 'The State Officers Electoral Board votes unanimously to strike Byron from the November ballot, 1,222 short of 10,816 once the challenges are done. Independent Mayra Macias is struck the same day by the same three objectors.' },
+  { date: 'timeline.s7_date', dateText: 'Late July', title: 'timeline.s7_title', titleText: 'Federal court', desc: 'timeline.s7_desc', descText: 'Byron sues the Illinois State Board of Elections, arguing that 10,816 signatures for an independent against 697 for a party candidate unconstitutionally restricts voters under the First and Fourteenth Amendments. Reinstatement is unlikely. He filed anyway, for everyone who comes next.' },
+  { date: 'timeline.s8_date', dateText: 'NOW', title: 'timeline.s8_title', titleText: 'The movement comes home', desc: 'timeline.s8_desc', descText: 'August 18: the movement packed Indígó MRKTŌ in Pilsen to launch the re-election campaign. The congressional run started in Pilsen too. Byron runs for a third term as Alderman of the 25th Ward, the ward the machine lost in 2019 and has never taken back.', now: true, cta: { href: '#petition', key: 'timeline.s8_cta', text: 'Join the Campaign' } },
+  { date: 'timeline.s9_date', dateText: 'February 23, 2027', title: 'timeline.s9_title', titleText: 'You decide', desc: 'timeline.s9_desc', descText: 'Not the machine. Not their lawyers. No objection can strike a ballot. You decide.' },
 ];
 ---
 
 <section class="battle section-padding" id="ballot-fight">
   <div class="container">
     <span class="section-label animate-in" style="text-align:center;display:block;" data-i18n="timeline.label">The Ballot Battle</span>
-    <h2 class="section-title animate-in" style="text-align:center;" data-i18n="timeline.headline">The Road to November</h2>
+    <h2 class="section-title animate-in" style="text-align:center;" data-i18n="timeline.headline">The Road Does Not End Here</h2>
 
     <div class="battle-wall animate-in">
       <SignatureWall />
@@ -57,10 +59,10 @@ const stages = [
     <div class="machine-cta-pattern"></div>
   </div>
   <div class="container machine-cta-content">
-    <h2 class="machine-cta-headline animate-in" data-i18n="machine.cta_headline">They're Trying to Erase Your Choice. Fight Back.</h2>
+    <h2 class="machine-cta-headline animate-in" data-i18n="machine.cta_headline">They Erased a Name. They Cannot Erase a Neighborhood.</h2>
     <div class="machine-cta-buttons animate-in">
-      <a href="#petition" class="btn btn-orange btn-massive" data-i18n="machine.cta_petition">Join the Fight</a>
-      <a href="https://secure.actblue.com/donate/byronfor04web/" class="btn btn-outline" target="_blank" rel="noopener" data-i18n="machine.cta_donate">Fund the Legal Defense</a>
+      <a href="#petition" class="btn btn-orange btn-massive" data-i18n="machine.cta_petition">Join the Campaign</a>
+      <a href="https://secure.actblue.com/donate/byron-sigcho-1" class="btn btn-outline" target="_blank" rel="noopener" data-i18n="machine.cta_donate">Fund the Campaign</a>
     </div>
   </div>
 </section>

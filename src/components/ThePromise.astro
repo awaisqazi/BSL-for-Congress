@@ -25,13 +25,17 @@ const fists = Array.from({ length: 9 });
       </div>
       <blockquote class="promise-quote animate-in">
         <span data-i18n="promise.quote">"We'll exceed the 10,000. Easily. At least 20,000."</span>
-        <cite class="promise-cite" data-i18n="promise.cite">Byron, at the announcement</cite>
+        <cite class="promise-cite" data-i18n="promise.cite">Shouted from the room at the announcement</cite>
       </blockquote>
     </div>
 
     <PromiseCounter variant="full" />
 
-    <a href="#petition" class="btn btn-orange btn-massive animate-in promise-cta" data-i18n="promise.cta">Defend the 22,788</a>
+    <p class="promise-close animate-in" data-i18n="promise.close">
+      They did not beat this at the doors. Their lawyers challenged signatures until the count fell 1,222 short of 10,816, and the rule that let them do it is now being challenged in federal court. On February 23, 2027, the 25th Ward votes, and objections do not count. Voters do.
+    </p>
+
+    <a href="#petition" class="btn btn-orange btn-massive animate-in promise-cta" data-i18n="promise.cta">Stand With the 25th Ward</a>
   </div>
 </section>
 
@@ -109,8 +113,16 @@ const fists = Array.from({ length: 9 });
     color: var(--gray-500);
   }
 
-  .promise-cta {
+  .promise-close {
+    max-width: 680px;
     margin-top: var(--space-3xl);
+    font-size: var(--text-lg);
+    line-height: 1.7;
+    color: var(--gray-700);
+  }
+
+  .promise-cta {
+    margin-top: var(--space-xl);
   }
 
   @media (max-width: 768px) {

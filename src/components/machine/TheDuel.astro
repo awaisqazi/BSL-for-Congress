@@ -1,5 +1,5 @@
 ---
-// Five rounds: the machine's move (dark, slides from the left) answered by
+// Six rounds: the machine's move (dark, slides from the left) answered by
 // the movement (cream taped flyer, slides from the right, always landing
 // second). A sticky VS header pins the two worlds while you scroll.
 import PromiseCounter from '../PromiseCounter.astro';
@@ -36,7 +36,7 @@ const fists = Array.from({ length: 7 });
       <article class="duel-panel duel-movement animate-in anim-right" style="--reveal-delay: 0.15s; --tilt: 0.4deg">
         <span class="duel-round-label" data-i18n="duel.our_answer">Our Answer</span>
         <h3 class="duel-title" data-i18n="duel.r1_movement_title">The Open Announcement</h3>
-        <p class="duel-text" data-i18n="duel.r1_movement_text">We are not waiting for the Democratic Party to give us permission. Byron announced in Pilsen at Cinco Estrellas, blocks from the classrooms where he taught.</p>
+        <p class="duel-text" data-i18n="duel.r1_movement_text">We did not wait for the Democratic Party to give us permission. Byron announced in Pilsen at Cinco Estrellas, blocks from the classrooms where he taught.</p>
         <p class="duel-quote" data-i18n="duel.r1_movement_quote">"I do not build coalitions with politicians. I build coalition with my constituents."</p>
       </article>
     </div>
@@ -99,7 +99,7 @@ const fists = Array.from({ length: 7 });
       <article class="duel-panel duel-movement animate-in anim-right" style="--reveal-delay: 0.15s; --tilt: -0.3deg">
         <span class="duel-round-label" data-i18n="duel.our_answer">Our Answer</span>
         <h3 class="duel-title" data-i18n="duel.r4_movement_title">A Thousand Neighbors</h3>
-        <p class="duel-text" data-i18n="duel.r4_movement_text">Byron asked for 1,000 grassroots donations to put this campaign in full swing. The movement keeps answering with more. Average gift: $27. No corporate PACs, no lobbyists, no AIPAC. Ever.</p>
+        <p class="duel-text" data-i18n="duel.r4_movement_text">Byron asked for 1,000 grassroots donations to put that campaign in full swing. The movement answered with more. Average gift: $27. No corporate PACs, no lobbyists, no AIPAC. Ever. That has not changed.</p>
         <div class="duel-dots-wrap">
           <svg class="duel-dots" viewBox={`0 0 ${DOTS_COLS * 10} ${DOTS_ROWS * 10}`} role="img" aria-label="One thousand dots, each one a grassroots donor.">
             {dots.map((d) => (
@@ -108,7 +108,7 @@ const fists = Array.from({ length: 7 });
           </svg>
         </div>
         <p class="duel-quote" data-i18n="duel.r4_movement_quote">"It takes people and people defeats money."</p>
-        <a href="https://secure.actblue.com/donate/byronfor04web/" class="btn btn-orange duel-micro-cta" target="_blank" rel="noopener" data-i18n="duel.r4_cta">Be One of the 1,000</a>
+        <a href="https://secure.actblue.com/donate/byron-sigcho-1" class="btn btn-orange duel-micro-cta" target="_blank" rel="noopener" data-i18n="duel.r4_cta">Chip in $27</a>
       </article>
     </div>
 
@@ -121,16 +121,37 @@ const fists = Array.from({ length: 7 });
           <span class="duel-stamp-date">06.09.2026</span>
         </div>
         <h3 class="duel-title" data-i18n="duel.r5_machine_title">The Objection</h3>
-        <p class="duel-text" data-i18n="duel.r5_machine_text">Machine lawyers are combing every line, challenging every misspelled name and every address one digit off, hoping to erase 22,788 voices one signature at a time, in a process built to drag into August.</p>
+        <p class="duel-text" data-i18n="duel.r5_machine_text">Machine lawyers combed every line, challenging every misspelled name and every address one digit off, working to erase 22,788 voices one signature at a time, in a process built to drag through the summer.</p>
       </article>
       <div class="duel-spine" aria-hidden="true"></div>
       <article class="duel-panel duel-movement animate-in anim-right" style="--reveal-delay: 0.15s; --tilt: 0.5deg">
         <span class="duel-round-label" data-i18n="duel.our_answer">Our Answer</span>
         <h3 class="duel-title" data-i18n="duel.r5_movement_title">The Defense</h3>
-        <p class="duel-text" data-i18n="duel.r5_movement_text">We are essential workers and we are going to fight back. Every volunteer who joins this fight is an answer the machine cannot object to. Let the people decide.</p>
+        <p class="duel-text" data-i18n="duel.r5_movement_text">The movement defended every line. Neighbors, volunteers, and essential workers sat through the hearings for signatures they had gathered themselves, asking for one thing: let the people decide.</p>
+      </article>
+    </div>
+
+    <!-- Round 6 -->
+    <div class="duel-round">
+      <article class="duel-panel duel-machine animate-in anim-left">
+        <span class="duel-round-label" data-i18n="duel.their_move">Their Move</span>
+        <div class="duel-stamp animate-in anim-stamp" style="--tilt: 2.5deg; --reveal-delay: 0.4s">
+          <span data-i18n="duel.r6_stamp">STRUCK FROM THE BALLOT</span>
+          <span class="duel-stamp-date">07.21.2026</span>
+        </div>
+        <h3 class="duel-title" data-i18n="duel.r6_machine_title">Their Victory, On Paper</h3>
+        <p class="duel-text" data-i18n="duel.r6_machine_text">In July 2026 the State Officers Electoral Board voted unanimously to strike Byron from the November ballot. After their lawyers finished with the petitions, the count came up 1,222 short of 10,816. The board chair told the candidates they had "just come up short." Independent Mayra Macias was struck the same day by the same three objectors, and the path was clear for their candidate.</p>
+      </article>
+      <div class="duel-spine" aria-hidden="true"></div>
+      <article class="duel-panel duel-movement animate-in anim-right" style="--reveal-delay: 0.15s; --tilt: -0.5deg">
+        <span class="duel-round-label" data-i18n="duel.our_answer">Our Answer</span>
+        <h3 class="duel-title" data-i18n="duel.r6_movement_title">Federal Court, And Home</h3>
+        <p class="duel-text" data-i18n="duel.r6_movement_text">Byron sued the Illinois State Board of Elections in federal court. The suit argues that demanding 10,816 signatures from an independent while asking 697 of a party candidate unconstitutionally restricts voters under the First and Fourteenth Amendments. His attorneys told him reinstatement was unlikely. He filed anyway.</p>
+        <p class="duel-text" data-i18n="duel.r6_movement_text2">Then the movement came home. Byron is running for re-election as Alderman of the 25th Ward, the ward the machine lost in 2019 and has never taken back. Round one went to their lawyers. Round two is February 23, 2027, where objections do not count and voters do.</p>
+        <p class="duel-quote" data-i18n="duel.r6_movement_quote">"This is being done so our community never again has to accept an appointed candidate."</p>
         <div class="duel-cta-row">
-          <a href="#petition" class="btn btn-orange" data-i18n="duel.r5_cta_join">Join the Fight</a>
-          <a href="https://secure.actblue.com/donate/byronfor04web/" class="btn btn-outline duel-btn-outline" target="_blank" rel="noopener" data-i18n="duel.r5_cta_fund">Fund the Legal Defense</a>
+          <a href="#petition" class="btn btn-orange" data-i18n="duel.r6_cta_join">Join the Campaign</a>
+          <a href="https://secure.actblue.com/donate/byron-sigcho-1" class="btn btn-outline duel-btn-outline" target="_blank" rel="noopener" data-i18n="duel.r6_cta_fund">Fund the Campaign</a>
         </div>
       </article>
     </div>
@@ -306,6 +327,10 @@ const fists = Array.from({ length: 7 });
     line-height: 1.75;
   }
 
+  .duel-text + .duel-text {
+    margin-top: var(--space-md);
+  }
+
   .duel-quote {
     margin-top: var(--space-lg);
     font-family: var(--font-display);
@@ -416,11 +441,13 @@ const fists = Array.from({ length: 7 });
     margin-top: var(--space-lg);
   }
 
-  /* Round 5: the stamp */
+  /* Rounds 5 and 6: the stamps */
   .duel-stamp {
     display: inline-flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    max-width: 100%;
     gap: 2px;
     font-family: var(--font-display);
     font-size: var(--text-xl);

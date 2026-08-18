@@ -23,23 +23,23 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <!-- Content Overlay -->
   <div class="hero-content-overlay" id="heroContentOverlay">
     <div class="hero-content container">
-      <span class="hero-badge animate-in anim-stamp" style="--tilt: -1deg; --reveal-delay: 0.45s" data-i18n="hero.badge">INDEPENDENT DEMOCRATIC SOCIALIST • IL-04</span>
+      <span class="hero-badge animate-in anim-stamp" style="--tilt: -1deg; --reveal-delay: 0.45s" data-i18n="hero.badge">RE-ELECT BYRON SIGCHO-LOPEZ • 25TH WARD ALDERMAN</span>
 
       <h1 class="hero-narrative animate-in" style="--reveal-delay: 0s">
-        <span data-i18n="hero.narrative_lead">Byron Sigcho Lopez is fighting to give IL-04</span>
-        <strong class="hero-tagline-highlight" data-i18n="hero.tagline">a choice.</strong>
+        <span data-i18n="hero.narrative_lead">The machine spent everything to erase his name from the ballot. It cannot erase</span>
+        <strong class="hero-tagline-highlight" data-i18n="hero.tagline">the 25th Ward.</strong>
       </h1>
 
       <p class="hero-narrative-secondary animate-in" style="--reveal-delay: 0.2s" data-i18n="hero.narrative_run">
-        Learn more about how democracy was subverted, and how a people-power movement is fighting back.
+        Byron Sigcho-Lopez is running for a third term as Alderman of the 25th Ward. The campaign launched August 18, 2026 in Pilsen, blocks from where the congressional run was announced.
       </p>
 
       <a href="#petition" class="btn btn-orange btn-massive hero-cta animate-in" style="--reveal-delay: 0.35s" data-i18n="hero.cta">
-        Join the Fight
+        Join the Campaign
       </a>
 
       <p class="hero-summary animate-in" style="--reveal-delay: 0.5s" data-i18n="hero.summary">
-        They had their coronation in March, when IL-04 voters got exactly one choice. You answered with 22,788 signatures. Now their lawyers are trying to erase them. We won't let them.
+        On July 21, 2026 the electoral board voted unanimously to strike his name from the November ballot, 1,222 signatures short after their lawyers finished. Byron is challenging Illinois's signature rules in federal court, in his words, so our community never again has to accept an appointed candidate. And he is home in the ward that built the movement, where on February 23 the neighbors answer.
       </p>
 
       <div class="hero-receipts animate-in" style="--reveal-delay: 0.6s">
@@ -55,12 +55,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <span class="hero-receipt-number stat-tabular">22,788</span>
           <span class="hero-receipt-label" data-i18n="hero.chip_delivered">you delivered</span>
         </div>
+        <div class="hero-receipt hero-receipt-struck">
+          <span class="hero-receipt-number stat-tabular">1,222</span>
+          <span class="hero-receipt-label" data-i18n="hero.chip_short">short after the lawyers finished</span>
+        </div>
       </div>
 
       <div class="hero-urgency animate-in anim-stamp" style="--tilt: -1.5deg; --reveal-delay: 0.75s">
-        <span data-i18n="hero.urgency_label">Objection filed June 9. Day</span>
-        <span class="hero-urgency-day stat-tabular" data-days-since="2026-06-09">2</span>
-        <span data-i18n="hero.urgency_label2">of the challenge.</span>
+        <span data-i18n="hero.urgency_label">Election day February 23.</span>
+        <span class="hero-urgency-day stat-tabular" data-days-until="2027-02-23">189</span>
+        <span data-i18n="hero.urgency_label2">days to go.</span>
       </div>
     </div>
 
@@ -314,6 +318,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   /* ── Receipt chips ── */
   .hero-receipts {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: stretch;
     gap: var(--space-md);
     margin-top: var(--space-sm);
@@ -358,6 +364,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   .hero-receipt-win .hero-receipt-number {
     color: var(--orange-light);
+  }
+
+  .hero-receipt-struck {
+    border-color: rgba(255, 107, 74, 0.6);
+    background: rgba(20, 10, 8, 0.35);
+  }
+
+  .hero-receipt-struck .hero-receipt-number {
+    color: #ffb09c;
   }
 
   /* ── Urgency stamp ── */

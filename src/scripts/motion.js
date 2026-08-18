@@ -69,6 +69,12 @@ function initUrgency() {
     const days = Math.max(1, Math.floor((Date.now() - since.getTime()) / 86400000));
     el.textContent = String(days);
   });
+  // Countdown chips, e.g. [data-days-until="2027-02-23"] for election day.
+  document.querySelectorAll('[data-days-until]').forEach((el) => {
+    const until = new Date(el.dataset.daysUntil + 'T00:00:00');
+    const days = Math.max(0, Math.ceil((until.getTime() - Date.now()) / 86400000));
+    el.textContent = String(days);
+  });
 }
 
 export function initMotion() {
