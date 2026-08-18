@@ -1,5 +1,4 @@
 ---
-import PromiseCounter from '../PromiseCounter.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
@@ -9,41 +8,33 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <div class="container blitz-content">
     <div class="blitz-alert animate-in">
       <span class="blitz-alert-icon">✊</span>
-      <span class="blitz-alert-text" data-i18n="volunteer.blitz_alert">JULY 21, 2026: THE BOARD SIDED WITH THE MACHINE</span>
+      <span class="blitz-alert-text" data-i18n="volunteer.blitz_alert">THE WARD CAMPAIGN IS LIVE</span>
     </div>
 
-    <h2 class="blitz-headline animate-in" data-i18n="volunteer.blitz_headline">They Erased the Name. Not the Movement.</h2>
+    <h2 class="blitz-headline animate-in" data-i18n="volunteer.blitz_headline">The Ward Answers on February 23</h2>
 
-    <div class="blitz-grid">
-      <div class="blitz-context">
-        <p class="blitz-text animate-in" data-i18n="volunteer.blitz_p1">
-          You did it. The law demanded 10,816 valid signatures from an independent, while the machine's candidate needed just 697. This movement collected and filed 22,788, more than double the requirement. That was never in question.
-        </p>
-        <p class="blitz-text animate-in" data-i18n="volunteer.blitz_p2">
-          On July 21, 2026, the State Officers Electoral Board voted unanimously to strike Byron from the November ballot, ruling he came up 1,222 signatures short of the 10,816 bar after the machine's lawyers finished challenging them. Round one went to their lawyers. But you cannot disqualify a neighborhood, and the movement that gathered 22,788 signatures came home to the ward that built it. The fight didn't end there either: in late July 2026, Byron sued the Illinois State Board of Elections in federal court over the signature burden itself. His words: "so our community never again has to accept an appointed candidate." Round two happens at the ballot box, February 23, 2027, where objections don't count and voters do.
-        </p>
-        <p class="blitz-promise animate-in" data-i18n="volunteer.blitz_promise">
-          The room promised 20,000. You delivered 22,788. Round two is February 23, 2027.
-        </p>
-      </div>
+    <p class="blitz-text animate-in" data-i18n="volunteer.blitz_p1">
+      This summer, machine lawyers kept his name off a congressional ballot. The 25th Ward tells a different story: we knock every door and answer at the ballot box on February 23, 2027.
+    </p>
 
-      <div class="blitz-counter-card animate-in">
-        <PromiseCounter variant="compact" />
-        <div class="blitz-status">
-          <span class="blitz-status-chip blitz-status-done">
-            <span aria-hidden="true">✓</span>
-            <span data-i18n="volunteer.status_filed">Filed 22,788</span>
-          </span>
-          <a class="blitz-status-chip blitz-status-alert" href={`${base}/movement#ballot-fight`}>
-            <span aria-hidden="true">⚠</span>
-            <span data-i18n="volunteer.status_objection">Erased July 21, 2026</span>
-          </a>
-          <a class="blitz-status-chip" href={`${base}/movement#ballot-fight`}>
-            <span aria-hidden="true">🗳️</span>
-            <span data-i18n="volunteer.status_ruling">Election Day Feb 23, 2027</span>
-          </a>
-        </div>
-      </div>
+    <a class="blitz-link animate-in" href={`${base}/movement#ballot-fight`}>
+      <span data-i18n="volunteer.blitz_link">Read what happened this summer</span>
+      <span aria-hidden="true">→</span>
+    </a>
+
+    <div class="blitz-status animate-in">
+      <span class="blitz-status-chip">
+        <span aria-hidden="true">🏠</span>
+        <span data-i18n="volunteer.status_wardnight">Ward Night Every Tuesday</span>
+      </span>
+      <span class="blitz-status-chip">
+        <span aria-hidden="true">✊</span>
+        <span data-i18n="volunteer.status_launched">Launched August 18</span>
+      </span>
+      <span class="blitz-status-chip" data-days-until="2027-02-23">
+        <span aria-hidden="true">🗳️</span>
+        <span data-i18n="volunteer.status_electionday">Election Day February 23, 2027</span>
+      </span>
     </div>
 
     <div class="blitz-cta animate-in">
@@ -71,6 +62,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   .blitz-content {
     position: relative;
     z-index: 1;
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto;
   }
 
   /* Alert Banner */
@@ -105,16 +99,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     line-height: 1;
     color: #ffffff;
     text-transform: uppercase;
-    margin-bottom: var(--space-2xl);
-  }
-
-  /* Grid */
-  .blitz-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: var(--space-3xl);
-    align-items: center;
-    margin-bottom: var(--space-2xl);
+    margin-bottom: var(--space-xl);
   }
 
   .blitz-text {
@@ -124,43 +109,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     margin-bottom: var(--space-md);
   }
 
-  .blitz-text:last-child {
-    margin-bottom: 0;
-  }
-
-  .blitz-promise {
+  .blitz-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-family: var(--font-display);
-    font-size: var(--text-lg);
-    font-weight: 900;
-    line-height: 1.4;
-    color: #ffffff;
-    margin-top: var(--space-md);
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--cream);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    margin-bottom: var(--space-2xl);
+    transition: color var(--duration-fast) var(--ease-default);
   }
 
-  /* Counter card: cream flyer pinned inside the orange band */
-  .blitz-counter-card {
-    position: relative;
-    overflow: visible;
-    background: var(--cream-light);
-    color: var(--blue-deeper);
-    padding: var(--space-2xl) var(--space-lg) var(--space-xl);
-    box-shadow: var(--shadow-lg);
-    rotate: 0.4deg;
-  }
-
-  .blitz-counter-card::before {
-    content: '';
-    position: absolute;
-    width: 84px;
-    height: 24px;
-    top: -11px;
-    left: 50%;
-    transform: translateX(-50%) rotate(-3deg);
-    background: rgba(245, 208, 138, 0.7);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
-    pointer-events: none;
+  .blitz-link:hover {
+    color: var(--gold-soft);
   }
 
   .blitz-status {
@@ -168,40 +132,23 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     flex-wrap: wrap;
     justify-content: center;
     gap: var(--space-sm);
-    margin-top: var(--space-md);
+    margin-bottom: var(--space-2xl);
   }
 
   .blitz-status-chip {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 5px 12px;
+    padding: 6px 16px;
     font-family: var(--font-display);
     font-size: var(--text-xs);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--blue-deeper);
-    background: rgba(3, 109, 153, 0.08);
-    border: 1.5px solid rgba(3, 109, 153, 0.3);
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
     border-radius: 100px;
-    text-decoration: none;
-  }
-
-  a.blitz-status-chip:hover {
-    border-color: var(--blue-deeper);
-  }
-
-  .blitz-status-done {
-    color: #1b7a3d;
-    background: rgba(27, 122, 61, 0.1);
-    border-color: rgba(27, 122, 61, 0.35);
-  }
-
-  .blitz-status-alert {
-    color: var(--orange-dark);
-    background: rgba(230, 136, 28, 0.12);
-    border-color: rgba(230, 136, 28, 0.45);
   }
 
   /* CTA */
@@ -210,24 +157,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   }
 
   /* Responsive */
-  @media (max-width: 1024px) {
-    .blitz-grid {
-      grid-template-columns: 1fr;
-      gap: var(--space-2xl);
-    }
-  }
-
   @media (max-width: 768px) {
-    .blitz-grid {
-      grid-template-columns: 1fr;
-    }
-
     .blitz-headline {
       font-size: var(--text-3xl);
-    }
-
-    .blitz-counter-card {
-      padding: var(--space-xl) var(--space-md);
     }
   }
 </style>

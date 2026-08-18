@@ -10,8 +10,6 @@ const dots = Array.from({ length: DOTS_COLS * DOTS_ROWS }, (_, i) => ({
   cx: (i % DOTS_COLS) * 10 + 5,
   cy: Math.floor(i / DOTS_COLS) * 10 + 5,
 }));
-
-const fists = Array.from({ length: 7 });
 ---
 
 <section class="duel" id="the-duel">
@@ -25,81 +23,34 @@ const fists = Array.from({ length: 7 });
 
   <div class="duel-rounds">
 
-    <!-- Round 1 -->
+    <!-- Round 1: the ward before us -->
     <div class="duel-round">
       <article class="duel-panel duel-machine animate-in anim-left">
         <span class="duel-round-label" data-i18n="duel.their_move">Their Move</span>
-        <h3 class="duel-title" data-i18n="duel.r1_machine_title">The Backroom Handoff</h3>
-        <p class="duel-text" data-i18n="duel.r1_machine_text">Chuy Garcia filed for a fifth term, waited until the final hours before the deadline, then handed the seat to his former chief of staff. She needed 697 signatures. Voters got one choice.</p>
+        <h3 class="duel-title" data-i18n="duel.r1_machine_title">Twenty-Three Years</h3>
+        <p class="duel-text" data-i18n="duel.r1_machine_text">For 23 years the 25th Ward belonged to Danny Solis and the machine behind him. Zoning, permits, and favors all ran through one office. It ended with the alderman disgraced and a federal investigation working its way through City Hall.</p>
       </article>
       <div class="duel-spine" aria-hidden="true"></div>
       <article class="duel-panel duel-movement animate-in anim-right" style="--reveal-delay: 0.15s; --tilt: 0.4deg">
         <span class="duel-round-label" data-i18n="duel.our_answer">Our Answer</span>
-        <h3 class="duel-title" data-i18n="duel.r1_movement_title">The Open Announcement</h3>
-        <p class="duel-text" data-i18n="duel.r1_movement_text">We did not wait for the Democratic Party to give us permission. Byron announced in Pilsen at Cinco Estrellas, blocks from the classrooms where he taught.</p>
+        <h3 class="duel-title" data-i18n="duel.r1_movement_title">The Pilsen Alliance</h3>
+        <p class="duel-text" data-i18n="duel.r1_movement_text">When the city moved to close 130 public schools, Byron organized with parents and teachers to keep them open. He went on to lead the Pilsen Alliance, fighting displacement and corruption block by block, years before he ran for anything.</p>
         <p class="duel-quote" data-i18n="duel.r1_movement_quote">"I do not build coalitions with politicians. I build coalition with my constituents."</p>
       </article>
     </div>
 
-    <!-- Round 2 -->
+    <!-- Round 2: who pays for the campaign -->
     <div class="duel-round">
       <article class="duel-panel duel-machine animate-in anim-left">
         <span class="duel-round-label" data-i18n="duel.their_move">Their Move</span>
-        <h3 class="duel-title" data-i18n="duel.r2_machine_title">The Secrecy, Celebrated</h3>
-        <p class="duel-text" data-i18n="duel.r2_machine_text">They publicly celebrated how secret the operation was, then introduced their candidate by playing in our faces about silencing our voices for another cycle.</p>
+        <h3 class="duel-title" data-i18n="duel.r2_machine_title">Developer Money</h3>
+        <p class="duel-text" data-i18n="duel.r2_machine_text">A machine ward runs on other people's checks. Developers and corporate PACs pay for the campaign, and then the votes follow the money instead of the block.</p>
       </article>
       <div class="duel-spine" aria-hidden="true"></div>
       <article class="duel-panel duel-movement animate-in anim-right" style="--reveal-delay: 0.15s; --tilt: -0.4deg">
         <span class="duel-round-label" data-i18n="duel.our_answer">Our Answer</span>
-        <h3 class="duel-title" data-i18n="duel.r2_movement_title">The Raised Hands</h3>
-        <p class="duel-text" data-i18n="duel.r2_movement_text">A reporter asked if an independent could even collect 10,816 valid signatures. The room answered before Byron could.</p>
-        <div class="duel-fists" aria-hidden="true">
-          {fists.map((_, i) => (
-            <span class="duel-fist" style={`--fist-delay: ${0.3 + i * 0.1}s`}>✊</span>
-          ))}
-        </div>
-        <p class="duel-quote" data-i18n="duel.r2_movement_quote">"We'll exceed the 10,000. Easily. At least 20,000."</p>
-      </article>
-    </div>
-
-    <!-- Round 3 -->
-    <div class="duel-round">
-      <article class="duel-panel duel-machine animate-in anim-left">
-        <span class="duel-round-label" data-i18n="duel.their_move">Their Move</span>
-        <h3 class="duel-title" data-i18n="duel.r3_machine_title">A Bar Set 15 Times Higher</h3>
-        <p class="duel-text" data-i18n="duel.r3_machine_text">Illinois election law demanded 10,816 valid signatures from an independent. Their candidate needed 697.</p>
-        <div class="duel-stats">
-          <div class="duel-stat">
-            <span class="duel-stat-number stat-tabular">697</span>
-            <span class="duel-stat-label" data-i18n="duel.r3_stat_machine">for their candidate</span>
-          </div>
-          <div class="duel-stat">
-            <span class="duel-stat-number stat-tabular">10,816</span>
-            <span class="duel-stat-label" data-i18n="duel.r3_stat_byron">demanded of Byron</span>
-          </div>
-        </div>
-      </article>
-      <div class="duel-spine" aria-hidden="true"></div>
-      <article class="duel-panel duel-movement duel-movement-counter animate-in anim-right" style="--reveal-delay: 0.15s; --tilt: 0.3deg">
-        <span class="duel-round-label" data-i18n="duel.our_answer">Our Answer</span>
-        <h3 class="duel-title" data-i18n="duel.r3_movement_title">The Promise Kept</h3>
-        <PromiseCounter variant="compact" />
-      </article>
-    </div>
-
-    <!-- Round 4 -->
-    <div class="duel-round">
-      <article class="duel-panel duel-machine duel-machine-money animate-in anim-left">
-        <span class="duel-round-label" data-i18n="duel.their_move">Their Move</span>
-        <h3 class="duel-title" data-i18n="duel.r4_machine_title">Twenty Million Dollars</h3>
-        <span class="duel-money stat-tabular" aria-hidden="true">$20,000,000</span>
-        <p class="duel-text" data-i18n="duel.r4_machine_text">This cycle in Illinois, $20 million from AIPAC, big tech oligarchs, and corporate interests denied people across the state the chance for fair elections.</p>
-      </article>
-      <div class="duel-spine" aria-hidden="true"></div>
-      <article class="duel-panel duel-movement animate-in anim-right" style="--reveal-delay: 0.15s; --tilt: -0.3deg">
-        <span class="duel-round-label" data-i18n="duel.our_answer">Our Answer</span>
-        <h3 class="duel-title" data-i18n="duel.r4_movement_title">A Thousand Neighbors</h3>
-        <p class="duel-text" data-i18n="duel.r4_movement_text">Byron asked for 1,000 grassroots donations to put that campaign in full swing. The movement answered with more. Average gift: $27. No corporate PACs, no lobbyists, no AIPAC. Ever. That has not changed.</p>
+        <h3 class="duel-title" data-i18n="duel.r2_movement_title">Not One Dollar Since 2015</h3>
+        <p class="duel-text" data-i18n="duel.r2_movement_text">Byron pledged in his first run to refuse contributions from developers and big corporations, and he has kept that pledge through every campaign since. This one is powered by small-dollar donations from teachers, nurses, union members, and working families.</p>
         <div class="duel-dots-wrap">
           <svg class="duel-dots" viewBox={`0 0 ${DOTS_COLS * 10} ${DOTS_ROWS * 10}`} role="img" aria-label="One thousand dots, each one a grassroots donor.">
             {dots.map((d) => (
@@ -107,47 +58,91 @@ const fists = Array.from({ length: 7 });
             ))}
           </svg>
         </div>
-        <p class="duel-quote" data-i18n="duel.r4_movement_quote">"It takes people and people defeats money."</p>
-        <a href="https://secure.actblue.com/donate/byron-sigcho-1" class="btn btn-orange duel-micro-cta" target="_blank" rel="noopener" data-i18n="duel.r4_cta">Chip in $27</a>
+        <p class="duel-quote" data-i18n="duel.r2_movement_quote">"It takes people and people defeats money."</p>
+        <a href="https://secure.actblue.com/donate/byron-sigcho-1" class="btn btn-orange duel-micro-cta" target="_blank" rel="noopener" data-i18n="duel.r2_cta">Chip in $27</a>
       </article>
     </div>
 
-    <!-- Round 5 -->
+    <!-- Round 3: zoning -->
     <div class="duel-round">
       <article class="duel-panel duel-machine animate-in anim-left">
         <span class="duel-round-label" data-i18n="duel.their_move">Their Move</span>
-        <div class="duel-stamp animate-in anim-stamp" style="--tilt: -3deg; --reveal-delay: 0.4s">
-          <span data-i18n="duel.r5_stamp">OBJECTION FILED</span>
-          <span class="duel-stamp-date">06.09.2026</span>
+        <h3 class="duel-title" data-i18n="duel.r3_machine_title">The Lot at 18th and Peoria</h3>
+        <p class="duel-text" data-i18n="duel.r3_machine_text">In 2018 Danny Solis rezoned the largest vacant lot in Pilsen from residential to industrial, and the developer pushed for 500 market-rate apartments on it. That is how zoning worked here: one alderman, one closed door, and the block finds out when the permits are pulled.</p>
+        <p class="duel-text" data-i18n="duel.r3_machine_text2">City Hall also floated landmarking roughly 900 Pilsen homes and buildings, a repair bill long-time owners could not carry.</p>
+      </article>
+      <div class="duel-spine" aria-hidden="true"></div>
+      <article class="duel-panel duel-movement animate-in anim-right" style="--reveal-delay: 0.15s; --tilt: 0.3deg">
+        <span class="duel-round-label" data-i18n="duel.our_answer">Our Answer</span>
+        <h3 class="duel-title" data-i18n="duel.r3_movement_title">Six Acres, Won Back</h3>
+        <p class="duel-text" data-i18n="duel.r3_movement_text">Byron fought the luxury plan as a Pilsen Alliance organizer and blocked it again in 2019 as alderman. The city bought the six-acre lot for $12 million in 2022. In April 2026 Casa Nayarit was selected for it: 76 permanently affordable homes and a ground-floor child care center at 900 W. 18th St, phase one of 432 units, reviewed by the ward's resident zoning advisory board before it moved.</p>
+        <p class="duel-text" data-i18n="duel.r3_movement_text2">Down the street, Casa Yucatán finishes this fall at 1609 W. 21st Place: 98 affordable apartments. Over 800 affordable units created or preserved since 2019, hundreds of neighbors stopped the landmark plan, and homeowners won real protection from predatory developers.</p>
+        <p class="duel-quote" data-i18n="duel.r3_movement_quote">"El pueblo unido jamás será vencido."</p>
+      </article>
+    </div>
+
+    <!-- Round 4: corruption and the courts -->
+    <div class="duel-round">
+      <article class="duel-panel duel-machine animate-in anim-left">
+        <span class="duel-round-label" data-i18n="duel.their_move">Their Move</span>
+        <h3 class="duel-title" data-i18n="duel.r4_machine_title">Campaign Cash for Criminal Lawyers</h3>
+        <p class="duel-text" data-i18n="duel.r4_machine_text">The Chicago Tribune reported in 2023 that Danny Solis spent $220,000 from his campaign fund on criminal defense lawyers during the federal probe at City Hall. Donors gave to a ward. The money went to his lawyers.</p>
+        <div class="duel-stats">
+          <div class="duel-stat">
+            <span class="duel-stat-number stat-tabular">23</span>
+            <span class="duel-stat-label" data-i18n="duel.r4_stat_years">years in the ward office</span>
+          </div>
+          <div class="duel-stat">
+            <span class="duel-stat-number stat-tabular">$220,000</span>
+            <span class="duel-stat-label" data-i18n="duel.r4_stat_defense">campaign funds spent on his defense</span>
+          </div>
         </div>
-        <h3 class="duel-title" data-i18n="duel.r5_machine_title">The Objection</h3>
-        <p class="duel-text" data-i18n="duel.r5_machine_text">Machine lawyers combed every line, challenging every misspelled name and every address one digit off, working to erase 22,788 voices one signature at a time, in a process built to drag through the summer.</p>
+      </article>
+      <div class="duel-spine" aria-hidden="true"></div>
+      <article class="duel-panel duel-movement animate-in anim-right" style="--reveal-delay: 0.15s; --tilt: -0.3deg">
+        <span class="duel-round-label" data-i18n="duel.our_answer">Our Answer</span>
+        <h3 class="duel-title" data-i18n="duel.r4_movement_title">All the Way to the Supreme Court</h3>
+        <p class="duel-text" data-i18n="duel.r4_movement_text">Byron challenged it and took Danny Solis all the way to the Illinois Supreme Court. In March 2022 the court condemned public corruption in strong terms and still ruled against him: the election code does not ban the practice, and only the legislature can change that. Nobody else in Chicago even tried.</p>
+        <p class="duel-quote" data-i18n="duel.r4_movement_quote">"If the law allows corrupt politicians to use campaign funds for legal defense fees, then it's time to change the law."</p>
+      </article>
+    </div>
+
+    <!-- Round 5: the 2023 race -->
+    <div class="duel-round">
+      <article class="duel-panel duel-machine duel-machine-money animate-in anim-left">
+        <span class="duel-round-label" data-i18n="duel.their_move">Their Move</span>
+        <h3 class="duel-title" data-i18n="duel.r5_machine_title">2023: The Money Came Back</h3>
+        <span class="duel-money stat-tabular" aria-hidden="true">$160,000</span>
+        <p class="duel-text" data-i18n="duel.r5_machine_text">In the 2023 ward race the business-backed Get Stuff Done PAC dropped just under $160,000 into ads and mailers against Byron and for his challenger, according to Crain's Chicago Business. WTTW reported that nearly 20 percent of the more than $618,000 the PAC spent citywide went to opposing him. Its funders included a financier who has long backed and advised Rahm Emanuel.</p>
       </article>
       <div class="duel-spine" aria-hidden="true"></div>
       <article class="duel-panel duel-movement animate-in anim-right" style="--reveal-delay: 0.15s; --tilt: 0.5deg">
         <span class="duel-round-label" data-i18n="duel.our_answer">Our Answer</span>
-        <h3 class="duel-title" data-i18n="duel.r5_movement_title">The Defense</h3>
-        <p class="duel-text" data-i18n="duel.r5_movement_text">The movement defended every line. Neighbors, volunteers, and essential workers sat through the hearings for signatures they had gathered themselves, asking for one thing: let the people decide.</p>
+        <h3 class="duel-title" data-i18n="duel.r5_movement_title">The Ward Sent Him Back</h3>
+        <p class="duel-text" data-i18n="duel.r5_movement_text">The answer was doors, Ward Night, and four years of neighbors who knew the office was theirs. The Chicago Tribune endorsed him, writing that he had admirably represented his ward. Gazette Chicago called him the best alderman in the City of Chicago. The ward re-elected him.</p>
+        <p class="duel-quote" data-i18n="duel.r5_movement_quote">"He's the real deal." Girl, I Guess Progressive Voter Guide, 2023.</p>
       </article>
     </div>
 
-    <!-- Round 6 -->
+    <!-- Round 6: the congressional chapter, told once -->
     <div class="duel-round">
       <article class="duel-panel duel-machine animate-in anim-left">
         <span class="duel-round-label" data-i18n="duel.their_move">Their Move</span>
-        <div class="duel-stamp animate-in anim-stamp" style="--tilt: 2.5deg; --reveal-delay: 0.4s">
+        <div class="duel-stamp animate-in anim-stamp" style="--tilt: -3deg; --reveal-delay: 0.4s">
           <span data-i18n="duel.r6_stamp">STRUCK FROM THE BALLOT</span>
           <span class="duel-stamp-date">07.21.2026</span>
         </div>
-        <h3 class="duel-title" data-i18n="duel.r6_machine_title">Their Victory, On Paper</h3>
-        <p class="duel-text" data-i18n="duel.r6_machine_text">In July 2026 the State Officers Electoral Board voted unanimously to strike Byron from the November ballot. After their lawyers finished with the petitions, the count came up 1,222 short of 10,816. The board chair told the candidates they had "just come up short." Independent Mayra Macias was struck the same day by the same three objectors, and the path was clear for their candidate.</p>
+        <h3 class="duel-title" data-i18n="duel.r6_machine_title">They Sent the Lawyers</h3>
+        <p class="duel-text" data-i18n="duel.r6_machine_text">In 2026 the machine handed a Congressional seat to a former chief of staff in the final hours before the deadline, and Byron ran as an independent. She needed 697 signatures. The law demanded 10,816 of him. The movement filed 22,788.</p>
+        <p class="duel-text" data-i18n="duel.r6_machine_text2">Their lawyers challenged the petitions line by line, and in July 2026 the State Officers Electoral Board voted unanimously to strike him from the November ballot, 1,222 short.</p>
       </article>
       <div class="duel-spine" aria-hidden="true"></div>
-      <article class="duel-panel duel-movement animate-in anim-right" style="--reveal-delay: 0.15s; --tilt: -0.5deg">
+      <article class="duel-panel duel-movement duel-movement-counter animate-in anim-right" style="--reveal-delay: 0.15s; --tilt: -0.5deg">
         <span class="duel-round-label" data-i18n="duel.our_answer">Our Answer</span>
-        <h3 class="duel-title" data-i18n="duel.r6_movement_title">Federal Court, And Home</h3>
-        <p class="duel-text" data-i18n="duel.r6_movement_text">Byron sued the Illinois State Board of Elections in federal court. The suit argues that demanding 10,816 signatures from an independent while asking 697 of a party candidate unconstitutionally restricts voters under the First and Fourteenth Amendments. His attorneys told him reinstatement was unlikely. He filed anyway.</p>
-        <p class="duel-text" data-i18n="duel.r6_movement_text2">Then the movement came home. Byron is running for re-election as Alderman of the 25th Ward, the ward the machine lost in 2019 and has never taken back. Round one went to their lawyers. Round two is February 23, 2027, where objections do not count and voters do.</p>
+        <h3 class="duel-title" data-i18n="duel.r6_movement_title">Home</h3>
+        <PromiseCounter variant="compact" />
+        <p class="duel-text duel-text-counter" data-i18n="duel.r6_movement_text">Byron sued the Illinois State Board of Elections in federal court. His attorneys told him reinstatement was unlikely. He filed anyway, for whoever runs next.</p>
+        <p class="duel-text" data-i18n="duel.r6_movement_text2">Then he came home. Byron is running for a third term as Alderman of the 25th Ward, the ward the machine lost in 2019 and has never taken back. Round one went to their lawyers. Round two is February 23, 2027, where objections do not count and voters do.</p>
         <p class="duel-quote" data-i18n="duel.r6_movement_quote">"This is being done so our community never again has to accept an appointed candidate."</p>
         <div class="duel-cta-row">
           <a href="#petition" class="btn btn-orange" data-i18n="duel.r6_cta_join">Join the Campaign</a>
@@ -331,6 +326,10 @@ const fists = Array.from({ length: 7 });
     margin-top: var(--space-md);
   }
 
+  .duel-text-counter {
+    margin-top: var(--space-lg);
+  }
+
   .duel-quote {
     margin-top: var(--space-lg);
     font-family: var(--font-display);
@@ -340,30 +339,7 @@ const fists = Array.from({ length: 7 });
     color: var(--orange-dark);
   }
 
-  /* Round 2: raised fists */
-  .duel-fists {
-    display: flex;
-    gap: var(--space-sm);
-    margin-top: var(--space-lg);
-    font-size: var(--text-2xl);
-  }
-
-  .duel-fist {
-    display: inline-block;
-    opacity: 0;
-    translate: 0 16px;
-  }
-
-  .visible .duel-fist {
-    animation: fist-rise 0.45s var(--ease-out-back) forwards;
-    animation-delay: var(--fist-delay, 0.3s);
-  }
-
-  @keyframes fist-rise {
-    to { opacity: 1; translate: 0 0; }
-  }
-
-  /* Round 3: machine stats */
+  /* Round 4: machine stats */
   .duel-stats {
     display: flex;
     gap: var(--space-2xl);
@@ -397,7 +373,7 @@ const fists = Array.from({ length: 7 });
     color: var(--blue-deeper);
   }
 
-  /* Round 4: money monolith + donor dots */
+  /* Round 5 money monolith + Round 2 donor dots */
   .duel-machine-money {
     border-left-color: #3a4a55;
   }

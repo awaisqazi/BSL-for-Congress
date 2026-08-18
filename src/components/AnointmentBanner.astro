@@ -9,45 +9,26 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   
   <div class="container anointment-content">
     <div class="anointment-inner">
-      <span class="anointment-label animate-in" data-i18n="anointment.label">Round One</span>
-      
-      <h2 class="anointment-headline animate-in" data-i18n="anointment.headline">
-        The Anointment
-      </h2>
-      
-      <ol class="anointment-steps">
-        <li class="anointment-step animate-in" style="--reveal-delay: 0s">
-          <span class="anointment-step-num" aria-hidden="true">1</span>
-          <p class="anointment-step-text" data-i18n="anointment.step1">Rep. Chuy García filed for a fifth term, telling no one he planned to retire.</p>
-        </li>
-        <li class="anointment-step animate-in" style="--reveal-delay: 0.15s">
-          <span class="anointment-step-num" aria-hidden="true">2</span>
-          <p class="anointment-step-text" data-i18n="anointment.step2">Moments before the deadline, his former chief of staff filed petitions collected in just days. He withdrew and endorsed her. She needed only 697 signatures.</p>
-        </li>
-        <li class="anointment-step animate-in" style="--reveal-delay: 0.3s">
-          <span class="anointment-step-num" aria-hidden="true">3</span>
-          <p class="anointment-step-text" data-i18n="anointment.step3">On March 17, IL-04 voters got exactly one choice. Independents had to collect over 10,816 signatures for November.</p>
-        </li>
-        <li class="anointment-step animate-in" style="--reveal-delay: 0.45s">
-          <span class="anointment-step-num" aria-hidden="true">4</span>
-          <p class="anointment-step-text" data-i18n="anointment.step4">22,788 of your neighbors answered. So on June 9, the machine sent lawyers to throw your signatures out.</p>
-        </li>
-        <li class="anointment-step animate-in" style="--reveal-delay: 0.6s">
-          <span class="anointment-step-num" aria-hidden="true">5</span>
-          <p class="anointment-step-text" data-i18n="anointment.step5">On July 21, 2026, the electoral board voted unanimously to strike Byron from the November ballot, 1,222 signatures short of 10,816 after their lawyers finished. Fellow independent Mayra Macías was struck by the same three objectors. The seat was handed over without a competitive election.</p>
-        </li>
-        <li class="anointment-step animate-in" style="--reveal-delay: 0.75s">
-          <span class="anointment-step-num" aria-hidden="true">6</span>
-          <p class="anointment-step-text" data-i18n="anointment.step6">Byron took Illinois to federal court over a rule that demanded 10,816 signatures of him and 697 of the machine's candidate. He is honest that reinstatement is unlikely. He filed anyway, so our community never again has to accept an appointed candidate.</p>
-        </li>
-      </ol>
+      <span class="anointment-label animate-in" data-i18n="anointment.label">This Summer</span>
 
-      <p class="anointment-kicker animate-in" data-i18n="anointment.kicker">
-        They needed lawyers to win round one. Round two is in federal court. Round three is the 25th Ward, on February 23, 2027, where no one can object to your ballot.
+      <h2 class="anointment-headline animate-in" data-i18n="anointment.headline">
+        The Ward Is a Different Story
+      </h2>
+
+      <p class="anointment-beat animate-in" style="--reveal-delay: 0s" data-i18n="anointment.b1">
+        Byron ran for Congress as an independent this year. Neighbors filed more than double the signatures the law demanded of him, and the machine's lawyers challenged them until an electoral board struck his name from the November ballot.
       </p>
 
-      <a href="https://www.chicagotribune.com/2026/03/20/illinois-4th-congressional-district-independents/" class="btn btn-orange anointment-cta animate-in" target="_blank" rel="noopener" data-i18n="anointment.cta">
-        Learn About the Subversion
+      <p class="anointment-beat animate-in" style="--reveal-delay: 0.15s" data-i18n="anointment.b2">
+        He is challenging that rule in federal court, in his words, so our community never again has to accept an appointed candidate. And he is home, running for the ward he has served since 2019.
+      </p>
+
+      <p class="anointment-kicker animate-in" data-i18n="anointment.kicker">
+        They can object to a petition. They cannot object to a neighbor's ballot.
+      </p>
+
+      <a href={`${base}/movement`} class="btn btn-orange anointment-cta animate-in" data-i18n="anointment.cta">
+        Read the Full Story
       </a>
     </div>
 
@@ -125,39 +106,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     text-transform: uppercase;
   }
 
-  .anointment-steps {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-
-  .anointment-step {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-md);
-  }
-
-  .anointment-step-num {
-    flex: none;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-display);
-    font-size: var(--text-sm);
-    font-weight: 900;
-    color: var(--blue-deeper);
-    background: var(--gold-soft);
-    border-radius: 50%;
-    rotate: -4deg;
-    margin-top: 2px;
-  }
-
-  .anointment-step-text {
+  .anointment-beat {
     margin: 0;
     font-size: var(--text-base);
     line-height: 1.65;
