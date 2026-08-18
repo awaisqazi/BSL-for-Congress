@@ -513,9 +513,24 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   }
 
   @media (max-width: 768px) {
+    /* The content column outgrows short viewports; let the hero grow
+       instead of clipping (svh avoids the iOS toolbar jump). */
     .hero {
+      height: auto;
       min-height: 100vh;
+      min-height: 100svh;
       max-height: unset;
+    }
+
+    .hero-content-overlay {
+      height: auto;
+      min-height: 100vh;
+      min-height: 100svh;
+    }
+
+    .hero-urgency {
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     .hero-narrative {
