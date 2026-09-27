@@ -132,6 +132,39 @@ Full text: `transcripts/2026-08-18-reelection-launch-byron.txt`.
 - Chinatown is a solidarity story, not a ward boundary claim. Do not describe it
   as part of the 25th.
 
+## Movement-building rules (from the Mamdani playbook, adapted)
+
+Full research memo with sources: `bsl-social-videos/research/mamdani-playbook.md`. The part imitators
+miss is not the videos; it is the pipe that turns a view into a door knock. What we adopt:
+
+- **Every video ends with the same ask, and the ask is a body, not a vote.** "Knock doors with us"
+  is the campaign's standing ask; a plank-specific action sits above it (Ward Night Tuesday, the
+  TIF committee, exemption help). The vote is the date stamp; the pill is the volunteer ask.
+- **Three planks, said identically in both languages, every time, until staff are sick of them.**
+  Byron's own three, in his own order: tax the rich, fund the schools, property tax relief. Spanish
+  is fixed once ("que paguen los ricos, que se financien las escuelas, alivio en los impuestos a la
+  propiedad") and reused so it becomes a chant, not a translation.
+- **Receipts are our version of the challenger's novelty.** Mamdani's team says the videos worked
+  because "it had substance." An incumbent's substance is what was delivered and what is next, with
+  the address attached.
+- **Spanish-first, not Spanish-subtitled, for some of the content.** The Spanish videos outperformed
+  the English ones by a wide margin in New York. Some cuts should be Spanish with English captions,
+  with references that are specific to Pilsen and La Villita, built to travel into family WhatsApp
+  threads.
+- **Punch at records and statements, never at people.** Rapid response is a receipt and a joke.
+  Answer bigotry with biography once, at length. Every attack video ends with the same volunteer
+  ask so the attack pays for the field.
+- **Joy is the register.** Warm to the room, blunt about billionaires, never afraid of looking a
+  little silly. "Fear of cringe is a real obstacle to retail politics."
+- **The neighborhood is the set.** Shoot walking on 18th, 26th and Taylor with the street loud
+  behind him; interruptions are content. Ask neighbors what things cost before Byron names the fix.
+- **Design for remixing.** The organizing-wall look (paper, tape, stamps, placards) is meant to be
+  stenciled, screen-printed and reposted by volunteers, not protected.
+
+What does not transfer: 100,000-volunteer scale, the public-financing "stop sending money" ask,
+ranked-choice cross-endorsements (Chicago's analogue is lining up allies for an April runoff), and
+national attention. The metric here is share of ward households reached, not views.
+
 ## A quick test before publishing
 
 Read the paragraph aloud in Byron's voice, standing in a packed room in Pilsen
