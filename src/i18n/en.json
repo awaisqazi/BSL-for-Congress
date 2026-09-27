@@ -23,16 +23,16 @@
   "promise": {
     "label": "Promises Kept",
     "headline": "He Said He Would. He Did.",
-    "beat1": "In 2019, the 25th Ward closed a 23 year chapter of Danny Solis and elected a teacher and organizer who took no money from developers. Neighbors have been checking the receipts ever since.",
+    "beat1": "We did not run in 2015 for ambition or a title. We ran because 20,000 neighbors had been pushed out of Pilsen by neglect, corruption, and silence, and because the schools had to stay open. In 2019 the ward closed a 23 year chapter of Danny Solis and elected a teacher and organizer who took no money from developers. Neighbors have been checking the receipts ever since.",
     "k1_title": "Take no developer or corporate money",
     "k1_desc": "Not one dollar since 2015. Byron has upheld that commitment every year in office, and he has pushed for publicly financed elections so no alderman has to depend on that money.",
     "k2_title": "Every Tuesday. Seven years.",
-    "k2_desc": "Ward Night every Tuesday since 2019, including all the way through the pandemic. Masks and sanitizer delivered door to door. An emergency fund of nearly $100,000 for neighbors who qualified for nothing else, including undocumented neighbors.",
+    "k2_desc": "Ward Night every Tuesday since 2019, including all the way through the pandemic. Masks and sanitizer delivered door to door. Neighbors in Chinatown sent PPE and vaccines. Close to $100,000 raised for emergency relief, not by billionaires but by the people, for neighbors who qualified for nothing else, including undocumented neighbors.",
     "k3_title": "Put zoning back in the neighbors' hands",
     "k3_desc": "A resident Zoning Advisory Board, with members from every neighborhood in the ward, now weighs in on what gets built. In April 2026 that board reviewed Casa Nayarit, the first 76 permanently affordable homes on the Pilsen lot the city bought after Byron blocked 500 luxury apartments.",
     "k4_title": "Deliver, block by block",
     "k4_desc": "Over 800 units of affordable housing created or preserved. Over $500,000 from the state for violence prevention. Over $1 million for Benito Juarez and other ward schools. Cermak Road repaved, and 311 pushed until the potholes and the streetlights got fixed.",
-    "close": "Seven years later the list is longer and the promise has not changed. On February 23, 2027, the 25th Ward decides whether the work keeps going.",
+    "close": "Seven years later the list is longer and the promise has not changed. It was never about one alderman. It was always about we, the people. On February 23, 2027, the 25th Ward decides whether the work keeps going.",
     "cta": "Stand With the 25th Ward"
   },
   "bio": {
@@ -40,9 +40,9 @@
     "headline": "Byron Sigcho-Lopez is a father of triplets and the independent socialist alderman who closed a 23 year chapter of machine corruption in the 25th Ward.",
     "p1": "Byron is an immigrant who came to the United States alone when he was 17 years old. His life is a testament to what happens when strangers become neighbors and family.",
     "p2": "Since 2019 he has delivered for the ward, not for donors. Over 800 units of affordable housing created or preserved. The largest vacant site in Pilsen, at 18th and Peoria, bought by the city after he blocked luxury towers, with Casa Nayarit now selected to build the first 76 permanently affordable homes there. Over $500,000 in state funds for violence prevention. Over $1 million in infrastructure for Benito Juarez Community Academy. Ward Night every Tuesday, including through the pandemic.",
-    "p3": "He is running for a third term because the work is not finished. Rent stabilization and a property tax system that protects seniors and working families. An elected school board. A reopened Department of the Environment. Street vendors who can work without a misdemeanor arrest turning into a deportation. A ward office that answers to neighbors and not to developers.",
+    "p3": "He is running for a third term because the work is not finished. Tax the rich, fund the schools, and give property tax relief to working families: the 3 percent millionaire surcharge that Illinois voters already approved at the ballot box. Full-day pre-K and after-school programs instead of hundreds of millions for a stadium. Rent stabilization and the Protect Renters Ordinance. An elected school board that governs. A reopened Department of the Environment. Street vendors who can work without a misdemeanor arrest turning into a deportation. A ward office that answers to neighbors and not to developers.",
     "p4": "Byron earned his Bachelor's in Mathematics and Business Administration from Cumberland University and his Master's in Economics from the University of Illinois at Chicago. He lives in Pilsen with his wife, Loreen, their triplets, a dog, and two cats.",
-    "quote_card": "\"It takes people and people defeats money.\"",
+    "quote_card": "\"It has never been about me. It has always been about we. We, the people.\"",
     "cta": "Read Byron's Full Story"
   },
   "platform": {
@@ -207,7 +207,7 @@
     "hero_sub": "Every ward answers one question: who does your alderman work for, the neighbors or the machine? For 23 years the answer here was the machine. In 2019 the ward took itself back, and it has not been for sale since. On February 23, 2027, we answer again.",
     "movement_label": "The Movement",
     "movement_headline": "What Makes Byron Different",
-    "movement_intro": "Byron Sigcho-Lopez is an ideologically committed democratic socialist and a firebrand who has spent his entire career fighting for the multiracial working class. He is not a politician looking for a promotion. He is an organizer who was called to serve by his community.",
+    "movement_intro": "Byron Sigcho-Lopez is an ideologically committed democratic socialist and a firebrand who has spent his entire career fighting for the multiracial working class. He is not a politician looking for a promotion. He is a teacher and organizer who was called to serve by his community, and in his own words, it has never been about me. It has always been about we.",
     "unbought_title": "The Unbought Insurgent",
     "unbought_text": "Unlike establishment politicians, Byron completely rejects corporate PAC money and contributions from real estate developers. His campaign is powered entirely by thousands of small-dollar grassroots donations from teachers, nurses, union members, and working families. He has upheld this commitment since his first campaign in 2015 and has never wavered.",
     "tested_title": "A Tested Record",
@@ -442,13 +442,13 @@
     "day_left": "day to Election Day"
   },
   "ticker": {
-    "p1": "Let the people decide.",
+    "p1": "Never about me. Always about we.",
     "p2": "People defeats money.",
     "p3": "Ward Night. Every Tuesday.",
     "p4": "No developer money. Not one dollar. Ever.",
     "p5": "February 23, 2027. Round two starts now.",
-    "p6": "People before party.",
-    "p7": "Solidarity!"
+    "p6": "Hoy por mí, mañana por ti.",
+    "p7": "Solidarity with actions, not selfies."
   },
   "nextup": {
     "label": "The Calendar",
