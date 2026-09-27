@@ -5,16 +5,16 @@
   <div class="container">
     <div class="signup-grid">
       <div class="signup-text">
-        <span class="section-label animate-in" data-i18n="volunteer.signup_label">Join the Movement</span>
+        <span class="section-label animate-in" data-i18n="volunteer.signup_label">Sign Up</span>
         <h2 class="section-title animate-in" data-i18n="volunteer.signup_headline">Sign Up to Volunteer</h2>
         <p class="signup-desc animate-in" data-i18n="volunteer.signup_desc">
-          Fill out the form and our team will reach out with next steps. Whether you have one hour or one hundred, there is a role for you in this movement.
+          Tell us your block and how you want to help. The campaign follows up to place you. One hour or one hundred, there is a post for you.
         </p>
 
         <ol class="signup-steps animate-in">
           <li class="signup-step">
             <span class="signup-step-num" aria-hidden="true">1</span>
-            <span data-i18n="volunteer.next_step1">You sign up. We reach out within a few days.</span>
+            <span data-i18n="volunteer.next_step1">You sign up. The campaign follows up to place you.</span>
           </li>
           <li class="signup-step">
             <span class="signup-step-num" aria-hidden="true">2</span>
@@ -28,7 +28,7 @@
         <p class="signup-solidarity animate-in" data-i18n="volunteer.signoff">Solidarity!</p>
       </div>
 
-      <form class="signup-form animate-in" id="volunteer-form" action="https://docs.google.com/forms/d/e/1FAIpQLSeUKnQVp4auTqHdFZeDrGlAOYAjmOO0sE19Xm11Pee2ayuuWQ/formResponse" method="POST" target="hidden_iframe_volunteer">
+      <form class="signup-form animate-in" id="volunteer-form" data-action-bar-hide action="https://docs.google.com/forms/d/e/1FAIpQLSeUKnQVp4auTqHdFZeDrGlAOYAjmOO0sE19Xm11Pee2ayuuWQ/formResponse" method="POST" target="hidden_iframe_volunteer">
         <div class="form-row">
           <div class="form-group">
             <label for="first-name" data-i18n="volunteer.label_first">First Name *</label>
@@ -124,11 +124,26 @@
         </p>
 
         <button type="submit" class="btn btn-orange btn-massive form-submit" data-i18n="volunteer.submit">
-          Join the Movement
+          Count Me In
         </button>
         
+        <!-- What happens next. Links sit outside the i18n spans so a language swap keeps them. -->
         <div class="volunteer-success" id="volunteer-success">
-          <p data-i18n="volunteer.success_msg">Welcome to the movement. Solidarity! Now bring one neighbor with you. ✊</p>
+          <p class="volunteer-success-head" data-i18n="volunteer.success_msg">You're in. Here is what happens next.</p>
+          <ol class="signup-steps volunteer-success-steps">
+            <li class="signup-step">
+              <span class="signup-step-num" aria-hidden="true">1</span>
+              <a href="https://25thward.org/" target="_blank" rel="noopener" data-i18n="volunteer.success_wardnight">Ward Night is every Tuesday at the ward office. Come by this week.</a>
+            </li>
+            <li class="signup-step">
+              <span class="signup-step-num" aria-hidden="true">2</span>
+              <a href="https://canvass.chicagodsa.org" target="_blank" rel="noopener" data-i18n="volunteer.success_canvass">Canvasses run on Sundays. Pick your first shift on the canvass map.</a>
+            </li>
+            <li class="signup-step">
+              <span class="signup-step-num" aria-hidden="true">3</span>
+              <span data-i18n="volunteer.success_followup">The campaign will follow up to place you at your post.</span>
+            </li>
+          </ol>
           <button type="button" class="btn btn-outline volunteer-share" id="volunteer-share">
             <span data-i18n="volunteer.share_btn">Copy the Link, Send It to a Neighbor</span>
             <span class="share-check" aria-hidden="true">✓</span>
@@ -148,11 +163,12 @@
     form.addEventListener('submit', function () {
       setTimeout(function () {
         form.reset();
+        // Swap the fields for the next steps (Ward Night, the canvass map,
+        // the follow-up) and leave them up. No timer; they read at their pace.
+        form.classList.add('is-submitted');
         if (successMsg) {
           successMsg.classList.add('visible');
-          setTimeout(function () {
-            successMsg.classList.remove('visible');
-          }, 12000);
+          successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }, 500);
     });
@@ -172,28 +188,10 @@
   });
 </script>
 
-<!-- Fund the Fight CTA -->
-<section class="volunteer-cta-block">
-  <div class="volunteer-cta-bg">
-    <div class="volunteer-cta-pattern"></div>
-  </div>
-  <div class="container volunteer-cta-content">
-    <h2 class="volunteer-cta-headline animate-in" data-i18n="volunteer.cta_headline">Can't Volunteer Today? Fund the Campaign.</h2>
-    <p class="volunteer-cta-text animate-in" data-i18n="volunteer.cta_text">
-      This campaign takes zero dollars from developers or corporate PACs. Every dollar you give funds door-knocking, campaign materials, and getting out the vote for February 23, 2027, run entirely by working people like you.
-    </p>
-    <p class="volunteer-cta-goal animate-in" data-i18n="volunteer.cta_goal">
-      Join the grassroots donors who keep this movement in full swing.
-    </p>
-    <div class="volunteer-cta-buttons animate-in">
-      <a href="https://secure.actblue.com/donate/byron-sigcho-1" class="btn btn-orange btn-massive" target="_blank" rel="noopener" data-i18n="volunteer.cta_donate">Chip in $27</a>
-    </div>
-  </div>
-</section>
-
 <style>
   .signup-section {
     background: var(--cream);
+    scroll-margin-top: var(--nav-height); /* #signup deep links land below the fixed navbar */
   }
 
   .signup-grid {
@@ -345,14 +343,36 @@
 
   .volunteer-success.visible {
     opacity: 1;
-    max-height: 220px;
+    max-height: 640px;
     margin-top: var(--space-md);
   }
 
-  .volunteer-success p {
+  /* After submit only the next steps stay on the clipboard */
+  .signup-form.is-submitted > :not(.volunteer-success) {
+    display: none;
+  }
+
+  .volunteer-success-head {
     font-family: var(--font-display);
-    font-weight: 800;
+    font-size: var(--text-xl);
+    font-weight: 900;
+    color: var(--blue-deeper);
     margin-bottom: var(--space-sm);
+  }
+
+  .volunteer-success-steps {
+    text-align: left;
+    margin: var(--space-md) 0 var(--space-lg);
+  }
+
+  .volunteer-success-steps a {
+    color: var(--blue-dark);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .volunteer-success-steps a:hover {
+    color: var(--orange-dark);
   }
 
   .volunteer-share {
@@ -414,63 +434,6 @@
     rotate: -1.5deg;
   }
 
-  /* CTA Block */
-  .volunteer-cta-block {
-    position: relative;
-    padding: var(--space-4xl) 0;
-    overflow: hidden;
-  }
-
-  .volunteer-cta-bg {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deeper) 100%);
-    z-index: 0;
-  }
-
-  .volunteer-cta-pattern {
-    position: absolute;
-    inset: 0;
-    opacity: 0.04;
-    background-image: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
-  }
-
-  .volunteer-cta-content {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-xl);
-  }
-
-  .volunteer-cta-headline {
-    font-family: var(--font-display);
-    font-size: var(--text-3xl);
-    font-weight: 900;
-    color: var(--cream);
-    text-transform: uppercase;
-    max-width: 700px;
-  }
-
-  .volunteer-cta-text {
-    font-size: var(--text-lg);
-    line-height: 1.7;
-    color: #ffffff;
-    max-width: 650px;
-  }
-
-  .volunteer-cta-goal {
-    font-family: var(--font-display);
-    font-size: var(--text-base);
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--gold-soft);
-    max-width: 650px;
-  }
-
   /* Responsive */
   @media (max-width: 1024px) {
     .signup-grid {
@@ -499,10 +462,6 @@
     .form-row,
     .form-row-3 {
       grid-template-columns: 1fr;
-    }
-
-    .volunteer-cta-headline {
-      font-size: var(--text-2xl);
     }
   }
 </style>

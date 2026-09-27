@@ -1,0 +1,206 @@
+---
+// Mobile-only standing ask, pinned to the bottom of the screen like a strip
+// of paper taped to the wall: "Knock doors with us." plus the two links that
+// turn a reader into a body on a shift (the sign-up form, the canvass map).
+// Slides in after the first scroll, steps aside while the signup form or the
+// footer's paid-for banner is on screen, and stays dismissed via localStorage.
+// Layout.astro injects it on every page except /links (actionBar={false}).
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<div class="action-bar" id="actionBar">
+  <div class="action-bar-row">
+    <span class="action-bar-ask" data-i18n="bar.ask">Knock doors with us.</span>
+    <button type="button" class="action-bar-close" id="actionBarClose">
+      <span class="action-bar-sr" data-i18n="bar.dismiss">Dismiss</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+  <div class="action-bar-links">
+    <a href={`${base}/volunteer#signup`} class="action-bar-primary" data-i18n="bar.signup">Sign up</a>
+    <a href="https://canvass.chicagodsa.org" class="action-bar-secondary" target="_blank" rel="noopener" data-i18n="bar.canvass">Find a canvass</a>
+  </div>
+</div>
+
+<script>
+  const bar = document.getElementById('actionBar');
+  const closeBtn = document.getElementById('actionBarClose');
+  const KEY = 'bsl-bar-dismissed';
+
+  let dismissed = false;
+  try {
+    dismissed = localStorage.getItem(KEY) === '1';
+  } catch {
+    dismissed = false;
+  }
+
+  if (bar && dismissed) {
+    bar.remove();
+  } else if (bar) {
+    const blockers = new Set<Element>();
+    let scrolled = false;
+
+    const update = () => {
+      const show = scrolled && blockers.size === 0;
+      bar.classList.toggle('is-visible', show);
+      document.body.classList.toggle('has-action-bar', show);
+    };
+
+    // Let the hero's own CTA do the work above the fold; the bar takes over below it.
+    const onScroll = () => {
+      const next = window.scrollY > 240;
+      if (next !== scrolled) {
+        scrolled = next;
+        update();
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Step aside for the signup form and the footer's paid-for banner.
+    const hiders = document.querySelectorAll('[data-action-bar-hide]');
+    if (hiders.length && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) blockers.add(entry.target);
+          else blockers.delete(entry.target);
+        });
+        update();
+      });
+      hiders.forEach((el) => io.observe(el));
+    }
+
+    closeBtn?.addEventListener('click', () => {
+      try {
+        localStorage.setItem(KEY, '1');
+      } catch {
+        // Storage blocked (private mode): dismiss for this page view only.
+      }
+      bar.classList.remove('is-visible');
+      document.body.classList.remove('has-action-bar');
+      window.removeEventListener('scroll', onScroll);
+      setTimeout(() => bar.remove(), 400);
+    });
+  }
+</script>
+
+<style>
+  /* Desktop never sees it: the navbar pill and section CTAs carry the ask. */
+  .action-bar {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .action-bar {
+      display: block;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 9000; /* under the navbar (9998), the drawer and the petition modal (9999) */
+      padding: 10px var(--space-md) calc(10px + env(safe-area-inset-bottom, 0px));
+      background: var(--cream-light);
+      border-top: 2px dashed var(--cream-dark);
+      box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.18);
+      transform: translateY(110%);
+      visibility: hidden;
+      transition: transform var(--duration-normal) var(--ease-default), visibility var(--duration-normal);
+    }
+
+    .action-bar.is-visible {
+      transform: translateY(0);
+      visibility: visible;
+    }
+
+    /* Tape */
+    .action-bar::before {
+      content: '';
+      position: absolute;
+      width: 64px;
+      height: 18px;
+      top: -9px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-2deg);
+      background: rgba(245, 208, 138, 0.8);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      pointer-events: none;
+    }
+
+    .action-bar-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      margin-bottom: 8px;
+    }
+
+    .action-bar-ask {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--blue-deeper);
+      rotate: -0.5deg;
+    }
+
+    .action-bar-close {
+      position: relative;
+      flex: none;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: var(--blue-deeper);
+      background: rgba(3, 109, 153, 0.08);
+    }
+
+    .action-bar-sr {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    .action-bar-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-sm);
+    }
+
+    .action-bar-primary,
+    .action-bar-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 8px 10px;
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      line-height: 1.1;
+      text-align: center;
+      border-radius: var(--radius-md);
+    }
+
+    /* The orange pulse pill: the same standing ask as every video */
+    .action-bar-primary {
+      background: var(--orange);
+      color: var(--white);
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    .action-bar-secondary {
+      color: var(--blue-deeper);
+      border: 2px solid var(--blue-deeper);
+    }
+  }
+</style>

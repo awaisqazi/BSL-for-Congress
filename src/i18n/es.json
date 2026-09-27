@@ -4,6 +4,7 @@
     "platform": "El Historial",
     "movement": "Maquinaria vs. Movimiento",
     "volunteer": "Voluntariado",
+    "volunteer_cta": "Hazte voluntario/a",
     "donate": "Donar"
   },
   "hero": {
@@ -11,7 +12,7 @@
     "narrative_lead": "Tu concejal desde 2019. Siete años de resultados, y el trabajo no está terminado. Un tercer mandato para",
     "tagline": "el Distrito 25.",
     "narrative_run": "Byron Sigcho-Lopez busca un tercer mandato como concejal del Distrito 25: Pilsen, La Villita, Heart of Chicago, Marshall Square y University Village. La campaña se lanzó el 18 de agosto de 2026 en Pilsen.",
-    "cta": "Únete a la Campaña",
+    "cta": "Toca Puertas con Nosotros",
     "summary": "Más de 800 unidades de vivienda asequible. Noche del Distrito cada martes durante siete años, incluso durante la pandemia. Ni un dólar de desarrolladores ni de PAC corporativos desde 2015. Este verano los abogados de la maquinaria mantuvieron su nombre fuera de una boleta al Congreso. El distrito es otra historia, y el 23 de febrero la deciden los vecinos.",
     "chip_units": "unidades asequibles",
     "chip_safety": "prevención de la violencia",
@@ -32,8 +33,8 @@
     "k3_desc": "Una Junta Asesora de Zonificación de residentes, con miembros de cada barrio del distrito, ahora opina sobre lo que se construye. En abril de 2026 esa junta revisó Casa Nayarit, las primeras 76 viviendas permanentemente asequibles en el terreno de Pilsen que la ciudad compró después de que Byron bloqueara 500 apartamentos de lujo.",
     "k4_title": "Entregar resultados, cuadra por cuadra",
     "k4_desc": "Más de 800 unidades de vivienda asequible creadas o preservadas. Más de $500,000 del estado para la prevención de la violencia. Más de $1 millón para Benito Juarez y otras escuelas del distrito. La calle Cermak repavimentada, y presión al 311 hasta que se arreglaron los baches y las luminarias.",
-    "close": "Siete años después la lista es más larga y la promesa no ha cambiado. Nunca fue sobre un concejal. Siempre fue sobre nosotros, el pueblo. El 23 de febrero de 2027, el Distrito 25 decide si el trabajo continúa.",
-    "cta": "Ponte del Lado del Distrito 25"
+    "close": "Siete años después la lista es más larga y la promesa no ha cambiado. Nunca fue sobre un concejal. Siempre fue sobre nosotros, el pueblo. El 23 de febrero de 2027, el Distrito 25 decide si el trabajo continúa. Hasta entonces, el trabajo son los domingos tocando puertas y los martes en la Noche del Distrito.",
+    "cta": "Apúntate para Tocar Puertas"
   },
   "bio": {
     "label": "Conoce a Byron",
@@ -77,7 +78,7 @@
   "footer": {
     "ticker_label": "Impulsado por el Pueblo",
     "ticker_text": "Donación promedio: $27. Sin dinero de PAC corporativos. Nunca.",
-    "signup_headline": "Únete al Movimiento",
+    "signup_headline": "Toca Puertas con Nosotros",
     "signup_paper_title": "✊ Inscripción de Voluntarios",
     "links_title": "Enlaces",
     "follow_us_title": "Síguenos",
@@ -228,7 +229,7 @@
     "pattern_4_label": "Objeciones a la boleta",
     "pattern_4": "Y cuando no tienen los votos, tienen a los abogados. Este verano sus objeciones dejaron el nombre de Byron fuera de una boleta al Congreso. Un distrito es otra historia: aquí tienen que ganarle frente a los vecinos.",
     "cta_headline": "Este Distrito No Está en Venta. Mantengámoslo Así.",
-    "cta_petition": "Únete a la Campaña",
+    "cta_petition": "Toca Puertas con Nosotros",
     "cta_donate": "Financia la Campaña"
   },
   "volunteer": {
@@ -236,14 +237,29 @@
     "hero_headline": "Sabemos Tocar Puertas. Ahora Lo Hacemos por el Distrito.",
     "hero_sub": "No tenemos dinero de PAC corporativos ni jefes de trastienda. Te tenemos a ti. Únete a la coalición multirracial de la clase trabajadora que mantiene al Distrito 25 sin comprar y reelige a Byron Sigcho-Lopez.",
     "hero_status": "COMIENZA LA CAMPAÑA DEL DISTRITO. DÍA DE ELECCIÓN: 23 DE FEBRERO DE 2027.",
+    "hero_cta": "Toca Puertas con Nosotros",
     "blitz_alert": "LA CAMPAÑA DEL DISTRITO YA ESTÁ EN MARCHA",
     "blitz_headline": "El Distrito Responde el 23 de Febrero",
     "blitz_p1": "Este verano, los abogados de la maquinaria mantuvieron su nombre fuera de una boleta al Congreso. El Distrito 25 cuenta una historia distinta: tocamos cada puerta y respondemos en las urnas el 23 de febrero de 2027.",
     "blitz_link": "Lee lo que pasó este verano",
-    "blitz_download": "✊ Únete a la Campaña del Distrito",
+    "blitz_download": "✊ Toca Puertas con Nosotros",
     "status_wardnight": "Noche del Distrito Cada Martes",
     "status_launched": "Lanzada el 18 de agosto",
     "status_electionday": "Día de Elección 23 de Febrero de 2027",
+    "week_label": "Esta Semana",
+    "week_headline": "Dos turnos fijos. Escoge uno.",
+    "week_sun_when": "Domingos",
+    "week_sun_title": "Toca Puertas",
+    "week_sun_desc": "Vecinos y el equipo de toda la ciudad, casi cada domingo. Encuentra el turno más cercano en el mapa.",
+    "week_sun_cta": "Abrir el mapa de caminatas",
+    "week_tue_when": "Martes",
+    "week_tue_title": "Noche del Distrito",
+    "week_tue_desc": "La oficina del distrito, cada martes desde 2019. Trae una pregunta o ven a ayudar.",
+    "week_tue_cta": "Planea tu visita",
+    "week_now_when": "Hoy",
+    "week_now_title": "Apúntate",
+    "week_now_desc": "Dinos tu cuadra y cómo quieres ayudar. La campaña te ubica.",
+    "week_now_cta": "Ir al formulario",
     "action_label": "Formas de Luchar",
     "action_headline": "Cada Rol Importa",
     "action_join": "Cuenten conmigo",
@@ -276,9 +292,9 @@
     "campus_title": "Organización en Campus y Juventud",
     "campus_desc": "Los embajadores de secundaria y los capitanes de campus universitario ayudan a movilizar a la próxima generación. Organiza campañas de registro de votantes, eventos en campus y construye una coalición juvenil que luche por educación accesible y un futuro digno.",
     "campus_tag": "Estudiantes • Votantes Jóvenes",
-    "signup_label": "Únete al Movimiento",
-    "signup_headline": "Regístrate como Voluntario",
-    "signup_desc": "Llena el formulario y nuestro equipo se comunicará contigo con los próximos pasos. Ya sea que tengas una hora o cien, hay un rol para ti en este movimiento.",
+    "signup_label": "Apúntate",
+    "signup_headline": "Apúntate como Voluntario/a",
+    "signup_desc": "Dinos tu cuadra y cómo quieres ayudar. La campaña te contacta para ubicarte. Una hora o cien, hay un puesto para ti.",
     "label_first": "Nombre *",
     "label_last": "Apellido *",
     "label_email": "Correo Electrónico *",
@@ -298,12 +314,15 @@
     "check_videos": "Ayudar a Crear Videos de Campaña (Videografía / Edición de Video)",
     "label_city": "Ciudad *",
     "compliance": "Al enviar, aceptas recibir actualizaciones periódicas de la campaña por SMS. Pueden aplicar tarifas de mensajes y datos. Envía STOP para cancelar.",
-    "submit": "Únete al Movimiento",
-    "next_step1": "Te registras. Nos comunicamos contigo en pocos días.",
+    "submit": "Cuenten Conmigo",
+    "next_step1": "Te apuntas. La campaña te contacta para ubicarte.",
     "next_step2": "Recibes tu puesto: tu cuadra, tu teléfono, tu campus, tu oficio.",
     "next_step3": "Tocamos puertas juntos y ganamos el 23 de febrero de 2027.",
     "signoff": "¡Solidaridad!",
-    "success_msg": "Bienvenido al movimiento. ¡Solidaridad! Ahora trae a un vecino contigo. ✊",
+    "success_msg": "Ya estás dentro. Esto es lo que sigue.",
+    "success_wardnight": "La Noche del Distrito es cada martes en la oficina del distrito. Pásate esta semana.",
+    "success_canvass": "Las caminatas son los domingos. Escoge tu primer turno en el mapa de caminatas.",
+    "success_followup": "La campaña te contactará para ubicarte en tu puesto.",
     "share_btn": "Copia el Enlace y Envíalo a un Vecino",
     "cta_headline": "¿No Puedes Ser Voluntario Hoy? Financia la Campaña.",
     "cta_text": "Esta campaña no recibe ni un dólar de desarrolladores ni de PAC corporativos. Cada dólar que das financia el tocar puertas, los materiales de campaña y la movilización del voto para el 23 de febrero de 2027, todo dirigido por personas trabajadoras como tú.",
@@ -312,23 +331,26 @@
   },
   "petition_modal": {
     "badge": "LA CAMPAÑA DEL DISTRITO",
-    "title": "Ayuda a Reelegir a Byron Sigcho-Lopez",
-    "subtitle": "Este verano los abogados de la maquinaria mantuvieron su nombre fuera de una boleta al Congreso, así que únete al movimiento que lo trae de vuelta al Distrito 25 el 23 de febrero de 2027.",
+    "title": "Toca Puertas con Nosotros",
+    "subtitle": "Domingos tocando puertas, martes en la Noche del Distrito, cada vecino que podamos alcanzar antes del 23 de febrero de 2027. Déjanos tus datos y la campaña te ubica.",
     "name": "Tu nombre",
     "email": "Correo electrónico",
     "phone": "Número de teléfono",
     "city": "Ciudad",
     "zip": "Código postal",
     "interest_label": "Quiero:",
-    "sign_petition": "Únete a la campaña de Byron. Cuenten conmigo.",
-    "volunteer_signatures": "Ser voluntario para ganar el 23 de febrero de 2027",
+    "sign_petition": "Cuenten conmigo. Manténganme al tanto.",
+    "volunteer_signatures": "Pónganme en un turno: puertas, Noche del Distrito o llamadas.",
     "activities_label": "Me siento cómodo/a con:",
     "door_knocking": "Hablar con mis vecinos",
     "community_events": "Eventos comunitarios y Noche del Distrito",
     "phone_banking": "Llamadas telefónicas",
     "social_media": "Publicar en redes sociales",
-    "submit": "Únete a la Campaña",
-    "success": "¡Gracias por unirte a la campaña! Pronto nos comunicaremos contigo. ✊"
+    "submit": "Cuenten Conmigo",
+    "success": "Ya estás dentro. Esto es lo que sigue.",
+    "success_wardnight": "La Noche del Distrito es cada martes en la oficina del distrito. Pásate esta semana.",
+    "success_canvass": "Las caminatas son los domingos. Escoge tu primer turno en el mapa de caminatas.",
+    "success_followup": "La campaña te contactará para ubicarte en tu puesto."
   },
   "duel": {
     "machine": "La Maquinaria",
@@ -373,7 +395,7 @@
     "r6_movement_text": "Byron demandó a la Junta Electoral del Estado de Illinois en corte federal. Sus abogados le dijeron que era poco probable que lo reintegraran. La presentó de todos modos, por quien se postule después.",
     "r6_movement_text2": "Y luego volvió a casa. Byron busca un tercer mandato como Concejal del Distrito 25, el distrito que la maquinaria perdió en 2019 y nunca ha recuperado. La primera ronda fue para sus abogados. La segunda es el 23 de febrero de 2027, donde las objeciones no cuentan y los votantes sí.",
     "r6_movement_quote": "\"Esto se hace para que nuestra comunidad nunca más tenga que aceptar a un candidato designado a dedo.\"",
-    "r6_cta_join": "Únete a la Campaña",
+    "r6_cta_join": "Toca Puertas con Nosotros",
     "r6_cta_fund": "Financia la Campaña"
   },
   "timeline": {
@@ -404,10 +426,10 @@
     "s8_date": "AHORA",
     "s8_title": "El movimiento vuelve a casa",
     "s8_desc": "18 de agosto: el movimiento llena Indígó MRKTŌ en Pilsen para lanzar la campaña de reelección. Byron busca un tercer mandato como Concejal del Distrito 25, y la temporada de peticiones empieza este otoño.",
-    "s8_cta": "Únete a la Campaña",
+    "s8_cta": "Toca Puertas con Nosotros",
     "s9_date": "23 de febrero de 2027",
     "s9_title": "Tú decides",
-    "s9_desc": "No la maquinaria. No sus abogados. El distrito decide a quién le responde su concejal. Tú decides."
+    "s9_desc": "No la maquinaria. No sus abogados. El distrito decide a quién le responde su concejal. Tú decides. Hasta entonces, tocamos puertas."
   },
   "counter": {
     "readout_label": "firmas válidas presentadas ante la Junta Electoral del Estado de Illinois. El registro permanece.",
@@ -432,12 +454,12 @@
     "farah_role": "Abogada de derechos humanos",
     "lee_quote": "El pueblo antes que el partido. Siempre será así, y él es el indicado.",
     "lee_role": "Estudiante organizador de secundaria",
-    "cta": "Suma tu voz. Ayuda a reelegir a Byron el 23 de febrero de 2027."
+    "cta": "Suma tu voz. Toca puertas con nosotros antes del 23 de febrero de 2027."
   },
   "road": {
     "quote": "La justicia no es un destino. Es el camino que se recorre.",
-    "lead": "Este es el camino por el barrio. Camínalo con nosotros hasta el 23 de febrero de 2027.",
-    "cta_join": "Únete a la Lucha",
+    "lead": "Este es el camino por el distrito. Camínalo con nosotros: domingos tocando puertas, martes en la Noche del Distrito, el 23 de febrero en las urnas.",
+    "cta_join": "Toca Puertas con Nosotros",
     "cta_donate": "Contribuye $27",
     "days_left": "días para el Día de la Elección",
     "day_left": "día para el Día de la Elección"
@@ -447,7 +469,7 @@
     "p2": "El pueblo vence al dinero.",
     "p3": "Noche del Distrito. Cada martes.",
     "p4": "Sin dinero de desarrolladores. Ni un dólar. Nunca.",
-    "p5": "23 de febrero de 2027. La ronda dos comienza ahora.",
+    "p5": "23 de febrero de 2027. La ronda dos empieza en la puerta.",
     "p6": "Hoy por mí, mañana por ti.",
     "p7": "Solidaridad con acciones, no con selfies."
   },
@@ -485,5 +507,11 @@
     "d_eday_date": "23 de feb, 2027",
     "d_eday": "Día de la Elección. Urnas abiertas de 6 AM a 7 PM.",
     "day_word": "día"
+  },
+  "bar": {
+    "ask": "Toca puertas con nosotros.",
+    "signup": "Apúntate",
+    "canvass": "Busca una caminata",
+    "dismiss": "Cerrar"
   }
 }

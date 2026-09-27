@@ -5,6 +5,8 @@
 // stop as a memorial, not at the top of the page.
 import SignatureWall from '../SignatureWall.astro';
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 const stages = [
   { date: 'timeline.s1_date', dateText: 'For 23 years', title: 'timeline.s1_title', titleText: 'The machine\'s ward', desc: 'timeline.s1_desc', descText: 'The 25th Ward belongs to Danny Solis and the machine behind him. Zoning, permits, and favors run through one office, and it ends with the alderman disgraced and a federal investigation at City Hall.' },
   { date: 'timeline.s2_date', dateText: 'The organizing years', title: 'timeline.s2_title', titleText: 'Pilsen Alliance', desc: 'timeline.s2_desc', descText: 'The city moves to close 130 public schools. Byron organizes with parents and teachers to keep them open, then leads the Pilsen Alliance against displacement and corruption.' },
@@ -14,8 +16,8 @@ const stages = [
   { date: 'timeline.s6_date', dateText: '2023', title: 'timeline.s6_title', titleText: 'They came back with money', desc: 'timeline.s6_desc', descText: 'The business-backed Get Stuff Done PAC drops just under $160,000 into the ward against Byron, nearly a fifth of the more than $618,000 it spends citywide. The ward sends Byron back.' },
   { date: 'timeline.s7_date', dateText: '2026', title: 'timeline.s7_title', titleText: 'The congressional chapter', desc: 'timeline.s7_desc', descText: 'Byron runs for Congress as an independent after the seat is handed to a former chief of staff. She needs 697 signatures. The law demands 10,816 of him. The movement files 22,788, and in July an electoral board strikes him from the November ballot, 1,222 short. He sues in federal court.' },
   { wall: true },
-  { date: 'timeline.s8_date', dateText: 'NOW', title: 'timeline.s8_title', titleText: 'The movement comes home', desc: 'timeline.s8_desc', descText: 'August 18: the movement packs Indígó MRKTŌ in Pilsen to launch the re-election campaign. Byron runs for a third term as Alderman of the 25th Ward, and petition season starts this fall.', now: true, cta: { href: '#petition', key: 'timeline.s8_cta', text: 'Join the Campaign' } },
-  { date: 'timeline.s9_date', dateText: 'February 23, 2027', title: 'timeline.s9_title', titleText: 'You decide', desc: 'timeline.s9_desc', descText: 'Not the machine. Not their lawyers. The ward decides who its alderman answers to. You decide.' },
+  { date: 'timeline.s8_date', dateText: 'NOW', title: 'timeline.s8_title', titleText: 'The movement comes home', desc: 'timeline.s8_desc', descText: 'August 18: the movement packs Indígó MRKTŌ in Pilsen to launch the re-election campaign. Byron runs for a third term as Alderman of the 25th Ward, and petition season starts this fall.', now: true, cta: { href: '#petition', key: 'timeline.s8_cta', text: 'Knock Doors With Us' } },
+  { date: 'timeline.s9_date', dateText: 'February 23, 2027', title: 'timeline.s9_title', titleText: 'You decide', desc: 'timeline.s9_desc', descText: 'Not the machine. Not their lawyers. The ward decides who its alderman answers to. You decide. Until then, we knock doors.' },
 ];
 ---
 
@@ -65,7 +67,7 @@ const stages = [
   <div class="container machine-cta-content">
     <h2 class="machine-cta-headline animate-in" data-i18n="machine.cta_headline">This Ward Is Not For Sale. Let's Keep It That Way.</h2>
     <div class="machine-cta-buttons animate-in">
-      <a href="#petition" class="btn btn-orange btn-massive" data-i18n="machine.cta_petition">Join the Campaign</a>
+      <a href={`${base}/volunteer#signup`} class="btn btn-orange btn-massive" data-i18n="machine.cta_petition">Knock Doors With Us</a>
       <a href="https://secure.actblue.com/donate/byron-sigcho-1" class="btn btn-outline" target="_blank" rel="noopener" data-i18n="machine.cta_donate">Fund the Campaign</a>
     </div>
   </div>

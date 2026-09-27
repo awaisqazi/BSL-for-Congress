@@ -14,7 +14,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <li><a href={`${base}/meet`} data-i18n="nav.meet">Meet Byron</a></li>
       <li><a href={`${base}/platform`} data-i18n="nav.platform">The Record</a></li>
       <li><a href={`${base}/movement`} data-i18n="nav.movement">Machine vs. Movement</a></li>
-      <li><a href={`${base}/volunteer`} data-i18n="nav.volunteer">Volunteer</a></li>
     </ul>
 
     <!-- Right-side actions -->
@@ -26,8 +25,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <button data-lang-toggle="es" class="lang-btn" aria-label="Español">ES</button>
       </div>
 
-      <!-- Donate Button -->
-      <a href="https://secure.actblue.com/donate/byron-sigcho-1" class="btn btn-orange nav-donate" target="_blank" rel="noopener" data-i18n="nav.donate">Donate</a>
+      <!-- Primary action: volunteer. Donate stays, secondary. -->
+      <a href={`${base}/volunteer#signup`} class="btn btn-orange nav-pill nav-volunteer" data-i18n="nav.volunteer_cta">Volunteer</a>
+      <a href="https://secure.actblue.com/donate/byron-sigcho-1" class="btn btn-outline nav-pill nav-donate" target="_blank" rel="noopener" data-i18n="nav.donate">Donate</a>
 
       <!-- Mobile Hamburger -->
       <button class="hamburger hide-desktop" id="hamburger" aria-label="Menu" aria-expanded="false">
@@ -44,9 +44,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <li><a href={`${base}/meet`} data-i18n="nav.meet">Meet Byron</a></li>
       <li><a href={`${base}/platform`} data-i18n="nav.platform">The Record</a></li>
       <li><a href={`${base}/movement`} data-i18n="nav.movement">Machine vs. Movement</a></li>
-      <li><a href={`${base}/volunteer`} data-i18n="nav.volunteer">Volunteer</a></li>
       <li>
-        <a href="https://secure.actblue.com/donate/byron-sigcho-1" class="btn btn-orange mobile-donate" target="_blank" rel="noopener" data-i18n="nav.donate">Donate</a>
+        <a href={`${base}/volunteer#signup`} class="btn btn-orange mobile-volunteer" data-i18n="nav.volunteer_cta">Volunteer</a>
+      </li>
+      <li>
+        <a href="https://secure.actblue.com/donate/byron-sigcho-1" class="btn btn-outline mobile-donate" target="_blank" rel="noopener" data-i18n="nav.donate">Donate</a>
       </li>
     </ul>
     <div class="mobile-social">
@@ -223,13 +225,27 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     font-weight: 300;
   }
 
-  /* Donate */
-  .nav-donate {
+  /* Action pills: Volunteer (orange, primary) and Donate (outline, secondary) */
+  .nav-pill {
     font-size: var(--text-xs) !important;
     padding: 8px 20px !important;
     text-transform: uppercase !important;
     letter-spacing: 0.1em !important;
     animation: none !important;
+    white-space: nowrap;
+  }
+
+  .nav-donate {
+    padding: 6px 18px !important;
+  }
+
+  /* Phones: the bar only has room for the logo, the language toggle and the
+     menu. Both pills live in the drawer, and the mobile action bar carries
+     the standing volunteer ask. */
+  @media (max-width: 768px) {
+    .nav-pill {
+      display: none;
+    }
   }
 
   /* Hamburger */
@@ -319,11 +335,31 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     width: 100%;
   }
 
-  .mobile-donate {
-    margin-top: var(--space-md);
+  .mobile-links .mobile-volunteer,
+  .mobile-links .mobile-donate {
     width: 100%;
     text-align: center;
     font-size: var(--text-lg) !important;
+    padding: var(--space-md) var(--space-xl);
+    border-bottom: none;
+  }
+
+  .mobile-links .mobile-volunteer {
+    margin-top: var(--space-md);
+    color: var(--white);
+  }
+
+  .mobile-links .mobile-volunteer:hover {
+    color: var(--white);
+  }
+
+  .mobile-links .mobile-donate {
+    color: var(--blue);
+    border: 2px solid var(--blue);
+  }
+
+  .mobile-links .btn::after {
+    display: none;
   }
 
   .mobile-social {

@@ -13,8 +13,8 @@
 
     <div class="petition-modal-header">
       <div class="petition-modal-badge" data-i18n="petition_modal.badge">THE WARD CAMPAIGN</div>
-      <h2 class="petition-modal-title" data-i18n="petition_modal.title">Help Re-Elect Byron Sigcho-Lopez</h2>
-      <p class="petition-modal-subtitle" data-i18n="petition_modal.subtitle">This summer the machine's lawyers kept his name off a congressional ballot, so join the movement bringing him back to the 25th Ward on February 23, 2027.</p>
+      <h2 class="petition-modal-title" data-i18n="petition_modal.title">Knock Doors With Us</h2>
+      <p class="petition-modal-subtitle" data-i18n="petition_modal.subtitle">Sundays on the doors, Tuesdays at Ward Night, every neighbor we can reach before February 23, 2027. Leave your info and the campaign will place you.</p>
     </div>
 
     <form 
@@ -39,12 +39,12 @@
         <label class="petition-checkbox">
           <input type="checkbox" name="entry.854369982" value="Sign Byron's petition" />
           <span class="checkbox-mark"></span>
-          <span data-i18n="petition_modal.sign_petition">Join Byron's campaign. Count me in.</span>
+          <span data-i18n="petition_modal.sign_petition">Count me in. Keep me posted.</span>
         </label>
         <label class="petition-checkbox">
           <input type="checkbox" name="entry.854369982" value="Volunteer to help collect signatures" />
           <span class="checkbox-mark"></span>
-          <span data-i18n="petition_modal.volunteer_signatures">Volunteer to help win on February 23, 2027</span>
+          <span data-i18n="petition_modal.volunteer_signatures">Put me on a shift: doors, Ward Night, or phones.</span>
         </label>
       </div>
 
@@ -76,14 +76,22 @@
       </div>
 
       <button type="submit" class="btn btn-orange petition-submit">
-        <span data-i18n="petition_modal.submit">Join the Campaign</span>
+        <span data-i18n="petition_modal.submit">Count Me In</span>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
           <path d="M5 12h14M12 5l7 7-7 7"/>
         </svg>
       </button>
     </form>
 
-    <p class="petition-success" id="petitionSuccess" data-i18n="petition_modal.success">Thank you for joining the campaign! We'll be in touch soon. ✊</p>
+    <!-- What happens next. Links sit outside the i18n spans so a language swap keeps them. -->
+    <div class="petition-success" id="petitionSuccess">
+      <p class="petition-success-head" data-i18n="petition_modal.success">You're in. Here is what happens next.</p>
+      <ul class="petition-next">
+        <li><a href="https://25thward.org/" target="_blank" rel="noopener" data-i18n="petition_modal.success_wardnight">Ward Night is every Tuesday at the ward office. Come by this week.</a></li>
+        <li><a href="https://canvass.chicagodsa.org" target="_blank" rel="noopener" data-i18n="petition_modal.success_canvass">Canvasses run on Sundays. Pick your first shift on the canvass map.</a></li>
+        <li><span data-i18n="petition_modal.success_followup">The campaign will follow up to place you at your post.</span></li>
+      </ul>
+    </div>
     <iframe name="petition_iframe" id="petition_iframe" style="display:none;"></iframe>
   </div>
 </div>
@@ -108,6 +116,12 @@
     function closeModal() {
       modal.classList.remove('active');
       document.body.style.overflow = '';
+      // If they just signed up, put the form back for the next neighbor.
+      if (form && form.style.display === 'none') {
+        form.reset();
+        form.style.display = '';
+        successMsg?.classList.remove('visible');
+      }
     }
 
     closeBtn?.addEventListener('click', closeModal);
@@ -122,18 +136,13 @@
       if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
     });
 
-    // Form submission
+    // Form submission: swap in the next steps (Ward Night, the canvass map,
+    // the follow-up) and leave them up until the neighbor closes the modal.
     if (form) {
       form.addEventListener('submit', () => {
         setTimeout(() => {
           form.style.display = 'none';
           if (successMsg) successMsg.classList.add('visible');
-          setTimeout(() => {
-            closeModal();
-            form.reset();
-            form.style.display = '';
-            if (successMsg) successMsg.classList.remove('visible');
-          }, 3000);
         }, 500);
       });
     }
@@ -386,7 +395,7 @@
     font-family: var(--font-body);
     font-size: var(--text-lg);
     color: var(--gold-soft);
-    padding: var(--space-3xl) var(--space-lg);
+    padding: 0 var(--space-md);
     opacity: 0;
     max-height: 0;
     overflow: hidden;
@@ -395,7 +404,48 @@
 
   .petition-success.visible {
     opacity: 1;
-    max-height: 200px;
+    max-height: 520px;
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .petition-success-head {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 900;
+    color: var(--cream);
+    margin-bottom: var(--space-md);
+  }
+
+  .petition-next {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    text-align: left;
+    font-size: var(--text-base);
+    line-height: 1.5;
+  }
+
+  .petition-next li {
+    position: relative;
+    padding-left: 1.6em;
+  }
+
+  .petition-next li::before {
+    content: '✊';
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .petition-next a {
+    color: var(--gold-soft);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .petition-next a:hover {
+    color: var(--cream);
   }
 
   /* ── Responsive ── */

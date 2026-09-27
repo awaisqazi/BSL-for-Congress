@@ -1,5 +1,7 @@
 ---
 // Shared closing band: every page ends on the same road and the same fork.
+// The fork leads with the body ask (the signup form); the dollar ask is second.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <section class="road-cta">
@@ -15,12 +17,12 @@
       <cite class="road-cite">Byron Sigcho-Lopez</cite>
     </blockquote>
 
-    <p class="road-lead animate-in" data-i18n="road.lead">This is the road through the ward. Walk it with us to February 23, 2027.</p>
+    <p class="road-lead animate-in" data-i18n="road.lead">This is the road through the ward. Walk it with us: Sundays on the doors, Tuesdays at Ward Night, February 23 at the polls.</p>
 
     <p class="road-countdown animate-in"><span class="road-count" data-days-until="2027-02-23">0</span> <span data-i18n="road.days_left">days to Election Day</span></p>
 
     <div class="road-buttons animate-in">
-      <a href="#petition" class="btn btn-orange btn-massive" data-i18n="road.cta_join">Join the Fight</a>
+      <a href={`${base}/volunteer#signup`} class="btn btn-orange btn-massive" data-i18n="road.cta_join">Knock Doors With Us</a>
       <a href="https://secure.actblue.com/donate/byron-sigcho-1" class="btn btn-cream" target="_blank" rel="noopener" data-i18n="road.cta_donate">Chip in $27</a>
     </div>
   </div>

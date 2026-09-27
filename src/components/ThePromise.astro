@@ -1,5 +1,6 @@
 ---
 // Promises Kept: what Byron ran on in 2019 and what the ward can check.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <section class="promise section-padding" id="the-promise">
@@ -33,10 +34,10 @@
     </ol>
 
     <p class="promise-close animate-in" data-i18n="promise.close">
-      Seven years later the list is longer and the promise has not changed. It was never about one alderman. It was always about we, the people. On February 23, 2027, the 25th Ward decides whether the work keeps going.
+      Seven years later the list is longer and the promise has not changed. It was never about one alderman. It was always about we, the people. On February 23, 2027, the 25th Ward decides whether the work keeps going. Until then, the work is Sundays on the doors and Tuesdays at Ward Night.
     </p>
 
-    <a href="#petition" class="btn btn-orange btn-massive animate-in promise-cta" data-i18n="promise.cta">Stand With the 25th Ward</a>
+    <a href={`${base}/volunteer#signup`} class="btn btn-orange btn-massive animate-in promise-cta" data-i18n="promise.cta">Sign Up to Knock Doors</a>
   </div>
 </section>
 

@@ -4,6 +4,7 @@
     "platform": "The Record",
     "movement": "Machine vs. Movement",
     "volunteer": "Volunteer",
+    "volunteer_cta": "Volunteer",
     "donate": "Donate"
   },
   "hero": {
@@ -11,7 +12,7 @@
     "narrative_lead": "Your alderman since 2019. Seven years of receipts, and the work is not finished. A third term for",
     "tagline": "the 25th Ward.",
     "narrative_run": "Byron Sigcho-Lopez is running for a third term as Alderman of the 25th Ward: Pilsen, Little Village, Heart of Chicago, Marshall Square, and University Village. The campaign launched August 18, 2026 in Pilsen.",
-    "cta": "Join the Campaign",
+    "cta": "Knock Doors With Us",
     "summary": "Over 800 units of affordable housing. Ward Night every Tuesday for seven years, including through the pandemic. Not one dollar from developers or corporate PACs since 2015. This summer the machine's lawyers kept his name off a congressional ballot. The ward is a different story, and on February 23 the neighbors decide it.",
     "chip_units": "affordable units",
     "chip_safety": "violence prevention",
@@ -32,8 +33,8 @@
     "k3_desc": "A resident Zoning Advisory Board, with members from every neighborhood in the ward, now weighs in on what gets built. In April 2026 that board reviewed Casa Nayarit, the first 76 permanently affordable homes on the Pilsen lot the city bought after Byron blocked 500 luxury apartments.",
     "k4_title": "Deliver, block by block",
     "k4_desc": "Over 800 units of affordable housing created or preserved. Over $500,000 from the state for violence prevention. Over $1 million for Benito Juarez and other ward schools. Cermak Road repaved, and 311 pushed until the potholes and the streetlights got fixed.",
-    "close": "Seven years later the list is longer and the promise has not changed. It was never about one alderman. It was always about we, the people. On February 23, 2027, the 25th Ward decides whether the work keeps going.",
-    "cta": "Stand With the 25th Ward"
+    "close": "Seven years later the list is longer and the promise has not changed. It was never about one alderman. It was always about we, the people. On February 23, 2027, the 25th Ward decides whether the work keeps going. Until then, the work is Sundays on the doors and Tuesdays at Ward Night.",
+    "cta": "Sign Up to Knock Doors"
   },
   "bio": {
     "label": "Meet Byron",
@@ -77,7 +78,7 @@
   "footer": {
     "ticker_label": "Powered by the People",
     "ticker_text": "Average donation: $27. No corporate PAC money. Ever.",
-    "signup_headline": "Join the Movement",
+    "signup_headline": "Knock Doors With Us",
     "signup_paper_title": "✊ Volunteer Sign-Up",
     "links_title": "Links",
     "follow_us_title": "Follow Us",
@@ -228,7 +229,7 @@
     "pattern_4_label": "Ballot objections",
     "pattern_4": "And when the votes are not there, the lawyers are. This summer their objections kept Byron's name off a congressional ballot. A ward is a different story: here they have to beat him in front of the neighbors.",
     "cta_headline": "This Ward Is Not For Sale. Let's Keep It That Way.",
-    "cta_petition": "Join the Campaign",
+    "cta_petition": "Knock Doors With Us",
     "cta_donate": "Fund the Campaign"
   },
   "volunteer": {
@@ -236,14 +237,29 @@
     "hero_headline": "We Know How to Knock On Doors. Now We Do It for the Ward.",
     "hero_sub": "We don't have corporate PAC money or backroom bosses. We have you. Join the multiracial working-class coalition that keeps the 25th Ward unbought and re-elects Byron Sigcho-Lopez.",
     "hero_status": "THE WARD CAMPAIGN BEGINS. ELECTION DAY: FEBRUARY 23, 2027.",
+    "hero_cta": "Knock Doors With Us",
     "blitz_alert": "THE WARD CAMPAIGN IS LIVE",
     "blitz_headline": "The Ward Answers on February 23",
     "blitz_p1": "This summer, machine lawyers kept his name off a congressional ballot. The 25th Ward tells a different story: we knock every door and answer at the ballot box on February 23, 2027.",
     "blitz_link": "Read what happened this summer",
-    "blitz_download": "✊ Join the Ward Campaign",
+    "blitz_download": "✊ Knock Doors With Us",
     "status_wardnight": "Ward Night Every Tuesday",
     "status_launched": "Launched August 18",
     "status_electionday": "Election Day February 23, 2027",
+    "week_label": "This Week",
+    "week_headline": "Two standing shifts. Pick one.",
+    "week_sun_when": "Sundays",
+    "week_sun_title": "Knock Doors",
+    "week_sun_desc": "Neighbors and the citywide crew, most Sundays. Find the shift nearest you on the map.",
+    "week_sun_cta": "Open the canvass map",
+    "week_tue_when": "Tuesdays",
+    "week_tue_title": "Ward Night",
+    "week_tue_desc": "The ward office, every Tuesday since 2019. Bring a question or come to help.",
+    "week_tue_cta": "Plan your visit",
+    "week_now_when": "Today",
+    "week_now_title": "Sign Up",
+    "week_now_desc": "Tell us your block and how you want to help. The campaign places you.",
+    "week_now_cta": "Go to the form",
     "action_label": "Ways to Fight",
     "action_headline": "Every Role Matters",
     "action_join": "Count me in",
@@ -276,9 +292,9 @@
     "campus_title": "Campus & Youth Organizing",
     "campus_desc": "High school ambassadors and college campus captains help mobilize the next generation. Organize voter registration drives, host campus events, and build a youth coalition that fights for affordable education and a livable future.",
     "campus_tag": "Students • Young Voters",
-    "signup_label": "Join the Movement",
+    "signup_label": "Sign Up",
     "signup_headline": "Sign Up to Volunteer",
-    "signup_desc": "Fill out the form and our team will reach out with next steps. Whether you have one hour or one hundred, there is a role for you in this movement.",
+    "signup_desc": "Tell us your block and how you want to help. The campaign follows up to place you. One hour or one hundred, there is a post for you.",
     "label_first": "First Name *",
     "label_last": "Last Name *",
     "label_email": "Email *",
@@ -298,12 +314,15 @@
     "check_videos": "Help Create Campaign Videos (Videography / Video Editing)",
     "label_city": "City *",
     "compliance": "By submitting, you agree to receive periodic campaign updates via SMS. Message and data rates may apply. Text STOP to unsubscribe.",
-    "submit": "Join the Movement",
-    "next_step1": "You sign up. We reach out within a few days.",
+    "submit": "Count Me In",
+    "next_step1": "You sign up. The campaign follows up to place you.",
     "next_step2": "You get a post: your block, your phone, your campus, your craft.",
     "next_step3": "We knock doors together and win on February 23, 2027.",
     "signoff": "Solidarity!",
-    "success_msg": "Welcome to the movement. Solidarity! Now bring one neighbor with you. ✊",
+    "success_msg": "You're in. Here is what happens next.",
+    "success_wardnight": "Ward Night is every Tuesday at the ward office. Come by this week.",
+    "success_canvass": "Canvasses run on Sundays. Pick your first shift on the canvass map.",
+    "success_followup": "The campaign will follow up to place you at your post.",
     "share_btn": "Copy the Link, Send It to a Neighbor",
     "cta_headline": "Can't Volunteer Today? Fund the Campaign.",
     "cta_text": "This campaign takes zero dollars from developers or corporate PACs. Every dollar you give funds door-knocking, campaign materials, and getting out the vote for February 23, 2027, run entirely by working people like you.",
@@ -312,23 +331,26 @@
   },
   "petition_modal": {
     "badge": "THE WARD CAMPAIGN",
-    "title": "Help Re-Elect Byron Sigcho-Lopez",
-    "subtitle": "This summer the machine's lawyers kept his name off a congressional ballot, so join the movement bringing him back to the 25th Ward on February 23, 2027.",
+    "title": "Knock Doors With Us",
+    "subtitle": "Sundays on the doors, Tuesdays at Ward Night, every neighbor we can reach before February 23, 2027. Leave your info and the campaign will place you.",
     "name": "Your name",
     "email": "Email address",
     "phone": "Phone number",
     "city": "City",
     "zip": "Zip code",
     "interest_label": "I want to:",
-    "sign_petition": "Join Byron's campaign. Count me in.",
-    "volunteer_signatures": "Volunteer to help win on February 23, 2027",
+    "sign_petition": "Count me in. Keep me posted.",
+    "volunteer_signatures": "Put me on a shift: doors, Ward Night, or phones.",
     "activities_label": "I'm comfortable with:",
     "door_knocking": "Talking to my neighbors",
     "community_events": "Community events and Ward Night",
     "phone_banking": "Phone banking",
     "social_media": "Posting on social media",
-    "submit": "Join the Campaign",
-    "success": "Thank you for joining the campaign! We'll be in touch soon. ✊"
+    "submit": "Count Me In",
+    "success": "You're in. Here is what happens next.",
+    "success_wardnight": "Ward Night is every Tuesday at the ward office. Come by this week.",
+    "success_canvass": "Canvasses run on Sundays. Pick your first shift on the canvass map.",
+    "success_followup": "The campaign will follow up to place you at your post."
   },
   "duel": {
     "machine": "The Machine",
@@ -373,7 +395,7 @@
     "r6_movement_text": "Byron sued the Illinois State Board of Elections in federal court. His attorneys told him reinstatement was unlikely. He filed anyway, for whoever runs next.",
     "r6_movement_text2": "Then he came home. Byron is running for a third term as Alderman of the 25th Ward, the ward the machine lost in 2019 and has never taken back. Round one went to their lawyers. Round two is February 23, 2027, where objections do not count and voters do.",
     "r6_movement_quote": "\"This is being done so our community never again has to accept an appointed candidate.\"",
-    "r6_cta_join": "Join the Campaign",
+    "r6_cta_join": "Knock Doors With Us",
     "r6_cta_fund": "Fund the Campaign"
   },
   "timeline": {
@@ -404,10 +426,10 @@
     "s8_date": "NOW",
     "s8_title": "The movement comes home",
     "s8_desc": "August 18: the movement packs Indígó MRKTŌ in Pilsen to launch the re-election campaign. Byron runs for a third term as Alderman of the 25th Ward, and petition season starts this fall.",
-    "s8_cta": "Join the Campaign",
+    "s8_cta": "Knock Doors With Us",
     "s9_date": "February 23, 2027",
     "s9_title": "You decide",
-    "s9_desc": "Not the machine. Not their lawyers. The ward decides who its alderman answers to. You decide."
+    "s9_desc": "Not the machine. Not their lawyers. The ward decides who its alderman answers to. You decide. Until then, we knock doors."
   },
   "counter": {
     "readout_label": "valid signatures filed with the Illinois State Board of Elections. The record stands.",
@@ -432,12 +454,12 @@
     "farah_role": "Human rights attorney",
     "lee_quote": "People before party. It will always be like that, and he is the man.",
     "lee_role": "High school student organizer",
-    "cta": "Add your voice. Help re-elect Byron on February 23, 2027."
+    "cta": "Add your voice. Knock doors with us before February 23, 2027."
   },
   "road": {
     "quote": "Justice is not a destination. It is the road that is traveled.",
-    "lead": "This is the road through the ward. Walk it with us to February 23, 2027.",
-    "cta_join": "Join the Fight",
+    "lead": "This is the road through the ward. Walk it with us: Sundays on the doors, Tuesdays at Ward Night, February 23 at the polls.",
+    "cta_join": "Knock Doors With Us",
     "cta_donate": "Chip in $27",
     "days_left": "days to Election Day",
     "day_left": "day to Election Day"
@@ -447,7 +469,7 @@
     "p2": "People defeats money.",
     "p3": "Ward Night. Every Tuesday.",
     "p4": "No developer money. Not one dollar. Ever.",
-    "p5": "February 23, 2027. Round two starts now.",
+    "p5": "February 23, 2027. Round two starts at the door.",
     "p6": "Hoy por mí, mañana por ti.",
     "p7": "Solidarity with actions, not selfies."
   },
@@ -485,5 +507,11 @@
     "d_eday_date": "Feb 23, 2027",
     "d_eday": "Election Day. Polls open 6 AM to 7 PM.",
     "day_word": "day"
+  },
+  "bar": {
+    "ask": "Knock doors with us.",
+    "signup": "Sign up",
+    "canvass": "Find a canvass",
+    "dismiss": "Dismiss"
   }
 }

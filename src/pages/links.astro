@@ -5,7 +5,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 <Layout
   title="Links | Byron Sigcho-Lopez for 25th Ward Alderman"
-  description="Quick links to Byron Sigcho-Lopez's campaign: donate, volunteer, and follow on social media."
+  description="Quick links to Byron Sigcho-Lopez's campaign: volunteer, find a canvass, come to Ward Night, donate, and follow on social media."
+  actionBar={false}
 >
   <main class="links-page">
     <div class="links-bg">
@@ -38,30 +39,31 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
       </div>
 
-      <!-- Primary Links: taped flyer strips -->
+      <!-- Primary Links: taped flyer strips. The body ask first (volunteer,
+           canvass, Ward Night), then Donate, then the reading. -->
       <div class="links-list">
         <a href={`${base}/`} class="link-strip animate-in anim-pin" style="--tilt: -0.8deg" target="_blank" rel="noopener">
           <span class="link-text">Visit the Official Website</span>
           <span class="link-arrow">→</span>
         </a>
 
-        <a href="https://secure.actblue.com/donate/byron-sigcho-1" class="link-strip link-strip-donate animate-in anim-pin" style="--tilt: 0.7deg" target="_blank" rel="noopener">
-          <span class="link-text">Donate: Fund the Campaign</span>
+        <a href={`${base}/volunteer#signup`} class="link-strip link-strip-primary animate-in anim-pin" style="--tilt: 0.7deg" target="_blank" rel="noopener">
+          <span class="link-text">Volunteer: Knock Doors With Us</span>
           <span class="link-arrow">→</span>
         </a>
 
-        <a href={`${base}/volunteer`} class="link-strip animate-in anim-pin" style="--tilt: -0.6deg" target="_blank" rel="noopener">
-          <span class="link-text">Volunteer: Join the Ground Game</span>
+        <a href="https://canvass.chicagodsa.org" class="link-strip animate-in anim-pin" style="--tilt: -0.6deg" target="_blank" rel="noopener">
+          <span class="link-text">Find a Canvass: Sundays</span>
           <span class="link-arrow">→</span>
         </a>
 
-        <a href="https://canvass.chicagodsa.org" class="link-strip animate-in anim-pin" style="--tilt: 0.6deg" target="_blank" rel="noopener">
-          <span class="link-text">Find a Canvass Near You</span>
-          <span class="link-arrow">→</span>
-        </a>
-
-        <a href="https://25thward.org/" class="link-strip animate-in anim-pin" style="--tilt: -0.5deg" target="_blank" rel="noopener">
+        <a href="https://25thward.org/" class="link-strip animate-in anim-pin" style="--tilt: 0.6deg" target="_blank" rel="noopener">
           <span class="link-text">Ward Night: Every Tuesday</span>
+          <span class="link-arrow">→</span>
+        </a>
+
+        <a href="https://secure.actblue.com/donate/byron-sigcho-1" class="link-strip animate-in anim-pin" style="--tilt: -0.5deg" target="_blank" rel="noopener">
+          <span class="link-text">Donate: Fund the Campaign</span>
           <span class="link-arrow">→</span>
         </a>
 
@@ -145,7 +147,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
       <!-- Divider -->
       <div class="links-divider animate-in">
-        <span class="links-divider-text">Join the Movement</span>
+        <span class="links-divider-text">Sign Up to Volunteer</span>
       </div>
 
       <!-- Volunteer Signup: Clipboard Embed -->
@@ -360,7 +362,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
   }
 
-  .link-strip-donate {
+  .link-strip-primary {
     background: var(--orange);
     color: var(--white);
   }

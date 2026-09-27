@@ -68,6 +68,7 @@ BSL-for-Congress/
 │   │   ├── PlatformGrid.astro  # Homepage — 4-card summarized platform
 │   │   ├── AnointmentBanner.astro
 │   │   ├── PetitionModal.astro # Global — injected by Layout.astro
+│   │   ├── MobileActionBar.astro # Global except /links — mobile bottom bar with the standing volunteer ask
 │   │   ├── Footer.astro        # Ticker strip + clipboard signup + sketch
 │   │   ├── platform/
 │   │   │   ├── PlatformHero.astro
@@ -84,10 +85,13 @@ BSL-for-Congress/
 │   │   │   ├── MachineSection.astro  # Timeline w/ pulsing "NOW" dot
 │   │   │   └── BallotFight.astro     # 697 → 10,816 → 50,000 stats + CTA
 │   │   └── volunteer/
-│   │       ├── VolunteerHero.astro
-│   │       ├── PetitionBlitz.astro   # Orange urgent banner
-│   │       ├── ActionBlocks.astro    # 6 action cards (3-col → 2 → 1)
-│   │       └── SignupForm.astro      # Google Form, sticky text on desktop
+│   │       ├── VolunteerHero.astro   # + "Knock Doors With Us" CTA → #signup
+│   │       ├── ThisWeek.astro        # Three taped strips: Sundays (canvass map), Tuesdays (Ward Night), Today (#signup)
+│   │       ├── RolePicker.astro      # Situation chips that pre-check the form, then scroll to #signup
+│   │       ├── PetitionBlitz.astro   # Orange banner, CTA → #signup
+│   │       ├── ActionBlocks.astro    # 6 action cards (3-col → 2 → 1), "Count me in" → #signup
+│   │       ├── SignupForm.astro      # Google Form, sticky text on desktop, next-steps state after submit
+│   │       └── FundCTA.astro         # Donate band, after the form (was inside SignupForm)
 │   ├── i18n/
 │   │   ├── i18n.js                   # Translation engine (text + INPUT placeholder)
 │   │   ├── en.json                   # English — runtime source of truth
@@ -162,6 +166,7 @@ meet.*                 → /meet page — origin, education, ward record, achiev
 machine.*              → /movement page — hero, movement, machine expose, timeline, ballot fight, CTA
 volunteer.*            → /volunteer page — hero, blitz, action cards, signup form labels, CTA
 petition_modal.*       → Global petition modal overlay
+bar.*                  → Mobile action bar (MobileActionBar.astro)
 ```
 
 ### Dead i18n Keys
@@ -311,7 +316,7 @@ Each page (except `links.astro`) imports `Layout`, `Navbar`, page-specific compo
 | `/platform` | [src/pages/platform.astro](src/pages/platform.astro) | PlatformHero → PolicyGrid → UnboughtBanner |
 | `/meet` | [src/pages/meet.astro](src/pages/meet.astro) | MeetHero → EarlyLife → WardRecord → SocialistValues |
 | `/movement` | [src/pages/movement.astro](src/pages/movement.astro) | MachineHero → MovementSection → MachineSection → BallotFight |
-| `/volunteer` | [src/pages/volunteer.astro](src/pages/volunteer.astro) | VolunteerHero → PetitionBlitz → ActionBlocks → SignupForm |
+| `/volunteer` | [src/pages/volunteer.astro](src/pages/volunteer.astro) | VolunteerHero → ThisWeek → RolePicker → SignupForm → ActionBlocks → PetitionBlitz → NextUp → FundCTA → SolidarityTicker (the form sits before the roles on purpose; every card and the blitz CTA scroll back up to `#signup`) |
 | `/links` | [src/pages/links.astro](src/pages/links.astro) | Linktree-style; uses Layout but **omits** Navbar/Footer |
 
 ### Per-Page SEO
@@ -556,14 +561,14 @@ Five accounts in this exact order: X, Instagram, Facebook, TikTok, YouTube. Each
 .links-container (max-width 480px, centered)
 ├── .links-header     (logo, "Byron Sigcho-Lopez", tagline)
 ├── .links-video      (YouTube embed — same video ID as hero, ouSFDZfJu-E)
-├── .links-list       (5 link cards: home, donate, volunteer, platform, movement)
+├── .links-list       (7 taped strips, in this order: home, volunteer (#signup, orange .link-strip-primary), canvass map, Ward Night, donate, platform, movement)
 ├── .links-socials    (5 round social buttons)
 ├── .links-divider    ("Join the Movement" with horizontal rules)
 ├── .links-form-wrap  (clipboard with RaiseMore iframe)
 └── .links-footer     ("Paid for by..." line)
 ```
 
-The `.link-card-donate` uses an orange-tinted gradient background to stand out from the other cards.
+The Volunteer strip carries `.link-strip-primary` (orange) so the body ask outranks Donate. The page passes `actionBar={false}` to Layout so the mobile action bar stays off the linktree.
 
 Mobile breakpoint here is `520px` (not the usual 768) because the page is mobile-first by intent.
 
@@ -586,7 +591,7 @@ When open, `document.body.style.overflow = 'hidden'` locks page scroll; closing 
 
 ### Submission Flow
 
-The form POSTs to a Google Form endpoint (see "Forms & Embeds" below). On submit the script waits 500 ms, hides the form, shows the success message for 3 seconds, then closes the modal and resets the form.
+The form POSTs to a Google Form endpoint (see "Forms & Embeds" below). On submit the script waits 500 ms, hides the form and shows the next-steps block (`#petitionSuccess`: Ward Night every Tuesday, Sunday canvasses via the map, "the campaign will follow up"). It stays up until the neighbor closes the modal; closing resets and restores the form. The links in that block sit outside the `data-i18n` spans so a language swap keeps them.
 
 ---
 
@@ -652,7 +657,7 @@ If you add/remove/reorder a field, **the `entry.NNNN` name must match the Google
 | Zip | `entry.1587719447` | required, `pattern="[0-9]{5}"` |
 | How to help (checkboxes, all share `entry.1014527396`) | 11 values | "Collect Petition Signatures", "Knock on Doors", "Phone/Text Banking", "Host a Meet & Greet", "Bilingual Outreach (I speak Spanish / Yo hablo español)", "Post on Social Media", "Precinct Captain / Volunteer", "High School Ambassador", "College Campus Captain / Volunteer", "Help Create Marketing Collateral (Graphic Design)", "Help Create Campaign Videos (Videography / Video Editing)" |
 
-After submit, the form resets and the success message shows for 5 seconds.
+After submit, the form resets, gets `.is-submitted` (fields hidden), and the next-steps block (Ward Night, canvass map, follow-up, share link) stays up with no timer. The `<form>` carries `data-action-bar-hide` so the mobile action bar steps aside while it is on screen. `.signup-section` has `scroll-margin-top: var(--nav-height)` because `#signup` is the sitewide deep-link target for the volunteer ask (navbar pill, hero, RoadCTA, links page, mobile bar).
 
 ### 2. RaiseMore Iframe — Footer & Links Page
 
@@ -726,7 +731,7 @@ Many sections have stable IDs that act as deep-link targets. **Don't rename thes
 | `/platform` | `#platform-hero`, `#issues`, `#housing`, `#healthcare`, `#economic`, `#immigration`, `#foreign-policy`, `#democracy`, `#education`, `#unbought` |
 | `/meet` | `#meet-hero`, `#early-life`, `#ward-record`, `#elected-by-the-people`, `#family` |
 | `/movement` | `#machine-hero`, `#the-movement`, `#the-machine`, `#ballot-fight` |
-| `/volunteer` | `#volunteer-hero`, `#petition-blitz`, `#ways-to-fight`, `#signup` |
+| `/volunteer` | `#volunteer-hero`, `#this-week`, `#find-your-post`, `#signup`, `#ways-to-fight`, `#petition-blitz`, `#next-up` |
 | **Global** | `#petition` — **does NOT scroll**; opens Petition Modal |
 
 Treat `#petition` as a reserved sentinel — never use it as an actual anchor target.
@@ -744,6 +749,12 @@ Two desktop-only sticky behaviors to be aware of:
 
 Both fall back to `position: static` at `≤1024px` (when the grid collapses to one column). If you change the grid breakpoint, change the sticky breakpoint too — otherwise sticky elements will overlap stacked content.
 
+Plus one mobile-only fixed element:
+
+| Element | File | Behavior |
+|---|---|---|
+| `.action-bar` (mobile action bar) | [src/components/MobileActionBar.astro](src/components/MobileActionBar.astro) | `position: fixed; bottom: 0`, `≤768px` only, `z-index: 9000`. Slides in once `scrollY > 240` (the hero CTA does the work above the fold), hides while any `[data-action-bar-hide]` element intersects (the volunteer `<form>`, the footer `.footer-legal` with the paid-for banner), and the X stores `localStorage['bsl-bar-dismissed'] = '1'` inside try/catch. While visible, `body.has-action-bar` lifts the hero sound button clear of it. Layout injects it everywhere except `/links` (`actionBar={false}`). |
+
 ---
 
 ## Responsive Breakpoints
@@ -753,7 +764,7 @@ The codebase uses three breakpoints consistently:
 | Breakpoint | Behavior |
 |---|---|
 | `max-width: 1024px` | `.hide-mobile` hides; multi-col grids collapse to 1- or 2-column; container padding bumps to `--space-xl` |
-| `max-width: 768px` | Phone layout; everything stacks to single column; section padding reduces to `--space-3xl`; container padding back to `--space-lg`; sub-page heroes switch parallax → scroll |
+| `max-width: 768px` | Phone layout; everything stacks to single column; section padding reduces to `--space-3xl`; container padding back to `--space-lg`; sub-page heroes switch parallax → scroll; the navbar's Volunteer/Donate pills hide (both live in the mobile drawer, Volunteer first and orange) and the mobile action bar takes over the standing ask |
 | `min-width: 1025px` | `.hide-desktop` hides; sticky elements activate |
 
 Plus one local breakpoint:
@@ -864,6 +875,7 @@ Used in Footer (5 icons) and Links page (5 buttons), and Navbar mobile drawer (5
 | `.petition-modal-overlay` | 9999 |
 | `.mobile-drawer` | 9999 |
 | `.navbar` | 9998 |
+| `.action-bar` (mobile action bar) | 9000 |
 | `.hero-sound-btn` | 20 |
 | `.hero-content-overlay` | 10 |
 | `.hero-gradient-overlay` | 1 |
