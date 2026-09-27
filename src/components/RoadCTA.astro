@@ -17,12 +17,34 @@
 
     <p class="road-lead animate-in" data-i18n="road.lead">This is the road through the ward. Walk it with us to February 23, 2027.</p>
 
+    <p class="road-countdown animate-in"><span class="road-count" data-days-until="2027-02-23">0</span> <span data-i18n="road.days_left">days to Election Day</span></p>
+
     <div class="road-buttons animate-in">
       <a href="#petition" class="btn btn-orange btn-massive" data-i18n="road.cta_join">Join the Fight</a>
       <a href="https://secure.actblue.com/donate/byron-sigcho-1" class="btn btn-cream" target="_blank" rel="noopener" data-i18n="road.cta_donate">Chip in $27</a>
     </div>
   </div>
 </section>
+
+<script>
+  import en from '../i18n/en.json';
+  import es from '../i18n/es.json';
+
+  // Singular on the eve of the election; re-run after language toggles.
+  function fixRoadDayWord() {
+    const num = document.querySelector('.road-count[data-days-until]');
+    const label = document.querySelector('[data-i18n="road.days_left"]');
+    if (!num || !label) return;
+    const until = new Date(num.getAttribute('data-days-until') + 'T00:00:00');
+    const days = Math.max(0, Math.ceil((until.getTime() - Date.now()) / 86400000));
+    if (days === 1) {
+      const lang = localStorage.getItem('bsl-lang') || 'en';
+      label.textContent = (lang === 'es' ? es : en).road.day_left;
+    }
+  }
+  fixRoadDayWord();
+  document.addEventListener('bsl:langchange', () => setTimeout(fixRoadDayWord, 0));
+</script>
 
 <style>
   .road-cta {
@@ -105,6 +127,22 @@
     font-size: var(--text-xl);
     color: #ffffff;
     font-weight: 500;
+  }
+
+  .road-countdown {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--gold-soft);
+  }
+
+  .road-count {
+    font-size: var(--text-xl);
+    font-weight: 900;
+    color: var(--cream);
+    margin-right: 0.35em;
   }
 
   .road-buttons {

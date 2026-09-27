@@ -437,7 +437,9 @@
     "quote": "La justicia no es un destino. Es el camino que se recorre.",
     "lead": "Este es el camino por el barrio. Camínalo con nosotros hasta el 23 de febrero de 2027.",
     "cta_join": "Únete a la Lucha",
-    "cta_donate": "Contribuye $27"
+    "cta_donate": "Contribuye $27",
+    "days_left": "días para el Día de la Elección",
+    "day_left": "día para el Día de la Elección"
   },
   "ticker": {
     "p1": "Que decida el pueblo.",
@@ -447,5 +449,40 @@
     "p5": "23 de febrero de 2027. La ronda dos comienza ahora.",
     "p6": "El pueblo antes que el partido.",
     "p7": "¡Solidaridad!"
+  },
+  "nextup": {
+    "label": "El Calendario",
+    "headline": "Preséntate. Trae a un Vecino.",
+    "sub": "Una campaña no es un sitio web. Son los martes en la oficina del distrito, los domingos tocando puertas y una mañana de febrero en las urnas. Aquí es donde nos encuentras.",
+    "days_word": "días",
+    "wardnight_when": "Cada martes",
+    "wardnight_title": "Noche del Distrito",
+    "wardnight_desc": "Siete años de martes, incluso durante la pandemia. Trae tu pregunta, tu número de caso o solo tu curiosidad, y habla directamente con el equipo de Byron.",
+    "wardnight_cta": "Planea tu visita",
+    "canvass_when": "Domingo 27 de septiembre • 10 AM",
+    "canvass_title": "Domingo a Tocar Puertas",
+    "canvass_desc": "Vecinos y el equipo de caminatas de toda la ciudad tocan puertas por Byron en el Distrito 25. ¿Primera vez? Te emparejamos con alguien con experiencia. Dos horas, buena compañía.",
+    "canvass_cta": "Confirma en el mapa",
+    "map_when": "Casi cada fin de semana",
+    "map_title": "Hay Caminatas Toda la Temporada",
+    "map_desc": "El mapa de caminatas muestra cada turno cerca de ti. Escoge un domingo, escoge una esquina y ayuda a llevar el distrito puerta por puerta.",
+    "map_cta": "Abrir el mapa de caminatas",
+    "filing_when": "Del 19 al 26 de octubre",
+    "filing_title": "Semana de Registro en la Junta",
+    "filing_desc": "Las peticiones se entregan a la Junta Electoral. Este año intentaron borrar un nombre de una boleta. Las firmas lo ponen en la siguiente. Ayuda a recolectarlas.",
+    "filing_cta": "Apúntate para ayudar",
+    "dates_label": "Marca Estas Fechas",
+    "dates_headline": "El Camino al 23 de Febrero",
+    "d_filing_date": "19 al 26 de oct, 2026",
+    "d_filing": "Registro de candidatos en la Junta Electoral",
+    "d_vbm_date": "25 de nov, 2026",
+    "d_vbm": "Abren las solicitudes de voto por correo",
+    "d_early_date": "14 de ene, 2027",
+    "d_early": "Puede comenzar la votación anticipada",
+    "d_reg_date": "26 de ene, 2027",
+    "d_reg": "Cierra el registro regular de votantes. Sigue el registro de gracia.",
+    "d_eday_date": "23 de feb, 2027",
+    "d_eday": "Día de la Elección. Urnas abiertas de 6 AM a 7 PM.",
+    "day_word": "día"
   }
 }

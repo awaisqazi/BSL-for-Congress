@@ -1,0 +1,406 @@
+---
+// The campaign calendar as flyers pinned to the organizing wall:
+// square paper, tape, date placards, countdown stamps, and a ledger
+// of official dates on ruled paper. Dated cards hide themselves after
+// they pass; the ledger rows gray out. All dates from the official
+// CBOE 2027 election calendar (adopted 7/28/2026).
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<section class="nextup section-padding" id="next-up">
+  <div class="container">
+    <span class="section-label animate-in" style="text-align:center;display:block;" data-i18n="nextup.label">The Calendar</span>
+    <h2 class="section-title animate-in" style="text-align:center;" data-i18n="nextup.headline">Show Up. Bring a Neighbor.</h2>
+    <p class="nextup-sub animate-in" data-i18n="nextup.sub">A campaign is not a website. It is Tuesdays at the ward office, Sundays on the doors, and a February morning at the polls. Here is where to find us.</p>
+
+    <div class="nextup-grid">
+      <!-- Ward Night: the standing appointment -->
+      <div class="nextup-card animate-in anim-pin" style="--tilt: -0.7deg">
+        <span class="nextup-when nextup-when-standing" data-i18n="nextup.wardnight_when">Every Tuesday</span>
+        <h3 class="nextup-placard-wrap"><span class="nextup-placard" data-i18n="nextup.wardnight_title">Ward Night</span></h3>
+        <p class="nextup-desc" data-i18n="nextup.wardnight_desc">Seven years of Tuesdays, even through the pandemic. Bring your question, your case number, or just your curiosity, and talk to Byron's team directly.</p>
+        <a class="nextup-cta" href="https://25thward.org/" target="_blank" rel="noopener"><span data-i18n="nextup.wardnight_cta">Plan your visit</span> <span class="nextup-cta-arrow" aria-hidden="true">→</span></a>
+      </div>
+
+      <!-- This Sunday's canvass (hides itself after the date) -->
+      <div class="nextup-card animate-in anim-pin" style="--tilt: 0.6deg; --reveal-delay: 0.08s" data-expires="2026-09-27">
+        <span class="nextup-when" data-i18n="nextup.canvass_when">Sunday, September 27 • 10 AM</span>
+        <h3 class="nextup-placard-wrap"><span class="nextup-placard" data-i18n="nextup.canvass_title">Sunday Canvass</span></h3>
+        <p class="nextup-desc" data-i18n="nextup.canvass_desc">Neighbors and the citywide canvass crew knock doors for Byron in the 25th. First time on the doors? You will be paired with a veteran. Two hours, good company.</p>
+        <span class="nextup-chip"><span data-days-until="2026-09-27">0</span>&nbsp;<span data-i18n="nextup.days_word">days</span></span>
+        <a class="nextup-cta" href="https://canvass.chicagodsa.org" target="_blank" rel="noopener"><span data-i18n="nextup.canvass_cta">RSVP on the canvass map</span> <span class="nextup-cta-arrow" aria-hidden="true">→</span></a>
+      </div>
+
+      <!-- The canvass map: evergreen -->
+      <div class="nextup-card animate-in anim-pin" style="--tilt: -0.5deg; --reveal-delay: 0.16s">
+        <span class="nextup-when nextup-when-standing" data-i18n="nextup.map_when">Most weekends</span>
+        <h3 class="nextup-placard-wrap"><span class="nextup-placard" data-i18n="nextup.map_title">Canvasses Run All Season</span></h3>
+        <p class="nextup-desc" data-i18n="nextup.map_desc">The canvass map shows every upcoming shift near you. Pick a Sunday, pick a corner, and help carry the ward door by door.</p>
+        <a class="nextup-cta" href="https://canvass.chicagodsa.org" target="_blank" rel="noopener"><span data-i18n="nextup.map_cta">Open the canvass map</span> <span class="nextup-cta-arrow" aria-hidden="true">→</span></a>
+      </div>
+
+      <!-- Filing week (hides itself after Oct 26) -->
+      <div class="nextup-card animate-in anim-pin" style="--tilt: 0.7deg; --reveal-delay: 0.24s" data-expires="2026-10-26">
+        <span class="nextup-when" data-i18n="nextup.filing_when">October 19 to 26</span>
+        <h3 class="nextup-placard-wrap"><span class="nextup-placard" data-i18n="nextup.filing_title">Filing Week at the Board</span></h3>
+        <p class="nextup-desc" data-i18n="nextup.filing_desc">Petitions go to the Board of Elections. They tried to erase a name from one ballot this year. Signatures put it on the next one. Help gather them.</p>
+        <span class="nextup-chip"><span data-days-until="2026-10-19">0</span>&nbsp;<span data-i18n="nextup.days_word">days</span></span>
+        <a class="nextup-cta" href={`${base}/volunteer#ways-to-fight`}><span data-i18n="nextup.filing_cta">Sign up to help</span> <span class="nextup-cta-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+
+    <!-- Official dates ledger -->
+    <div class="nextup-ledger animate-in">
+      <span class="nextup-ledger-label" data-i18n="nextup.dates_label">Mark These</span>
+      <h3 class="nextup-ledger-headline" data-i18n="nextup.dates_headline">The Road to February 23</h3>
+      <ul class="nextup-dates">
+        <li class="nextup-date-row" data-past-after="2026-10-26">
+          <span class="nextup-date" data-i18n="nextup.d_filing_date">Oct 19 to 26, 2026</span>
+          <span class="nextup-date-what" data-i18n="nextup.d_filing">Candidate filing at the Board of Elections</span>
+          <span class="nextup-chip nextup-chip-row"><span data-days-until="2026-10-19">0</span>&nbsp;<span data-i18n="nextup.days_word">days</span></span>
+        </li>
+        <li class="nextup-date-row" data-past-after="2026-11-25">
+          <span class="nextup-date" data-i18n="nextup.d_vbm_date">Nov 25, 2026</span>
+          <span class="nextup-date-what" data-i18n="nextup.d_vbm">Vote-by-mail applications open</span>
+          <span class="nextup-chip nextup-chip-row"><span data-days-until="2026-11-25">0</span>&nbsp;<span data-i18n="nextup.days_word">days</span></span>
+        </li>
+        <li class="nextup-date-row" data-past-after="2027-01-14">
+          <span class="nextup-date" data-i18n="nextup.d_early_date">Jan 14, 2027</span>
+          <span class="nextup-date-what" data-i18n="nextup.d_early">Early voting can begin</span>
+          <span class="nextup-chip nextup-chip-row"><span data-days-until="2027-01-14">0</span>&nbsp;<span data-i18n="nextup.days_word">days</span></span>
+        </li>
+        <li class="nextup-date-row" data-past-after="2027-01-26">
+          <span class="nextup-date" data-i18n="nextup.d_reg_date">Jan 26, 2027</span>
+          <span class="nextup-date-what" data-i18n="nextup.d_reg">Regular voter registration closes. Grace registration follows.</span>
+          <span class="nextup-chip nextup-chip-row"><span data-days-until="2027-01-26">0</span>&nbsp;<span data-i18n="nextup.days_word">days</span></span>
+        </li>
+        <li class="nextup-date-row nextup-date-row-eday" data-past-after="2027-02-23">
+          <span class="nextup-date" data-i18n="nextup.d_eday_date">Feb 23, 2027</span>
+          <span class="nextup-date-what" data-i18n="nextup.d_eday">Election Day. Polls open 6 AM to 7 PM.</span>
+          <span class="nextup-chip nextup-chip-row"><span data-days-until="2027-02-23">0</span>&nbsp;<span data-i18n="nextup.days_word">days</span></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  import en from '../i18n/en.json';
+  import es from '../i18n/es.json';
+
+  // Dated flyers come off the wall the morning after; ledger rows gray out.
+  document.querySelectorAll('[data-expires]').forEach((el) => {
+    const end = new Date(el.getAttribute('data-expires') + 'T23:59:59');
+    if (Date.now() > end.getTime()) el.remove();
+  });
+  document.querySelectorAll('[data-past-after]').forEach((el) => {
+    const end = new Date(el.getAttribute('data-past-after') + 'T23:59:59');
+    if (Date.now() > end.getTime()) {
+      el.classList.add('is-past');
+      const chip = el.querySelector('.nextup-chip');
+      if (chip) chip.remove();
+    }
+  });
+
+  // "1 days" reads wrong in both languages; swap in the singular word.
+  // Re-run after each language toggle since i18n.js rewrites the label.
+  function fixDayWords() {
+    const lang = localStorage.getItem('bsl-lang') || 'en';
+    const dict = lang === 'es' ? es : en;
+    document.querySelectorAll('.nextup-chip').forEach((chip) => {
+      const num = chip.querySelector('[data-days-until]');
+      const word = chip.querySelector('[data-i18n="nextup.days_word"]');
+      if (!num || !word) return;
+      const until = new Date(num.getAttribute('data-days-until') + 'T00:00:00');
+      const days = Math.max(0, Math.ceil((until.getTime() - Date.now()) / 86400000));
+      if (days === 1) word.textContent = dict.nextup.day_word;
+    });
+  }
+  fixDayWords();
+  document.addEventListener('bsl:langchange', () => setTimeout(fixDayWords, 0));
+</script>
+
+<style>
+  .nextup {
+    background: var(--cream);
+  }
+
+  .nextup-sub {
+    max-width: 640px;
+    margin: var(--space-md) auto 0;
+    text-align: center;
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: var(--gray-700);
+  }
+
+  .nextup-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-xl);
+    margin-top: var(--space-3xl);
+    align-items: start;
+  }
+
+  /* Flyers: square paper, taped, slightly crooked */
+  .nextup-card {
+    position: relative;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    background: var(--cream-light);
+    padding: var(--space-xl);
+    box-shadow: var(--shadow-md);
+    rotate: var(--tilt, 0deg);
+    transition: rotate var(--duration-normal) var(--ease-default), translate var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
+  }
+
+  .nextup-card::before {
+    content: '';
+    position: absolute;
+    width: 64px;
+    height: 20px;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    background: rgba(245, 208, 138, 0.65);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+  }
+
+  .nextup-card:hover {
+    rotate: 0deg;
+    translate: 0 -4px;
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Stamped date line */
+  .nextup-when {
+    align-self: flex-start;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--orange-dark);
+    border: 2px dashed rgba(230, 136, 28, 0.55);
+    border-radius: 3px;
+    padding: 3px 10px;
+    rotate: -1deg;
+    margin-bottom: var(--space-md);
+  }
+
+  .nextup-when-standing {
+    color: var(--blue-dark);
+    border-color: rgba(27, 54, 93, 0.4);
+  }
+
+  .nextup-placard-wrap {
+    margin: 0 0 var(--space-sm);
+    rotate: -1deg;
+  }
+
+  .nextup-placard {
+    display: inline;
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 900;
+    line-height: 1.55;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--cream-light);
+    background: var(--blue-deeper);
+    padding: 0.14em 0.5em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .nextup-card:nth-child(even) .nextup-placard {
+    background: var(--orange-dark);
+  }
+
+  .nextup-desc {
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: var(--gray-700);
+    margin-bottom: var(--space-md);
+  }
+
+  /* Countdown stamp */
+  .nextup-chip {
+    align-self: flex-start;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue-deeper);
+    background: rgba(27, 54, 93, 0.08);
+    padding: 3px 10px;
+    rotate: 1deg;
+    margin-bottom: var(--space-md);
+  }
+
+  .nextup-cta {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    padding-top: var(--space-md);
+    border-top: 2px dashed var(--cream-dark);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue-dark);
+    transition: color var(--duration-fast) var(--ease-default);
+  }
+
+  .nextup-cta:hover {
+    color: var(--orange-dark);
+  }
+
+  .nextup-cta-arrow {
+    transition: translate var(--duration-fast) var(--ease-default);
+  }
+
+  .nextup-cta:hover .nextup-cta-arrow {
+    translate: 5px 0;
+  }
+
+  /* Ledger: official dates on ruled paper */
+  .nextup-ledger {
+    margin-top: var(--space-3xl);
+    background: var(--cream-light);
+    padding: var(--space-2xl) var(--space-2xl) var(--space-xl);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    background-image: repeating-linear-gradient(
+      180deg,
+      transparent,
+      transparent 35px,
+      rgba(27, 54, 93, 0.07) 35px,
+      rgba(27, 54, 93, 0.07) 36px
+    );
+  }
+
+  .nextup-ledger::before {
+    content: '';
+    position: absolute;
+    width: 88px;
+    height: 22px;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(2deg);
+    background: rgba(245, 208, 138, 0.65);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+  }
+
+  .nextup-ledger-label {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--orange-dark);
+  }
+
+  .nextup-ledger-headline {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 900;
+    color: var(--blue-deeper);
+    margin: var(--space-xs) 0 var(--space-lg);
+  }
+
+  .nextup-dates {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nextup-date-row {
+    display: grid;
+    grid-template-columns: 160px 1fr auto;
+    align-items: baseline;
+    gap: var(--space-lg);
+    padding: var(--space-sm) 0;
+    border-bottom: 1px dashed rgba(27, 54, 93, 0.15);
+  }
+
+  .nextup-date-row:last-child {
+    border-bottom: none;
+  }
+
+  .nextup-date-row.is-past {
+    opacity: 0.45;
+  }
+
+  .nextup-date-row.is-past .nextup-date-what {
+    text-decoration: line-through;
+  }
+
+  .nextup-date {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--orange-dark);
+  }
+
+  .nextup-date-what {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--gray-700);
+  }
+
+  .nextup-chip-row {
+    margin-bottom: 0;
+    rotate: 0deg;
+    white-space: nowrap;
+  }
+
+  .nextup-date-row-eday .nextup-date,
+  .nextup-date-row-eday .nextup-date-what {
+    font-weight: 900;
+    color: var(--blue-deeper);
+  }
+
+  @media (max-width: 1024px) {
+    .nextup-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .nextup-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .nextup-ledger {
+      padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    }
+
+    .nextup-date-row {
+      grid-template-columns: 1fr auto;
+      gap: var(--space-xs) var(--space-md);
+    }
+
+    .nextup-date {
+      grid-column: 1;
+    }
+
+    .nextup-chip-row {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .nextup-date-what {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

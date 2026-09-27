@@ -437,7 +437,9 @@
     "quote": "Justice is not a destination. It is the road that is traveled.",
     "lead": "This is the road through the ward. Walk it with us to February 23, 2027.",
     "cta_join": "Join the Fight",
-    "cta_donate": "Chip in $27"
+    "cta_donate": "Chip in $27",
+    "days_left": "days to Election Day",
+    "day_left": "day to Election Day"
   },
   "ticker": {
     "p1": "Let the people decide.",
@@ -447,5 +449,40 @@
     "p5": "February 23, 2027. Round two starts now.",
     "p6": "People before party.",
     "p7": "Solidarity!"
+  },
+  "nextup": {
+    "label": "The Calendar",
+    "headline": "Show Up. Bring a Neighbor.",
+    "sub": "A campaign is not a website. It is Tuesdays at the ward office, Sundays on the doors, and a February morning at the polls. Here is where to find us.",
+    "days_word": "days",
+    "wardnight_when": "Every Tuesday",
+    "wardnight_title": "Ward Night",
+    "wardnight_desc": "Seven years of Tuesdays, even through the pandemic. Bring your question, your case number, or just your curiosity, and talk to Byron's team directly.",
+    "wardnight_cta": "Plan your visit",
+    "canvass_when": "Sunday, September 27 • 10 AM",
+    "canvass_title": "Sunday Canvass",
+    "canvass_desc": "Neighbors and the citywide canvass crew knock doors for Byron in the 25th. First time on the doors? You will be paired with a veteran. Two hours, good company.",
+    "canvass_cta": "RSVP on the canvass map",
+    "map_when": "Most weekends",
+    "map_title": "Canvasses Run All Season",
+    "map_desc": "The canvass map shows every upcoming shift near you. Pick a Sunday, pick a corner, and help carry the ward door by door.",
+    "map_cta": "Open the canvass map",
+    "filing_when": "October 19 to 26",
+    "filing_title": "Filing Week at the Board",
+    "filing_desc": "Petitions go to the Board of Elections. They tried to erase a name from one ballot this year. Signatures put it on the next one. Help gather them.",
+    "filing_cta": "Sign up to help",
+    "dates_label": "Mark These",
+    "dates_headline": "The Road to February 23",
+    "d_filing_date": "Oct 19 to 26, 2026",
+    "d_filing": "Candidate filing at the Board of Elections",
+    "d_vbm_date": "Nov 25, 2026",
+    "d_vbm": "Vote-by-mail applications open",
+    "d_early_date": "Jan 14, 2027",
+    "d_early": "Early voting can begin",
+    "d_reg_date": "Jan 26, 2027",
+    "d_reg": "Regular voter registration closes. Grace registration follows.",
+    "d_eday_date": "Feb 23, 2027",
+    "d_eday": "Election Day. Polls open 6 AM to 7 PM.",
+    "day_word": "day"
   }
 }
