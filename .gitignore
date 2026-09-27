@@ -34,3 +34,9 @@ Thumbs.db
 
 # Gemini AI artifacts
 .gemini/
+
+# local tooling checkouts
+ffmpeg/
+remotion-video/
+bsl-social-videos/
+.codex/skills/remotion-ffmpeg/

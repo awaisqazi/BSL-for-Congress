@@ -31,6 +31,7 @@ const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
     
     <!-- SEO -->
     <title>{title}</title>
+    <link rel="canonical" href={pageUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />

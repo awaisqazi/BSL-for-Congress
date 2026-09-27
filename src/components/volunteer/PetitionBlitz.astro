@@ -31,7 +31,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <span aria-hidden="true">✊</span>
         <span data-i18n="volunteer.status_launched">Launched August 18</span>
       </span>
-      <span class="blitz-status-chip" data-days-until="2027-02-23">
+      <!-- No data-days-until on the chip itself: the counter script replaces an
+           element's whole textContent, which wiped the icon and label and left a
+           bare number. The countdown lives in the ledger right below. -->
+      <span class="blitz-status-chip">
         <span aria-hidden="true">🗳️</span>
         <span data-i18n="volunteer.status_electionday">Election Day February 23, 2027</span>
       </span>

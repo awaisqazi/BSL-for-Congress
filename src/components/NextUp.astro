@@ -87,6 +87,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <script>
   import en from '../i18n/en.json';
   import es from '../i18n/es.json';
+  import { daysUntil } from '../scripts/motion.js';
 
   // Dated flyers come off the wall the morning after; ledger rows gray out.
   document.querySelectorAll('[data-expires]').forEach((el) => {
@@ -102,8 +103,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
   });
 
-  // "1 days" reads wrong in both languages; swap in the singular word.
-  // Re-run after each language toggle since i18n.js rewrites the label.
+  // "1 days" reads wrong in both languages; swap in the singular word. On the
+  // day itself the chip says "Today" (or "Now" while a multi-day window like
+  // filing week is still open). Re-run after each language toggle and after
+  // the shared counter writes its numbers, since both rewrite these spans.
   function fixDayWords() {
     const lang = localStorage.getItem('bsl-lang') || 'en';
     const dict = lang === 'es' ? es : en;
@@ -111,12 +114,20 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       const num = chip.querySelector('[data-days-until]');
       const word = chip.querySelector('[data-i18n="nextup.days_word"]');
       if (!num || !word) return;
-      const until = new Date(num.getAttribute('data-days-until') + 'T00:00:00');
-      const days = Math.max(0, Math.ceil((until.getTime() - Date.now()) / 86400000));
-      if (days === 1) word.textContent = dict.nextup.day_word;
+      const days = daysUntil(num.getAttribute('data-days-until'));
+      if (days === 1) {
+        word.textContent = dict.nextup.day_word;
+      } else if (days <= 0) {
+        const holder = chip.closest('[data-expires], [data-past-after]');
+        const end = holder && (holder.getAttribute('data-expires') || holder.getAttribute('data-past-after'));
+        const stillOpen = end && daysUntil(end) > 0;
+        num.textContent = '';
+        word.textContent = stillOpen ? dict.nextup.now_word : dict.nextup.today_word;
+      }
     });
   }
   fixDayWords();
+  document.addEventListener('DOMContentLoaded', () => setTimeout(fixDayWords, 0));
   document.addEventListener('bsl:langchange', () => setTimeout(fixDayWords, 0));
 </script>
 
@@ -134,12 +145,24 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     color: var(--gray-700);
   }
 
+  /* auto-fit so the wall closes up when a dated flyer comes down (no empty
+     column where a card was); a max width keeps two or three cards from
+     stretching into banners. */
   .nextup-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: var(--space-xl);
     margin-top: var(--space-3xl);
     align-items: start;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .nextup-card {
+    max-width: 420px;
+    width: 100%;
+    justify-self: center;
   }
 
   /* Flyers: square paper, taped, slightly crooked */
@@ -371,7 +394,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   @media (max-width: 1024px) {
     .nextup-grid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
   }
 

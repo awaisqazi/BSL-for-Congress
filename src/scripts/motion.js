@@ -4,6 +4,16 @@
 // pages that contain [data-sigwall].
 export const REDUCED = matchMedia('(prefers-reduced-motion: reduce)');
 
+// Whole calendar days from today (local) to an ISO date. Compares UTC
+// midnights so the fall-back/spring-forward hour never shifts the count.
+export function daysUntil(iso) {
+  const [y, m, d] = String(iso).split('-').map(Number);
+  const now = new Date();
+  const a = Date.UTC(y, m - 1, d);
+  const b = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+  return Math.round((a - b) / 86400000);
+}
+
 const reveal = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -71,9 +81,7 @@ function initUrgency() {
   });
   // Countdown chips, e.g. [data-days-until="2027-02-23"] for election day.
   document.querySelectorAll('[data-days-until]').forEach((el) => {
-    const until = new Date(el.dataset.daysUntil + 'T00:00:00');
-    const days = Math.max(0, Math.ceil((until.getTime() - Date.now()) / 86400000));
-    el.textContent = String(days);
+    el.textContent = String(Math.max(0, daysUntil(el.dataset.daysUntil)));
   });
 }
 

@@ -4,7 +4,7 @@
 
 <!-- Modal Overlay -->
 <div class="petition-modal-overlay" id="petitionModal">
-  <div class="petition-modal">
+  <div class="petition-modal" role="dialog" aria-modal="true" aria-labelledby="petitionModalTitle">
     <button class="petition-modal-close" id="petitionModalClose" aria-label="Close">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
         <path d="M18 6L6 18M6 6l12 12"/>
@@ -13,7 +13,7 @@
 
     <div class="petition-modal-header">
       <div class="petition-modal-badge" data-i18n="petition_modal.badge">THE WARD CAMPAIGN</div>
-      <h2 class="petition-modal-title" data-i18n="petition_modal.title">Knock Doors With Us</h2>
+      <h2 class="petition-modal-title" id="petitionModalTitle" data-i18n="petition_modal.title">Knock Doors With Us</h2>
       <p class="petition-modal-subtitle" data-i18n="petition_modal.subtitle">Sundays on the doors, Tuesdays at Ward Night, every neighbor we can reach before February 23, 2027. Leave your info and the campaign will place you.</p>
     </div>
 
@@ -102,20 +102,42 @@
     const closeBtn = document.getElementById('petitionModalClose');
     const form = document.getElementById('petitionForm') as HTMLFormElement;
     const successMsg = document.getElementById('petitionSuccess');
+    const dialog = modal.querySelector('.petition-modal') as HTMLElement;
+    let opener: HTMLElement | null = null;
 
-    // Open modal from any link with href="#petition"
+    const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const focusables = () =>
+      // offsetParent is null inside a position:fixed overlay, so test rendered boxes instead.
+      [...dialog.querySelectorAll<HTMLElement>(FOCUSABLE)].filter((el) => el.getClientRects().length > 0);
+
+    // Open modal from any link with href="#petition"; move focus inside so
+    // keyboard and screen-reader users land in the dialog, not behind it.
     document.querySelectorAll('a[href="#petition"], a[href*="#petition"]').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
+        opener = link as HTMLElement;
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        setTimeout(() => (focusables()[1] || focusables()[0])?.focus(), 50);
       });
+    });
+
+    // Keep Tab inside the dialog while it is open.
+    modal.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab' || !modal.classList.contains('active')) return;
+      const items = focusables();
+      if (!items.length) return;
+      const first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     });
 
     // Close modal
     function closeModal() {
       modal.classList.remove('active');
       document.body.style.overflow = '';
+      opener?.focus();
+      opener = null;
       // If they just signed up, put the form back for the next neighbor.
       if (form && form.style.display === 'none') {
         form.reset();

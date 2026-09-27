@@ -30,7 +30,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <a href="https://secure.actblue.com/donate/byron-sigcho-1" class="btn btn-outline nav-pill nav-donate" target="_blank" rel="noopener" data-i18n="nav.donate">Donate</a>
 
       <!-- Mobile Hamburger -->
-      <button class="hamburger hide-desktop" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <button class="hamburger hide-desktop" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobile-drawer">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
@@ -78,6 +78,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     hamburger.classList.toggle('active');
     hamburger.setAttribute('aria-expanded', String(isOpen));
     document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  // Escape closes the drawer and hands focus back to the button
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer?.classList.contains('open')) {
+      drawer.classList.remove('open');
+      hamburger?.classList.remove('active');
+      hamburger?.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      hamburger?.focus();
+    }
   });
 
   // Close drawer on link click

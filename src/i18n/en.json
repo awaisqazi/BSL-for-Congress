@@ -19,7 +19,10 @@
     "chip_schools": "for ward schools",
     "chip_money": "from developers or PACs",
     "urgency_label": "Election day February 23.",
-    "urgency_label2": "days to go."
+    "urgency_label2": "days to go.",
+    "urgency_label2_one": "day to go.",
+    "sound_watch": "Watch with Sound",
+    "sound_return": "Return to Page"
   },
   "promise": {
     "label": "Promises Kept",
@@ -119,11 +122,11 @@
     "elected_label": "Elected by the People",
     "elected_headline": "A Grassroots Movement, Not a Machine Candidacy",
     "elected_p1": "In 2019, Byron ran a grassroots campaign for Alderman of the 25th Ward. He committed to refuse political contributions from developers and big corporations - a commitment he has upheld to this day and beyond. Since taking office, any resident now can personally meet with Byron at his weekly Ward Night, and all residents can receive compassion, support, and city services from the devoted public servants who staff the 25th Ward office.",
-    "elected_p2": "In 2023, big money and the political establishment lined up against Byron. Byron took democratic establishment and corrupt Danny Solis all the way to the Illinois Supreme Court over his unethical campaign finance practices. The voters of the 25th Ward sent him back to City Hall.",
+    "elected_p2": "In 2023, big money and the political establishment lined up against Byron. A year earlier he had taken disgraced former Alderman Danny Solis all the way to the Illinois Supreme Court over campaign cash spent on criminal defense lawyers. The court left the fix to the legislature, so that is where the fight went. The voters of the 25th Ward sent him back to City Hall.",
     "elected_2026": "In 2026, Byron ran for Congress as an independent, and the machine's lawyers worked to keep his name off the ballot. He came home to run for a third term, back to stand with the 25th Ward that raised him up.",
     "elected_p3": "As an elected official, he used the power of his office to put the people's power into the institutions that needed it - under his leadership, change is happening.",
     "achieve_housing_title": "800+ Affordable Units",
-    "achieve_housing_desc": "Byron has preserved and created over 800 units of affordable housing across Chicago and as Chairman of the Committee on Housing and Real Estate, made Chicago the largest city to pass a $135 million dollar investment via the Green Social Housing Initiative, to build sustainable housing and help address the housing crisis in Illinois.",
+    "achieve_housing_desc": "Byron has preserved and created over 800 units of affordable housing across Chicago and as Chairman of the Committee on Housing and Real Estate, made Chicago the largest city to pass a $135 million investment via the Green Social Housing Initiative, to build sustainable housing and help address the housing crisis in Illinois.",
     "achieve_wardnight_title": "Open Door, Every Week",
     "achieve_wardnight_desc": "Every community member has the opportunity to speak directly with their elected official every Tuesday at the Ward Office - the accountability is a commitment.",
     "achieve_health_title": "Community Services",
@@ -432,7 +435,7 @@
     "s9_desc": "Not the machine. Not their lawyers. The ward decides who its alderman answers to. You decide. Until then, we knock doors."
   },
   "counter": {
-    "readout_label": "valid signatures filed with the Illinois State Board of Elections. The record stands.",
+    "readout_label": "signatures filed with the Illinois State Board of Elections. The record stands.",
     "marker_machine": "What their candidate needed",
     "marker_law": "What the law demanded of Byron",
     "marker_promise": "The room's promise",
@@ -506,7 +509,9 @@
     "d_reg": "Regular voter registration closes. Grace registration follows.",
     "d_eday_date": "Feb 23, 2027",
     "d_eday": "Election Day. Polls open 6 AM to 7 PM.",
-    "day_word": "day"
+    "day_word": "day",
+    "today_word": "Today",
+    "now_word": "Now"
   },
   "bar": {
     "ask": "Knock doors with us.",

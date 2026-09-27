@@ -23,7 +23,9 @@ export function setLang(lang) {
   
   // Update toggle buttons
   document.querySelectorAll('[data-lang-toggle]').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.langToggle === lang);
+    const on = btn.dataset.langToggle === lang;
+    btn.classList.toggle('active', on);
+    btn.setAttribute('aria-pressed', String(on));
   });
 
   document.dispatchEvent(new CustomEvent('bsl:langchange', { detail: { lang } }));

@@ -42,11 +42,11 @@
 | Styling | **Vanilla CSS** with CSS custom properties (no Tailwind, no Sass) |
 | Fonts | Google Fonts — `Outfit` (display) + `Inter` (body), loaded via `@import` inside [src/styles/global.css](src/styles/global.css) |
 | i18n | Custom client-side JS ([src/i18n/i18n.js](src/i18n/i18n.js)) reading `data-i18n` attributes |
-| Hosting | GitHub Pages, base path `/BSL-for-Congress/` |
-| Donations | ActBlue → `secure.actblue.com/donate/byronfor04web/` |
+| Hosting | GitHub Pages on the custom domain `https://byronfor25.com` (base path `/`; `public/CNAME`). The old `awaisqazi.github.io/BSL-for-Congress/` address 301s here. |
+| Donations | ActBlue → `https://secure.actblue.com/donate/byron-sigcho-1` |
 | Petition / Volunteer forms | **Google Forms** (hidden iframe submission) |
 | Newsletter / signup form | **RaiseMore** embedded iframe |
-| Hero video | **YouTube** iframe embed, video ID `ouSFDZfJu-E` |
+| Hero video | **YouTube** iframe embed, video ID `ouSFDZfJu-E` (still the congressional launch video, kept on purpose until a ward-race cut is uploaded; the channel is still named "for Congress IL-04") |
 
 ---
 
@@ -540,7 +540,7 @@ The clipboard tilts and deepens its shadow on hover (`rotate(-1deg) translateY(-
 
 ### Footer Social Icons
 
-Five accounts in this exact order: X, Instagram, Facebook, TikTok, YouTube. Each is an inline SVG with `aria-label`. Hover background goes orange. See **Social Media Accounts** section for URLs.
+Four accounts in this exact order: X, Instagram, TikTok, YouTube (no Facebook, on purpose). Each is an inline SVG with `aria-label`. Hover background goes orange. See **Social Media Accounts** section for URLs.
 
 ---
 
@@ -845,13 +845,12 @@ Used in Footer (5 icons) and Links page (5 buttons), and Navbar mobile drawer (5
 
 | Platform | Handle | URL |
 |---|---|---|
-| X (Twitter) | @BSLForCongress | `https://x.com/BSLForCongress` |
-| Instagram | bslforcongress | `https://www.instagram.com/bslforcongress/` |
-| Facebook | BSLForCongress | `https://www.facebook.com/BSLForCongress/` |
-| TikTok | **@sigchofor25** | `https://www.tiktok.com/@sigchofor25` ← different naming convention |
-| YouTube | @BSLforCongress | `https://www.youtube.com/@BSLforCongress` |
+| X (Twitter) | @ByronSigcho | `https://x.com/ByronSigcho` |
+| Instagram | @bslfor25 | `https://www.instagram.com/bslfor25/` |
+| TikTok | @sigchofor25 | `https://www.tiktok.com/@sigchofor25` |
+| YouTube | @BSLforCongress | `https://www.youtube.com/@BSLforCongress` (the channel still carries the Congress-era name; swap the URL in all three places once it is renamed) |
 
-**Note**: TikTok handle is `sigchofor25`, not `bslforcongress`. If you need to update social links, search for these URLs across `Navbar.astro`, `Footer.astro`, and `links.astro` — there are 3 sets of icons that should stay in sync.
+**Facebook is intentionally absent.** Four icons, in this order, in `Navbar.astro` (mobile drawer), `Footer.astro`, and `links.astro`; if you update a social URL, update all three sets.
 
 ---
 
@@ -859,7 +858,7 @@ Used in Footer (5 icons) and Links page (5 buttons), and Navbar mobile drawer (5
 
 | Service | URL / ID | Where |
 |---|---|---|
-| ActBlue donation | `https://secure.actblue.com/donate/byronfor04web/` | Navbar, Footer ticker, all CTA blocks, Links page |
+| ActBlue donation | `https://secure.actblue.com/donate/byron-sigcho-1` | Navbar, Footer ticker, all CTA blocks, Links page |
 | RaiseMore signup form | `https://www.raisemore.app/forms/signup/org_3CzwGfMfnK1106k0fBTvwYbnDKI?horizontal=false` | Footer + Links clipboards |
 | Google Form (Petition) | ID `1FAIpQLSeYiVz1TB2tsAFdh1OakH62dM7XGCNBnaJz57Mn1beP0dqE6A` | PetitionModal |
 | Google Form (Volunteer) | ID `1FAIpQLSeUKnQVp4auTqHdFZeDrGlAOYAjmOO0sE19Xm11Pee2ayuuWQ` | volunteer/SignupForm |
