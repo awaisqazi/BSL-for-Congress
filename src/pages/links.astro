@@ -30,12 +30,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       <!-- Video Player -->
       <div class="links-video animate-in">
         <div class="links-video-wrap">
-          <iframe
-            src="https://www.youtube.com/embed/ouSFDZfJu-E?rel=0&modestbranding=1&playsinline=1"
-            title="Byron Sigcho-Lopez for 25th Ward Alderman"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen></iframe>
+          <video
+            controls
+            playsinline
+            preload="metadata"
+            poster={`${base}/video/hero-poster.jpg`}
+            title="Byron Sigcho-Lopez for 25th Ward Alderman">
+            <source src={`${base}/video/hero-sound.mp4`} type="video/mp4" />
+          </video>
         </div>
       </div>
 
@@ -186,7 +188,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
       <!-- Footer -->
       <div class="links-footer animate-in">
-        <p>Paid for by Friends of Byron Sigcho Lopez</p>
+        <p class="links-paid-for">Paid for by Friends of Byron Sigcho Lopez</p>
+        <p class="links-disclosure">A copy of our report filed with the Illinois State Board of Elections is (or will be) available on the Board's official website (elections.il.gov) or for purchase from the State Board of Elections, Springfield, Illinois.</p>
       </div>
     </div>
   </main>
@@ -305,12 +308,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     overflow: hidden;
   }
 
-  .links-video-wrap iframe {
+  .links-video-wrap video {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    object-fit: contain;
+    background: #0a1a2e;
   }
 
   /* ── Link strips: flyers taped to the night wall ── */
@@ -671,9 +676,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
   .links-footer p {
     font-family: var(--font-body);
-    font-size: 10px;
-    color: rgba(255, 255, 255, 0.25);
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.8);
     letter-spacing: 0.05em;
+  }
+
+  .links-paid-for {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .links-disclosure {
+    margin-top: var(--space-sm);
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.65);
   }
 
   /* ── Mobile ── */

@@ -6,15 +6,21 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <!-- Video Background -->
   <div class="hero-video-bg">
     <div class="hero-video-container" id="heroVideoContainer">
-      <iframe
+      <video
         id="heroVideo"
-        src="https://www.youtube.com/embed/ouSFDZfJu-E?autoplay=1&mute=1&loop=1&playlist=ouSFDZfJu-E&controls=0&showinfo=0&modestbranding=1&playsinline=1&enablejsapi=1"
-        title="Byron Sigcho-Lopez: The People's Fighter"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen
-      ></iframe>
+        class="hero-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster={`${base}/video/hero-poster.jpg`}
+        aria-hidden="true"
+        data-src-loop={`${base}/video/hero-loop.mp4`}
+        data-src-sound={`${base}/video/hero-sound.mp4`}
+      >
+        <source src={`${base}/video/hero-loop.mp4`} type="video/mp4" />
+      </video>
     </div>
     <!-- Gradient Overlay -->
     <div class="hero-gradient-overlay" id="heroGradientOverlay"></div>
@@ -63,7 +69,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <div class="hero-urgency animate-in anim-stamp" style="--tilt: -1.5deg; --reveal-delay: 0.75s">
         <span data-i18n="hero.urgency_label">Election day February 23.</span>
-        <span class="hero-urgency-day stat-tabular" data-days-until="2027-02-23">189</span>
+        <span class="hero-urgency-day stat-tabular" data-days-until="2027-02-23">149</span>
         <span data-i18n="hero.urgency_label2">days to go.</span>
       </div>
     </div>
@@ -86,11 +92,27 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <path d="M15.536 8.464a5 5 0 010 7.072"/>
       <path d="M18.364 5.636a9 9 0 010 12.728"/>
     </svg>
-    <span class="sound-label" id="heroSoundLabel">Watch with Sound</span>
+    <span class="sound-label" id="heroSoundLabel" data-i18n="hero.sound_watch">Watch with Sound</span>
   </button>
 </section>
 
 <script>
+  import en from '../i18n/en.json';
+  import es from '../i18n/es.json';
+  import { daysUntil } from '../scripts/motion.js';
+
+  const dict = () => ((localStorage.getItem('bsl-lang') || 'en') === 'es' ? es : en);
+
+  // "1 days to go" on the eve of the election; re-run after language toggles.
+  function fixHeroDayWord() {
+    const num = document.querySelector('.hero-urgency-day[data-days-until]');
+    const label = document.querySelector('[data-i18n="hero.urgency_label2"]');
+    if (!num || !label) return;
+    if (daysUntil(num.getAttribute('data-days-until')) === 1) label.textContent = dict().hero.urgency_label2_one;
+  }
+  fixHeroDayWord();
+  document.addEventListener('bsl:langchange', () => setTimeout(fixHeroDayWord, 0));
+
   document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('heroSoundBtn');
     const iconOff = document.querySelector('.sound-icon-off') as HTMLElement;
@@ -99,46 +121,108 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     const contentOverlay = document.getElementById('heroContentOverlay');
     const gradientOverlay = document.getElementById('heroGradientOverlay');
     const videoContainer = document.getElementById('heroVideoContainer');
-    const iframe = document.getElementById('heroVideo') as HTMLIFrameElement;
+    const video = document.getElementById('heroVideo') as HTMLVideoElement | null;
+    const loopSrc = video?.dataset.srcLoop || '';
+    const soundSrc = video?.dataset.srcSound || '';
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     let isMuted = true;
 
-    btn?.addEventListener('click', () => {
-      if (isMuted) {
-        // UNMUTE: fade out overlays, switch iframe to controls + unmute, resize to fit
-        isMuted = false;
-        if (iconOff) iconOff.style.display = 'none';
-        if (iconOn) iconOn.style.display = 'block';
-        if (label) label.textContent = 'Return to Page';
+    // Point the element at a new file (the <source> child is dropped so
+    // the src attribute is the only candidate) and reload.
+    const setSource = (src: string) => {
+      if (!video) return;
+      video.querySelectorAll('source').forEach((el) => el.remove());
+      video.src = src;
+      video.load();
+    };
 
-        contentOverlay?.classList.add('faded-out');
-        gradientOverlay?.classList.add('faded-out');
-        videoContainer?.classList.add('video-watching');
+    const tryPlay = () => {
+      video?.play().catch(() => { /* autoplay blocked: the poster stays up */ });
+    };
 
-        // Swap iframe src: unmute + show controls
-        if (iframe) {
-          iframe.src = iframe.src
-            .replace('controls=0', 'controls=1')
-            .replace('mute=1', 'mute=0');
-        }
-      } else {
-        // MUTE: restore overlays, switch iframe back to muted bg mode
-        isMuted = true;
-        if (iconOff) iconOff.style.display = 'block';
-        if (iconOn) iconOn.style.display = 'none';
-        if (label) label.textContent = 'Watch with Sound';
-
-        contentOverlay?.classList.remove('faded-out');
-        gradientOverlay?.classList.remove('faded-out');
-        videoContainer?.classList.remove('video-watching');
-
-        // Swap iframe src: mute + hide controls
-        if (iframe) {
-          iframe.src = iframe.src
-            .replace('controls=1', 'controls=0')
-            .replace('mute=0', 'mute=1');
-        }
+    // Muted background loop. Reduced motion keeps the poster instead.
+    const startBackground = () => {
+      if (!video) return;
+      if (reduceMotion.matches) {
+        video.pause();
+        video.removeAttribute('autoplay');
+        return;
       }
+      tryPlay();
+    };
+    startBackground();
+
+    // Some browsers reject the first muted play() before the file is ready or until the
+    // page is interacted with; retry on readiness and on the first gesture, loop mode only.
+    const retryPlay = () => {
+      if (video && isMuted && video.paused && !reduceMotion.matches) tryPlay();
+    };
+    video?.addEventListener('canplay', retryPlay);
+    ['pointerdown', 'touchstart', 'scroll', 'keydown'].forEach((ev) =>
+      window.addEventListener(ev, retryPlay, { once: true, passive: true })
+    );
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) retryPlay(); });
+
+    // Keep the visible label and the accessible name in the current language
+    // and the current state (i18n.js rewrites the span on every toggle).
+    const syncLabel = () => {
+      const text = isMuted ? dict().hero.sound_watch : dict().hero.sound_return;
+      if (label) label.textContent = text;
+      btn?.setAttribute('aria-label', text);
+      btn?.setAttribute('aria-pressed', String(!isMuted));
+    };
+    document.addEventListener('bsl:langchange', () => setTimeout(syncLabel, 0));
+
+    const enterSound = () => {
+      isMuted = false;
+      if (iconOff) iconOff.style.display = 'none';
+      if (iconOn) iconOn.style.display = 'block';
+      syncLabel();
+
+      contentOverlay?.classList.add('faded-out');
+      gradientOverlay?.classList.add('faded-out');
+      videoContainer?.classList.add('video-watching');
+
+      if (video) {
+        video.loop = false;
+        video.muted = false;
+        video.controls = true;
+        video.removeAttribute('aria-hidden');
+        setSource(soundSrc);
+        video.currentTime = 0;
+        tryPlay();
+      }
+    };
+
+    const exitSound = () => {
+      isMuted = true;
+      if (iconOff) iconOff.style.display = 'block';
+      if (iconOn) iconOn.style.display = 'none';
+      syncLabel();
+
+      contentOverlay?.classList.remove('faded-out');
+      gradientOverlay?.classList.remove('faded-out');
+      videoContainer?.classList.remove('video-watching');
+
+      if (video) {
+        video.controls = false;
+        video.muted = true;
+        video.loop = true;
+        video.setAttribute('aria-hidden', 'true');
+        setSource(loopSrc);
+        startBackground();
+      }
+    };
+
+    btn?.addEventListener('click', () => {
+      if (isMuted) enterSound();
+      else exitSound();
+    });
+
+    // When the sound copy finishes, fall back to the muted loop.
+    video?.addEventListener('ended', () => {
+      if (!isMuted) exitSound();
     });
   });
 </script>
@@ -168,34 +252,31 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     height: 100%;
   }
 
-  /* Cover-fill trick: oversized iframe centered to eliminate black bars */
-  .hero-video-container iframe {
+  /* Self-hosted loop, cover-filled. The frame's story (placards, receipts,
+     end panel) lives on the right two thirds, so desktop keeps it centred
+     and mobile shifts the window onto Byron's paper card on the left. */
+  .hero-video {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 177.78vh;  /* 16:9 ratio relative to viewport height */
-    min-width: 100%;
-    height: 56.25vw;  /* 16:9 ratio relative to viewport width */
-    min-height: 100%;
-    transform: translate(-50%, -50%);
-    border: none;
-    pointer-events: none; /* Prevent clicks on bg video */
-  }
-
-  /* Watching mode: fit iframe inside viewport with controls visible */
-  .hero-video-container.video-watching iframe {
+    inset: 0;
     width: 100%;
     height: 100%;
-    min-width: unset;
-    min-height: unset;
-    pointer-events: auto; /* Allow interaction with player */
+    object-fit: cover;
+    object-position: 50% 50%;
+    background: #0a1a2e;
+    pointer-events: none; /* Background video is decoration only */
   }
 
+  /* Watching mode: the sound copy fits inside the viewport on navy */
   .hero-video-container.video-watching {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-2xl);
+    background: #0a1a2e;
+    padding: calc(var(--nav-height) + var(--space-md)) var(--space-2xl) calc(var(--space-2xl) + 48px);
+  }
+
+  .hero-video-container.video-watching .hero-video {
+    position: relative;
+    object-fit: contain;
+    object-position: 50% 50%;
+    pointer-events: auto; /* Controls are live */
   }
 
   /* ── Gradient Overlay ── */
@@ -368,9 +449,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   /* ── Urgency stamp ── */
   .hero-urgency {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 6px;
+    display: inline-block;
+    line-height: 1.3;
     margin-top: var(--space-sm);
     padding: 5px 14px;
     font-family: var(--font-display);
@@ -385,8 +465,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     backdrop-filter: blur(4px);
   }
 
+  /* Spans flow inline (the markup's spaces separate them) so the number
+     shares the label's baseline; each span stays whole if the stamp wraps. */
+  .hero-urgency > span {
+    white-space: nowrap;
+  }
+
   .hero-urgency-day {
-    font-size: var(--text-base);
+    font-size: 1.2em;
     line-height: 1;
   }
 
@@ -595,6 +681,159 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     .hero-video-container.video-watching {
       padding: var(--space-lg);
+    }
+  }
+
+  /* Phones and portrait tablets: a 16:9 frame cover-filled into a tall box
+     shows a narrow slice of it. Aim that slice at Byron's paper card
+     (source x 96..646 of 1920) instead of the empty middle. */
+  @media (max-width: 767px), (orientation: portrait) and (max-width: 1366px) {
+    .hero-video {
+      object-position: 9% 50%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero-video-container.video-watching {
+      padding: calc(var(--nav-height) + var(--space-sm)) var(--space-sm) calc(var(--space-2xl) + 40px);
+    }
+  }
+
+  /* Landscape tablet and desktop: the column sits in the left third over
+     the paper card, and the scrim is weighted left so the placards,
+     receipts and end panel on the right two thirds read. The story starts
+     at about 37% of the frame, so the column ends before that. */
+  @media (min-width: 768px) and (orientation: landscape) {
+    /* Start the frame under the fixed nav so the top placard line is not
+       hidden behind it. */
+    /* The strip behind the translucent nav matches the nav itself */
+    .hero {
+      background: var(--cream);
+    }
+
+    .hero-video-bg {
+      top: var(--nav-height);
+      height: auto;
+      bottom: 0;
+    }
+
+    .hero-video {
+      /* Narrower than 16:9: favour the left edge so the story shifts right.
+         Wider than 16:9: trim a little from the top and more from the
+         bottom, keeping the caption band (source y 700..950) in view. */
+      object-position: 30% 30%;
+    }
+
+    .hero-video-container.video-watching {
+      padding: var(--space-md) var(--space-2xl) calc(var(--space-xl) + 56px);
+    }
+
+    .hero-gradient-overlay {
+      background:
+        linear-gradient(
+          to right,
+          rgba(10, 26, 46, 0.86) 0%,
+          rgba(10, 26, 46, 0.82) 30%,
+          rgba(10, 26, 46, 0.5) 38%,
+          rgba(10, 26, 46, 0.12) 46%,
+          rgba(10, 26, 46, 0) 55%
+        ),
+        linear-gradient(
+          to top,
+          rgba(10, 26, 46, 0.35) 0%,
+          rgba(10, 26, 46, 0) 22%
+        );
+    }
+
+    .hero-content-overlay {
+      align-items: flex-start;
+      text-align: left;
+      padding: calc(var(--nav-height) + var(--space-md)) var(--space-xl) var(--space-xl) 4.5vw;
+    }
+
+    .hero-content {
+      align-items: flex-start;
+      width: clamp(340px, 33vw, 620px);
+      max-width: 620px;
+      margin: 0;
+      padding: 0;
+      gap: calc(var(--space-md) * 1.25);
+    }
+
+    .hero-narrative {
+      font-size: clamp(1.2rem, 0.8rem + 0.95vw, 1.8rem);
+      line-height: 1.32;
+    }
+
+    .hero-narrative-secondary {
+      font-size: clamp(0.85rem, 0.72rem + 0.25vw, 1rem);
+      line-height: 1.5;
+    }
+
+    .hero-narrative,
+    .hero-narrative-secondary {
+      max-width: 100%;
+    }
+
+    /* One line in both languages at every landscape width */
+    .hero-cta {
+      margin-top: var(--space-xs, 4px);
+      white-space: nowrap;
+      font-size: clamp(0.95rem, 0.55rem + 0.8vw, 1.5rem) !important;
+      padding: var(--space-md) var(--space-xl) !important;
+    }
+
+    /* One line on one baseline: tighter tracking so it fits the column */
+    .hero-urgency {
+      margin-top: 0;
+      white-space: nowrap;
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+    }
+
+    .hero-badge {
+      letter-spacing: 0.14em;
+    }
+
+    .hero-scroll-cue {
+      left: 4.5vw;
+      translate: 0 0;
+    }
+  }
+
+  /* Thinned column: the summary and the receipt chips are cut on every
+     viewport (both are on the page below the fold). The intro paragraph
+     stays only on roomy desktop screens. */
+  .hero-summary,
+  .hero-receipts {
+    display: none;
+  }
+
+  @media (max-width: 1023px), (orientation: portrait), (max-height: 820px) {
+    .hero-narrative-secondary {
+      display: none;
+    }
+  }
+
+  /* Phones and portrait tablets: the headline goes up one step and the
+     gaps open up by a quarter now that the column is shorter. */
+  @media (max-width: 1024px) and (orientation: portrait) {
+    .hero-content {
+      gap: calc(var(--space-lg) * 1.25);
+    }
+
+    .hero-narrative {
+      font-size: var(--text-xl);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero-content {
+      gap: calc(var(--space-md) * 1.25);
+    }
+
+    .hero-narrative {
+      font-size: var(--text-lg);
     }
   }
 </style>
