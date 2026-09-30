@@ -29,7 +29,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <!-- Content Overlay -->
   <div class="hero-content-overlay" id="heroContentOverlay">
     <div class="hero-content container">
-      <span class="hero-badge animate-in anim-stamp" style="--tilt: -1deg; --reveal-delay: 0.45s" data-i18n="hero.badge">RE-ELECT BYRON SIGCHO-LOPEZ • 25TH WARD ALDERMAN</span>
+      <span class="hero-badge animate-in anim-stamp" style="--tilt: -1deg; --reveal-delay: 0.45s" data-i18n="hero.badge">RE-ELECT BYRON SIGCHO-LOPEZ • THE PEOPLE'S FIGHTER</span>
 
       <h1 class="hero-narrative animate-in" style="--reveal-delay: 0s">
         <span data-i18n="hero.narrative_lead">Your alderman since 2019. Seven years of receipts, and the work is not finished. A third term for</span>
@@ -42,6 +42,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <a href={`${base}/volunteer#signup`} class="btn btn-orange btn-massive hero-cta animate-in" style="--reveal-delay: 0.35s" data-i18n="hero.cta">
         Knock Doors With Us
+      </a>
+      <a href={`${base}/volunteer#sign-petition`} class="hero-petition-link animate-in" style="--reveal-delay: 0.4s" data-expires="2026-10-26">
+        <span data-i18n="hero.petition_link">Sign the petition</span> <span aria-hidden="true">→</span>
       </a>
 
       <p class="hero-summary animate-in" style="--reveal-delay: 0.5s" data-i18n="hero.summary">
@@ -383,6 +386,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     margin-top: var(--space-md);
     font-size: var(--text-2xl) !important;
     padding: var(--space-lg) var(--space-3xl) !important;
+  }
+
+  .hero-petition-link {
+    display: inline-block;
+    margin-top: var(--space-sm);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--cream);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  }
+
+  .hero-petition-link:hover {
+    color: var(--gold-soft);
   }
 
   .hero-summary {

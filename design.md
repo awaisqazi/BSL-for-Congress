@@ -540,7 +540,7 @@ The clipboard tilts and deepens its shadow on hover (`rotate(-1deg) translateY(-
 
 ### Footer Social Icons
 
-Four accounts in this exact order: X, Instagram, TikTok, YouTube (no Facebook, on purpose). Each is an inline SVG with `aria-label`. Hover background goes orange. See **Social Media Accounts** section for URLs.
+Five accounts in this exact order: Instagram, Facebook, TikTok, YouTube, X (Facebook returned in September 2026 because the walk card lists BSLFOR25 on Facebook and Instagram). Each is an inline SVG with `aria-label`. Hover background goes orange. See **Social Media Accounts** section for URLs.
 
 ---
 
@@ -845,12 +845,13 @@ Used in Footer (5 icons) and Links page (5 buttons), and Navbar mobile drawer (5
 
 | Platform | Handle | URL |
 |---|---|---|
-| X (Twitter) | @ByronSigcho | `https://x.com/ByronSigcho` |
 | Instagram | @bslfor25 | `https://www.instagram.com/bslfor25/` |
+| Facebook | BSLFOR25 | `https://www.facebook.com/bslfor25/` (page title "Byron Sigcho Lopez for 25th Ward Alderman", verified September 29, 2026) |
 | TikTok | @sigchofor25 | `https://www.tiktok.com/@sigchofor25` |
 | YouTube | @BSLforCongress | `https://www.youtube.com/@BSLforCongress` (the channel still carries the Congress-era name; swap the URL in all three places once it is renamed) |
+| X (Twitter) | @ByronSigcho | `https://x.com/ByronSigcho` |
 
-**Facebook is intentionally absent.** Four icons, in this order, in `Navbar.astro` (mobile drawer), `Footer.astro`, and `links.astro`; if you update a social URL, update all three sets.
+Five icons, in the order of this table (Instagram, Facebook, TikTok, YouTube, X), in `Navbar.astro` (mobile drawer), `Footer.astro`, and `links.astro`; if you update a social URL, update all three sets.
 
 ---
 

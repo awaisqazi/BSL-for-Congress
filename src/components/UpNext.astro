@@ -1,0 +1,208 @@
+---
+// "Up Next": the back of the campaign's walk card. The eight planks for the
+// next term, in the card's order, as a numbered ledger on ruled paper,
+// closed by the card's coalition line and the standing volunteer ask.
+// English fallback text lives here; en.json / es.json (upnext.*) win at runtime.
+//
+// Props:
+//   tone: 'cream' (default, home page) | 'light' (cream-light, for pages
+//         where the section above is already cream)
+//   pull: show the closing coalition line (default true). The Record page
+//         turns it off because the Unbought banner directly below carries
+//         the same line as its kicker.
+interface Props {
+  tone?: 'cream' | 'light';
+  pull?: boolean;
+}
+const { tone = 'cream', pull = true } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const planks = [
+  'Bring our money back to our community',
+  "Unite our community to push Springfield for a millionaire's tax",
+  'Universal pre-K, and fully fund Chicago Public Schools',
+  'Expand neighborhood affordable housing and infrastructure investments',
+  'Protect workers, not big corporations',
+  'End discriminatory leisure helicopter noise pollution',
+  'More violence prevention investments',
+  'Re-connect the Pink and Blue Lines, and more frequent 18th Street bus service',
+];
+---
+
+<section class:list={['upnext', 'section-padding', tone === 'light' && 'upnext-light']} id="up-next">
+  <div class="container upnext-inner">
+    <div class="upnext-intro">
+      <span class="section-label animate-in" data-i18n="upnext.label">The Next Term</span>
+      <h2 class="section-title animate-in" data-i18n="upnext.headline">Up Next</h2>
+      <p class="upnext-sub animate-in" data-i18n="upnext.intro">These are the next term's fights. We carry them to every door until February 23.</p>
+    </div>
+
+    <div class="upnext-ledger animate-in anim-pin" style="--tilt: -0.4deg">
+      <ol class="upnext-list">
+        {planks.map((text, i) => (
+          <li class="upnext-row">
+            <span class="upnext-num" aria-hidden="true">{i + 1}</span>
+            <span class="upnext-text" data-i18n={`upnext.p${i + 1}`}>{text}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    {pull && (
+      <p class="upnext-pull animate-in anim-stamp" style="--tilt: -1deg"><span class="upnext-pull-placard" data-i18n="upnext.pull">Byron builds coalition with community, not billionaires.</span></p>
+    )}
+
+    <div class="upnext-cta animate-in">
+      <a href={`${base}/volunteer#signup`} class="btn btn-orange" data-i18n="upnext.cta">Knock Doors With Us</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .upnext {
+    background: var(--cream);
+    position: relative;
+  }
+
+  .upnext-light {
+    background: var(--cream-light);
+  }
+
+  .upnext-inner {
+    max-width: 860px;
+  }
+
+  .upnext-intro {
+    text-align: center;
+  }
+
+  .upnext-sub {
+    max-width: 600px;
+    margin: var(--space-md) auto 0;
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: var(--gray-700);
+  }
+
+  /* Ledger: ruled paper, taped at the top, margin line on the left */
+  .upnext-ledger {
+    position: relative;
+    margin-top: var(--space-3xl);
+    background-color: var(--white);
+    background-image: linear-gradient(90deg, transparent 0, transparent 63px, rgba(230, 136, 28, 0.35) 63px, rgba(230, 136, 28, 0.35) 65px, transparent 65px);
+    padding: var(--space-lg) var(--space-xl) var(--space-lg) 0;
+    box-shadow: var(--shadow-md);
+  }
+
+  .upnext-ledger::before {
+    content: '';
+    position: absolute;
+    width: 96px;
+    height: 22px;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(2deg);
+    background: rgba(245, 208, 138, 0.7);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+  }
+
+  .upnext-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .upnext-row {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    align-items: center;
+    min-height: 52px;
+    column-gap: var(--space-lg);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(3, 109, 153, 0.14);
+  }
+
+  .upnext-row:first-child {
+    border-top: 1px solid rgba(3, 109, 153, 0.14);
+  }
+
+  .upnext-num {
+    justify-self: center;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--orange-dark);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .upnext-text {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--blue-deeper);
+  }
+
+  .upnext-pull {
+    margin: var(--space-2xl) auto 0;
+    text-align: center;
+    max-width: 720px;
+  }
+
+  .upnext-pull-placard {
+    display: inline;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 900;
+    line-height: 1.6;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    color: var(--cream-light);
+    background: var(--orange-dark);
+    padding: 0.14em 0.5em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .upnext-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-2xl);
+  }
+
+  @media (max-width: 768px) {
+    .upnext-ledger {
+      margin-top: var(--space-2xl);
+      padding-right: var(--space-md);
+      background-image: linear-gradient(90deg, transparent 0, transparent 43px, rgba(230, 136, 28, 0.35) 43px, rgba(230, 136, 28, 0.35) 45px, transparent 45px);
+    }
+
+    .upnext-row {
+      grid-template-columns: 44px 1fr;
+      column-gap: var(--space-md);
+      align-items: start;
+      padding: 10px 0;
+    }
+
+    .upnext-num {
+      font-size: var(--text-lg);
+      padding-top: 2px;
+    }
+
+    .upnext-text {
+      font-size: var(--text-base);
+    }
+
+    .upnext-pull-placard {
+      font-size: var(--text-lg);
+    }
+
+    .upnext-cta .btn {
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+    }
+  }
+</style>

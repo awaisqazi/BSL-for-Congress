@@ -1,97 +1,59 @@
 ---
-// Homepage platform summary: the march, compressed. Four duotone photo
-// bands with placard headlines and the summary copy on a small flyer,
-// closed by a CTA strip pasted over the storefront photo.
+// Homepage "Byron Gets Results": the nine results from the campaign's walk
+// card, in the card's order, as taped receipts on the organizing wall.
+// A dashed stamp carries the number wherever the card has one.
+// English fallback text lives here; en.json / es.json (platform.*) win at runtime.
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const img = (name) => `${base}/images/issues/${name}`;
+
+const results = [
+  { key: 'r1', stamp: '800+', title: 'Affordable homes, kept and built', desc: 'We fended off developers to create and preserve more than 800 units of affordable housing.' },
+  { key: 'r2', title: 'Families stay home', desc: 'Tenant protections and property tax relief keep families in the homes they already have.' },
+  { key: 'r3', stamp: '50%', title: 'Crime down by half', desc: 'We backed Community Violence Intervention teams on our blocks, and crime is down 50 percent since 2024.' },
+  { key: 'r4', title: 'The machine answers for it', desc: 'We took Danny Solis all the way to the Illinois Supreme Court, and we keep holding corrupt machine politics to account.' },
+  { key: 'r5', title: 'Care close to home', desc: 'We reopened a mental health clinic and opened an affordable dental clinic for our families.' },
+  { key: 'r6', title: 'Air we can check', desc: 'The largest community air quality monitoring network in the country, so polluters answer to the people.' },
+  { key: 'r7', stamp: '$7M+', title: 'Money for our own corridors', desc: 'Over $7 million invested in existing and new local businesses.' },
+  { key: 'r8', stamp: '$6.4M', title: 'Streets neighbors chose', desc: '$6.4 million in street, alley, sidewalk and streetlight improvements since 2023, chosen through participatory budgeting.' },
+  { key: 'r9', title: 'A sanctuary that holds', desc: 'We preserved Sanctuary City policies and stood up to ICE terror in our neighborhoods, every single time.' },
+];
+const tilts = ['-0.7deg', '0.5deg', '-0.4deg', '0.6deg', '-0.6deg', '0.4deg', '-0.5deg', '0.7deg', '-0.4deg'];
 ---
 
-<section class="mini-march" id="platform">
-  <div class="container mini-march-intro">
-    <span class="section-label animate-in" data-i18n="platform.label">The Record</span>
-    <h2 class="section-title animate-in" data-i18n="platform.headline">What the 25th Ward built, and what we finish next.</h2>
-  </div>
+<section class="results section-padding" id="platform">
+  <div class="container">
+    <div class="results-intro">
+      <span class="section-label results-label animate-in anim-stamp" style="--tilt: -2deg" data-i18n="platform.label">Byron Gets Results</span>
+      <h2 class="section-title animate-in" data-i18n="platform.headline">When we fight, we win.</h2>
+      <p class="results-sub animate-in" data-i18n="platform.sub">Nine receipts from the card we carry to every door in the 25th Ward.</p>
+    </div>
 
-  <div class="mini-bands">
+    <ol class="results-grid">
+      {results.map((r, i) => (
+        <li class="result-card animate-in anim-pin" style={`--tilt: ${tilts[i]}; --reveal-delay: ${(i % 3) * 0.08}s`}>
+          <div class="result-top">
+            <span class="result-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            {r.stamp && <span class="result-stamp">{r.stamp}</span>}
+          </div>
+          <h3 class="result-placard-wrap"><span class="result-placard" data-i18n={`platform.${r.key}.title`}>{r.title}</span></h3>
+          <p class="result-desc" data-i18n={`platform.${r.key}.desc`}>{r.desc}</p>
+        </li>
+      ))}
+    </ol>
 
-    <article class="mini-band">
-      <div class="mini-photo animate-in anim-left">
-        <img src={img('housing.jpg')} width="1400" height="1050" alt="Byron speaking with a living room full of neighbors at a meet and greet" loading="lazy" decoding="async" style="object-position: 50% 35%" />
-        <div class="mini-wash" aria-hidden="true"></div>
-        <span class="mini-caption"><span data-i18n="issues.housing_caption">Listening to neighbors, door to door</span></span>
-      </div>
-      <div class="container mini-inner">
-        <div class="mini-flyer animate-in anim-pin" style="--tilt: -0.6deg; --reveal-delay: 0.15s">
-          <h3 class="mini-placard-wrap"><span class="mini-placard" data-i18n="platform.housing.title">Affordable homes you can walk past</span></h3>
-          <p class="mini-desc" data-i18n="platform.housing.desc">Over 800 units of affordable housing created or preserved since 2019. Casa Yucatán tops out at 98 affordable apartments on 21st Place, rents starting at $551, finishing this fall. On the Pilsen lot the city bought for $12 million after neighbors organized and Byron blocked 500 luxury apartments, Casa Nayarit will bring 76 permanently affordable homes and a child care center, phase one of 432. He also passed protections for homeowners and seniors against predatory developers.</p>
-        </div>
-      </div>
-    </article>
-
-    <article class="mini-band">
-      <div class="mini-photo animate-in anim-right">
-        <img src={img('healthcare.jpg')} width="1400" height="1050" alt="Byron with union nurses holding a Union Nurses Build Healthy Communities sign" loading="lazy" decoding="async" style="object-position: 50% 40%" />
-        <div class="mini-wash" aria-hidden="true"></div>
-        <span class="mini-caption"><span data-i18n="issues.gender_equity_caption">With Chicago's union nurses</span></span>
-      </div>
-      <div class="container mini-inner">
-        <div class="mini-flyer animate-in anim-pin" style="--tilt: 0.5deg; --reveal-delay: 0.15s">
-          <h3 class="mini-placard-wrap"><span class="mini-placard" data-i18n="platform.safety.title">Safety built block by block</span></h3>
-          <p class="mini-desc" data-i18n="platform.safety.desc">When City Hall left violence prevention out of the budget, Byron worked with state and county partners to bring over $500,000 for public safety infrastructure to the ward and $80,000 for programming at Rudy Lozano Alternative High School. Neighbors organized 2532 to reduce gun violence block by block, and the ward office works street by street with residents on the root causes of harm.</p>
-        </div>
-      </div>
-    </article>
-
-    <article class="mini-band mini-warm">
-      <div class="mini-photo animate-in anim-left">
-        <img src={img('economic.jpg')} width="1400" height="787" alt="Byron speaking through a megaphone on a picket line with striking workers" loading="lazy" decoding="async" style="object-position: 60% 50%" />
-        <div class="mini-wash" aria-hidden="true"></div>
-        <span class="mini-caption"><span data-i18n="issues.economic_caption">On the picket line with striking workers</span></span>
-      </div>
-      <div class="container mini-inner">
-        <div class="mini-flyer animate-in anim-pin" style="--tilt: -0.5deg; --reveal-delay: 0.15s">
-          <h3 class="mini-placard-wrap"><span class="mini-placard" data-i18n="platform.schools.title">Strong schools, open libraries, air you can breathe</span></h3>
-          <p class="mini-desc" data-i18n="platform.schools.desc">Over $1 million in state infrastructure for Benito Juarez Community Academy and other 25th Ward schools, and the process started to expand the Rudy Lozano library. Byron joined the hunger strike to #StopGeneralIron, won a commitment to a cumulative burden health impact study, and stood with PERRO demanding toxics testing and dust control before any teardown at the old Fisk power station on Cermak.</p>
-        </div>
-      </div>
-    </article>
-
-    <article class="mini-band">
-      <div class="mini-photo animate-in anim-right">
-        <img src={img('democracy.jpg')} width="1400" height="1050" alt="Press conference on the Illinois Capitol steps beneath the Lincoln statue" loading="lazy" decoding="async" style="object-position: 50% 28%" />
-        <div class="mini-wash" aria-hidden="true"></div>
-        <span class="mini-caption"><span data-i18n="issues.transparency_caption">Taking the fight to Springfield</span></span>
-      </div>
-      <div class="container mini-inner">
-        <div class="mini-flyer animate-in anim-pin" style="--tilt: 0.6deg; --reveal-delay: 0.15s">
-          <h3 class="mini-placard-wrap"><span class="mini-placard" data-i18n="platform.accountability.title">Not for sale, and never was</span></h3>
-          <p class="mini-desc" data-i18n="platform.accountability.desc">Byron took disgraced former Alderman Danny Solis all the way to the Illinois Supreme Court to stop campaign cash from paying for a criminal defense lawyer. The court said the election code does not bar it and left the fix to the legislature, so that is where the fight goes next. He does not take contributions from large corporations or developers, and he has upheld that commitment every year in office.</p>
-        </div>
-      </div>
-    </article>
-
-    <!-- CTA strip pasted on the storefront photo -->
-    <article class="mini-band mini-cta-band">
-      <div class="mini-photo">
-        <img src={img('storefront.jpg')} width="1400" height="1050" alt="Families gathered at a storefront campaign event" loading="lazy" decoding="async" style="object-position: 50% 45%" />
-        <div class="mini-wash" aria-hidden="true"></div>
-      </div>
-      <div class="container mini-cta-inner">
-        <a href={`${base}/platform`} class="btn btn-orange btn-massive animate-in anim-stamp" style="--tilt: -1deg" data-i18n="platform.cta">Read the Full Record</a>
-      </div>
-    </article>
-
+    <div class="results-cta">
+      <a href={`${base}/platform`} class="btn btn-orange btn-massive animate-in anim-stamp" style="--tilt: -1deg" data-i18n="platform.cta">Read the Full Record</a>
+    </div>
   </div>
 </section>
 
 <style>
-  .mini-march {
+  .results {
     background: var(--cream-light);
     position: relative;
     overflow-x: clip;
   }
 
-  .mini-march::before {
+  .results::before {
     content: '';
     position: absolute;
     top: 0;
@@ -99,252 +61,182 @@ const img = (name) => `${base}/images/issues/${name}`;
     right: 0;
     height: 4px;
     background: linear-gradient(90deg, var(--blue), var(--orange), var(--blue));
-    z-index: 4;
   }
 
-  .mini-march-intro {
+  .results-intro {
     text-align: center;
-    padding-top: var(--space-4xl);
-    padding-bottom: var(--space-3xl);
+    max-width: 720px;
+    margin: 0 auto;
   }
 
-  .mini-band {
-    position: relative;
-    min-height: clamp(300px, 42vh, 440px);
-    display: flex;
-    align-items: center;
-  }
-
-  .mini-band::before {
-    content: '';
-    position: absolute;
-    top: -1px;
-    left: 0;
-    right: 0;
-    height: 12px;
-    background: var(--cream-light);
-    clip-path: polygon(0 0, 100% 0, 100% 30%, 96% 90%, 91% 25%, 86% 75%, 81% 35%, 76% 95%, 70% 30%, 64% 70%, 58% 20%, 52% 85%, 46% 40%, 40% 90%, 34% 25%, 28% 70%, 22% 35%, 16% 95%, 10% 30%, 5% 75%, 0 40%);
-    z-index: 3;
-  }
-
-  .mini-photo {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    background: var(--cream-light);
-  }
-
-  .mini-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: grayscale(1) contrast(1.18) brightness(1.04);
+  .results-label {
+    display: inline-block;
+    font-weight: 900;
+    border: 3px solid var(--orange);
+    border-radius: 3px;
+    padding: 4px 14px;
     mix-blend-mode: multiply;
-    transition: filter 0.45s var(--ease-default);
   }
 
-  .mini-photo::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at center, transparent 52%, rgba(10, 20, 26, 0.42) 100%);
-    pointer-events: none;
+  .results-intro .section-title {
+    margin-top: var(--space-md);
   }
 
-  .mini-wash {
-    position: absolute;
-    inset: 0;
-    background: var(--blue-deeper);
-    mix-blend-mode: screen;
-    transition: opacity 0.45s var(--ease-default);
-    pointer-events: none;
+  .results-sub {
+    margin: var(--space-md) auto 0;
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: var(--gray-700);
   }
 
-  .mini-wash::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.5) 1px, transparent 1.4px);
-    background-size: 4px 4px;
-    mix-blend-mode: overlay;
-    opacity: 0.25;
-  }
-
-  .mini-warm .mini-wash {
-    background: var(--orange-dark);
-  }
-
-  .mini-band:hover .mini-photo img,
-  .mini-band:focus-within .mini-photo img {
-    filter: none;
-    mix-blend-mode: normal;
-  }
-
-  .mini-band:hover .mini-wash,
-  .mini-band:focus-within .mini-wash {
-    opacity: 0.12;
-  }
-
-  .mini-caption {
-    position: absolute;
-    bottom: var(--space-lg);
-    right: var(--space-xl);
-    background: rgba(245, 208, 138, 0.78);
-    padding: 3px 12px;
-    rotate: -2deg;
-    font-family: var(--font-display);
-    font-size: var(--text-xs);
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--blue-deeper);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
-    z-index: 2;
-  }
-
-  .mini-band:nth-child(even) .mini-caption {
-    right: auto;
-    left: var(--space-xl);
-    rotate: 2deg;
-  }
-
-  .mini-inner {
-    position: relative;
-    z-index: 2;
-    width: 100%;
+  .results-grid {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-3xl) 0 0;
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: var(--space-lg);
-    align-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2xl) var(--space-xl);
+    align-items: stretch;
   }
 
-  .mini-flyer {
-    grid-column: 1 / 7;
+  /* Receipt: paper, tape, slightly crooked */
+  .result-card {
     position: relative;
     overflow: visible;
-    background: var(--cream-light);
-    padding: var(--space-lg) var(--space-xl) var(--space-xl);
-    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    background: var(--white);
+    padding: var(--space-xl) var(--space-xl) var(--space-lg);
+    box-shadow: var(--shadow-md);
     rotate: var(--tilt, 0deg);
-    margin-block: var(--space-3xl);
+    transition: rotate var(--duration-normal) var(--ease-default), translate var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
   }
 
-  .mini-band:nth-child(even) .mini-flyer {
-    grid-column: 7 / 13;
-  }
-
-  .mini-flyer::before {
+  .result-card::before {
     content: '';
     position: absolute;
-    width: 72px;
-    height: 22px;
-    top: -10px;
+    width: 64px;
+    height: 20px;
+    top: -9px;
     left: 50%;
     transform: translateX(-50%) rotate(-3deg);
-    background: rgba(245, 208, 138, 0.65);
+    background: rgba(245, 208, 138, 0.7);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
     pointer-events: none;
   }
 
-  .mini-placard-wrap {
-    margin: calc(-1 * var(--space-2xl)) 0 var(--space-md);
-    rotate: var(--tilt, 0deg);
+  .result-card:nth-child(even)::before {
+    transform: translateX(-50%) rotate(2.5deg);
   }
 
-  .mini-placard {
+  .result-card:hover {
+    rotate: 0deg;
+    translate: 0 -4px;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .result-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+    min-height: 2.6rem;
+  }
+
+  .result-num {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    color: var(--orange-dark);
+  }
+
+  /* Dashed stamp for the card's number */
+  .result-stamp {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    color: var(--blue-deeper);
+    border: 3px dashed rgba(3, 109, 153, 0.55);
+    border-radius: 4px;
+    padding: 6px 12px 5px;
+    rotate: 2deg;
+    font-variant-numeric: tabular-nums;
+    mix-blend-mode: multiply;
+  }
+
+  .result-card:nth-child(even) .result-stamp {
+    rotate: -2deg;
+    color: var(--orange-dark);
+    border-color: rgba(230, 136, 28, 0.6);
+  }
+
+  .result-placard-wrap {
+    margin: 0 0 var(--space-md);
+    rotate: -0.8deg;
+  }
+
+  .result-placard {
     display: inline;
     font-family: var(--font-display);
-    font-size: var(--text-xl);
+    font-size: var(--text-base);
     font-weight: 900;
-    line-height: 1.5;
+    line-height: 1.6;
     text-transform: uppercase;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
     color: var(--cream-light);
     background: var(--blue-deeper);
-    padding: 0.12em 0.45em;
+    padding: 0.14em 0.5em;
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
   }
 
-  .mini-warm .mini-placard {
+  .result-card:nth-child(even) .result-placard {
     background: var(--orange-dark);
   }
 
-  .mini-desc {
+  .result-desc {
     font-size: var(--text-sm);
     line-height: 1.7;
     color: var(--gray-700);
     margin: 0;
   }
 
-  /* CTA strip */
-  .mini-cta-band {
-    min-height: 220px;
-  }
-
-  .mini-cta-inner {
-    position: relative;
-    z-index: 2;
+  .results-cta {
     display: flex;
     justify-content: center;
+    margin-top: var(--space-3xl);
   }
 
-  @media (max-width: 1024px) and (min-width: 769px) {
-    .mini-flyer {
-      grid-column: 1 / 8;
-    }
-
-    .mini-band:nth-child(even) .mini-flyer {
-      grid-column: 6 / 13;
+  @media (max-width: 1024px) {
+    .results-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
   @media (max-width: 768px) {
-    .mini-band {
-      min-height: auto;
-      display: block;
+    .results-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+      margin-top: var(--space-2xl);
     }
 
-    .mini-photo {
-      position: relative;
-      inset: auto;
-      aspect-ratio: 4 / 3;
+    .result-card {
+      padding: var(--space-lg) var(--space-lg) var(--space-lg);
     }
 
-    .mini-photo img {
-      position: absolute;
-      inset: 0;
+    .result-card:hover {
+      rotate: var(--tilt, 0deg);
+      translate: none;
     }
 
-    .mini-inner {
-      display: block;
-    }
-
-    .mini-flyer,
-    .mini-band:nth-child(even) .mini-flyer {
-      width: calc(100% - 2 * var(--space-md));
-      margin: calc(-1 * var(--space-2xl)) auto var(--space-2xl);
-    }
-
-    .mini-caption {
-      bottom: var(--space-3xl);
-    }
-
-    .mini-cta-band {
-      min-height: 200px;
-      display: flex;
-      align-items: center;
-    }
-
-    .mini-cta-band .mini-photo {
-      position: absolute;
-      inset: 0;
-      aspect-ratio: auto;
-    }
-
-    .mini-photo.anim-left.visible,
-    .mini-photo.anim-right.visible {
-      animation-name: fadeInUp;
+    .results-cta .btn {
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
     }
   }
 </style>

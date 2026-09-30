@@ -8,7 +8,7 @@
     "donate": "Donar"
   },
   "hero": {
-    "badge": "REELIGE A BYRON SIGCHO-LOPEZ • CONCEJAL DEL DISTRITO 25",
+    "badge": "REELIGE A BYRON SIGCHO-LOPEZ • EL LUCHADOR DEL PUEBLO",
     "narrative_lead": "Tu concejal desde 2019. Siete años de resultados, y el trabajo no está terminado. Un tercer mandato para",
     "tagline": "el Distrito 25.",
     "narrative_run": "Byron Sigcho-Lopez busca un tercer mandato como concejal del Distrito 25: Pilsen, La Villita, Heart of Chicago, Marshall Square y University Village. La campaña se lanzó el 18 de agosto de 2026 en Pilsen.",
@@ -22,7 +22,8 @@
     "urgency_label2": "días restantes.",
     "urgency_label2_one": "día restante.",
     "sound_watch": "Ver con Sonido",
-    "sound_return": "Volver a la Página"
+    "sound_return": "Volver a la Página",
+    "petition_link": "Firma la petición"
   },
   "promise": {
     "label": "Promesas Cumplidas",
@@ -41,32 +42,53 @@
   },
   "bio": {
     "label": "Conoce a Byron",
-    "headline": "Byron Sigcho-Lopez es padre de trillizos y el concejal socialista independiente que cerró un capítulo de 23 años de corrupción de la maquinaria en el Distrito 25.",
-    "p1": "Byron es un inmigrante que vino a los Estados Unidos solo cuando tenía 17 años. Su vida es un testimonio de lo que ocurre cuando los extraños se convierten en vecinos y familia.",
-    "p2": "Desde 2019 ha entregado resultados para el distrito, no para los donantes. Más de 800 unidades de vivienda asequible creadas o preservadas. El terreno baldío más grande de Pilsen, en la 18 y Peoria, comprado por la ciudad después de que él bloqueara torres de lujo, con Casa Nayarit ya seleccionada para construir ahí las primeras 76 viviendas permanentemente asequibles. Más de $500,000 en fondos estatales para la prevención de la violencia. Más de $1 millón en infraestructura para Benito Juarez Community Academy. Noche del Distrito cada martes, incluso durante la pandemia.",
-    "p3": "Busca un tercer mandato porque el trabajo no está terminado. Que paguen los ricos, que se financien las escuelas y que haya alivio en los impuestos a la propiedad para las familias trabajadoras: el recargo del 3 por ciento a los millonarios que los votantes de Illinois ya aprobaron en las urnas. Pre-K de día completo y programas después de la escuela en vez de cientos de millones para un estadio. Estabilización de rentas y la Ordenanza para Proteger a los Inquilinos. Una junta escolar electa que de verdad gobierne. Un Departamento del Medio Ambiente reabierto. Vendedores ambulantes que puedan trabajar sin que un arresto por falta menor se convierta en una deportación. Una oficina del distrito que le responde a los vecinos y no a los desarrolladores.",
+    "headline": "Inmigrante, esposo, papá de trillizos en las Escuelas Públicas de Chicago, socialista democrático y tu concejal actual del Distrito 25.",
+    "p1": "Como Presidente del Comité de Vivienda y Bienes Raíces, y como legislador, ha aprobado ordenanzas que protegen a nuestras comunidades contra la gentrificación y el desplazamiento de familias que llevan generaciones aquí.",
+    "p2": "Juntos hemos ganado inversiones para la seguridad, la salud, la educación y la vivienda de nuestra comunidad. Más de 800 unidades de vivienda asequible creadas o preservadas. El terreno baldío más grande de Pilsen, en la 18 y Peoria, comprado por la ciudad después de que los vecinos frenaran las torres de lujo, con Casa Nayarit ya seleccionada para construir ahí las primeras 76 viviendas permanentemente asequibles. Una clínica de salud mental reabierta y una clínica dental asequible. Más de $500,000 en fondos estatales para la prevención de la violencia. Más de $1 millón en infraestructura para Benito Juarez Community Academy. Noche del Distrito cada martes, incluso durante la pandemia.",
+    "p3": "Busca un tercer mandato porque el trabajo no está terminado. Que paguen los ricos, que se financien las escuelas y que haya alivio en los impuestos a la propiedad para las familias trabajadoras: el recargo del 3 por ciento a los millonarios que los votantes de Illinois ya aprobaron en las urnas. Pre-K de día completo y programas después de la escuela en vez de cientos de millones para un estadio. Estabilización de rentas y la Ordenanza para Proteger a los Inquilinos. Una junta escolar electa que de verdad gobierne. Un Departamento del Medio Ambiente reabierto. Vendedores ambulantes que puedan trabajar sin que un arresto por falta menor se convierta en una deportación. Una oficina del distrito que le responde a los vecinos y no a los desarrolladores. Los intereses poderosos nunca van a impedir que Byron esté contigo y con nuestra comunidad.",
     "p4": "Byron obtuvo su Licenciatura en Matemáticas y Administración de Empresas en Cumberland University y su Maestría en Economía en la Universidad de Illinois en Chicago. Vive en Pilsen con su esposa, Loreen, sus trillizos, un perro y dos gatos.",
     "quote_card": "\"Nunca ha sido sobre mí. Siempre ha sido sobre nosotros. Nosotros, el pueblo.\"",
     "cta": "Lee la Historia Completa de Byron"
   },
   "platform": {
-    "label": "El Historial",
-    "headline": "Lo que construyó el Distrito 25, y lo que falta por terminar.",
-    "housing": {
-      "title": "Viviendas asequibles que puedes ver al pasar",
-      "desc": "Más de 800 unidades de vivienda asequible creadas o preservadas desde 2019. Casa Yucatán llega a sus 98 apartamentos asequibles en la 21st Place, con rentas desde $551, y se termina este otoño. En el terreno de Pilsen que la ciudad compró por $12 millones después de que los vecinos se organizaran y Byron bloqueara 500 apartamentos de lujo, Casa Nayarit traerá 76 viviendas permanentemente asequibles y un centro de cuidado infantil, la primera fase de 432. También aprobó protecciones para propietarios y personas mayores frente a desarrolladores depredadores."
+    "label": "Byron da resultados",
+    "headline": "Cuando luchamos, ganamos.",
+    "sub": "Nueve pruebas de la tarjeta que llevamos a cada puerta del Distrito 25.",
+    "r1": {
+      "title": "Vivienda asequible, defendida y construida",
+      "desc": "Les plantamos cara a los desarrolladores para crear y preservar más de 800 unidades de vivienda asequible."
     },
-    "safety": {
-      "title": "Seguridad construida cuadra por cuadra",
-      "desc": "Cuando el Ayuntamiento dejó la prevención de la violencia fuera del presupuesto, Byron trabajó con socios estatales y del condado para traer más de $500,000 en infraestructura de seguridad pública al distrito y $80,000 para programación en la preparatoria alternativa Rudy Lozano. Los vecinos organizaron 2532 para reducir la violencia armada cuadra por cuadra, y la oficina del distrito trabaja calle por calle con los residentes sobre las causas de fondo del daño."
+    "r2": {
+      "title": "Las familias se quedan",
+      "desc": "Protecciones para inquilinos y alivio en los impuestos a la propiedad para que las familias se queden en su casa."
     },
-    "schools": {
-      "title": "Escuelas fuertes, bibliotecas abiertas, aire que se puede respirar",
-      "desc": "Más de $1 millón en infraestructura estatal para Benito Juarez Community Academy y otras escuelas del Distrito 25, y el proceso iniciado para ampliar la biblioteca Rudy Lozano. Byron se unió a la huelga de hambre para #StopGeneralIron, ganó el compromiso de un estudio de impacto acumulativo en la salud, y se paró junto a PERRO exigiendo pruebas de tóxicos y control de polvo antes de cualquier demolición en la vieja planta Fisk sobre Cermak."
+    "r3": {
+      "title": "El crimen, a la mitad",
+      "desc": "Respaldamos a los equipos de intervención comunitaria contra la violencia en nuestras cuadras, y el crimen ha bajado 50 por ciento desde 2024."
     },
-    "accountability": {
-      "title": "No está en venta, y nunca lo estuvo",
-      "desc": "Byron llevó al desprestigiado ex concejal Danny Solis hasta la Corte Suprema de Illinois para impedir que el dinero de campaña pagara a un abogado de defensa penal. La corte dijo que el código electoral no lo prohíbe y dejó la solución en manos de la legislatura, así que ahí sigue la lucha. No acepta contribuciones de grandes corporaciones ni de desarrolladores, y ha mantenido ese compromiso cada año en el cargo."
+    "r4": {
+      "title": "La maquinaria rinde cuentas",
+      "desc": "Llevamos a Danny Solis hasta la Corte Suprema de Illinois, y le seguimos exigiendo cuentas a la política corrupta de la maquinaria."
+    },
+    "r5": {
+      "title": "Salud cerca de casa",
+      "desc": "Reabrimos una clínica de salud mental y abrimos una clínica dental asequible para nuestras familias."
+    },
+    "r6": {
+      "title": "Un aire que vigilamos",
+      "desc": "La red comunitaria de monitoreo de la calidad del aire más grande del país, para que los contaminadores le rindan cuentas al pueblo."
+    },
+    "r7": {
+      "title": "Dinero para nuestros corredores",
+      "desc": "Más de $7 millones invertidos en negocios locales, los de siempre y los nuevos."
+    },
+    "r8": {
+      "title": "Calles que eligieron los vecinos",
+      "desc": "$6.4 millones en mejoras de calles, callejones, banquetas y alumbrado público desde 2023, elegidas por los vecinos con el presupuesto participativo."
+    },
+    "r9": {
+      "title": "Un santuario que se sostiene",
+      "desc": "Preservamos las políticas de Ciudad Santuario y le hicimos frente al terror de ICE en nuestros barrios, cada vez que llegó."
     },
     "cta": "Lee el Historial Completo"
   },
@@ -90,7 +112,7 @@
     "disclosure": "Una copia de nuestro informe presentado ante la Junta Electoral del Estado de Illinois está (o estará) disponible en el sitio web oficial de la Junta (elections.il.gov) o para compra en la Junta Electoral del Estado, Springfield, Illinois."
   },
   "meet": {
-    "hero_badge": "SOCIALISTA DEMOCRÁTICO INDEPENDIENTE • CHICAGO DSA • DISTRITO 25",
+    "hero_badge": "SOCIALISTA DEMOCRÁTICO INDEPENDIENTE • CHICAGO DSA • EL LUCHADOR DEL PUEBLO",
     "hero_headline": "Un Organizador, No un Político.",
     "hero_sub": "De Ecuador a Tennessee a Pilsen. Byron Sigcho-Lopez llegó a este país solo a los 17 años y ha dedicado su vida a luchar junto a la clase trabajadora como maestro, investigador, organizador y socialista democrático sin disculpas.",
     "hero_thesis": "\"La justicia no es un destino. Es el camino que se recorre.\" Este es el camino que formó a Byron.",
@@ -126,16 +148,16 @@
     "elected_2026": "En 2026, Byron se postuló para el Congreso como independiente, y los abogados de la maquinaria trabajaron para mantener su nombre fuera de la boleta. Volvió a casa para postularse a un tercer mandato, para estar junto al Distrito 25 que lo formó.",
     "elected_p3": "Como funcionario electo, usó el poder de su cargo para poner el poder del pueblo en las instituciones que lo necesitaban - bajo su liderazgo, el cambio está sucediendo.",
     "achieve_housing_title": "Más de 800 Unidades Asequibles",
-    "achieve_housing_desc": "Byron ha preservado y creado más de 800 unidades de vivienda asequible en todo Chicago y como Presidente del Comité de Vivienda y Bienes Raíces, hizo de Chicago la ciudad más grande en aprobar una inversión de $135 millones a través de la Iniciativa de Vivienda Social Verde, para construir vivienda sostenible y ayudar a abordar la crisis de vivienda en Illinois.",
+    "achieve_housing_desc": "Frenamos a los desarrolladores para crear y preservar más de 800 unidades de vivienda asequible en el distrito. Como Presidente del Comité de Vivienda y Bienes Raíces, Byron hizo de Chicago la ciudad más grande en aprobar una inversión de $135 millones a través de la Iniciativa de Vivienda Social Verde, para construir vivienda sostenible frente a la crisis de vivienda.",
     "achieve_wardnight_title": "Puertas Abiertas, Cada Semana",
-    "achieve_wardnight_desc": "Cada miembro de la comunidad tiene la oportunidad de hablar directamente con su funcionario electo cada martes en la Oficina del Distrito - la rendición de cuentas es un compromiso.",
+    "achieve_wardnight_desc": "Cada miembro de la comunidad tiene la oportunidad de hablar directamente con su funcionario electo cada martes en la Oficina del Distrito: la rendición de cuentas es un compromiso.",
     "achieve_health_title": "Servicios Comunitarios",
-    "achieve_health_desc": "La Despensa de Alimentos de Pilsen ha crecido para servir más que nunca. Los perpetradores de crímenes atroces son responsabilizados con más frecuencia y la seguridad pública se ha vuelto más posible para que la comunidad organice. Se abrió una clínica dental accesible para el pueblo y una clínica de salud mental también.",
+    "achieve_health_desc": "Una clínica de salud mental reabierta y una clínica dental asequible. Apoyo a los equipos de intervención comunitaria contra la violencia, con el crimen reducido en un 50% desde 2024. La Despensa de Alimentos de Pilsen ha crecido para servir a más vecinos que nunca.",
     "achieve_fight_title": "Enfrentando a los Poderosos",
-    "achieve_fight_desc": "Los contribuyentes de impuestos sobre la propiedad saben que su funcionario electo ha votado en contra de cada aumento de impuestos sobre la propiedad propuesto, y ha trabajado para luchar por un recargo estatal a los millonarios e impuestos a la riqueza de los multimillonarios. Cuando Trump envió a ICE a nuestras comunidades, Byron los enfrentó de frente con todo el peso de su cargo y su comunidad asegurando que Bovino y otros matones fueran responsabilizados en la máxima medida posible en los tribunales.",
-    "elected_call": "Byron ha cambiado lo que era posible en el servicio público a nivel municipal y no se va a detener. Lo necesitamos de vuelta en el Ayuntamiento por el Distrito 25.",
+    "achieve_fight_desc": "Los contribuyentes saben que su concejal ha votado en contra de cada aumento propuesto de los impuestos a la propiedad y ha luchado por un recargo estatal a los millonarios e impuestos a la riqueza de los multimillonarios. Cuando Trump mandó a ICE a nuestras comunidades, Byron preservó las políticas de Ciudad Santuario y le hizo frente a ICE en nuestros barrios, con todo el peso de su cargo y de su comunidad detrás.",
+    "elected_call": "Los intereses poderosos nunca van a impedir que Byron esté contigo y con nuestra comunidad.",
     "family_headline": "Arraigado en Pilsen",
-    "family_desc": "Byron, y su esposa Loreen, viven en Pilsen con sus pequeños trillizos (que asisten a escuela pública), y su perro, Buster, y sus dos gatos Dos y 三歲.",
+    "family_desc": "Byron y su esposa Loreen viven en Pilsen con sus trillizos, que asisten a las Escuelas Públicas de Chicago, su perro, Buster, y sus dos gatos.",
     "caption_ecuador": "Byron con su familia en Quito, Ecuador",
     "caption_cumberland": "Recibiendo el Premio del Presidente en Cumberland University",
     "caption_schools": "Luchando por la inversión en nuestras escuelas del barrio",
@@ -151,7 +173,7 @@
     "kicker": "\"Boogie vive. Escuché el llamado de mi gente.\""
   },
   "issues": {
-    "hero_badge": "EL HISTORIAL • DISTRITO 25",
+    "hero_badge": "EL HISTORIAL • EL LUCHADOR DEL PUEBLO",
     "hero_headline": "No Son Promesas. Son Hechos. Siete Años Entregando para el Distrito 25.",
     "hero_sub": "En 2019 los vecinos del Distrito 25 terminaron con una maquinaria de 23 años y eligieron a un maestro y organizador que nunca le ha aceptado ni un centavo. Esto es lo que construimos juntos, y lo que terminamos después.",
     "another_world": "Otro mundo no solo es posible. Es necesario.",
@@ -160,12 +182,12 @@
     "grid_headline": "Lo Que Construimos Juntos",
     "public_safety_caption": "Vecinos, cuadra por cuadra",
     "public_safety_title": "Seguridad pública, construida cuadra por cuadra",
-    "public_safety_desc": "Cuando el Ayuntamiento dejó la prevención de violencia fuera del presupuesto, Byron encontró otro camino. Trajo más de $500,000 en fondos estatales para infraestructura de seguridad pública al distrito, más $80,000 para programas en la escuela alternativa Rudy Lozano.",
+    "public_safety_desc": "Cuando el Ayuntamiento dejó la prevención de violencia fuera del presupuesto, Byron encontró otro camino. Trajo más de $500,000 en fondos estatales para infraestructura de seguridad pública al distrito, más $80,000 para programas en la escuela alternativa Rudy Lozano. Juntos respaldamos a los equipos de intervención comunitaria contra la violencia que trabajan en nuestras cuadras, y el crimen ha bajado 50 por ciento desde 2024.",
     "public_safety_desc2": "De sus reuniones regulares de seguridad comunitaria nació 2532, una organización liderada por residentes que aplica estrategias cuadra por cuadra para reducir la violencia armada y atacar sus causas de raíz en todo el Distrito 25.",
     "public_safety_desc3": "Ha exigido responsabilidad al Departamento de Policía de Chicago por sus bajas tasas de resolución de casos, ha trabajado con víctimas de violencia y sus familias para conseguir respuestas, y ha respaldado a residentes y dueños de negocios que alzan la voz por su propia cuadra.",
     "housing_caption": "Escuchando a los vecinos, puerta por puerta",
     "housing_title": "800 unidades entregadas. Dos más en camino.",
-    "housing_desc": "Más de 800 viviendas asequibles creadas o preservadas en el distrito tan solo en el primer mandato de Byron, muchas de ellas para familias. En la 18 y Peoria, un desarrollador quería 500 apartamentos de lujo en 6.3 acres. La comunidad dijo ya basta. Los vecinos se organizaron, dieron la pelea y exigieron la expropiación. Byron bloqueó el plan de lujo, y la ciudad compró los terrenos por $12 millones. En abril de 2026, la ciudad seleccionó a The Resurrection Project para construir Casa Nayarit en el 900 W. 18th St.: 76 viviendas permanentemente asequibles más un centro de cuidado infantil, la primera fase de 432 unidades. La Junta Asesora de Zonificación, liderada por residentes, revisó el proyecto antes de que avanzara.",
+    "housing_desc": "Más de 800 viviendas asequibles creadas o preservadas en el distrito tan solo en el primer mandato de Byron, muchas de ellas para familias. Protecciones para inquilinos y alivio en los impuestos a la propiedad mantienen a las familias en las casas donde ya viven. En la 18 y Peoria, un desarrollador quería 500 apartamentos de lujo en 6.3 acres. La comunidad dijo ya basta. Los vecinos se organizaron, dieron la pelea y exigieron la expropiación. Byron bloqueó el plan de lujo, y la ciudad compró los terrenos por $12 millones. En abril de 2026, la ciudad seleccionó a The Resurrection Project para construir Casa Nayarit en el 900 W. 18th St.: 76 viviendas permanentemente asequibles más un centro de cuidado infantil, la primera fase de 432 unidades. La Junta Asesora de Zonificación, liderada por residentes, revisó el proyecto antes de que avanzara.",
     "housing_desc2": "A pocas cuadras de ahí, Casa Yucatán, 98 apartamentos asequibles en 1609 W. 21st Place con rentas desde $551, alcanzó su piso final en marzo de 2026 y se espera que termine este otoño. Byron también copresidió el grupo de trabajo de la Ordenanza de Requisitos de Vivienda Asequible del alcalde, ayudó a duplicar el mínimo del ARO del 10% al 20%, y aprobó legislación que protege a propietarios de vivienda, personas mayores y residentes de largo plazo contra el acoso de desarrolladores depredadores. Ahora llevó la Ordenanza para Proteger a los Inquilinos al comité de vivienda, para acabar con los cargos abusivos y con el cobro del primer mes, el último y hasta un tercer mes de renta solo para mudarse.",
     "housing_desc3": "La reevaluación de 2022 les quitó el 46 por ciento a los dueños de casa de Pilsen de la noche a la mañana, y la próxima reevaluación en toda la ciudad llega en 2027. Byron ha votado en contra de cada aumento de impuestos a la propiedad propuesto, y su oficina de distrito ayuda a los vecinos a inscribirse en las exenciones que ya les corresponden. Su compromiso es el recargo del 3 por ciento a los millonarios que los votantes de Illinois ya aprobaron en las urnas en noviembre de 2024: no más aumentos en los impuestos a la propiedad, no más quitarles fondos a nuestras propias escuelas.",
     "schools_caption": "Con la próxima generación",
@@ -175,22 +197,22 @@
     "environment_caption": "Alzando la voz por la justicia ambiental",
     "environment_title": "Fisk no es Crawford",
     "environment_desc": "Byron y PERRO, la Organización Pilsen por los Derechos y la Reforma Ambiental, exigen pruebas de toxicidad, remediación y un verdadero plan de control de polvo antes de que Midwest Generation derribe la centenaria planta de energía Fisk en 1111 W. Cermak Rd. En octubre de 2025 amenazó con bloquear la demolición por completo. Cada vecino en Pilsen y La Villita recuerda la implosión de Hilco en 2020 en la vieja planta Crawford, y él se está asegurando de que no vuelva a pasar.",
-    "environment_desc2": "Nos dijeron que teníamos que aceptar ser el basurero de la industria. La comunidad dio la pelea, desde la huelga de hambre, con Byron entre los huelguistas, que ayudó a mantener la contaminación de General Iron fuera de una comunidad trabajadora, hasta lo que él llama el sistema de monitoreo del aire más grande del país, para que los contaminadores le rindan cuentas al pueblo. Byron ganó el compromiso de un estudio de impacto de carga acumulativa en la salud, impulsó criterios de justicia ambiental en cada contrato de adquisiciones de la ciudad después de exigir cuentas a contaminadores como MAT Asphalt en otras partes de Chicago, y hoy lleva esa misma lucha al corredor industrial de Pilsen, donde los vecinos exigen que la ciudad agregue espacios verdes y cierre a sus mayores contaminadores, incluyendo Sims Metal Management.",
+    "environment_desc2": "Nos dijeron que teníamos que aceptar ser el basurero de la industria. La comunidad dio la pelea, desde la huelga de hambre, con Byron entre los huelguistas, que ayudó a mantener la contaminación de General Iron fuera de una comunidad trabajadora, hasta la red comunitaria de monitoreo de la calidad del aire más grande del país, para que los contaminadores le rindan cuentas al pueblo. Byron ganó el compromiso de un estudio de impacto de carga acumulativa en la salud, impulsó criterios de justicia ambiental en cada contrato de adquisiciones de la ciudad después de exigir cuentas a contaminadores como MAT Asphalt en otras partes de Chicago, y hoy lleva esa misma lucha al corredor industrial de Pilsen, donde los vecinos exigen que la ciudad agregue espacios verdes y cierre a sus mayores contaminadores, incluyendo Sims Metal Management.",
     "environment_desc3": "Ahora lucha por reabrir el Departamento de Medio Ambiente de la ciudad para que las preocupaciones climáticas y de justicia ambiental sean atendidas por la ciudad, no dejadas al azar.",
     "gender_equity_caption": "Con las enfermeras sindicalizadas de Chicago",
     "gender_equity_title": "Salud y justicia reproductiva para cada vecino",
-    "gender_equity_desc": "En 2025 el estado terminó la cobertura médica para adultos indocumentados, y decenas de miles de vecinos en todo Illinois perdieron su atención. Esta comunidad no se quedó esperando. Los vecinos reabrieron una clínica pública de salud mental, y una nueva clínica ahora ofrece atención médica y dental para niños y familias.",
+    "gender_equity_desc": "En 2025 el estado terminó la cobertura médica para adultos indocumentados, y decenas de miles de vecinos en todo Illinois perdieron su atención. Esta comunidad no se quedó esperando. Los vecinos reabrieron una clínica pública de salud mental, y una nueva clínica asequible ahora ofrece atención dental y médica para niños y familias.",
     "gender_equity_desc2": "Byron presionó a la Oficina del Alcalde, junto con sus colegas, para aumentar el financiamiento de servicios sociales y de salud inclusivos para la comunidad LGBTQIA+, y apoyó legislación que convirtió a Chicago en una ciudad santuario de salud reproductiva. Se enorgullece de liderar la primera oficina del Distrito 25 con un equipo de liderazgo de mayoría femenina, incluyendo a su Jefa de Gabinete.",
     "constituent_services_caption": "Cada vecino, atendido",
     "constituent_services_title": "Cada martes. Siete años.",
     "constituent_services_desc": "Cada martes por la noche, durante siete años, incluso durante la pandemia, Byron ha organizado la Noche del Distrito para que los vecinos le lleven sus preocupaciones directamente. Durante la pandemia, él y su equipo entregaron personalmente cubrebocas, desinfectante y suministros de seguridad por todo el distrito, los vecinos de Chinatown mandaron equipo de protección y vacunas en solidaridad, y su oficina creó un fondo de emergencia de casi $100,000, recaudado por el pueblo, para residentes que no calificaban para otra ayuda, incluyendo a vecinos indocumentados.",
-    "constituent_services_desc2": "La oficina del distrito organiza el presupuesto participativo MENU para que los residentes decidan cómo se gastan los fondos de infraestructura, organiza los Sábados de Limpieza cada primavera y verano, y mantiene un Comité de Revisión de TIF abierto al público. Su equipo presiona al 311 para reparar baches y arreglar luminarias, lideró la repavimentación de Cermak Road, y cada invierno su oficina y sus voluntarios palean nieve para residentes mayores y con discapacidades.",
+    "constituent_services_desc2": "$6.4 millones en mejoras de calles, callejones, banquetas y alumbrado público desde 2023, elegidas a través del presupuesto participativo MENU para que los residentes decidan cómo se gastan los fondos de infraestructura. La oficina del distrito organiza los Sábados de Limpieza cada primavera y verano, y mantiene un Comité de Revisión de TIF abierto al público. Su equipo presiona al 311 para reparar baches y arreglar luminarias, lideró la repavimentación de Cermak Road, y cada invierno su oficina y sus voluntarios palean nieve para residentes mayores y con discapacidades.",
     "constituent_services_desc3": "¿Quién le va a negar un plato de comida a un niño? Cuando los nuevos vecinos llegaron por miles y los dejaron durmiendo en estaciones de policía, esta comunidad abrió en 48 horas un albergue para casi 400 personas, y ahí nació un bebé en lugar de nacer en una estación de policía.",
     "economic_caption": "En la línea de huelga con trabajadores",
     "economic_title": "Con los trabajadores y los pequeños negocios",
-    "economic_desc": "Byron apoyó la creación de la Cámara de Comercio de Pilsen para que los pequeños negocios tengan acceso directo y autodeterminado a recursos y representación, y trabaja para integrar las cámaras de Pilsen y La Villita para que todo el distrito se beneficie. Cuando una instalación de distribución de Amazon en el distrito falló a sus trabajadores en acceso a baños y aire acondicionado, su oficina actuó rápido para ganar cambios. Cuando los agentes federales trajeron meses de miedo a los corredores comerciales del distrito y el gobierno miró para otro lado, pusimos más de $7 millones en esos corredores. No solo nos presentamos cuando están las cámaras. Nos presentamos todos los días.",
+    "economic_desc": "Byron apoyó la creación de la Cámara de Comercio de Pilsen para que los pequeños negocios tengan acceso directo y autodeterminado a recursos y representación, y trabaja para integrar las cámaras de Pilsen y La Villita para que todo el distrito se beneficie. Cuando una instalación de distribución de Amazon en el distrito falló a sus trabajadores en acceso a baños y aire acondicionado, su oficina actuó rápido para ganar cambios. Cuando los agentes federales trajeron meses de miedo a los corredores comerciales del distrito y el gobierno miró para otro lado, invertimos más de $7 millones en negocios locales, los de siempre y los nuevos. No solo nos presentamos cuando están las cámaras. Nos presentamos todos los días.",
     "economic_desc2": "Caminó la línea de huelga con trabajadores sindicalizados y en organización por toda la ciudad, se paró junto a los pequeños negocios del Discount Mall de La Villita en su lucha por quedarse en la calle 26, ayudó a la Despensa de Alimentos de Pilsen a mudarse a un espacio más grande donde ahora alimenta a más de 1,500 vecinos al mes, y luchó para que los pequeños negocios fueran reembolsados por las cuotas de licencia que pagaron pero no pudieron usar durante los cierres de COVID.",
-    "economic_desc3": "La lucha continúa. En 2026, los vendedores ambulantes han quedado atrapados entre arrestos por faltas menores de la policía de Chicago y agentes de ICE que los esperan en sus audiencias judiciales, con vendedores deportados directamente desde el tribunal. Byron lucha por ayuda con licencias y defensa legal para que nadie en el Distrito 25 sea castigado con la deportación por vender comida en la banqueta.",
+    "economic_desc3": "Preservamos las políticas de Ciudad Santuario y le hicimos frente a ICE en nuestros barrios, y la lucha continúa. En 2026, los vendedores ambulantes han quedado atrapados entre arrestos por faltas menores de la policía de Chicago y agentes de ICE que los esperan en sus audiencias judiciales, con vendedores deportados directamente desde el tribunal. Byron lucha por ayuda con licencias y defensa legal para que nadie en el Distrito 25 sea castigado con la deportación por vender comida en la banqueta.",
     "transparency_caption": "Llevando la lucha a Springfield",
     "transparency_title": "Llevó a Solis hasta la Corte Suprema",
     "transparency_desc": "Byron llevó al desacreditado exconcejal Danny Solis hasta la Corte Suprema de Illinois por gastar $220,000 en fondos de campaña en sus propios abogados de defensa criminal. En un distrito cuyo último concejal usó un micrófono oculto para el FBI, la lucha misma es lo que importa. Byron también ha fortalecido la Oficina del Inspector General mientras exponía la implosión de Hilco, la redada ilegal contra Anjanette Young y fallas de seguridad pública en nuestras comunidades.",
@@ -198,13 +220,28 @@
     "transparency_desc3": "En 2026, cuando ese mismo poder político usó las cortes para borrar su nombre de la boleta al Congreso, Byron no dejó de luchar. Llevó las leyes de acceso a la boleta de Illinois a la corte federal, en sus palabras, para que nuestra comunidad nunca más tenga que aceptar a un candidato designado.",
     "unbought_label": "El Compromiso Socialista Democrático",
     "unbought_headline": "Representación sin Comprar.",
-    "unbought_text": "Byron rechaza por completo el dinero de PAC corporativos y las contribuciones de grandes desarrolladores inmobiliarios, un compromiso que ha mantenido desde 2015. Solo responde a la coalición de clase trabajadora del Distrito 25. Su campaña se financia con pequeñas donaciones de vecinos, maestros, miembros sindicales y familias trabajadoras. Esto es lo que significa ser verdaderamente independiente.",
+    "unbought_text": "La clase multimillonaria quiere volver a los tiempos en que manejaba como títere a nuestro concejal, respaldando a candidatos que no hacen gran cosa. Byron nunca ha sido eso. No necesita la bendición de desarrolladores ni multimillonarios para luchar con nosotros por un futuro mejor.",
     "stat_corporate": "Dinero de PAC Corporativos",
     "stat_developer": "Contribuciones de Desarrolladores",
     "stat_avg": "Donación Promedio",
     "unbought_press_quote": "\"Los multimillonarios creen que pueden comprar cada escaño. Este no.\"",
     "unbought_press_attribution": "Byron, lanzamiento de la reelección, 18 de agosto de 2026",
-    "unbought_kicker": "\"Se necesita gente, y el pueblo vence al dinero.\""
+    "unbought_kicker": "Byron construye coalición con la comunidad, no con los multimillonarios."
+  },
+  "upnext": {
+    "label": "El Próximo Mandato",
+    "headline": "Lo que sigue",
+    "intro": "Estas son las luchas del próximo mandato. Las llevamos de puerta en puerta hasta el 23 de febrero.",
+    "p1": "Que nuestro dinero regrese a nuestra comunidad",
+    "p2": "Unir a nuestra comunidad para exigirle a Springfield un impuesto a los millonarios",
+    "p3": "Pre-kínder universal y fondos completos para las Escuelas Públicas de Chicago",
+    "p4": "Más vivienda asequible e inversión en infraestructura para nuestros barrios",
+    "p5": "Proteger a los trabajadores, no a las grandes corporaciones",
+    "p6": "Acabar con el ruido de helicópteros de paseo, una contaminación que discrimina a nuestros barrios",
+    "p7": "Más inversión en prevención de la violencia",
+    "p8": "Volver a conectar la Línea Rosa y la Línea Azul, y que el camión de la 18 pase más seguido",
+    "pull": "Byron construye coalición con la comunidad, no con los multimillonarios.",
+    "cta": "Toca Puertas con Nosotros"
   },
   "machine": {
     "hero_badge": "EL DISTRITO 25",
@@ -304,7 +341,7 @@
     "label_phone": "Teléfono Celular *",
     "label_zip": "Código Postal *",
     "help_legend": "¿Cómo te gustaría ayudar?",
-    "check_petition": "Correr la Voz (Comparte la Campaña en Línea y con Vecinos)",
+    "check_petition": "Firmar o Recolectar Firmas para la Petición (hasta el 26 de octubre)",
     "check_canvass": "Tocar Puertas",
     "check_phone": "Llamadas/Mensajes de Texto",
     "check_host": "Organizar un Encuentro",
@@ -330,7 +367,13 @@
     "cta_headline": "¿No Puedes Ser Voluntario Hoy? Financia la Campaña.",
     "cta_text": "Esta campaña no recibe ni un dólar de desarrolladores ni de PAC corporativos. Cada dólar que das financia el tocar puertas, los materiales de campaña y la movilización del voto para el 23 de febrero de 2027, todo dirigido por personas trabajadoras como tú.",
     "cta_goal": "Únete a los donantes de base que mantienen este movimiento en plena marcha.",
-    "cta_donate": "Contribuye $27"
+    "cta_donate": "Contribuye $27",
+    "petition_label": "Firma la Petición",
+    "petition_headline": "Pongamos a Byron en la Boleta del 23 de Febrero",
+    "petition_what": "Esta es la petición de nominación que pone el nombre de Byron en la boleta del 23 de febrero de 2027. Recogemos firmas hasta el cierre del periodo de registro de candidaturas, del 19 al 26 de octubre de 2026.",
+    "petition_who": "Si estás registrado para votar en el Distrito 25, puedes firmar una vez. Una firma por vecino, y cada una cuenta.",
+    "petition_where": "Fírmala en la Noche del Distrito cualquier martes, en un recorrido de los domingos, o marca la casilla de la petición en el formulario y la campaña te la lleva.",
+    "petition_cta": "Tráiganme la Petición"
   },
   "petition_modal": {
     "badge": "LA CAMPAÑA DEL DISTRITO",
@@ -452,7 +495,7 @@
     "robert_quote": "Que alguien que no te conoce de nada te ayude dice mucho de la persona. Confía en el corazón.",
     "robert_role": "Líder comunitario de Chinatown",
     "jesse_quote": "Él va a cuidar de ti. No te va a traicionar. Su puerta siempre está abierta.",
-    "jesse_role": "Presidenta de organización de inquilinos",
+    "jesse_role": "Preside una organización de inquilinos",
     "farah_quote": "No solo habla por hablar. Encarna la lucha de su comunidad y la promesa de lo que puede ser.",
     "farah_role": "Abogada de derechos humanos",
     "lee_quote": "El pueblo antes que el partido. Siempre será así, y él es el indicado.",
@@ -465,7 +508,8 @@
     "cta_join": "Toca Puertas con Nosotros",
     "cta_donate": "Contribuye $27",
     "days_left": "días para el Día de la Elección",
-    "day_left": "día para el Día de la Elección"
+    "day_left": "día para el Día de la Elección",
+    "petition_link": "Firma la petición"
   },
   "ticker": {
     "p1": "Nunca sobre mí. Siempre sobre nosotros.",

@@ -8,7 +8,7 @@
     "donate": "Donate"
   },
   "hero": {
-    "badge": "RE-ELECT BYRON SIGCHO-LOPEZ • 25TH WARD ALDERMAN",
+    "badge": "RE-ELECT BYRON SIGCHO-LOPEZ • THE PEOPLE'S FIGHTER",
     "narrative_lead": "Your alderman since 2019. Seven years of receipts, and the work is not finished. A third term for",
     "tagline": "the 25th Ward.",
     "narrative_run": "Byron Sigcho-Lopez is running for a third term as Alderman of the 25th Ward: Pilsen, Little Village, Heart of Chicago, Marshall Square, and University Village. The campaign launched August 18, 2026 in Pilsen.",
@@ -22,7 +22,8 @@
     "urgency_label2": "days to go.",
     "urgency_label2_one": "day to go.",
     "sound_watch": "Watch with Sound",
-    "sound_return": "Return to Page"
+    "sound_return": "Return to Page",
+    "petition_link": "Sign the petition"
   },
   "promise": {
     "label": "Promises Kept",
@@ -41,32 +42,53 @@
   },
   "bio": {
     "label": "Meet Byron",
-    "headline": "Byron Sigcho-Lopez is a father of triplets and the independent socialist alderman who closed a 23 year chapter of machine corruption in the 25th Ward.",
-    "p1": "Byron is an immigrant who came to the United States alone when he was 17 years old. His life is a testament to what happens when strangers become neighbors and family.",
-    "p2": "Since 2019 he has delivered for the ward, not for donors. Over 800 units of affordable housing created or preserved. The largest vacant site in Pilsen, at 18th and Peoria, bought by the city after he blocked luxury towers, with Casa Nayarit now selected to build the first 76 permanently affordable homes there. Over $500,000 in state funds for violence prevention. Over $1 million in infrastructure for Benito Juarez Community Academy. Ward Night every Tuesday, including through the pandemic.",
-    "p3": "He is running for a third term because the work is not finished. Tax the rich, fund the schools, and give property tax relief to working families: the 3 percent millionaire surcharge that Illinois voters already approved at the ballot box. Full-day pre-K and after-school programs instead of hundreds of millions for a stadium. Rent stabilization and the Protect Renters Ordinance. An elected school board that governs. A reopened Department of the Environment. Street vendors who can work without a misdemeanor arrest turning into a deportation. A ward office that answers to neighbors and not to developers.",
+    "headline": "An immigrant, a husband, a dad of triplets in Chicago Public Schools, a democratic socialist, and your current 25th Ward alderman.",
+    "p1": "As Chairman of the Committee on Housing and Real Estate, and as a policymaker, he has passed ordinances that protect our communities against gentrification and the displacement of multi-generational families.",
+    "p2": "Together we have won investments in our community's safety, health, education and housing. Over 800 units of affordable housing created or preserved. The largest vacant site in Pilsen, at 18th and Peoria, bought by the city after the neighbors stopped the luxury towers, with Casa Nayarit now selected to build the first 76 permanently affordable homes there. A reopened mental health clinic and an affordable dental clinic. Over $500,000 in state funds for violence prevention. Over $1 million in infrastructure for Benito Juarez Community Academy. Ward Night every Tuesday, including through the pandemic.",
+    "p3": "He is running for a third term because the work is not finished. Tax the rich, fund the schools, and give property tax relief to working families: the 3 percent millionaire surcharge that Illinois voters already approved at the ballot box. Full-day pre-K and after-school programs instead of hundreds of millions for a stadium. Rent stabilization and the Protect Renters Ordinance. An elected school board that governs. A reopened Department of the Environment. Street vendors who can work without a misdemeanor arrest turning into a deportation. A ward office that answers to neighbors and not to developers. Powerful interests will never stop Byron from standing with you and our community.",
     "p4": "Byron earned his Bachelor's in Mathematics and Business Administration from Cumberland University and his Master's in Economics from the University of Illinois at Chicago. He lives in Pilsen with his wife, Loreen, their triplets, a dog, and two cats.",
     "quote_card": "\"It has never been about me. It has always been about we. We, the people.\"",
     "cta": "Read Byron's Full Story"
   },
   "platform": {
-    "label": "The Record",
-    "headline": "What the 25th Ward built, and what we finish next.",
-    "housing": {
-      "title": "Affordable homes you can walk past",
-      "desc": "Over 800 units of affordable housing created or preserved since 2019. Casa Yucatán tops out at 98 affordable apartments on 21st Place, rents starting at $551, finishing this fall. On the Pilsen lot the city bought for $12 million after neighbors organized and Byron blocked 500 luxury apartments, Casa Nayarit will bring 76 permanently affordable homes and a child care center, phase one of 432. He also passed protections for homeowners and seniors against predatory developers."
+    "label": "Byron Gets Results",
+    "headline": "When we fight, we win.",
+    "sub": "Nine receipts from the card we carry to every door in the 25th Ward.",
+    "r1": {
+      "title": "Affordable homes, kept and built",
+      "desc": "We fended off developers to create and preserve more than 800 units of affordable housing."
     },
-    "safety": {
-      "title": "Safety built block by block",
-      "desc": "When City Hall left violence prevention out of the budget, Byron worked with state and county partners to bring over $500,000 for public safety infrastructure to the ward and $80,000 for programming at Rudy Lozano Alternative High School. Neighbors organized 2532 to reduce gun violence block by block, and the ward office works street by street with residents on the root causes of harm."
+    "r2": {
+      "title": "Families stay home",
+      "desc": "Tenant protections and property tax relief keep families in the homes they already have."
     },
-    "schools": {
-      "title": "Strong schools, open libraries, air you can breathe",
-      "desc": "Over $1 million in state infrastructure for Benito Juarez Community Academy and other 25th Ward schools, and the process started to expand the Rudy Lozano library. Byron joined the hunger strike to #StopGeneralIron, won a commitment to a cumulative burden health impact study, and stood with PERRO demanding toxics testing and dust control before any teardown at the old Fisk power station on Cermak."
+    "r3": {
+      "title": "Crime down by half",
+      "desc": "We backed Community Violence Intervention teams on our blocks, and crime is down 50 percent since 2024."
     },
-    "accountability": {
-      "title": "Not for sale, and never was",
-      "desc": "Byron took disgraced former Alderman Danny Solis all the way to the Illinois Supreme Court to stop campaign cash from paying for a criminal defense lawyer. The court said the election code does not bar it and left the fix to the legislature, so that is where the fight goes next. He does not take contributions from large corporations or developers, and he has upheld that commitment every year in office."
+    "r4": {
+      "title": "The machine answers for it",
+      "desc": "We took Danny Solis all the way to the Illinois Supreme Court, and we keep holding corrupt machine politics to account."
+    },
+    "r5": {
+      "title": "Care close to home",
+      "desc": "We reopened a mental health clinic and opened an affordable dental clinic for our families."
+    },
+    "r6": {
+      "title": "Air we can check",
+      "desc": "The largest community air quality monitoring network in the country, so polluters answer to the people."
+    },
+    "r7": {
+      "title": "Money for our own corridors",
+      "desc": "Over $7 million invested in existing and new local businesses."
+    },
+    "r8": {
+      "title": "Streets neighbors chose",
+      "desc": "$6.4 million in street, alley, sidewalk and streetlight improvements since 2023, chosen through participatory budgeting."
+    },
+    "r9": {
+      "title": "A sanctuary that holds",
+      "desc": "We preserved Sanctuary City policies and stood up to ICE terror in our neighborhoods, every single time."
     },
     "cta": "Read the Full Record"
   },
@@ -90,7 +112,7 @@
     "disclosure": "A copy of our report filed with the Illinois State Board of Elections is (or will be) available on the Board's official website (elections.il.gov) or for purchase from the State Board of Elections, Springfield, Illinois."
   },
   "meet": {
-    "hero_badge": "INDEPENDENT DEMOCRATIC SOCIALIST • CHICAGO DSA • 25TH WARD",
+    "hero_badge": "INDEPENDENT DEMOCRATIC SOCIALIST • CHICAGO DSA • THE PEOPLE'S FIGHTER",
     "hero_headline": "An Organizer, Not a Politician.",
     "hero_sub": "From Ecuador to Tennessee to Pilsen. Byron Sigcho-Lopez came to this country alone at 17 and has spent his life fighting alongside the working class as a teacher, researcher, organizer, and unapologetic democratic socialist.",
     "hero_thesis": "\"Justice is not a destination. It is the road that is traveled.\" This is the road that made Byron.",
@@ -126,16 +148,16 @@
     "elected_2026": "In 2026, Byron ran for Congress as an independent, and the machine's lawyers worked to keep his name off the ballot. He came home to run for a third term, back to stand with the 25th Ward that raised him up.",
     "elected_p3": "As an elected official, he used the power of his office to put the people's power into the institutions that needed it - under his leadership, change is happening.",
     "achieve_housing_title": "800+ Affordable Units",
-    "achieve_housing_desc": "Byron has preserved and created over 800 units of affordable housing across Chicago and as Chairman of the Committee on Housing and Real Estate, made Chicago the largest city to pass a $135 million investment via the Green Social Housing Initiative, to build sustainable housing and help address the housing crisis in Illinois.",
+    "achieve_housing_desc": "We fended off developers to create and preserve over 800 units of affordable housing in the ward. As Chairman of the Committee on Housing and Real Estate, Byron made Chicago the largest city to pass a $135 million investment through the Green Social Housing Initiative, building sustainable homes to meet the housing crisis.",
     "achieve_wardnight_title": "Open Door, Every Week",
-    "achieve_wardnight_desc": "Every community member has the opportunity to speak directly with their elected official every Tuesday at the Ward Office - the accountability is a commitment.",
+    "achieve_wardnight_desc": "Every community member has the opportunity to speak directly with their elected official every Tuesday at the Ward Office: the accountability is a commitment.",
     "achieve_health_title": "Community Services",
-    "achieve_health_desc": "The Pilsen Food Pantry has grown to serve more than ever. Perpetrators of heinous crimes are held accountable more often and public safety has become more possible for the community to organize for. A dental clinic accessible to the people was opened and a mental health clinic as well.",
+    "achieve_health_desc": "A reopened mental health clinic and an affordable dental clinic. Support for Community Violence Intervention teams, reducing crime by 50% since 2024. The Pilsen Food Pantry has grown to serve more neighbors than ever.",
     "achieve_fight_title": "Standing Against the Powerful",
-    "achieve_fight_desc": "Property tax payers know that their elected official has voted against every single proposed property tax increase, and worked to fight for a statewide millionaire surcharge and wealth taxes on the billionaires. When Trump sent ICE to our communities, Byron faced them head on with the full weight of his office and his community ensuring that Bovino and other thugs were held accountable to the furthest extent possible in court.",
-    "elected_call": "Byron has changed what was possible in public service on the municipal level and he isn't stopping. We need him back at City Hall for the 25th Ward.",
+    "achieve_fight_desc": "Property taxpayers know their alderman has voted against every single proposed property tax increase and fought for a statewide millionaire surcharge and wealth taxes on the billionaires. When Trump sent ICE into our communities, Byron preserved Sanctuary City policies and stood up to ICE in our neighborhoods, with the full weight of his office and his community behind him.",
+    "elected_call": "Powerful interests will never stop Byron from standing with you and our community.",
     "family_headline": "Rooted in Pilsen",
-    "family_desc": "Byron, and his wife Loreen, live in Pilsen with their little triplets (who attend public school), and their dog, Buster, and their two cats Dos and 三歲.",
+    "family_desc": "Byron and his wife Loreen live in Pilsen with their triplets, who attend Chicago Public Schools, their dog, Buster, and their two cats.",
     "caption_ecuador": "Byron with his family in Quito, Ecuador",
     "caption_cumberland": "Receiving the President's Award at Cumberland University",
     "caption_schools": "Fighting for investment in our neighborhood schools",
@@ -151,7 +173,7 @@
     "kicker": "\"Boogie lives. I heard my people calling.\""
   },
   "issues": {
-    "hero_badge": "THE RECORD • 25TH WARD",
+    "hero_badge": "THE RECORD • THE PEOPLE'S FIGHTER",
     "hero_headline": "Not Promises. Receipts. Seven Years Delivering for the 25th Ward.",
     "hero_sub": "In 2019 the neighbors of the 25th Ward ended a 23-year machine and elected a teacher and organizer who has never taken a dime from it. This is what we built together, and what we finish next.",
     "another_world": "Another world is not only possible. It is necessary.",
@@ -160,12 +182,12 @@
     "grid_headline": "What We Built Together",
     "public_safety_caption": "Neighbors, block by block",
     "public_safety_title": "Public safety, built block by block",
-    "public_safety_desc": "When City Hall left violence prevention out of the budget, Byron went around it. He brought more than $500,000 in state funding for public safety infrastructure into the ward, plus $80,000 for programming at Rudy Lozano Alternative High School.",
+    "public_safety_desc": "When City Hall left violence prevention out of the budget, Byron went around it. He brought more than $500,000 in state funding for public safety infrastructure into the ward, plus $80,000 for programming at Rudy Lozano Alternative High School. Together we backed the Community Violence Intervention teams working our blocks, and crime is down 50 percent since 2024.",
     "public_safety_desc2": "Out of his regular community safety meetings, neighbors built 2532, a resident-led organization that applies block-by-block strategies to reduce gun violence and address its root causes across the 25th Ward.",
     "public_safety_desc3": "He has pushed the Chicago Police Department for accountability on low clearance rates, worked with victims of violence and their families to get answers, and backed residents and business owners raising concerns on their own blocks.",
     "housing_caption": "Listening to neighbors, door to door",
     "housing_title": "800 units delivered. Two more rising now.",
-    "housing_desc": "More than 800 affordable homes created or preserved in the ward in Byron's first term alone, many of them family-sized. At 18th and Peoria, a developer wanted 500 luxury apartments on 6.3 acres. The community said no more. Neighbors organized, fought back, and demanded eminent domain. Byron blocked the luxury plan, and the city bought the lots for $12 million. In April 2026 the city selected The Resurrection Project to build Casa Nayarit at 900 W. 18th St., 76 permanently affordable homes plus a child care center, phase one of 432 units. The resident-led Zoning Advisory Board reviewed it before it moved forward.",
+    "housing_desc": "More than 800 affordable homes created or preserved in the ward in Byron's first term alone, many of them family-sized. Tenant protections and property tax relief keep families in the homes they already have. At 18th and Peoria, a developer wanted 500 luxury apartments on 6.3 acres. The community said no more. Neighbors organized, fought back, and demanded eminent domain. Byron blocked the luxury plan, and the city bought the lots for $12 million. In April 2026 the city selected The Resurrection Project to build Casa Nayarit at 900 W. 18th St., 76 permanently affordable homes plus a child care center, phase one of 432 units. The resident-led Zoning Advisory Board reviewed it before it moved forward.",
     "housing_desc2": "A few blocks away, Casa Yucatán, 98 affordable apartments at 1609 W. 21st Place with rents starting at $551, topped out in March 2026 and is set to finish this fall. Byron also co-chaired the mayor's Affordable Requirements Ordinance task force, helped double the ARO minimum from 10% to 20%, and passed legislation protecting homeowners, seniors, and longtime residents from harassment by predatory developers. Now he has brought the Protect Renters Ordinance to the housing committee, to end junk fees and first, last, and third month's rent just to move in.",
     "housing_desc3": "The 2022 reassessment took 46 percent from Pilsen homeowners overnight, and the next citywide reassessment lands in 2027. Byron has voted against every proposed property tax increase, and his ward office helps neighbors sign up for the exemptions they are owed right now. His commitment is the 3 percent millionaire surcharge Illinois voters already said yes to in November 2024: no more raises in property taxes, no more defunding our own schools.",
     "schools_caption": "With the next generation",
@@ -175,22 +197,22 @@
     "environment_caption": "Raising his voice for environmental justice",
     "environment_title": "Fisk is not Crawford",
     "environment_desc": "Byron and PERRO, the Pilsen Environmental Rights and Reform Organization, are demanding toxics testing, remediation, and a real dust-control plan before Midwest Generation tears down the century-old Fisk power station at 1111 W. Cermak Rd. In October 2025 he threatened to block the demolition outright. Every neighbor in Pilsen and Little Village remembers the 2020 Hilco implosion at the old Crawford plant, and he is making sure it does not happen twice.",
-    "environment_desc2": "They told us we had to accept being the dumping ground for the industry. The community fought back, from the hunger strike Byron joined that helped keep General Iron's pollution out of a working-class community, to what he calls the largest air monitoring system in the country, so polluters answer to the people. He won a commitment to a cumulative burden health impact study, pushed environmental justice criteria into every city procurement contract after holding polluters like MAT Asphalt accountable elsewhere in Chicago, and is taking the same fight into the Pilsen industrial corridor, where neighbors are demanding the city add green space and shut down its biggest polluters, including Sims Metal Management.",
+    "environment_desc2": "They told us we had to accept being the dumping ground for the industry. The community fought back, from the hunger strike Byron joined that helped keep General Iron's pollution out of a working-class community, to the largest community air quality monitoring network in the country, so polluters answer to the people. He won a commitment to a cumulative burden health impact study, pushed environmental justice criteria into every city procurement contract after holding polluters like MAT Asphalt accountable elsewhere in Chicago, and is taking the same fight into the Pilsen industrial corridor, where neighbors are demanding the city add green space and shut down its biggest polluters, including Sims Metal Management.",
     "environment_desc3": "Now he is fighting to reopen the Department of the Environment so climate and environmental justice concerns are handled by the city, not left to chance.",
     "gender_equity_caption": "With Chicago's union nurses",
     "gender_equity_title": "Health care and reproductive justice for every neighbor",
-    "gender_equity_desc": "In 2025 the state ended health coverage for undocumented adults, and tens of thousands of neighbors across Illinois lost their care. This community did not wait. Neighbors reopened a public mental health clinic, and a new clinic now offers medical and dental care for children and families.",
+    "gender_equity_desc": "In 2025 the state ended health coverage for undocumented adults, and tens of thousands of neighbors across Illinois lost their care. This community did not wait. Neighbors reopened a public mental health clinic, and a new affordable clinic now offers dental and medical care for children and families.",
     "gender_equity_desc2": "Byron pushed the Mayor's Office, alongside his colleagues, to increase funding for LGBTQIA+ inclusive social and health services, and supported legislation making Chicago a reproductive health sanctuary city. He is proud to lead the first 25th Ward office with a majority-female leadership team, including his Chief of Staff.",
     "constituent_services_caption": "Every neighbor, served",
     "constituent_services_title": "Every Tuesday. Seven years.",
     "constituent_services_desc": "Every Tuesday night, for seven years, including through the pandemic, Byron has hosted Ward Night so neighbors can bring their concerns to him directly. During the pandemic, he and his team personally delivered masks, sanitizer, and safety supplies across the ward, neighbors in Chinatown sent PPE and vaccines in solidarity, and his office built an emergency fund of nearly $100,000, raised by the people, for residents who did not qualify for other assistance, including undocumented neighbors.",
-    "constituent_services_desc2": "The ward office runs MENU participatory budgeting so residents decide how infrastructure dollars get spent, organizes Clean-Up Saturdays every spring and summer, and holds a standing TIF Review Committee open to the public. His team pushes 311 to fill potholes and fix streetlights, led the repaving of Cermak Road, and every winter his office and volunteers shovel for elderly and disabled residents.",
+    "constituent_services_desc2": "$6.4 million in street, alley, sidewalk and streetlight improvements since 2023, chosen through MENU participatory budgeting so residents decide how infrastructure dollars get spent. The ward office organizes Clean-Up Saturdays every spring and summer, and holds a standing TIF Review Committee open to the public. His team pushes 311 to fill potholes and fix streetlights, led the repaving of Cermak Road, and every winter his office and volunteers shovel for elderly and disabled residents.",
     "constituent_services_desc3": "Who will deny a plate of food to a child? When new neighbors arrived by the thousands and were left sleeping in police stations, this community opened a shelter in 48 hours for almost 400 people, and a baby was born there instead of in a police station.",
     "economic_caption": "On the picket line with striking workers",
     "economic_title": "Standing with workers and small businesses",
-    "economic_desc": "Byron supported the creation of the Pilsen Chamber of Commerce so small businesses have direct, self-determined access to resources and advocacy, and he is working to integrate the Pilsen and Little Village chambers so the whole ward benefits. When an Amazon distribution facility in the ward failed workers on bathroom access and air conditioning, his office moved fast to win changes. When federal agents brought months of fear to the ward's business corridors and government looked the other way, we put more than $7 million into those corridors. We do not only show up when the cameras are there. We show up every single day.",
+    "economic_desc": "Byron supported the creation of the Pilsen Chamber of Commerce so small businesses have direct, self-determined access to resources and advocacy, and he is working to integrate the Pilsen and Little Village chambers so the whole ward benefits. When an Amazon distribution facility in the ward failed workers on bathroom access and air conditioning, his office moved fast to win changes. When federal agents brought months of fear to the ward's business corridors and government looked the other way, we invested over $7 million in existing and new local businesses. We do not only show up when the cameras are there. We show up every single day.",
     "economic_desc2": "He walked the line with unionized and organizing workers across the city, stood with the small businesses of the Little Village Discount Mall through their fight to stay on 26th Street, helped the Pilsen Food Pantry move into a larger space where it now feeds more than 1,500 neighbors a month, and fought to get small businesses reimbursed for license fees they paid but couldn't use during the COVID shutdowns.",
-    "economic_desc3": "The fight continues. In 2026, street vendors have been caught between CPD misdemeanor arrests and ICE agents waiting at their court hearings, with vendors deported straight out of the courthouse. Byron is fighting for licensing help and legal defense so no one in the 25th Ward is punished with deportation for selling food on a sidewalk.",
+    "economic_desc3": "We preserved Sanctuary City policies and stood up to ICE in our neighborhoods, and the fight continues. In 2026, street vendors have been caught between CPD misdemeanor arrests and ICE agents waiting at their court hearings, with vendors deported straight out of the courthouse. Byron is fighting for licensing help and legal defense so no one in the 25th Ward is punished with deportation for selling food on a sidewalk.",
     "transparency_caption": "Taking the fight to Springfield",
     "transparency_title": "He took Solis all the way to the Supreme Court",
     "transparency_desc": "Byron took disgraced former Alderman Danny Solis all the way to the Illinois Supreme Court over Solis spending $220,000 in campaign funds on his own criminal defense lawyers. In a ward whose last alderman wore a wire for the FBI, the fight itself is the point. Byron has also strengthened the Office of Inspector General as it exposed the Hilco implosion, the illegal raid on Anjanette Young, and public safety failures in our communities.",
@@ -198,13 +220,28 @@
     "transparency_desc3": "In 2026, when that same political establishment used the courts to strike his name from the congressional ballot, Byron didn't stop fighting. He took Illinois's ballot-access laws to federal court, in his words, so our community never again has to accept an appointed candidate.",
     "unbought_label": "The Democratic Socialist Commitment",
     "unbought_headline": "Unbought Representation.",
-    "unbought_text": "Byron completely rejects corporate PAC money and contributions from large real estate developers, a commitment he has kept since 2015. He only answers to the working-class coalition of the 25th Ward. His campaign is funded by small-dollar donations from neighbors, teachers, union members, and working families. This is what it means to be truly independent.",
+    "unbought_text": "The billionaire class wants to return to the days of holding the puppet strings of our local alderman, backing candidates who won't do much. Byron has never been that. He doesn't need the blessing of developers and billionaires to fight with us for a better future.",
     "stat_corporate": "Corporate PAC Money",
     "stat_developer": "Developer Contributions",
     "stat_avg": "Avg. Donation",
     "unbought_press_quote": "\"Billionaires think they can buy every single seat. Not this one.\"",
     "unbought_press_attribution": "Byron, re-election launch, August 18, 2026",
-    "unbought_kicker": "\"It takes people and people defeats money.\""
+    "unbought_kicker": "Byron builds coalition with community, not billionaires."
+  },
+  "upnext": {
+    "label": "The Next Term",
+    "headline": "Up Next",
+    "intro": "These are the next term's fights. We carry them to every door until February 23.",
+    "p1": "Bring our money back to our community",
+    "p2": "Unite our community to push Springfield for a millionaire's tax",
+    "p3": "Universal pre-K, and fully fund Chicago Public Schools",
+    "p4": "Expand neighborhood affordable housing and infrastructure investments",
+    "p5": "Protect workers, not big corporations",
+    "p6": "End discriminatory leisure helicopter noise pollution",
+    "p7": "More violence prevention investments",
+    "p8": "Re-connect the Pink and Blue Lines, and more frequent 18th Street bus service",
+    "pull": "Byron builds coalition with community, not billionaires.",
+    "cta": "Knock Doors With Us"
   },
   "machine": {
     "hero_badge": "THE 25TH WARD",
@@ -304,7 +341,7 @@
     "label_phone": "Mobile Phone *",
     "label_zip": "ZIP Code *",
     "help_legend": "How would you like to help?",
-    "check_petition": "Spread the Word (Share the Campaign Online & With Neighbors)",
+    "check_petition": "Sign or Collect Petition Signatures (through October 26)",
     "check_canvass": "Knock on Doors",
     "check_phone": "Phone/Text Banking",
     "check_host": "Host a Meet & Greet",
@@ -330,7 +367,13 @@
     "cta_headline": "Can't Volunteer Today? Fund the Campaign.",
     "cta_text": "This campaign takes zero dollars from developers or corporate PACs. Every dollar you give funds door-knocking, campaign materials, and getting out the vote for February 23, 2027, run entirely by working people like you.",
     "cta_goal": "Join the grassroots donors who keep this movement in full swing.",
-    "cta_donate": "Chip in $27"
+    "cta_donate": "Chip in $27",
+    "petition_label": "Sign the Petition",
+    "petition_headline": "Put Byron on the February 23 Ballot",
+    "petition_what": "This is the nominating petition that puts Byron's name on the February 23, 2027 ballot. Signatures are collected through the filing window, October 19 to 26, 2026.",
+    "petition_who": "If you are registered to vote in the 25th Ward, you can sign once. One signature per neighbor, and every one counts.",
+    "petition_where": "Sign it at Ward Night any Tuesday, on a Sunday canvass, or check the petition box on the form and the campaign will bring it to you.",
+    "petition_cta": "Bring the Petition to Me"
   },
   "petition_modal": {
     "badge": "THE WARD CAMPAIGN",
@@ -465,7 +508,8 @@
     "cta_join": "Knock Doors With Us",
     "cta_donate": "Chip in $27",
     "days_left": "days to Election Day",
-    "day_left": "day to Election Day"
+    "day_left": "day to Election Day",
+    "petition_link": "Sign the petition"
   },
   "ticker": {
     "p1": "Never about me. Always about we.",
