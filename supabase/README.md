@@ -1,7 +1,10 @@
 # byronfor25 database (Supabase)
 
-Status: designed, not live. No project exists yet, nothing on the site calls
-it yet. This folder holds the plan and the SQL.
+Status (Oct 10, 2026): project `byronfor25` (ref `rsxddnoymkebahumcfnc`,
+us-east-2) is live with both migrations applied. GitHub repository variables
+`PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_ANON_KEY` are set. The site code
+(`src/scripts/supa.js`, the two form dual-writes, the "I'm coming" card form)
+is written and tested locally; it goes live on the next deploy.
 
 ## What it is for
 

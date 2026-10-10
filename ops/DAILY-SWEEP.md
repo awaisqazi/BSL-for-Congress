@@ -309,9 +309,9 @@ All commands from the repo root. Any failure: DO NOT push, DO NOT revert, leave 
 cd "/Users/fezqazi/Documents/BSL for Congress"
 npm run build
 ```
-The build must succeed AND emit the events page and calendar files:
+The build must succeed AND emit the Show Up page (/volunteer/) and calendar files:
 ```
-test -f dist/events/index.html && ls dist/events/*.ics | wc -l   # every dated events.json entry has two .ics (en, -es)
+test -f dist/volunteer/index.html && ls dist/events/*.ics | wc -l   # two .ics per dated events.json entry (en, -es), plus all.ics and all-es.ics
 ```
 If an event or deadline was added, `ls dist/events/<id>.ics dist/events/<id>-es.ics` must both exist.
 
@@ -369,7 +369,7 @@ curl -sL https://byronfor25.com/news/ | grep -c "SLUG"
 curl -sL https://byronfor25.com/news/ | grep -c "—"     # must be 0
 ```
 Each news post also has its own page: `curl -sL https://byronfor25.com/news/SLUG/ | grep -c SLUG`. For an event, check
-`curl -sL https://byronfor25.com/events/ | grep -c "<event title or address>"` and
+`curl -sL https://byronfor25.com/volunteer/ | grep -c "<event title or address>"` and
 `curl -sI https://byronfor25.com/events/ID.ics | head -1` (expect 200). The home page shows only the next three, so do not
 expect a later event there. For a ledger row, also check
 `curl -sL https://byronfor25.com/ | grep -c "d_SLUG\|<the English row text>"`.
@@ -386,7 +386,7 @@ Corrected: <slug>: <fact fixed>               (only if any)
 Events added: <id | start | address | source url>   (one line each, or none)
 Ledger rows added: <date, text> (or none)
 Seen, not published: <short item> because <reason>   (one line each)
-Build: pass/fail | /events/ + .ics emitted | parity OK | emdash grep clean | forms frozen
+Build: pass/fail | /volunteer/ + .ics emitted | parity OK | emdash grep clean | forms frozen
 Deploy: run <id> success | live check: slug found at https://byronfor25.com/news/
 Needs a human: <e.g. RaiseMore org still says Byron for Congress; YouTube handle @BSLforCongress; dead links; blocked sources>
 ```

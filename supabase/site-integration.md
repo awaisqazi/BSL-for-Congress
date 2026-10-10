@@ -1,6 +1,7 @@
 # Site integration plan
 
-Nothing here is built yet. This describes the changes to make once the
+Built Oct 10, 2026 (see `src/scripts/supa.js`, `SignupForm.astro`,
+`PetitionModal.astro`, `EventCard.astro`). This describes the changes to make once the
 project exists and the two public values are in GitHub. Rule zero: the frozen
 Google Form posts (action URLs, `entry.*` names, checkbox `value`s) are not
 touched. Supabase is an extra copy, written alongside.
@@ -99,8 +100,8 @@ us you're coming"). Cards with an Action Network `rsvp` link keep the link.
   - Email or mobile phone (one field each; at least one required, checked
     in JS and again by the database)
   - ZIP (optional, 5 digits)
-  - "Bringing anyone?" stepper, 0 to 10, default 0
-  - nameless honeypot input
+  - "Bringing anyone?" select, "Just me" then +1 to +5 (the database allows up to 10)
+  - honeypot input named `website` (this form never posts to Google)
   - Submit: "I'm coming" / "Voy"
 - `<form data-event-id="{event.id}">` so `rsvp(form.dataset.eventId, new FormData(form))`
   knows the event. The id must match `events.json` (the database enforces the

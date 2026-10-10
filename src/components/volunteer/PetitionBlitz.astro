@@ -25,7 +25,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </a>
 
     <!-- Petition season: comes off the page the morning after filing closes
-         (data-expires is handled by the NextUp/RoadCTA scripts). -->
+         (data-expires is handled by the script at the bottom of this file). -->
     <div class="blitz-petition animate-in anim-pin" style="--tilt: -0.6deg" data-expires="2026-10-26">
       <span class="blitz-petition-label" data-i18n="volunteer.petition_label">Sign the Petition</span>
       <h3 class="blitz-petition-headline" data-i18n="volunteer.petition_headline">Put Byron on the February 23 Ballot</h3>
@@ -60,6 +60,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
   </div>
 </section>
+
+<script>
+  // Same data-expires convention as NextUp and RoadCTA, repeated here because
+  // /volunteer carries neither: the petition card goes after 23:59:59 on its date.
+  document.querySelectorAll('.petition-blitz [data-expires]').forEach((el) => {
+    const end = new Date(el.getAttribute('data-expires') + 'T23:59:59');
+    if (Date.now() > end.getTime()) el.remove();
+  });
+</script>
 
 <style>
   .petition-blitz {

@@ -119,6 +119,9 @@
           </label>
         </fieldset>
 
+        <!-- Honeypot for the campaign database copy. No name attribute, so the Google post never carries it. -->
+        <div class="hp-trap" aria-hidden="true"><input type="text" id="vol-hp" tabindex="-1" autocomplete="off" /></div>
+
         <p class="form-compliance" data-i18n="volunteer.compliance">
           By submitting, you agree to receive periodic campaign updates via SMS. Message and data rates may apply. Text STOP to unsubscribe.
         </p>
@@ -156,11 +159,16 @@
 </section>
 
 <script>
+  import { volunteer as saveVolunteer } from '../../scripts/supa.js';
+
   const form = document.getElementById('volunteer-form') as HTMLFormElement | null;
   const successMsg = document.getElementById('volunteer-success');
 
   if (form) {
     form.addEventListener('submit', function () {
+      // Parallel copy to the campaign database. Not awaited and never throws:
+      // the Google Form post above goes out exactly as before.
+      saveVolunteer(new FormData(form));
       setTimeout(function () {
         form.reset();
         // Swap the fields for the next steps (Ward Night, the canvass map,
@@ -189,6 +197,16 @@
 </script>
 
 <style>
+  .hp-trap {
+    position: absolute;
+    clip-path: inset(50%);
+    opacity: 0;
+    pointer-events: none;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
   .signup-section {
     background: var(--cream);
     scroll-margin-top: var(--nav-height); /* #signup deep links land below the fixed navbar */

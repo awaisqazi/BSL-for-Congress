@@ -1,10 +1,22 @@
 ---
-// Home: right under the hero, the next three shifts from src/data/events.json
-// as big taped flyers with one orange button each, then the two standing
-// shifts and the canvass team form. Up to six upcoming cards ship; the
-// script drops any that passed since the last deploy and shows the first three.
+// Show Up, two variants from src/data/events.json.
+// Home (default): right under the hero, the next three shifts as big taped
+// flyers with one orange button each, then the two standing shifts and the
+// canvass team form. Up to six upcoming cards ship; the script drops any that
+// passed since the last deploy and shows the first three.
+// /volunteer (full): every upcoming dated shift grouped This Week / Coming Up
+// (#this-week), the "Plan your month" calendar (#calendar, MiniCalendar),
+// the standing weekly flyers (#every-week), the official dates
+// as a ledger (#dates) and the canvass team card. No-RSVP buttons go to
+// #signup on the same page. Calendar files come from pages/events/[file].ics.js.
 import EventCard from './EventCard.astro';
-import { upcoming, recurring } from '../data/events.js';
+import MiniCalendar from './MiniCalendar.astro';
+import { upcoming, recurring, deadlines, ledgerDate, pick, icsPath, todayChicago, addDays, startDate } from '../data/events.js';
+
+interface Props {
+  full?: boolean;
+}
+const { full = false } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const candidates = upcoming().slice(0, 6);
@@ -12,8 +24,104 @@ const tilts = ['-0.6deg', '0.5deg', '-0.4deg'];
 const wardNight = recurring.find((e) => e.kind === 'wardnight');
 const sundays = recurring.find((e) => e.kind === 'canvass');
 const TEAM_FORM = 'https://forms.gle/aBc3EsoUhraW2A4Q8';
+
+// Full variant: grouped at build time, regrouped in the browser by today's date.
+const today = todayChicago();
+const weekEnd = addDays(today, 6);
+const list = full ? upcoming(today) : [];
+const thisWeek = list.filter((e) => startDate(e) <= weekEnd);
+const comingUp = list.filter((e) => startDate(e) > weekEnd);
+const fullTilts = ['-0.6deg', '0.5deg', '-0.4deg', '0.6deg'];
 ---
 
+{full ? (
+<section class="showup showup-full" id="show-up">
+  <div class="container">
+    <div class="showup-head showup-head-full">
+      <span class="section-label animate-in" data-i18n="events.label">Show Up</span>
+      <h2 class="section-title animate-in" data-i18n="events.page_headline">Find a Shift. Bring a Neighbor.</h2>
+    </div>
+
+    <div class="ev-upcoming" id="this-week">
+      <div class="ev-group" data-ev-group="week">
+        <h3 class="ev-group-title animate-in"><span data-i18n="events.this_week">This Week</span></h3>
+        <ul class="ev-grid" data-ev-list="week">
+          {thisWeek.map((e, i) => (
+            <EventCard event={e} signupHref="#signup" tilt={fullTilts[i % 4]} delay={i * 0.06} pulse={i === 0} calendar />
+          ))}
+        </ul>
+      </div>
+
+      <div class="ev-group" data-ev-group="later">
+        <h3 class="ev-group-title animate-in"><span data-i18n="events.coming_up">Coming Up</span></h3>
+        <ul class="ev-grid" data-ev-list="later">
+          {comingUp.map((e, i) => (
+            <EventCard event={e} signupHref="#signup" tilt={fullTilts[(i + 1) % 4]} delay={i * 0.06} calendar />
+          ))}
+        </ul>
+      </div>
+
+      <p class="ev-empty" data-ev-empty hidden={list.length > 0 ? true : undefined} data-i18n="events.empty">No dated shifts are posted right now. The standing shifts below keep going.</p>
+    </div>
+
+    <MiniCalendar />
+
+    <div class="ev-weekly" id="every-week">
+      <h3 class="ev-group-title animate-in"><span data-i18n="events.every_week">Every Week</span></h3>
+      <ul class="ev-weekly-grid">
+        {recurring.map((e, i) => (
+          <li class="ev-weekly-card animate-in anim-pin" style={`--tilt: ${i % 2 ? '0.5deg' : '-0.5deg'}`}>
+            <span class="ev-weekly-when"><span data-lang="en">{e.when.en}</span><span data-lang="es" hidden>{e.when.es}</span></span>
+            <h4 class="ev-weekly-title-wrap"><span class="ev-weekly-title"><span data-lang="en">{e.title.en}</span><span data-lang="es" hidden>{e.title.es}</span></span></h4>
+            <p class="ev-weekly-place"><span data-lang="en">{pick(e.location, 'en')}</span><span data-lang="es" hidden>{pick(e.location, 'es')}</span></p>
+            <p class="ev-weekly-line"><span data-lang="en">{e.line.en}</span><span data-lang="es" hidden>{e.line.es}</span></p>
+            <a class="ev-weekly-cta" href={e.link} target="_blank" rel="noopener">
+              <span><span data-lang="en">{e.action.en}</span><span data-lang="es" hidden>{e.action.es}</span></span>
+              <span class="ev-weekly-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="ev-dates-wrap" id="dates">
+      <div class="ev-ledger animate-in">
+        <span class="ev-ledger-label" data-i18n="events.dates_label">Dates That Matter</span>
+        <h3 class="ev-ledger-headline" data-i18n="events.dates_headline">The Road to February 23</h3>
+        <ul class="ev-dates">
+          {deadlines.map((e) => (
+            <li class:list={['ev-date-row', { 'ev-date-row-eday': e.kind === 'election' }]} data-past-after={e.expires}>
+              <span class="ev-date"><span data-lang="en">{ledgerDate(e, 'en')}</span><span data-lang="es" hidden>{ledgerDate(e, 'es')}</span></span>
+              <span class="ev-date-what">
+                <span class="ev-date-title"><span data-lang="en">{e.title.en}</span><span data-lang="es" hidden>{e.title.es}</span></span>
+                <span class="ev-date-line"><span data-lang="en">{e.line.en}</span><span data-lang="es" hidden>{e.line.es}</span></span>
+              </span>
+              <span class="ev-date-cal">
+                <a data-lang="en" href={`${base}${icsPath(e, 'en')}`} download><span data-i18n="events.add_calendar">Add to calendar</span></a>
+                <a data-lang="es" hidden href={`${base}${icsPath(e, 'es')}`} download><span data-i18n="events.add_calendar">Agregar al calendario</span></a>
+              </span>
+            </li>
+          ))}
+        </ul>
+        <p class="ev-ledger-source">
+          <span data-i18n="latest.receipt">The receipt:</span>
+          <a href={deadlines[0]?.source} target="_blank" rel="noopener noreferrer" data-i18n="events.dates_source">Chicago Board of Elections, 2027 election calendar</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="ev-team" id="canvass-team">
+      <div class="ev-team-card animate-in anim-pin" style="--tilt: -0.4deg">
+        <div>
+          <h3 class="ev-team-title" data-i18n="events.team_title">Can't make these dates?</h3>
+          <p class="ev-team-desc" data-i18n="events.team_desc">Join the canvass team and tell us when you can go out.</p>
+        </div>
+        <a class="btn btn-orange ev-team-btn" href={TEAM_FORM} target="_blank" rel="noopener" data-i18n="events.team_cta">Join the Canvass Team</a>
+      </div>
+    </div>
+  </div>
+</section>
+) : (
 <section class="showup section-padding" id="show-up">
   <div class="container">
     <div class="showup-head">
@@ -22,7 +130,7 @@ const TEAM_FORM = 'https://forms.gle/aBc3EsoUhraW2A4Q8';
         <h2 class="section-title animate-in" data-i18n="events.headline">The Next Doors We Knock</h2>
         <p class="showup-sub animate-in" data-i18n="events.sub">Pick a shift and bring a neighbor. Every signature on the petition is a neighbor's name.</p>
       </div>
-      <a href={`${base}/events/`} class="showup-all animate-in">
+      <a href={`${base}/volunteer/#calendar`} class="showup-all animate-in">
         <span data-i18n="events.all_link">See every date</span> <span class="showup-all-arrow" aria-hidden="true">→</span>
       </a>
     </div>
@@ -60,17 +168,55 @@ const TEAM_FORM = 'https://forms.gle/aBc3EsoUhraW2A4Q8';
     </p>
   </div>
 </section>
+)}
 
 <script>
-  import { pruneList, watchCountdowns } from '../scripts/events-client.js';
+  import { pruneList, watchCountdowns, isPast } from '../scripts/events-client.js';
 
+  // Home: drop past cards, show the first three.
   const list = document.querySelector('[data-showup-list]');
-  const left = pruneList(list, 3);
-  if (!left) {
-    list?.remove();
-    const empty = document.querySelector('[data-showup-empty]');
-    if (empty) empty.hidden = false;
+  if (list) {
+    const left = pruneList(list, 3);
+    if (!left) {
+      list.remove();
+      const empty = document.querySelector('[data-showup-empty]');
+      if (empty) empty.hidden = false;
+    }
   }
+
+  // /volunteer: regroup by today's date (the page was grouped at build time):
+  // cards in the next seven days go under This Week, later ones under Coming Up.
+  const week = document.querySelector('[data-ev-list="week"]');
+  const later = document.querySelector('[data-ev-list="later"]');
+  if (week && later) {
+    pruneList(week);
+    pruneList(later);
+    const pad = (n) => String(n).padStart(2, '0');
+    const now = new Date();
+    const end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 6);
+    const weekEnd = `${end.getFullYear()}-${pad(end.getMonth() + 1)}-${pad(end.getDate())}`;
+    const cards = [...week.children, ...later.children].sort((a, b) => (a.dataset.date < b.dataset.date ? -1 : 1));
+    cards.forEach((card) => {
+      (card.dataset.date <= weekEnd ? week : later).appendChild(card);
+    });
+    let total = 0;
+    [week, later].forEach((ul) => {
+      const n = ul.children.length;
+      total += n;
+      const group = ul.closest('[data-ev-group]');
+      if (group) group.hidden = n === 0;
+    });
+    const empty = document.querySelector('[data-ev-empty]');
+    if (empty) empty.hidden = total > 0;
+  }
+
+  document.querySelectorAll('.ev-date-row[data-past-after]').forEach((el) => {
+    if (isPast(el.getAttribute('data-past-after'))) {
+      el.classList.add('is-past');
+      el.querySelector('.ev-date-cal')?.remove();
+    }
+  });
+
   watchCountdowns();
 </script>
 
@@ -248,6 +394,398 @@ const TEAM_FORM = 'https://forms.gle/aBc3EsoUhraW2A4Q8';
 
     .showup-chip-arrow {
       margin-left: auto;
+    }
+  }
+  /* /volunteer full variant: every dated shift, weekly flyers, ledger */
+  .showup-full {
+    padding: var(--space-3xl) 0;
+    scroll-margin-top: var(--nav-height);
+  }
+
+  .showup-head-full {
+    display: block;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .ev-upcoming,
+  .ev-weekly,
+  .ev-dates-wrap,
+  .ev-team {
+    scroll-margin-top: calc(var(--nav-height) + var(--space-md));
+  }
+
+  .ev-weekly,
+  .ev-dates-wrap,
+  .ev-team {
+    margin-top: var(--space-3xl);
+  }
+
+  .ev-group + .ev-group {
+    margin-top: var(--space-3xl);
+  }
+
+  .ev-group[hidden] {
+    display: none;
+  }
+
+  .ev-group-title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--blue-deeper);
+    margin-bottom: var(--space-xl);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .ev-group-title::after {
+    content: '';
+    flex: 1;
+    border-top: 2px dashed rgba(27, 54, 93, 0.2);
+  }
+
+  .ev-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-2xl) var(--space-xl);
+    align-items: stretch;
+    padding: 0;
+  }
+
+  .ev-empty {
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--blue-deeper);
+    text-align: center;
+  }
+
+  .ev-empty[hidden] {
+    display: none;
+  }
+
+  /* Every week: two standing flyers */
+  .ev-weekly-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-xl);
+    padding: 0;
+    max-width: 900px;
+  }
+
+  .ev-weekly-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--white);
+    padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    box-shadow: var(--shadow-md);
+    rotate: var(--tilt, 0deg);
+    list-style: none;
+  }
+
+  .ev-weekly-card::before {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 19px;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    background: rgba(245, 208, 138, 0.7);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+
+  .ev-weekly-when {
+    align-self: flex-start;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--blue-dark);
+    border: 2px dashed rgba(27, 54, 93, 0.4);
+    border-radius: 3px;
+    padding: 3px 10px;
+    rotate: -1deg;
+    margin-bottom: var(--space-md);
+  }
+
+  .ev-weekly-title-wrap {
+    margin: 0 0 var(--space-sm);
+    rotate: -0.8deg;
+  }
+
+  .ev-weekly-title {
+    display: inline;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 900;
+    line-height: 1.6;
+    text-transform: uppercase;
+    color: var(--cream-light);
+    background: var(--blue-deeper);
+    padding: 0.14em 0.5em;
+  }
+
+  .ev-weekly-card:nth-child(even) .ev-weekly-title {
+    background: var(--orange-dark);
+  }
+
+  .ev-weekly-place {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 800;
+    color: var(--blue-deeper);
+    margin-bottom: var(--space-xs);
+  }
+
+  .ev-weekly-line {
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    color: var(--gray-700);
+    margin-bottom: var(--space-md);
+  }
+
+  .ev-weekly-cta {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 48px;
+    padding-top: var(--space-sm);
+    border-top: 2px dashed var(--cream-dark);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue-dark);
+  }
+
+  .ev-weekly-cta:hover {
+    color: var(--orange-dark);
+  }
+
+  .ev-weekly-arrow {
+    transition: translate var(--duration-fast) var(--ease-default);
+  }
+
+  .ev-weekly-cta:hover .ev-weekly-arrow {
+    translate: 5px 0;
+  }
+
+  /* Ledger: official dates on ruled paper */
+  .ev-ledger {
+    position: relative;
+    background: var(--cream-light);
+    padding: var(--space-2xl) var(--space-2xl) var(--space-xl);
+    box-shadow: var(--shadow-md);
+    background-image: repeating-linear-gradient(180deg, transparent, transparent 35px, rgba(27, 54, 93, 0.07) 35px, rgba(27, 54, 93, 0.07) 36px);
+  }
+
+  .ev-ledger::before {
+    content: '';
+    position: absolute;
+    width: 88px;
+    height: 22px;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(2deg);
+    background: rgba(245, 208, 138, 0.65);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+
+  .ev-ledger-label {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--orange-dark);
+  }
+
+  .ev-ledger-headline {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 900;
+    color: var(--blue-deeper);
+    margin: var(--space-xs) 0 var(--space-lg);
+  }
+
+  .ev-dates {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .ev-date-row {
+    display: grid;
+    grid-template-columns: 200px 1fr auto;
+    align-items: baseline;
+    gap: var(--space-lg);
+    padding: var(--space-sm) 0;
+    border-bottom: 1px dashed rgba(27, 54, 93, 0.15);
+    list-style: none;
+  }
+
+  .ev-date-row:last-child {
+    border-bottom: none;
+  }
+
+  .ev-date-row.is-past {
+    opacity: 0.45;
+  }
+
+  .ev-date-row.is-past .ev-date-title {
+    text-decoration: line-through;
+  }
+
+  .ev-date {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--orange-dark);
+  }
+
+  .ev-date-what {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .ev-date-title {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 800;
+    color: var(--blue-deeper);
+  }
+
+  .ev-date-line {
+    font-size: var(--text-sm);
+    line-height: 1.55;
+    color: var(--gray-700);
+  }
+
+  .ev-date-cal a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue-dark);
+    white-space: nowrap;
+  }
+
+  .ev-date-cal a:hover {
+    color: var(--orange-dark);
+  }
+
+  .ev-date-row-eday .ev-date,
+  .ev-date-row-eday .ev-date-title {
+    color: var(--blue-deeper);
+    font-weight: 900;
+  }
+
+  .ev-ledger-source {
+    margin-top: var(--space-md);
+    font-size: var(--text-xs);
+    color: var(--gray-500);
+  }
+
+  .ev-ledger-source a {
+    color: var(--blue-dark);
+    text-decoration: underline;
+  }
+
+  /* Canvass team */
+  .ev-team-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xl);
+    background: var(--blue-deeper);
+    color: var(--cream-light);
+    padding: var(--space-xl) var(--space-2xl);
+    box-shadow: var(--shadow-md);
+    rotate: var(--tilt, 0deg);
+  }
+
+  .ev-team-card::before {
+    content: '';
+    position: absolute;
+    width: 72px;
+    height: 20px;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    background: rgba(245, 208, 138, 0.75);
+  }
+
+  .ev-team-title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--cream-light);
+    margin-bottom: var(--space-xs);
+  }
+
+  .ev-team-desc {
+    font-size: var(--text-base);
+    line-height: 1.6;
+    color: var(--cream);
+  }
+
+  .ev-team-btn {
+    flex: none;
+    min-height: 52px;
+    border-radius: 999px;
+    font-size: var(--text-base);
+  }
+
+  @media (max-width: 1024px) {
+    .ev-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .showup-full {
+      padding: var(--space-2xl) 0;
+    }
+
+    .ev-grid,
+    .ev-weekly-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .ev-ledger {
+      padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    }
+
+    .ev-date-row {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    .ev-team-card {
+      flex-direction: column;
+      align-items: stretch;
+      text-align: center;
+      padding: var(--space-xl) var(--space-lg);
+    }
+
+    .ev-team-btn {
+      width: 100%;
     }
   }
 </style>

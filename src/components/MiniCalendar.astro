@@ -1,0 +1,720 @@
+---
+// "Plan your month": a small month calendar inside the /volunteer Show Up
+// block (#calendar). Data comes from src/data/events.json, inlined as JSON at
+// build time: every dated entry, plus the weekly standing shifts expanded in
+// the browser from today through Election Day, plus the April 6, 2027 runoff
+// as a date marker only. Tapping a day opens a panel under the grid with the
+// same single action as EventCard (RSVP, or the sign-up form; deadlines get
+// "Add to calendar"). The selected day goes in the URL as #cal-YYYY-MM-DD.
+// Labels, month and weekday names come from the `events.cal_*` keys.
+import { dated, recurring, pick, timeRange, actionHref, mapHref, icsPath, feedPath, startDate } from '../data/events.js';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const host = (Astro.site ? Astro.site.host : 'byronfor25.com');
+const ELECTION_DAY = '2027-02-23';
+const RUNOFF_DAY = '2027-04-06';
+const DOW = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
+const both = (fn) => ({ en: fn('en'), es: fn('es') });
+const endDate = (e) => (e.end ? startDate({ start: e.end }) : startDate(e));
+
+const data = {
+  until: ELECTION_DAY,
+  last: RUNOFF_DAY,
+  dated: dated.map((e) => {
+    const href = actionHref(e, '#signup');
+    const deadline = e.kind === 'deadline' || e.kind === 'election';
+    return {
+      d: startDate(e),
+      to: endDate(e),
+      k: e.kind,
+      t: e.title,
+      l: e.line,
+      p: both((lang) => pick(e.location, lang)),
+      a: e.address || null,
+      m: mapHref(e),
+      time: both((lang) => timeRange(e, lang)),
+      act: e.action,
+      href: deadline ? null : href,
+      ext: !deadline && /^https?:\/\//.test(href),
+      ics: deadline ? both((lang) => `${base}${icsPath(e, lang)}`) : null,
+    };
+  }),
+  weekly: recurring.map((e) => ({
+    dow: DOW[e.rule.split(':')[1]],
+    k: e.kind,
+    t: e.title,
+    l: e.line,
+    w: e.when,
+    p: both((lang) => pick(e.location, lang)),
+    act: e.action,
+    href: e.link,
+  })),
+};
+---
+
+<div class="mcal" id="calendar" data-mcal>
+  <div class="mcal-card animate-in">
+    <h3 class="mcal-placard-wrap"><span class="mcal-placard" data-i18n="events.cal_label">Plan Your Month</span></h3>
+
+    <div class="mcal-head">
+      <button type="button" class="mcal-nav" data-mcal-prev>
+        <span class="mcal-sr" data-i18n="events.cal_prev">Previous month</span>
+        <span aria-hidden="true">←</span>
+      </button>
+      <h4 class="mcal-month" data-mcal-month aria-live="polite"></h4>
+      <button type="button" class="mcal-nav" data-mcal-next>
+        <span class="mcal-sr" data-i18n="events.cal_next">Next month</span>
+        <span aria-hidden="true">→</span>
+      </button>
+    </div>
+
+    <div class="mcal-weekdays" data-mcal-weekdays aria-hidden="true"></div>
+    <div class="mcal-grid" data-mcal-grid></div>
+
+    <ul class="mcal-legend">
+      <li><span class="mcal-dot mcal-dot-shift" aria-hidden="true"></span><span data-i18n="events.cal_legend_shift">Canvass or meetup</span></li>
+      <li><span class="mcal-dot mcal-dot-ward" aria-hidden="true"></span><span data-i18n="events.cal_legend_wardnight">Ward Night</span></li>
+      <li><span class="mcal-dot mcal-dot-date" aria-hidden="true"></span><span data-i18n="events.cal_legend_date">Board deadline or election</span></li>
+    </ul>
+
+    <div class="mcal-panel" data-mcal-panel aria-live="polite"></div>
+
+    <div class="mcal-subscribe">
+      <a class="btn btn-orange mcal-sub-btn" data-lang="en" href={`webcal://${host}${feedPath('en')}`}><span data-i18n="events.cal_subscribe">Subscribe to all dates</span></a>
+      <a class="btn btn-orange mcal-sub-btn" data-lang="es" hidden href={`webcal://${host}${feedPath('es')}`}><span data-i18n="events.cal_subscribe">Suscríbete a todas las fechas</span></a>
+      <p class="mcal-sub-hint" data-i18n="events.cal_subscribe_hint">Subscribe in Google or Apple Calendar and the dates stay updated as we add them.</p>
+      <p class="mcal-sub-links">
+        <a data-lang="en" href={`https://calendar.google.com/calendar/render?cid=${encodeURIComponent(`webcal://${host}${feedPath('en')}`)}`} target="_blank" rel="noopener noreferrer"><span data-i18n="events.cal_google">Using Google Calendar? Subscribe here</span></a>
+        <a data-lang="es" hidden href={`https://calendar.google.com/calendar/render?cid=${encodeURIComponent(`webcal://${host}${feedPath('es')}`)}`} target="_blank" rel="noopener noreferrer"><span data-i18n="events.cal_google">¿Usas Google Calendar? Suscríbete aquí</span></a>
+        <a data-lang="en" href={`${base}${feedPath('en')}`} download><span data-i18n="events.cal_add_all">Add all upcoming</span></a>
+        <a data-lang="es" hidden href={`${base}${feedPath('es')}`} download><span data-i18n="events.cal_add_all">Agregar todas las próximas</span></a>
+      </p>
+    </div>
+  </div>
+  <script type="application/json" data-mcal-data set:html={JSON.stringify(data).replace(/</g, '\\u003c')}></script>
+</div>
+
+<script>
+  import en from '../i18n/en.json';
+  import es from '../i18n/es.json';
+
+  type Pair = { en: string; es: string };
+  type Item = {
+    k: string; t: Pair; l: Pair | null; p: Pair | null; a?: string | null; m?: string | null;
+    time?: Pair | null; w?: Pair | null; act: Pair | null; href: string | null; ext?: boolean; ics?: Pair | null;
+  };
+
+  const root = document.querySelector<HTMLElement>('[data-mcal]');
+  const raw = root?.querySelector('[data-mcal-data]')?.textContent;
+  if (root && raw) {
+    const data = JSON.parse(raw);
+    const grid = root.querySelector<HTMLElement>('[data-mcal-grid]')!;
+    const weekdays = root.querySelector<HTMLElement>('[data-mcal-weekdays]')!;
+    const monthEl = root.querySelector<HTMLElement>('[data-mcal-month]')!;
+    const panel = root.querySelector<HTMLElement>('[data-mcal-panel]')!;
+    const prev = root.querySelector<HTMLButtonElement>('[data-mcal-prev]')!;
+    const next = root.querySelector<HTMLButtonElement>('[data-mcal-next]')!;
+
+    const pad = (n: number) => String(n).padStart(2, '0');
+    const iso = (d: Date) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+    const parse = (s: string) => {
+      const [y, m, d] = s.split('-').map(Number);
+      return new Date(y, m - 1, d);
+    };
+    const addDays = (s: string, n: number) => {
+      const d = parse(s);
+      d.setDate(d.getDate() + n);
+      return iso(d);
+    };
+    const lang = (): 'en' | 'es' => {
+      try {
+        return localStorage.getItem('bsl-lang') === 'es' ? 'es' : 'en';
+      } catch {
+        return 'en';
+      }
+    };
+    const dict = () => (lang() === 'es' ? es : en).events as Record<string, string>;
+    const list = (key: string) => dict()[key].split(',');
+    const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+
+    const today = iso(new Date());
+    const firstMonth = parse(today.slice(0, 8) + '01');
+    const lastMonth = parse(data.last.slice(0, 8) + '01');
+
+    // Build the day index: dated entries (ranges fill every day), the weekly
+    // shifts from today through Election Day, and the runoff marker.
+    const byDay = new Map<string, Item[]>();
+    const put = (day: string, item: Item) => {
+      if (!byDay.has(day)) byDay.set(day, []);
+      byDay.get(day)!.push(item);
+    };
+    for (const e of data.dated) {
+      for (let d = e.d; d <= e.to; d = addDays(d, 1)) put(d, e);
+    }
+    for (let d = today; d <= data.until; d = addDays(d, 1)) {
+      const dow = parse(d).getDay();
+      for (const w of data.weekly) if (w.dow === dow) put(d, w);
+    }
+    put(data.last, { k: 'runoff', t: { en: '', es: '' }, l: null, p: null, act: null, href: null });
+    // Dated entries first, then standing shifts, so the specific shift leads.
+    byDay.forEach((items) => items.sort((a, b) => Number(!!a.w) - Number(!!b.w)));
+
+    const kindClass = (k: string) => (k === 'wardnight' ? 'ward' : k === 'deadline' || k === 'election' || k === 'runoff' ? 'date' : 'shift');
+
+    let view = new Date(firstMonth);
+    let selected = today;
+
+    function firstEventFrom(day: string) {
+      const keys = [...byDay.keys()].filter((k) => k >= day).sort();
+      return keys[0] || day;
+    }
+
+    function countLabel(n: number) {
+      const t = dict();
+      if (n === 0) return t.cal_none;
+      return (n === 1 ? t.cal_one : t.cal_many).replace('{n}', String(n));
+    }
+
+    function dayLabel(day: string, withWeekday = false) {
+      const d = parse(day);
+      const months = list('cal_months');
+      const m = months[d.getMonth()];
+      const w = list('cal_weekdays_long')[d.getDay()];
+      if (lang() === 'es') return `${withWeekday ? w + ' ' : ''}${d.getDate()} de ${m}`;
+      return `${withWeekday ? w + ', ' : ''}${m} ${d.getDate()}`;
+    }
+
+    function renderGrid() {
+      const L = lang();
+      const months = list('cal_months');
+      const monthName = months[view.getMonth()];
+      monthEl.textContent = L === 'es'
+        ? `${monthName.charAt(0).toUpperCase()}${monthName.slice(1)} de ${view.getFullYear()}`
+        : `${monthName} ${view.getFullYear()}`;
+      weekdays.innerHTML = list('cal_weekdays').map((w) => `<span>${esc(w)}</span>`).join('');
+      prev.disabled = view <= firstMonth;
+      next.disabled = view >= lastMonth;
+
+      const start = new Date(view);
+      start.setDate(1 - start.getDay());
+      const viewKey = iso(view).slice(0, 7);
+      const focusDay = selected.startsWith(viewKey) ? selected : `${viewKey}-01`;
+      const cells: string[] = [];
+      for (let i = 0; i < 42; i++) {
+        const d = new Date(start);
+        d.setDate(start.getDate() + i);
+        if (i >= 35 && d.getMonth() !== view.getMonth()) break;
+        const key = iso(d);
+        const items = byDay.get(key) || [];
+        const outside = d.getMonth() !== view.getMonth();
+        const dots = items.slice(0, 3).map((it) => `<span class="mcal-dot mcal-dot-${kindClass(it.k)}"></span>`).join('');
+        const cls = ['mcal-day', outside && 'is-outside', key === today && 'is-today', key < today && 'is-past', key === selected && 'is-selected', items.length && 'has-events']
+          .filter(Boolean).join(' ');
+        const aria = `${dayLabel(key)}, ${countLabel(items.length)}${key === today ? `, ${dict().today}` : ''}`;
+        cells.push(
+          `<button type="button" class="${cls}" data-day="${key}" aria-label="${esc(aria)}" aria-pressed="${key === selected}" tabindex="${key === focusDay ? 0 : -1}">` +
+            `<span class="mcal-num" aria-hidden="true">${d.getDate()}</span><span class="mcal-dots" aria-hidden="true">${dots}</span></button>`,
+        );
+      }
+      grid.innerHTML = cells.join('');
+    }
+
+    function itemHtml(it: Item) {
+      const L = lang();
+      const t = dict();
+      if (it.k === 'runoff') {
+        return `<li class="mcal-item mcal-item-date"><span class="mcal-item-title">${esc(t.cal_runoff_title)}</span><p class="mcal-item-line">${esc(t.cal_runoff_line)}</p></li>`;
+      }
+      const when = it.w ? it.w[L] : it.time ? it.time[L] : '';
+      const place = it.p ? it.p[L] : '';
+      const addr = it.a ? (it.m ? `<a class="mcal-item-addr" href="${esc(it.m)}" target="_blank" rel="noopener noreferrer">${esc(it.a)}</a>` : esc(it.a)) : '';
+      let action = '';
+      if (it.ics) {
+        action = `<a class="mcal-item-cal" href="${esc(it.ics[L])}" download>${esc(t.add_calendar)}</a>`;
+      } else if (it.href && it.act) {
+        const ext = it.ext || /^https?:\/\//.test(it.href);
+        action = `<a class="btn btn-orange mcal-item-btn" href="${esc(it.href)}"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>${esc(it.act[L])}</a>`;
+      }
+      return `<li class="mcal-item mcal-item-${kindClass(it.k)}">` +
+        (when ? `<span class="mcal-item-when">${esc(when)}</span>` : '') +
+        `<span class="mcal-item-title">${esc(it.t[L])}</span>` +
+        (place || addr ? `<p class="mcal-item-place">${esc(place)}${place && addr ? ', ' : ''}${addr}</p>` : '') +
+        (it.l ? `<p class="mcal-item-line">${esc(it.l[L])}</p>` : '') +
+        action + '</li>';
+    }
+
+    function renderPanel() {
+      const items = byDay.get(selected) || [];
+      const head = `<h5 class="mcal-panel-day">${esc(dayLabel(selected, true))}${selected === today ? ` <span class="mcal-panel-today">${esc(dict().today)}</span>` : ''}</h5>`;
+      panel.innerHTML = head + (items.length
+        ? `<ul class="mcal-items">${items.map(itemHtml).join('')}</ul>`
+        : `<p class="mcal-panel-empty">${esc(dict().cal_empty)}</p>`);
+    }
+
+    function render() {
+      renderGrid();
+      renderPanel();
+    }
+
+    function select(day: string, opts: { focus?: boolean; share?: boolean } = {}) {
+      selected = day;
+      const d = parse(day);
+      if (d.getMonth() !== view.getMonth() || d.getFullYear() !== view.getFullYear()) {
+        view = new Date(d.getFullYear(), d.getMonth(), 1);
+      }
+      render();
+      if (opts.share) {
+        try {
+          history.replaceState(null, '', `#cal-${day}`);
+        } catch {}
+      }
+      if (opts.focus) grid.querySelector<HTMLButtonElement>(`[data-day="${day}"]`)?.focus();
+    }
+
+    grid.addEventListener('click', (ev) => {
+      const btn = (ev.target as HTMLElement).closest<HTMLButtonElement>('[data-day]');
+      if (btn) select(btn.dataset.day!, { focus: true, share: true });
+    });
+
+    // Arrow keys move a day or a week; Home/End jump to the week's ends.
+    grid.addEventListener('keydown', (ev) => {
+      const btn = (ev.target as HTMLElement).closest<HTMLButtonElement>('[data-day]');
+      if (!btn) return;
+      const step = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7 }[ev.key];
+      const day = btn.dataset.day!;
+      let target: string | null = null;
+      if (step) target = addDays(day, step);
+      if (ev.key === 'Home') target = addDays(day, -parse(day).getDay());
+      if (ev.key === 'End') target = addDays(day, 6 - parse(day).getDay());
+      if (!target) return;
+      const t = parse(target);
+      const tm = new Date(t.getFullYear(), t.getMonth(), 1);
+      if (tm < firstMonth || tm > lastMonth) return;
+      ev.preventDefault();
+      select(target, { focus: true, share: true });
+    });
+
+    const shift = (n: number) => {
+      view = new Date(view.getFullYear(), view.getMonth() + n, 1);
+      renderGrid();
+    };
+    prev.addEventListener('click', () => shift(-1));
+    next.addEventListener('click', () => shift(1));
+
+    document.addEventListener('bsl:langchange', () => render());
+
+    // Shared link (#cal-2026-10-18) opens on that day; otherwise today, or the
+    // next day with something on it.
+    const fromHash = () => {
+      const m = location.hash.match(/^#cal-(\d{4}-\d{2}-\d{2})$/);
+      if (!m) return false;
+      const t = parse(m[1]);
+      const tm = new Date(t.getFullYear(), t.getMonth(), 1);
+      if (isNaN(t.getTime()) || tm < firstMonth || tm > lastMonth) return false;
+      select(m[1]);
+      requestAnimationFrame(() => root.scrollIntoView({ block: 'start' }));
+      return true;
+    };
+    if (!fromHash()) select(byDay.has(today) ? today : firstEventFrom(today));
+    window.addEventListener('hashchange', fromHash);
+  }
+</script>
+
+<style>
+  .mcal {
+    margin-top: var(--space-3xl);
+    scroll-margin-top: calc(var(--nav-height) + var(--space-md));
+  }
+
+  .mcal-card {
+    position: relative;
+    max-width: 640px;
+    margin: 0 auto;
+    background: var(--cream-light);
+    background-image: repeating-linear-gradient(180deg, transparent, transparent 35px, rgba(27, 54, 93, 0.06) 35px, rgba(27, 54, 93, 0.06) 36px);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-2xl) var(--space-xl) var(--space-xl);
+  }
+
+  .mcal-card::before {
+    content: '';
+    position: absolute;
+    width: 88px;
+    height: 22px;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    background: rgba(245, 208, 138, 0.7);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+
+  .mcal-placard-wrap {
+    margin: 0 0 var(--space-lg);
+    text-align: center;
+    rotate: -0.8deg;
+  }
+
+  .mcal-placard {
+    display: inline;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 900;
+    line-height: 1.6;
+    text-transform: uppercase;
+    color: var(--cream-light);
+    background: var(--blue-deeper);
+    padding: 0.14em 0.5em;
+  }
+
+  .mcal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .mcal-month {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--blue-deeper);
+    text-align: center;
+  }
+
+  .mcal-nav {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed rgba(27, 54, 93, 0.35);
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--blue-deeper);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  .mcal-nav:hover:not(:disabled) {
+    border-color: var(--orange-dark);
+    color: var(--orange-dark);
+  }
+
+  .mcal-nav:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .mcal-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .mcal-weekdays,
+  .mcal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  .mcal-weekdays :global(span) {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray-500);
+    text-align: center;
+    padding: 4px 0;
+  }
+
+  .mcal-grid :global(.mcal-day) {
+    position: relative;
+    min-height: 52px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 4px 0;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.55);
+    color: var(--blue-deeper);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 800;
+    cursor: pointer;
+    transition: border-color var(--duration-fast) var(--ease-default), background var(--duration-fast) var(--ease-default);
+  }
+
+  .mcal-grid :global(.mcal-day:hover) {
+    border-color: rgba(201, 116, 22, 0.5);
+  }
+
+  .mcal-grid :global(.mcal-day:focus-visible) {
+    outline: 3px solid var(--blue);
+    outline-offset: 1px;
+  }
+
+  .mcal-grid :global(.mcal-day.is-outside) {
+    opacity: 0.35;
+  }
+
+  .mcal-grid :global(.mcal-day.is-past) {
+    color: var(--gray-500);
+  }
+
+  .mcal-grid :global(.mcal-day.is-today) {
+    border: 2px dashed var(--orange-dark);
+  }
+
+  .mcal-grid :global(.mcal-day.is-today .mcal-num) {
+    color: var(--orange-dark);
+  }
+
+  .mcal-grid :global(.mcal-day.is-selected) {
+    background: var(--blue-deeper);
+    border-color: var(--blue-deeper);
+    color: var(--cream-light);
+    opacity: 1;
+  }
+
+  .mcal-grid :global(.mcal-day.is-selected .mcal-num) {
+    color: var(--cream-light);
+  }
+
+  .mcal-grid :global(.mcal-dots) {
+    display: flex;
+    gap: 3px;
+    min-height: 8px;
+  }
+
+  .mcal :global(.mcal-dot) {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex: none;
+  }
+
+  .mcal :global(.mcal-dot-shift) {
+    background: var(--orange);
+  }
+
+  .mcal :global(.mcal-dot-ward) {
+    background: var(--blue-dark);
+  }
+
+  .mcal :global(.mcal-dot-date) {
+    background: var(--cream);
+    box-shadow: inset 0 0 0 2px var(--orange-dark);
+  }
+
+  .mcal-grid :global(.is-selected .mcal-dot-ward) {
+    background: var(--blue);
+    box-shadow: 0 0 0 1.5px var(--cream-light);
+  }
+
+  .mcal-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-xs) var(--space-lg);
+    margin: var(--space-md) 0 0;
+    padding: 0;
+    font-size: var(--text-xs);
+    color: var(--gray-700);
+  }
+
+  .mcal-legend li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .mcal-panel {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: 2px dashed var(--cream-dark);
+  }
+
+  .mcal-panel :global(.mcal-panel-day) {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--blue-deeper);
+    margin-bottom: var(--space-sm);
+  }
+
+  .mcal-panel :global(.mcal-panel-today) {
+    font-size: var(--text-xs);
+    color: var(--orange-dark);
+    border: 2px dashed currentColor;
+    border-radius: 3px;
+    padding: 1px 6px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .mcal-panel :global(.mcal-panel-empty) {
+    font-size: var(--text-sm);
+    color: var(--gray-700);
+  }
+
+  .mcal-panel :global(.mcal-items) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: 0;
+  }
+
+  .mcal-panel :global(.mcal-item) {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: var(--white);
+    padding: var(--space-md);
+    border-left: 5px solid var(--orange);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .mcal-panel :global(.mcal-item-ward) {
+    border-left-color: var(--blue-dark);
+  }
+
+  .mcal-panel :global(.mcal-item-date) {
+    border-left-color: var(--gold-soft);
+  }
+
+  .mcal-panel :global(.mcal-item-when) {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--orange-dark);
+  }
+
+  .mcal-panel :global(.mcal-item-title) {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 900;
+    color: var(--blue-deeper);
+  }
+
+  .mcal-panel :global(.mcal-item-place),
+  .mcal-panel :global(.mcal-item-line) {
+    font-size: var(--text-sm);
+    line-height: 1.55;
+    color: var(--gray-700);
+  }
+
+  .mcal-panel :global(.mcal-item-addr) {
+    color: var(--blue-dark);
+    text-decoration: underline;
+  }
+
+  .mcal-panel :global(.mcal-item-btn) {
+    margin-top: var(--space-sm);
+    min-height: 48px;
+    justify-content: center;
+    border-radius: 999px;
+    align-self: flex-start;
+  }
+
+  .mcal-panel :global(.mcal-item-cal) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue-dark);
+    align-self: flex-start;
+  }
+
+  .mcal-panel :global(.mcal-item-cal:hover) {
+    color: var(--orange-dark);
+  }
+
+  .mcal-subscribe {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-lg);
+    border-top: 2px dashed var(--cream-dark);
+    text-align: center;
+  }
+
+  .mcal-sub-btn {
+    min-height: 52px;
+    border-radius: 999px;
+  }
+
+  .mcal-sub-hint {
+    margin-top: var(--space-sm);
+    font-size: var(--text-sm);
+    color: var(--gray-700);
+  }
+
+  .mcal-sub-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 var(--space-lg);
+  }
+
+  .mcal-sub-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue-dark);
+  }
+
+  .mcal-sub-links a:hover {
+    color: var(--orange-dark);
+  }
+
+  .mcal-sub-links a[hidden],
+  .mcal-subscribe a[hidden] {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .mcal-card {
+      padding: var(--space-xl) var(--space-sm) var(--space-lg);
+    }
+
+    .mcal-weekdays,
+    .mcal-grid {
+      gap: 2px;
+    }
+
+    .mcal-grid :global(.mcal-day) {
+      min-height: 48px;
+    }
+
+    .mcal-sub-btn {
+      width: 100%;
+    }
+  }
+</style>

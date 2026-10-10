@@ -2,13 +2,14 @@
 // Volunteer roles as assignment sheets pinned to the organizing wall:
 // square paper, tape, placard titles, a stamped duty line, and a
 // tear-off "Count me in" strip. No icons, no rounded cards.
+// On /volunteer this sits directly under RolePicker as one "Ways to Help"
+// unit: the picker carries the visible heading, so this section's heading is
+// screen-reader only. #ways-to-fight stays (NextUp links to it).
 ---
 
 <section class="action-blocks section-padding" id="ways-to-fight">
   <div class="container">
-    <span class="section-label animate-in" style="text-align:center;display:block;" data-i18n="volunteer.action_label">Ways to Fight</span>
-    <h2 class="section-title animate-in" style="text-align:center;" data-i18n="volunteer.action_headline">Every Role Matters</h2>
-
+    <h2 class="action-sr" data-i18n="volunteer.action_headline">Every Role Matters</h2>
     <div class="action-grid">
       <!-- Deep Canvassing -->
       <div class="action-card animate-in anim-pin" id="action-canvass" style="--tilt: -0.7deg">
@@ -76,6 +77,16 @@
 <style>
   .action-blocks {
     background: var(--cream);
+    scroll-margin-top: var(--nav-height);
+  }
+
+  .action-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
   }
 
   .action-grid {

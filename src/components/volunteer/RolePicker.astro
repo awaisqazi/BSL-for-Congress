@@ -1,7 +1,8 @@
 ---
 // "Find Your Post": situation chips that highlight the matching action card
 // and pre-check the matching boxes on the EXISTING signup form (values and
-// entry IDs untouched), then scroll to #signup.
+// entry IDs untouched), then scroll to #signup. On /volunteer it heads the
+// "Ways to Help" unit; ActionBlocks (the role cards) follows with no heading.
 const roles = [
   { key: 'neighbors', icon: '🏘️', card: 'action-canvass', checks: 'Knock on Doors|Collect Petition Signatures', label: 'I know my neighbors' },
   { key: 'phone', icon: '📱', card: 'action-digital', checks: 'Phone/Text Banking|Post on Social Media|Collect Petition Signatures', label: 'I live on my phone' },
@@ -14,7 +15,7 @@ const roles = [
 
 <section class="role-picker section-padding" id="find-your-post">
   <div class="container role-picker-content">
-    <span class="section-label animate-in" data-i18n="volunteer.picker_label">Find Your Post</span>
+    <span class="section-label animate-in" data-i18n="volunteer.picker_label">Ways to Help</span>
     <h2 class="section-title animate-in" data-i18n="volunteer.picker_headline">Where Do You Stand?</h2>
     <p class="role-picker-sub animate-in" data-i18n="volunteer.picker_sub">
       Don't turn on each other. Uplift each other. Help each other. Show solidarity. Pick what sounds like you and we'll point you to your post.

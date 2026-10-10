@@ -44,6 +44,7 @@ function validate(list) {
     if (!e || typeof e !== 'object') return errors.push(`${at}: not an object`);
     if (!ID_RE.test(e.id || '')) errors.push(`${at}: id must be lowercase words joined by hyphens`);
     if (seen.has(e.id)) errors.push(`${at}: duplicate id`);
+    if (e.id === 'all' || e.id === 'all-es') errors.push(`${at}: "all" is reserved for the /events/all.ics feed`);
     seen.add(e.id);
     if (!KINDS.includes(e.kind)) errors.push(`${at}: kind must be one of ${KINDS.join(', ')}`);
     if (!bilingual(e.title)) errors.push(`${at}: title needs en and es`);
@@ -194,19 +195,16 @@ function fold(line) {
 
 const utcStamp = (iso) => new Date(iso).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
 
-export function ics(e, lang, site = 'https://byronfor25.com') {
+// The VEVENT lines for one dated entry (shared by the single files and the feed).
+function vevent(e, lang, site, stampNow) {
   const title = pick(e.title, lang);
   const loc = [pick(e.location, lang), e.address].filter(Boolean).join(', ');
-  const desc = [pick(e.line, lang), e.rsvp ? `RSVP: ${e.rsvp}` : null, `${site}/events/`].filter(Boolean).join('\n');
+  const page = `${site}/volunteer/#show-up`;
+  const desc = [pick(e.line, lang), e.rsvp ? `RSVP: ${e.rsvp}` : null, page].filter(Boolean).join('\n');
   const lines = [
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
-    'PRODID:-//Friends of Byron Sigcho Lopez//byronfor25.com//EN',
-    'CALSCALE:GREGORIAN',
-    'METHOD:PUBLISH',
     'BEGIN:VEVENT',
     `UID:${e.id}${lang === 'es' ? '-es' : ''}@byronfor25.com`,
-    `DTSTAMP:${utcStamp(new Date().toISOString())}`,
+    `DTSTAMP:${stampNow}`,
   ];
   if (DATE_RE.test(e.start)) {
     const endIncl = e.end && DATE_RE.test(e.end) ? e.end : e.start;
@@ -219,9 +217,56 @@ export function ics(e, lang, site = 'https://byronfor25.com') {
   lines.push(`SUMMARY:${icsEscape(title)}`);
   if (loc) lines.push(`LOCATION:${icsEscape(loc)}`);
   lines.push(`DESCRIPTION:${icsEscape(desc)}`);
-  lines.push(`URL:${e.rsvp || `${site}/events/`}`);
-  lines.push('END:VEVENT', 'END:VCALENDAR');
+  lines.push(`URL:${e.rsvp || page}`);
+  lines.push('END:VEVENT');
+  return lines;
+}
+
+const calHead = (name) => [
+  'BEGIN:VCALENDAR',
+  'VERSION:2.0',
+  'PRODID:-//Friends of Byron Sigcho Lopez//byronfor25.com//EN',
+  'CALSCALE:GREGORIAN',
+  'METHOD:PUBLISH',
+  ...(name ? [`X-WR-CALNAME:${icsEscape(name)}`, 'X-WR-TIMEZONE:America/Chicago', 'REFRESH-INTERVAL;VALUE=DURATION:P1D', 'X-PUBLISHED-TTL:P1D'] : []),
+];
+
+export function ics(e, lang, site = 'https://byronfor25.com') {
+  const lines = [...calHead(null), ...vevent(e, lang, site, utcStamp(new Date().toISOString())), 'END:VCALENDAR'];
+  return lines.map(fold).join('\r\n') + '\r\n';
+}
+
+const RRULE_DAYS = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
+
+// The whole calendar in one file (/events/all.ics, /events/all-es.ics): every
+// dated entry, plus each weekly standing shift as an all-day event repeating
+// for the next 20 weeks from the build date.
+export function icsFeed(lang, site = 'https://byronfor25.com', today = todayChicago()) {
+  const now = utcStamp(new Date().toISOString());
+  const name = lang === 'es' ? 'Byron Sigcho-Lopez, Distrito 25: fechas' : 'Byron Sigcho-Lopez, 25th Ward: dates';
+  const lines = [...calHead(name)];
+  dated.forEach((e) => lines.push(...vevent(e, lang, site, now)));
+  recurring.forEach((e) => {
+    const day = RRULE_DAYS.indexOf(e.rule.split(':')[1]);
+    const first = addDays(today, (day - weekdayIndex(today) + 7) % 7);
+    const loc = [pick(e.location, lang), e.address].filter(Boolean).join(', ');
+    lines.push(
+      'BEGIN:VEVENT',
+      `UID:${e.id}${lang === 'es' ? '-es' : ''}@byronfor25.com`,
+      `DTSTAMP:${now}`,
+      `DTSTART;VALUE=DATE:${first.replace(/-/g, '')}`,
+      `DTEND;VALUE=DATE:${addDays(first, 1).replace(/-/g, '')}`,
+      `RRULE:FREQ=WEEKLY;BYDAY=${RRULE_DAYS[day]};COUNT=20`,
+      `SUMMARY:${icsEscape(pick(e.title, lang))}`,
+      ...(loc ? [`LOCATION:${icsEscape(loc)}`] : []),
+      `DESCRIPTION:${icsEscape([pick(e.when, lang), pick(e.line, lang), e.link].join('\n'))}`,
+      `URL:${e.link}`,
+      'END:VEVENT',
+    );
+  });
+  lines.push('END:VCALENDAR');
   return lines.map(fold).join('\r\n') + '\r\n';
 }
 
 export const icsPath = (e, lang) => `/events/${e.id}${lang === 'es' ? '-es' : ''}.ics`;
+export const feedPath = (lang) => `/events/all${lang === 'es' ? '-es' : ''}.ics`;
