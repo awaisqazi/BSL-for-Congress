@@ -58,6 +58,26 @@ How to read:
 
 For each item collect: account, post URL, post date, exact text, any linked URL, any date/time/place.
 
+### 1b. Stories, highlights and posted links (required every run)
+
+Stories disappear after 24 hours and are where the campaign posts most same-week shifts, so read them every run:
+1. On each Instagram account (1 to 3), open the account's stories (the profile picture ring) and step through every
+   frame with the right arrow or by tapping the right side; read any text, dates, places, @mentions and link stickers.
+   Stories usually need the Claude in Chrome extension (signed in); the in-app pane rarely shows them. Never reply,
+   react, or tap a poll or question sticker. If stories cannot be opened, write "stories unreadable: <account>".
+2. Open the story highlights on @bslfor25 (for example Volunteer, Educators4Byron, Rally, Canvass) and skim the newest
+   frame of each for dated items you have not already recorded.
+3. Follow every link you encounter: the bio link (Linktree or form), link stickers in stories, "link in bio" references,
+   and URLs in captions. Open each one (Action Network, Mobilize, Google Forms, Eventbrite, Zeffy, ActBlue, canvass maps,
+   news articles) and record: the final URL after redirects, what it is, who owns it, whether it is current (an event
+   page with a future date, a live form) or stale (a Congress-era page, a past event), and its HTTP status. A current
+   RSVP or sign-up link found this way is publishable as an event or a link strip; a stale one goes in the report under
+   "link hygiene" so the campaign can fix it. Never fill in or submit any form you open.
+4. Screenshots of a story frame you cite go in your scratchpad (`computer` screenshot with `save_to_disk`); note the path
+   in the report because the story will be gone tomorrow and the screenshot is the only receipt. A story is a valid
+   source for an event only when it states the date, time and place; otherwise list it as unverified.
+
+
 ## 2. What counts as publishable
 
 Publish only if the item states a verifiable fact AND you have a source link a reader can open. Qualifying:
@@ -340,7 +360,9 @@ Each news post also has its own page: `curl -sL https://byronfor25.com/news/SLUG
 expect a later event there. For a ledger row, also check
 `curl -sL https://byronfor25.com/ | grep -c "d_SLUG\|<the English row text>"`.
 
-## 8. Report format (under 16 lines, plain text, no emdashes)
+## 8. Report format (under 18 lines, plain text, no emdashes)
+
+Include two extra lines: `Stories read: <accounts, frames count, anything dated>` and `Links checked: <count current / count stale>` with the stale ones named under link hygiene.
 
 ```
 Daily sweep <YYYY-MM-DD>
