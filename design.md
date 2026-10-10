@@ -1,6 +1,6 @@
 # BSL for Congress — Site Design & Architecture Reference
 
-> **Purpose:** Single source of truth for how this site is wired. Read the relevant section before any change so you don't break i18n, animations, layout, or form submissions. The bilingual JSON, the Google Forms entry IDs, and the YouTube hero video are the three pieces most likely to silently regress.
+> **Purpose:** Single source of truth for how this site is wired. Read the relevant section before any change so you don't break i18n, animations, layout, or form submissions. The bilingual JSON, the Google Forms entry IDs, and the self-hosted hero video are the three pieces most likely to silently regress.
 
 ---
 
@@ -14,7 +14,10 @@
 6. [Component Architecture](#component-architecture)
 7. [Page Structure & Routing](#page-structure--routing)
 7a. [Events Surface: Show Up, /events, events.json](#events-surface-show-up-events-eventsjson)
+7b. [Latest: News Section](#latest-news-section)
+7c. [The Petition Ask](#the-petition-ask)
 8. [Hero Video Background — CRITICAL](#hero-video-background--critical)
+8a. [Summer Band (AnointmentBanner)](#summer-band-anointmentbanner)
 9. [Sub-Page Hero Pattern (Parallax + Overlay + Noise)](#sub-page-hero-pattern-parallax--overlay--noise)
 10. [Platform / Issues Content — CRITICAL](#platform--issues-content--critical)
 11. [Footer Quirks](#footer-quirks)
@@ -31,6 +34,8 @@
 22. [External Services Reference](#external-services-reference)
 23. [Z-Index Hierarchy](#z-index-hierarchy)
 24. [Deployment](#deployment)
+24a. [Backend (planned)](#backend-planned)
+24b. [Ops: Daily Sweep](#ops-daily-sweep)
 25. [Common Pitfalls Checklist](#common-pitfalls-checklist)
 
 ---
@@ -42,12 +47,14 @@
 | Framework | **Astro** (static site generator, scoped-CSS by default) |
 | Styling | **Vanilla CSS** with CSS custom properties (no Tailwind, no Sass) |
 | Fonts | Google Fonts — `Outfit` (display) + `Inter` (body), loaded via `@import` inside [src/styles/global.css](src/styles/global.css) |
-| i18n | Custom client-side JS ([src/i18n/i18n.js](src/i18n/i18n.js)) reading `data-i18n` attributes |
+| i18n | Custom client-side JS ([src/i18n/i18n.js](src/i18n/i18n.js)) reading `data-i18n` attributes, plus a `data-lang="en"/"es"` toggle for rich content (see [Bilingual System](#bilingual-system-i18n--critical)) |
 | Hosting | GitHub Pages on the custom domain `https://byronfor25.com` (base path `/`; `public/CNAME`). The old `awaisqazi.github.io/BSL-for-Congress/` address 301s here. |
 | Donations | ActBlue → `https://secure.actblue.com/donate/byron-sigcho-1` |
 | Petition / Volunteer forms | **Google Forms** (hidden iframe submission) |
 | Newsletter / signup form | **RaiseMore** embedded iframe |
-| Hero video | **YouTube** iframe embed, video ID `ouSFDZfJu-E` (still the congressional launch video, kept on purpose until a ward-race cut is uploaded; the channel is still named "for Congress IL-04") |
+| Hero video | **Self-hosted MP4** in `public/video/`: `hero-loop.mp4` (muted background loop), `hero-sound.mp4` (Watch with Sound copy), `hero-poster.jpg`. The Links page plays `hero-sound.mp4`. No YouTube embed remains. |
+| Data files | `src/data/events.json` (shifts and dates), `src/data/news.json` (Latest posts); both validated at build time |
+| Backend | None live. Supabase is planned as an insert-only second copy of form data; see [Backend (planned)](#backend-planned) |
 
 ---
 
@@ -55,35 +62,47 @@
 
 ```
 BSL-for-Congress/
-├── astro.config.mjs            # site + base = /BSL-for-Congress
+├── astro.config.mjs            # site = https://byronfor25.com, base = /
+├── ops/
+│   └── DAILY-SWEEP.md          # Runbook for the daily scheduled task (socials to Latest)
+├── supabase/                   # Planned backend: README.md, site-integration.md, migrations/ (not live)
+├── voice.md                    # Campaign voice rules for all copy
 ├── public/
-│   ├── BSL_Official.png        # Logo (used in Navbar + Links page)
+│   ├── BSL_Official.png, BSL_Alderman25.png   # Logos (Navbar, Links page header)
+│   ├── CNAME                   # byronfor25.com
+│   ├── video/                  # hero-loop.mp4, hero-sound.mp4, hero-poster.jpg
 │   ├── favicon.ico, favicon-*.png, apple-touch-icon.png, android-chrome-*.png
 │   ├── site.webmanifest
 │   └── images/                 # See "Image Assets Reference" below
 ├── src/
 │   ├── components/
 │   │   ├── Navbar.astro        # Fixed top nav + lang toggle + mobile drawer (Meet Byron, The Record, Machine vs. Movement, Show Up)
-│   │   ├── Hero.astro          # Homepage hero — YouTube video bg + sound toggle
+│   │   ├── Hero.astro          # Homepage hero: self-hosted <video> bg + sound toggle
 │   │   ├── ShowUp.astro        # Homepage, right after Hero: next three dated shifts + standing-shift chips
 │   │   ├── EventCard.astro     # One dated shift as a taped flyer (ShowUp, /events, ThisWeek)
 │   │   ├── MeetOrganizer.astro # Homepage bio block
-│   │   ├── PlatformGrid.astro  # Homepage — 4-card summarized platform
-│   │   ├── AnointmentBanner.astro
+│   │   ├── PlatformGrid.astro  # Homepage "Byron Gets Results": nine results (platform.r1..r9)
+│   │   ├── UpNext.astro        # "Up Next" ledger: eight planks (upnext.p1..p8); home + /platform
+│   │   ├── LatestStrip.astro   # Homepage strip: three newest non-expired Latest posts
+│   │   ├── AnointmentBanner.astro # The summer band (single column, Block Club receipt stamp)
+│   │   ├── NextUp.astro        # Calendar flyers + official-dates ledger
+│   │   ├── RoadCTA.astro       # Closing band on every page; carries the petition link
+│   │   ├── ThePromise, PromiseCounter, VoicesWall, SignatureWall, SolidarityTicker .astro
 │   │   ├── PetitionModal.astro # Global — injected by Layout.astro
 │   │   ├── MobileActionBar.astro # Global except /links — mobile bottom bar with the standing volunteer ask
 │   │   ├── Footer.astro        # Ticker strip + clipboard signup + sketch
 │   │   ├── platform/
 │   │   │   ├── PlatformHero.astro
+│   │   │   ├── AnotherWorld.astro
 │   │   │   ├── PolicyGrid.astro    # All 7 planks, verbatim, multi-paragraph
 │   │   │   └── UnboughtBanner.astro # Stats + CTA block
 │   │   ├── meet/
-│   │   │   ├── MeetHero.astro
+│   │   │   ├── MeetHero.astro, Lineage.astro, RoadMarker.astro
 │   │   │   ├── EarlyLife.astro      # Ecuador + Cumberland sections
 │   │   │   ├── WardRecord.astro     # Teacher banner + 4 milestone cards
 │   │   │   └── SocialistValues.astro # 4 achievement cards + family + CTA
 │   │   ├── machine/
-│   │   │   ├── MachineHero.astro
+│   │   │   ├── MachineHero.astro, TheDuel.astro, BattleTimeline.astro
 │   │   │   ├── MovementSection.astro # Sticky pull-quote on desktop
 │   │   │   ├── MachineSection.astro  # Timeline w/ pulsing "NOW" dot
 │   │   │   └── BallotFight.astro     # 697 → 10,816 → 50,000 stats + CTA
@@ -91,18 +110,20 @@ BSL-for-Congress/
 │   │       ├── VolunteerHero.astro   # + "Knock Doors With Us" CTA → #signup
 │   │       ├── ThisWeek.astro        # Next three dated shifts (EventCard, from events.json), then three taped strips: Sundays (canvass map), Tuesdays (Ward Night), Today (#signup)
 │   │       ├── RolePicker.astro      # Situation chips that pre-check the form, then scroll to #signup
-│   │       ├── PetitionBlitz.astro   # Orange banner, CTA → #signup
+│   │       ├── PetitionBlitz.astro   # Ward-campaign banner; its section id is sign-petition (the petition anchor)
 │   │       ├── ActionBlocks.astro    # 6 action cards (3-col → 2 → 1), "Count me in" → #signup
 │   │       ├── SignupForm.astro      # Google Form, sticky text on desktop, next-steps state after submit
 │   │       └── FundCTA.astro         # Donate band, after the form (was inside SignupForm)
 │   ├── data/
 │   │   ├── events.json               # Single source for shifts and official dates (schema: EVENTS-README.md)
 │   │   ├── events.js                 # Build-time checks + date/time/.ics helpers
-│   │   ├── news.json, news.js        # "Latest" posts (schema: NEWS-README.md)
+│   │   ├── NEWS-README.md            # Schema and rules for news.json
+│   │   ├── news.json, news.js        # "Latest" posts (validation, sorting, date helpers)
 │   ├── scripts/
-│   │   └── events-client.js          # Browser-side expiry, regrouping and Today/Tomorrow chips for event cards
+│   │   ├── events-client.js          # Browser-side expiry, regrouping and Today/Tomorrow chips for event cards
+│   │   └── motion.js, signature-wall.js  # Day countdowns, wall behavior
 │   ├── i18n/
-│   │   ├── i18n.js                   # Translation engine (text + INPUT placeholder)
+│   │   ├── i18n.js                   # Translation engine (data-i18n text + INPUT placeholder, data-lang show/hide)
 │   │   ├── en.json                   # English — runtime source of truth
 │   │   └── es.json                   # Spanish — must mirror en.json keys
 │   ├── layouts/
@@ -115,7 +136,7 @@ BSL-for-Congress/
 │   │   ├── volunteer.astro
 │   │   ├── events/index.astro        # /events/ ("Show Up")
 │   │   ├── events/[file].ics.js      # Calendar files, one per dated entry per language
-│   │   ├── news/                     # /news/ list + /news/<slug>/ posts
+│   │   ├── news/index.astro, [slug].astro  # /news/ list + /news/<slug>/ posts
 │   │   └── links.astro               # Linktree-style; uses Layout, no Navbar/Footer
 │   └── styles/
 │       └── global.css                # All design tokens + reset + utilities + buttons + animations
@@ -153,6 +174,20 @@ When changing **any visible text** that has a `data-i18n` attribute, update:
 
 Because `i18n.js` writes to `textContent`, any inline HTML or child elements inside a `[data-i18n]` element will be wiped on language change. **Don't put `<strong>`, `<em>`, `<br>`, etc. inside an i18n-bound element.** If you need rich formatting, split the i18n key into pieces and put each on its own element, or accept the limitation and use plain Unicode (em-dash, ellipsis) instead of markup.
 
+#### The exception: `data-lang` blocks (rich content)
+
+Long, data-driven copy (news posts, event cards) does not go through `en.json`. Instead the build writes both languages into the page as sibling wrappers, `<span data-lang="en">` and `<span data-lang="es" hidden>`. `applyTranslations()` in [src/i18n/i18n.js](src/i18n/i18n.js) shows the one that matches the current language and sets `hidden` on the other, and it runs on every toggle. How it differs from `data-i18n`:
+
+| | `data-i18n="key"` | `data-lang="en"` / `data-lang="es"` |
+|---|---|---|
+| Text lives in | `en.json` / `es.json` | The component or JSON data file (`news.json`, `events.json`) |
+| Mechanism | JS overwrites `textContent` | JS toggles `hidden` on pre-rendered siblings |
+| Child markup (links, `<time>`) | Wiped | Safe, because nothing is rewritten |
+| Parity audit | Covered by the script below | Not covered; the data file's build check requires both `en` and `es` |
+| Use for | Fixed UI labels and page copy | Posts, event details, anything generated from a data file |
+
+Spanish wrappers ship with `hidden` so English paints first without a flash. Never put `data-lang` and `data-i18n` on the same element.
+
 ### ⚠️ THE #4 GOTCHA: Multi-Paragraph Blocks Need a Numbered Key Per Paragraph
 
 In [src/components/platform/PolicyGrid.astro](src/components/platform/PolicyGrid.astro), the multi-paragraph blocks now use a numbered convention so every paragraph translates:
@@ -167,10 +202,11 @@ If you add a new paragraph to one of these blocks, **also add the matching `_des
 ### i18n Key Naming Conventions (Top-Level Sections)
 
 ```
-nav.*                  → Navigation labels (also used in Footer + Mobile drawer)
+nav.*                  → Navigation labels (also used in Footer + Mobile drawer); includes nav.events ("Show Up", main nav) and nav.latest ("Latest", footer only)
 hero.*                 → Homepage hero (Hero.astro)
 bio.*                  → Homepage "Meet Byron" bio block (MeetOrganizer.astro)
-platform.*             → Homepage platform cards (PlatformGrid.astro) + section header
+platform.*             → Homepage "Byron Gets Results" (PlatformGrid.astro): label, headline, sub, cta, r1..r9 (each {title, desc})
+upnext.*               → "Up Next" ledger (UpNext.astro): label, headline, intro, p1..p8, pull, cta
 anointment.*           → Homepage "The Anointment" banner (AnointmentBanner.astro)
 footer.*               → Footer ticker, signup headline, paid-for, copyright
 issues.*               → /platform page — full plank descriptions, hero, unbought, CTA
@@ -178,8 +214,9 @@ meet.*                 → /meet page — origin, education, ward record, achiev
 machine.*              → /movement page — hero, movement, machine expose, timeline, ballot fight, CTA
 volunteer.*            → /volunteer page — hero, blitz, action cards, signup form labels, CTA
 petition_modal.*       → Global petition modal overlay
-bar.*                  → Mobile action bar (MobileActionBar.astro)
-latest.*               → Latest strip (home) + /news pages
+bar.*                  → Mobile action bar (MobileActionBar.astro): ask, signup, canvass, showup, dismiss
+linkspage.*            → The only i18n keys on /links: canvass_team, petition_rsvp
+latest.*               → Latest strip (home) + /news pages: UI labels only (label, headline, sub, cta, read, receipt, past, rsvp, ...). Post copy is NOT here; see 7b
 events.*               → Show Up block, /events page, ThisWeek dated cards, /news pointer
 ```
 
@@ -215,7 +252,7 @@ Healthy state: all five "missing/used not in/dead" arrays empty, and the three c
 | String | Where | Why hardcoded |
 |---|---|---|
 | Photo credit `Eileen T. Meslar / Chicago Tribune` | AnointmentBanner | Proper photographer attribution stays in source language |
-| All `links.astro` text | `/links` Linktree page | Mobile bio link — single audience, English by design |
+| Most `links.astro` text | `/links` Linktree page | Mobile bio link, English by design. Only two strips (`linkspage.canvass_team`, `linkspage.petition_rsvp`) use i18n keys |
 
 ---
 
@@ -327,11 +364,13 @@ Each page (except `links.astro`) imports `Layout`, `Navbar`, page-specific compo
 | Route | File | Composition |
 |---|---|---|
 | `/` | [src/pages/index.astro](src/pages/index.astro) | Hero > ShowUp > ThePromise > MeetOrganizer > PlatformGrid (results) > UpNext > LatestStrip > AnointmentBanner > NextUp > RoadCTA > SolidarityTicker |
-| `/platform` | [src/pages/platform.astro](src/pages/platform.astro) | PlatformHero → PolicyGrid → UnboughtBanner |
+| `/platform` | [src/pages/platform.astro](src/pages/platform.astro) | PlatformHero → PolicyGrid → UpNext (`tone="light" pull={false}`) → UnboughtBanner |
 | `/meet` | [src/pages/meet.astro](src/pages/meet.astro) | MeetHero → EarlyLife → WardRecord → SocialistValues |
 | `/movement` | [src/pages/movement.astro](src/pages/movement.astro) | MachineHero → MovementSection → MachineSection → BallotFight |
-| `/events` | [src/pages/events/index.astro](src/pages/events/index.astro) | Header (badge, headline, standing ask) > This Week > Coming Up > Every Week > Dates That Matter (ledger) > canvass team card > SignupForm (`#signup`) > "All the latest" link |
-| `/news` | [src/pages/news/index.astro](src/pages/news/index.astro) | One-line pointer to /events > every post in news.json, newest first; `/news/<slug>/` per post |
+| `/events/` | [src/pages/events/index.astro](src/pages/events/index.astro) | Header (badge, headline, standing ask) > This Week > Coming Up > Every Week > Dates That Matter (ledger) > canvass team card > SignupForm (`#signup`) > "All the latest" link |
+| `/news/` | [src/pages/news/index.astro](src/pages/news/index.astro) | One-line pointer to /events > every post in news.json, newest first |
+| `/news/<slug>/` | [src/pages/news/[slug].astro](src/pages/news/[slug].astro) | One page per post: stamp, kind, title, summary, event flyer, paragraphs, link strips, the receipt, the Knock Doors pill. Details in 7b |
+| `/events/<id>.ics`, `/events/<id>-es.ics` | [src/pages/events/[file].ics.js](src/pages/events/[file].ics.js) | Calendar files built per dated entry and language; see 7a |
 | `/volunteer` | [src/pages/volunteer.astro](src/pages/volunteer.astro) | VolunteerHero → ThisWeek (next three dated shifts, then the standing strips) → RolePicker → SignupForm → ActionBlocks → PetitionBlitz → NextUp → FundCTA → SolidarityTicker (the form sits before the roles on purpose; every card and the blitz CTA scroll back up to `#signup`) |
 | `/links` | [src/pages/links.astro](src/pages/links.astro) | Linktree-style; uses Layout but **omits** Navbar/Footer |
 
@@ -391,72 +430,158 @@ Placed directly after the Hero, before ThePromise. Label "Show Up" / "Preséntat
 
 Main nav (desktop and mobile drawer): Meet Byron, The Record, Machine vs. Movement, **Show Up** (`nav.events`, to /events/), then the EN/ES toggle, Volunteer (orange pill), Donate. "Latest" left the main nav; it lives in the footer links (`nav.latest`, after Show Up) and in the Latest strip's "All the latest" link.
 
+Footer links, in order (`Footer.astro`): Meet Byron, The Record, Machine vs. Movement, Show Up, Latest, Volunteer. The drawer and footer social icons are covered in [Social Media Accounts](#social-media-accounts).
+
 ### Adding or retiring an event
 
 Edit `events.json` only, following EVENTS-README.md, then `npm run build`. Do not hand-edit cards in components. Past entries can stay in the file; the pages hide them.
 
 ---
 
+## Latest: News Section
+
+"Latest" is the campaign's dated news wall: events, press receipts, actions and milestones, each with its source. Every post lives in one file and every surface reads from it. (It was removed from the main nav; Show Up took the slot. See [Events Surface](#events-surface-show-up-events-eventsjson) for the shifts side.)
+
+### The single source: `src/data/news.json`
+
+- [src/data/news.json](src/data/news.json) is a JSON array of posts. Schema, field table, a worked example and the rules a sweep must follow: [src/data/NEWS-README.md](src/data/NEWS-README.md). Do not restate the schema elsewhere.
+- Fields in one line: `slug`, `date`, `kind` (`event`, `news`, `press`, `action`), bilingual `title` / `summary` / `body` (`{en, es}`; body is a list of plain paragraphs), required `source {label, href}`, and optional `event`, `links`, `image`, `expires`.
+- [src/data/news.js](src/data/news.js) validates the file at build time (a bad post fails the build, so nothing deploys; emdashes are rejected, both languages are required, every post needs a `source`) and exports `posts`, `getPost()`, `stampDate()`, `longDate()`, `eventWhen()`, `eventLastDay()`, `pick()`, `linkAttrs()`, `todayChicago()` and `KIND_LABELS`.
+- **Sorting:** `date` descending (newest first). Posts with the same date keep their order in the file. Order in the file is otherwise irrelevant.
+- Never edit or rename a published `slug`; its URL is already shared.
+
+### Where it shows
+
+| Surface | File | Behavior |
+|---|---|---|
+| Home strip | [src/components/LatestStrip.astro](src/components/LatestStrip.astro), placed after UpNext and before the summer band | The three newest non-expired posts as taped cards, cream-light background. Build time ships up to six candidates (those with no `expires` or `expires` today or later, Chicago); a client script removes any card whose `data-latest-expires` day has passed since the last deploy, then shows the first three. If none remain the whole section removes itself. |
+| List | [src/pages/news/index.astro](src/pages/news/index.astro) | Every post, newest first, expired ones included. Opens with the one-line pointer to /events. Event posts get a "Past" chip after their last day (`data-past-after`). |
+| Post | [src/pages/news/[slug].astro](src/pages/news/[slug].astro) | Date stamp, kind chip, title, summary, event flyer (when `event` exists, with RSVP button when `event.rsvp` exists), body paragraphs, link strips, **the receipt line**, and a closing "Knock Doors With Us" pill to `/volunteer#signup`. |
+| Footer | `Footer.astro` | The only nav entry: "Latest" (`nav.latest`), after Show Up. |
+
+The strip uses `data-latest-expires`, not `data-expires`, on purpose: other components' scripts (NextUp) delete every `[data-expires]` element outright, which would skip the strip's re-count.
+
+### Two kinds of copy on these pages
+
+- **Post content** (title, summary, body, event place, link labels, kind chips) ships in both languages inside `data-lang="en"` / `data-lang="es"` wrappers. i18n.js toggles them; nothing is in `en.json`. See the data-lang table in the i18n section.
+- **Page chrome** (section label, headline, "Read more", "Past", "RSVP", "The receipt:", the join pill, and the strip labels) goes through the `latest.*` keys in `en.json` / `es.json` as usual.
+
+### The receipt line
+
+Every post ends its body with a dashed-stamp link, "The receipt: <label>" / "El comprobante: <label>", built from `source` (`latest.receipt` plus the label). It is the same dashed-stamp look as the summer band's press tag. Press is shown only as this receipt; the post text speaks as the campaign ("we") about our own record, never "X reported that" (see `voice.md`). `source.href` can be an outside URL (opens in a new tab) or a site path such as `/platform/`.
+
+### Rules for every post
+
+1. **Verified facts only.** Every name, number, date, time and address must appear in the linked source. If it is not in a source, leave it out. Never invent a time, speaker, giveaway, format or location.
+2. **Every post needs a source.** No source, no post. The build enforces the field; a human or the sweep enforces that the source says what the post says.
+3. No emdashes, never name an opponent, goals are floors not caps, real Spanish for Pilsen and La Villita. The full list is in NEWS-README.md.
+4. Time-bound posts get an `expires` date so they leave the home strip.
+5. After editing, run `npm run build`; fix whatever it reports before pushing.
+
+---
+
+## The Petition Ask
+
+During petition season (filing window October 19 to 26, 2026) the home page and closing band carry a quiet "Sign the petition" link.
+
+- **Target:** `/volunteer#sign-petition`, the id on the `<section>` in [PetitionBlitz.astro](src/components/volunteer/PetitionBlitz.astro). It scrolls to the petition card, whose button ("Bring the Petition to Me") continues to `#signup`.
+- **Why not `#petition`:** [PetitionModal.astro](src/components/PetitionModal.astro) intercepts every link whose `href` contains `#petition` (`a[href*="#petition"]`) and opens the modal instead of navigating. A real anchor named `petition` would never scroll. Hence `sign-petition`. `news.json` links to petition use the same anchor.
+- **Where it appears:** the hero ([Hero.astro](src/components/Hero.astro), `.hero-petition-link`, directly under the Knock Doors button, copy `hero.petition_link`), the closing band ([RoadCTA.astro](src/components/RoadCTA.astro), `.road-petition-link`, copy `road.petition_link`, shown on every page that ends with RoadCTA), and the petition card on /volunteer.
+- **Expiry convention:** each of these carries `data-expires="2026-10-26"`. NextUp's script removes any `[data-expires]` element once that day has passed (after 23:59:59 local), so the link vanishes on October 27 without a deploy. When you add another petition link, copy the attribute exactly (RoadCTA is the model) and use `/volunteer#sign-petition`. After filing closes, the CTA elements can be deleted outright in a later cleanup.
+
+---
+
 ## Hero Video Background — CRITICAL
 
-The homepage hero ([src/components/Hero.astro](src/components/Hero.astro)) uses a **YouTube iframe as a background video**, not a static image.
+The homepage hero ([src/components/Hero.astro](src/components/Hero.astro)) uses a **self-hosted `<video>`** as a background. There is no YouTube iframe anywhere on the site any more.
+
+### Files
+
+| File | Role |
+|---|---|
+| `public/video/hero-loop.mp4` | The muted background loop (`autoplay muted loop playsinline preload="metadata"`) |
+| `public/video/hero-sound.mp4` | The "Watch with Sound" copy; also the only video on the Links page (with native `controls`) |
+| `public/video/hero-poster.jpg` | `poster` for both; stays up when autoplay is blocked or the visitor prefers reduced motion |
+
+Always reference them as `${base}/video/...`. The `<video>` carries `data-src-loop` and `data-src-sound`; the script swaps between them. Replacing a video means replacing the file (same name) and keeping the poster in sync.
 
 ### Architecture
 
 ```
 .hero
-├── .hero-video-bg         (YouTube iframe with cover-fill trick)
-├── .hero-gradient-overlay (dark→blue gradient on top of video)
-├── .hero-content-overlay  (badge, headline, sub, CTA, context)
-└── .hero-sound-btn        (bottom-right button toggling mute + controls)
+├── .hero-video-bg
+│   ├── .hero-video-container  (#heroVideoContainer)
+│   │   └── <video class="hero-video" id="heroVideo">
+│   └── .hero-gradient-overlay (scrim on top of the video)
+├── .hero-content-overlay      (badge, headline, secondary line, CTA, petition link, urgency)
+├── .hero-scroll-cue
+└── .hero-sound-btn            (bottom-right: Watch with Sound / return)
 ```
 
-### The Cover-Fill Trick
+### Cover fill and `object-position` per viewport
 
-YouTube iframes don't natively "object-fit: cover" — the workaround is to oversize the iframe and translate-center it:
+The video is `position: absolute; inset: 0; object-fit: cover`. A 16:9 frame in a different box crops, so `object-position` aims the crop at the part of the frame that matters (Byron's paper card is on the left; placards, receipts and the end panel are on the right two thirds):
 
-```css
-.hero-video-container iframe {
-  width: 177.78vh;   /* 16:9 ratio relative to viewport height */
-  min-width: 100%;
-  height: 56.25vw;   /* 16:9 ratio relative to viewport width */
-  min-height: 100%;
-  transform: translate(-50%, -50%);
-  pointer-events: none; /* prevent clicks on bg video */
-}
-```
+| Viewport | Rule | Why |
+|---|---|---|
+| Default | `50% 50%` | Centered |
+| Phones (`max-width: 767px`) and portrait up to 1366px | `9% 50%` | A tall box shows a narrow slice; aim it at the paper card on the left |
+| Landscape, `min-width: 768px` | `30% 30%`, and `.hero-video-bg` starts at `top: var(--nav-height)` | The strip behind the translucent nav is `--cream`, so the top placard line is not hidden by the fixed nav; wider-than-16:9 boxes trim the top a little and the bottom more, keeping the caption band in view |
 
-The iframe is sized to whichever dimension fills the larger axis, then centered with `translate(-50%, -50%)`. This eliminates black bars at any aspect ratio.
+On landscape the gradient scrim is weighted to the left (navy, about 0.86 opacity at the left edge fading to 0 by 55%), because the text column sits over the paper card. Content must end before about 37% of the frame, where the story starts.
 
-### Sound Toggle Behavior
+### The thinned column
 
-The `.hero-sound-btn` swaps the iframe `src` to toggle YouTube parameters:
-- **Muted (default)**: `?autoplay=1&mute=1&loop=1&playlist=...&controls=0&showinfo=0&modestbranding=1&playsinline=1`
-- **Unmuted (on click)**: rewrites `controls=0` → `controls=1` and `mute=1` → `mute=0`
+The hero text column was cut so the video carries the story:
 
-When unmuted:
-- `.hero-content-overlay` and `.hero-gradient-overlay` get `.faded-out` (opacity 0, pointer-events none)
-- `.hero-video-container` gets `.video-watching` — iframe shrinks to fit the viewport with padding, gains `pointer-events: auto` so the user can interact with the player
+- `.hero-summary` (the long "Over 800 units..." paragraph) and `.hero-receipts` (the four number chips) are `display: none` on every viewport. Their copy (`hero.summary`, `hero.chip_*`) stays in the markup and JSON; both facts are shown lower on the page.
+- `.hero-narrative-secondary` (the "running for a third term" paragraph) shows only on roomy desktop; it is hidden at `max-width: 1023px`, in portrait, and at `max-height: 820px`.
+- Landscape: the Knock Doors button and the urgency stamp are held to one line in both languages (`white-space: nowrap`, fluid font size).
 
-Clicking again re-mutes, restores overlays, and removes controls.
+### Autoplay retry
 
-### Changing the Video
+Some browsers reject the first muted `play()` before the file is ready or before any interaction, so the script retries, in loop mode only (not while the sound copy is playing, and never with reduced motion): on the video's `canplay`, on the first `pointerdown`, `touchstart`, `scroll` or `keydown` (each registered once), and on `visibilitychange` back to visible. If play is still blocked the poster simply stays up. With `prefers-reduced-motion: reduce` the video is paused and `autoplay` removed.
 
-Search for `ouSFDZfJu-E` (appears twice — once in the iframe `src`, once in the `playlist=` parameter so the loop works). Both must change together. The same video ID is also used by the Links page (with `controls=1` from the start).
+### Sound toggle
+
+`.hero-sound-btn` calls `enterSound()` / `exitSound()`:
+
+- **Enter:** `loop = false`, `muted = false`, `controls = true`, `aria-hidden` removed, source swapped to `hero-sound.mp4`, `currentTime = 0`, play. The content overlay and gradient get `.faded-out` (opacity 0, no pointer events) and the container gets `.video-watching`: the video switches to `object-fit: contain` on navy with padding and live controls.
+- **Exit** (second click, or the sound copy's `ended` event): the reverse, back to `hero-loop.mp4`, muted, looping.
+- The button label and `aria-label` are re-synced from `hero.sound_watch` / `hero.sound_return` on every language toggle (i18n.js rewrites the span, so `syncLabel()` runs after `bsl:langchange`).
+
+### The Links page video
+
+[links.astro](src/pages/links.astro) shows a plain `<video controls playsinline preload="metadata" poster=hero-poster.jpg>` whose only source is `hero-sound.mp4`: the sound copy, with sound and controls from the start, not the muted loop.
 
 ### Hero Text Hierarchy
 
 ```
 .hero-badge                — hero.badge           (i18n)
 .hero-narrative            — wraps two i18n spans:
-  ├── <span data-i18n="hero.narrative_lead">  (intro sentences ending with "…safer when")
-  └── <strong .hero-tagline-highlight data-i18n="hero.tagline">  (orange uppercase callout, "everybody has a home and everybody eats.")
-.hero-narrative-secondary  — hero.narrative_run   (i18n, the November 3rd Independent run paragraph)
-.btn .hero-cta             — hero.cta → opens petition modal via href="#petition"
-.hero-context              — hero.context         (i18n, the long paragraph)
+  ├── <span data-i18n="hero.narrative_lead">  (intro sentences ending "A third term for")
+  └── <strong .hero-tagline-highlight data-i18n="hero.tagline">  (orange uppercase callout, "the 25th Ward.")
+.hero-narrative-secondary  : hero.narrative_run   (desktop only, see above)
+.btn .hero-cta             : hero.cta → /volunteer#signup ("Knock Doors With Us")
+.hero-petition-link        : hero.petition_link → /volunteer#sign-petition (data-expires="2026-10-26"; see The Petition Ask)
+.hero-summary, .hero-receipts : hidden everywhere (see thinned column)
+.hero-urgency              : hero.urgency_label / data-days-until="2027-02-23" / hero.urgency_label2
 ```
 
-**Why the headline is split into two i18n spans:** the iconic phrase "everybody has a home and everybody eats." needs to render with different typography (display font, uppercase, orange) inside the same paragraph as the surrounding narrative. Because `i18n.js` overwrites `textContent` (and would wipe any nested `<strong>` inside a single `data-i18n` element — see Gotcha #3), the lead sentences and the highlighted phrase live on two sibling elements that each carry their own `data-i18n` key. Keep this split if you edit the copy; merging into one key will lose the styling.
+**Why the headline is split into two i18n spans:** the tagline needs different typography (display font, uppercase, orange) inside the same paragraph as the lead. Because `i18n.js` overwrites `textContent` (Gotcha #3), the lead and the highlight live on two sibling elements that each carry their own `data-i18n` key. Keep this split if you edit the copy.
+
+The urgency stamp's day count is filled by `motion.js`; on the eve of the election `hero.urgency_label2_one` ("day to go.") is swapped in and re-applied after language toggles.
+
+---
+
+## Summer Band (AnointmentBanner)
+
+[src/components/AnointmentBanner.astro](src/components/AnointmentBanner.astro), `id="anointment"`, on the home page after the Latest strip. Label "This Summer", headline "The Ward Is a Different Story", one paragraph (`anointment.b1`), a gold kicker line, then the actions row.
+
+- **Single column, no photo.** The old two-column layout with the Chuy Garcia photo and its credit is gone; `.anointment-content` is capped at 780px and `.anointment-inner` is a flex column. (Two leftover `grid-template-columns: 1fr` rules remain in the media queries and do nothing.) The `Chuy Garcia.jpeg` entry in the image table is no longer used by it.
+- **Actions row:** the orange "Read the Full Story" button (`anointment.cta`, to /movement) and the **Block Club receipt link** (`.anointment-press`, `anointment.press`: "The receipt: Block Club Chicago, July 21, 2026"), styled as the dashed stamp: 2px dashed cream border at 60% opacity, 3px radius, small uppercase display type, `rotate: -1deg`, hover turns gold. It opens in a new tab with `rel="noopener noreferrer"`. This dashed-stamp receipt look is the site-wide convention (also the post receipt in /news).
+- Blue background with a slanted top edge (`::before`, `skewY(-1.5deg)`) that blends into the cream-light Latest strip above it, which is why the strip adds extra bottom padding.
+- Copy rule: the band speaks as the campaign; the press link is only a trailing receipt. Do not name anyone behind the ballot objections.
 
 ---
 
@@ -486,59 +611,48 @@ PlatformHero, MeetHero, MachineHero, and VolunteerHero all share an identical st
 
 ## Platform / Issues Content — CRITICAL
 
-### Two Components, Different Purposes
+### The walk card is the source of truth
 
-| Component | File | Page | Style | Planks Shown |
-|---|---|---|---|---|
-| `PlatformGrid.astro` | [src/components/PlatformGrid.astro](src/components/PlatformGrid.astro) | `/` (homepage) | Summarized 1-paragraph descriptions | 4 of 7 |
-| `PolicyGrid.astro` | [src/components/platform/PolicyGrid.astro](src/components/platform/PolicyGrid.astro) | `/platform` | Verbatim multi-paragraph candidate text | All 7 |
+The campaign's printed walk card is the source of truth for the **nine results** and the **eight planks**. The numbers on it ($6.4M, $7M+, 800+ units, 50 percent) are **campaign-official**: do not round, "improve", recompute or soften them, and do not add a number the card does not carry. If the card and a component disagree, the card wins. Both lists are in the card's order. The commit "Align the site to the campaign's walk card" is where the site was brought into line.
 
-### The 7 Platform Planks (exact verbatim titles)
+### Components, different purposes
 
-1. **Housing for every veteran and all our neighbors**
-2. **Medicare for all**
-3. **Green jobs. Local economies. A livable future.**
-4. **Abolishing ICE & decriminalization of migration**
-5. **No more tax dollars for war in Iran and genocide in Israel**
-6. **Democracy for the people, not for billionaires and corporations**
-7. **Literacy, Curiosity, Creativity, and Inspiration Now**
+| Component | File | Page | Content |
+|---|---|---|---|
+| `PlatformGrid.astro` | [src/components/PlatformGrid.astro](src/components/PlatformGrid.astro) | `/` | "Byron Gets Results": the nine results |
+| `UpNext.astro` | [src/components/UpNext.astro](src/components/UpNext.astro) | `/` and `/platform` | "Up Next": the eight planks for the next term |
+| `PolicyGrid.astro` | [src/components/platform/PolicyGrid.astro](src/components/platform/PolicyGrid.astro) | `/platform` | Eight full-bleed photo bands with the platform's long-form text |
 
-### Homepage Cards (PlatformGrid.astro) — only 4 shown
+### "Byron Gets Results" (`PlatformGrid.astro`, namespace `platform`)
 
-Cards: Housing, Medicare for All, Green Jobs, Democracy. Each card has:
-- `data-accent="<plank>"` attribute (housing/healthcare/economic/democracy) — currently unused for styling but present for future per-card theming
-- Inline SVG icon
-- `<h3 class="card-title" data-i18n="platform.{plank}.title">`
-- `<p class="card-desc" data-i18n="platform.{plank}.desc">`
-- `.card-accent-line` that fills on hover
+- Section `id="platform"`. Header keys: `platform.label`, `platform.headline`, `platform.sub`, closing button `platform.cta` (to /platform).
+- Nine taped result cards in an ordered list, keys **`platform.r1` to `platform.r9`**, each an object with `title` and `desc` (`platform.r3.title`, `platform.r3.desc`). The component holds the English fallback in a `results` array and renders `data-i18n={`platform.${key}.title`}`.
+- **Stamps** (the dashed number at the top right of a card) appear only where the card carries a number: r1 `800+`, r3 `50%`, r7 `$7M+`, r8 `$6.4M`. Stamps are hardcoded in the array, not translated. Cards without a number get no stamp.
+- Card order, each also a nested object in both JSON files: r1 affordable homes (800+), r2 tenant protections, r3 crime down by half (50%), r4 Danny Solis to the Illinois Supreme Court, r5 clinics, r6 air quality network, r7 money for local businesses ($7M+), r8 participatory budgeting streets ($6.4M), r9 sanctuary policies.
+- The old four-card `platform.{housing,healthcare,economic,democracy}` structure is gone.
 
-i18n keys: `platform.housing.title`, `platform.healthcare.title`, `platform.economic.title`, `platform.democracy.title` (and `.desc` for each).
+### "Up Next" (`UpNext.astro`, namespace `upnext`)
 
-### Full Platform Page (PolicyGrid.astro) — all 7 in 2-col grid
+- Section `id="up-next"`. Keys `upnext.label`, `.headline`, `.intro`, **`.p1` to `.p8`** (the eight planks as a numbered ledger on ruled paper), `.pull` (the coalition line, "Byron builds coalition with community, not billionaires."), `.cta` ("Knock Doors With Us", to `/volunteer#signup`).
+- **Props:** `tone` (`'cream'` default for the home page, `'light'` for pages whose section above is already cream) and **`pull`** (default `true`).
+- **`pull={false}` on /platform:** [platform.astro](src/pages/platform.astro) renders `<UpNext tone="light" pull={false} />` because the Unbought banner directly below carries the same line as its kicker (`issues.unbought_kicker`). Showing both would repeat it back to back. On the home page `pull` stays on.
+- The planks are in the card's order and wording; edit all three places (see triple-sync below).
 
-Each block has `id="<slug>"` for deep-linking (`/platform#housing`, etc.). Slugs: `housing`, `healthcare`, `economic`, `immigration`, `democracy`, `education`, `foreign-policy`.
+### /platform page order
 
-Grid layout is hand-tuned so visual rows balance:
-- **Row 1:** Housing (3 ¶) + Medicare (2 ¶) — both long
-- **Row 2:** Green Jobs (2 ¶) + Democracy (1 long ¶)
-- **Row 3:** ICE (1 ¶) + Education (1 ¶)
-- **Row 4:** Foreign Policy — `.policy-block-wide` with `grid-column: 1 / -1` (full width)
+`PlatformHero` > `AnotherWorld` (thin bridge band, `issues.another_world`) > `PolicyGrid` > `UpNext` (light, no pull) > `UnboughtBanner`.
 
-If you add or remove a plank, **rebalance the row pairings** or one column will become much taller than the other.
+### PolicyGrid (`/platform`)
 
-i18n keys: `issues.{slug}_title`, `issues.{slug}_desc` (note underscore, not nested object — different style from `platform.*`).
+Eight bands, each `id` a deep-link target, mirrored left/right with a photo from `public/images/issues/`: `public-safety`, `housing`, `schools`, `environment`, `gender-equity`, `constituent-services`, `economic`, `transparency`. Keys are flat with underscores: `issues.{slug}_title`, `issues.{slug}_desc`, plus `_desc2`, `_desc3` for further paragraphs (slug with underscores, e.g. `issues.public_safety_title`, `issues.gender_equity_desc2`). Campaign-authored copy here is frozen; only presentation changes. If you add a paragraph, add the matching `_descN` key to both JSON files.
 
-### Multi-Paragraph Translation Convention
+### Updating Platform Copy: Triple-Sync Required
 
-PolicyGrid blocks with more than one paragraph use numbered keys: `issues.housing_desc`, `issues.housing_desc2`, `issues.housing_desc3` for Housing's three paragraphs; `issues.healthcare_desc` + `_desc2` for Medicare; `issues.economic_desc` + `_desc2` for Green Jobs. Single-paragraph blocks (Immigration, Democracy, Education, Foreign Policy) just use `issues.{plank}_desc`. Add a `_descN` key for every new paragraph you introduce.
-
-### Updating Platform Copy — Triple-Sync Required
-
-If you change any plank title or description:
-1. Edit the `.astro` file (PlatformGrid for homepage, PolicyGrid for platform page)
-2. Edit the matching key in [src/i18n/en.json](src/i18n/en.json) — **note `platform.*` is nested objects, `issues.*` is flat with underscores**
-3. Edit the matching key in [src/i18n/es.json](src/i18n/es.json)
-4. **If a title appears in both PlatformGrid and PolicyGrid (e.g. Housing), you have to update both `platform.housing.title` AND `issues.housing_title`.**
+For any result, plank or band text:
+1. Edit the `.astro` fallback (PlatformGrid `results`, UpNext `planks`, or PolicyGrid markup).
+2. Edit the key in [src/i18n/en.json](src/i18n/en.json). Note `platform.*` and `upnext.*` differ in shape: `platform.rN` is a nested `{title, desc}` object, `upnext.pN` is a flat string, `issues.*` is flat with underscores.
+3. Edit the same key in [src/i18n/es.json](src/i18n/es.json).
+4. If a number changes, check it against the walk card first, then grep for it (hero summary, `bio.*`, news posts, `issues.*`) so the sacred numbers stay consistent everywhere.
 
 ---
 
@@ -623,7 +737,7 @@ Five accounts in this exact order: Instagram, Facebook, TikTok, YouTube, X (Face
 ### Important Notes
 
 - **Uses `<Layout>`** — so it inherits Layout's PetitionModal, scroll observer, and i18n init script. (The previous design.md said it bypasses Layout — that's wrong; it just omits Navbar and Footer.)
-- **No i18n** — every string is hardcoded English by design.
+- **Almost no i18n.** Strings are hardcoded English by design; the two exceptions are `linkspage.canvass_team` and `linkspage.petition_rsvp` (the canvass-team and petition-canvass RSVP strips).
 - **Internal links open in `target="_blank"`** — this is intentional because the page is meant for social-bio link clicks where opening a new tab is the expected behavior.
 
 ### Page Structure
@@ -632,9 +746,9 @@ Five accounts in this exact order: Instagram, Facebook, TikTok, YouTube, X (Face
 .links-bg (fixed gradient: dark blue → black)
 .links-container (max-width 480px, centered)
 ├── .links-header     (logo, "Byron Sigcho-Lopez", tagline)
-├── .links-video      (YouTube embed — same video ID as hero, ouSFDZfJu-E)
-├── .links-list       (7 taped strips, in this order: home, volunteer (#signup, orange .link-strip-primary), canvass map, Ward Night, donate, platform, movement)
-├── .links-socials    (5 round social buttons)
+├── .links-video      (self-hosted <video controls>, hero-sound.mp4 with hero-poster.jpg; the sound copy, not the muted loop)
+├── .links-list       (taped strips: home, volunteer (#signup, orange .link-strip-primary), canvass team form, petition canvasses RSVP, canvass map, Ward Night, donate, platform, movement; read the file for the current order)
+├── .links-socials    (5 round social buttons: Instagram, Facebook, TikTok, YouTube, X)
 ├── .links-divider    ("Join the Movement" with horizontal rules)
 ├── .links-form-wrap  (clipboard with RaiseMore iframe)
 └── .links-footer     ("Paid for by..." line)
@@ -799,14 +913,13 @@ Many sections have stable IDs that act as deep-link targets. **Don't rename thes
 
 | Page | Anchor IDs |
 |---|---|
-| `/` | `#hero`, `#meet`, `#platform`, `#anointment` |
-| `/platform` | `#platform-hero`, `#issues`, `#housing`, `#healthcare`, `#economic`, `#immigration`, `#foreign-policy`, `#democracy`, `#education`, `#unbought` |
+| `/` | `#hero`, `#show-up`, `#the-promise`, `#meet`, `#platform` (results), `#up-next`, `#latest`, `#anointment`, `#next-up` |
+| `/platform` | `#issues`, `#public-safety`, `#housing`, `#schools`, `#environment`, `#gender-equity`, `#constituent-services`, `#economic`, `#transparency`, `#up-next`, `#unbought` |
 | `/meet` | `#meet-hero`, `#early-life`, `#ward-record`, `#elected-by-the-people`, `#family` |
 | `/movement` | `#machine-hero`, `#the-movement`, `#the-machine`, `#ballot-fight` |
-| `/` (new) | `#show-up` |
 | `/events` | `#events-hero`, `#upcoming`, `#every-week`, `#dates`, `#canvass-team`, `#signup` |
-| `/volunteer` | `#volunteer-hero`, `#this-week`, `#find-your-post`, `#signup`, `#ways-to-fight`, `#petition-blitz`, `#next-up` |
-| **Global** | `#petition` — **does NOT scroll**; opens Petition Modal |
+| `/volunteer` | `#volunteer-hero`, `#this-week`, `#find-your-post`, `#signup`, `#ways-to-fight`, `#sign-petition` (the petition card), `#next-up` |
+| **Global** | `#petition`: **does NOT scroll**; opens Petition Modal. Use `#sign-petition` for the real anchor |
 
 Treat `#petition` as a reserved sentinel — never use it as an actual anchor target.
 
@@ -863,7 +976,7 @@ Plus one local breakpoint:
 
 ### GitHub Pages Base Path
 
-The site deploys to GitHub Pages at `/BSL-for-Congress/`. **All paths must respect the base URL.**
+The site deploys to GitHub Pages on `https://byronfor25.com` with `base: '/'`. **All paths must still go through the base helper.**
 
 ```js
 // In every .astro frontmatter:
@@ -876,7 +989,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 The `replace(/\/$/, '')` strips a trailing slash so concatenation always produces clean paths. The base is also exposed on `<body data-base={base}>` if a script needs it client-side.
 
-**Never hardcode `/images/...` or `/platform`** — they will 404 on GitHub Pages. Always use `${base}/...`.
+**Never hardcode `/images/...` or `/platform`.** Always use `${base}/...`.
 
 This rule includes:
 - All `<a href>` to internal pages
@@ -899,7 +1012,6 @@ All static images live in [public/images/](public/images/):
 | `byron-cumberland-graduation.jpg` | EarlyLife | President's Award |
 | `byron-school-rally.jpg` | WardRecord blue banner | School rally |
 | `byron-family-triplets.jpg` | SocialistValues family closing | Family with triplets |
-| `Chuy Garcia.jpeg` | AnointmentBanner | **⚠️ filename has a SPACE** — needs URL encoding if referenced anywhere new; in the existing template it works because Astro normalizes the path |
 | `hero-rally.jpeg` | Layout.astro `<head>` | OG/Twitter card image (every page) |
 | `machine-hero-split.png` | MachineHero | /movement parallax bg |
 | `movement-frontlines.png` | MovementSection | Image stack |
@@ -937,8 +1049,9 @@ Five icons, in the order of this table (Instagram, Facebook, TikTok, YouTube, X)
 | RaiseMore signup form | `https://www.raisemore.app/forms/signup/org_3CzwGfMfnK1106k0fBTvwYbnDKI?horizontal=false` | Footer + Links clipboards |
 | Google Form (Petition) | ID `1FAIpQLSeYiVz1TB2tsAFdh1OakH62dM7XGCNBnaJz57Mn1beP0dqE6A` | PetitionModal |
 | Google Form (Volunteer) | ID `1FAIpQLSeUKnQVp4auTqHdFZeDrGlAOYAjmOO0sE19Xm11Pee2ayuuWQ` | volunteer/SignupForm |
-| YouTube hero / links video | Video ID `ouSFDZfJu-E` | Hero (autoplay muted bg + sound toggle) + Links page |
-| External news link | Chicago Tribune article on IL-04 anointment | AnointmentBanner CTA |
+| Hero / links video | Self-hosted `public/video/hero-loop.mp4`, `hero-sound.mp4`, `hero-poster.jpg` | Hero (muted loop + sound toggle) + Links page (sound copy) |
+| Supabase (planned) | Project `byronfor25`, region `us-east-2` | Not live; see Backend (planned) |
+| Press receipt | Block Club Chicago, July 21, 2026 | AnointmentBanner dashed stamp |
 
 ---
 
@@ -975,12 +1088,44 @@ npm run preview            # preview built site locally
 
 ```js
 export default defineConfig({
-  site: 'https://awaisqazi.github.io',
-  base: '/BSL-for-Congress',
+  site: 'https://byronfor25.com',
+  base: '/',
 });
 ```
 
-The `base` path drives every `${base}/...` reference. If you ever move to a custom domain at the root, drop or change `base` and audit the codebase for any hardcoded `/BSL-for-Congress/` strings.
+The site is served from the custom domain root (`public/CNAME`), so `base` is `/`. Deploy is a push to `main`; the GitHub Pages workflow (`.github/workflows/deploy.yml`) builds and publishes. The `${base}/...` convention is kept everywhere so a base path could return without a rewrite, but nothing hardcodes one. The old `awaisqazi.github.io/BSL-for-Congress/` address redirects to the domain.
+
+---
+
+## Backend (planned)
+
+Nothing here is live. The full plan is in [supabase/README.md](supabase/README.md) (what is stored, the safety model, setup steps) and [supabase/site-integration.md](supabase/site-integration.md) (the code changes to make once the project exists). The SQL is in `supabase/migrations/`.
+
+| Item | Plan |
+|---|---|
+| Project | Supabase `byronfor25`, region East US (Ohio) `us-east-2` |
+| Tables | `volunteers`, `event_rsvps`, `petition_requests`, `actions`; views `campaign_daily_summary` and `rsvps_by_event` |
+| Access | **Insert-only** for the public role on a fixed column list: no reads, edits or deletes from the browser. Validation (ZIP, email shape, guest count, language) lives in the database. Honeypot field marks bots `flagged`. |
+| Keys | The project URL and publishable (anon) key are public by design. They go in as GitHub **repository variables** (not secrets), passed to the build as `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_ANON_KEY`. Unset variables leave the feature off. |
+| Client | About 40 lines of plain `fetch` in a new `src/scripts/supa.js`; no new script tag, nothing added to `Layout.astro` |
+| Dual-write | The Supabase insert is fire-and-forget, sent alongside the existing Google Form post. **It never blocks or replaces the Google post**: if Supabase is down, slow or unconfigured, visitors and the Google sheet see no difference. |
+| Frozen values | The Google Form action URLs, `entry.*` names and checkbox `value`s stay exactly as documented in [Forms & Embeds](#forms--embeds). The integration reads those existing names; it does not change the markup. |
+
+Until the project exists, do not add code that calls Supabase.
+
+---
+
+## Ops: Daily Sweep
+
+[ops/DAILY-SWEEP.md](ops/DAILY-SWEEP.md) is the runbook for the daily scheduled task that turns the campaign's public social posts and Chicago DSA events into "Latest" posts. The task has no memory of earlier sessions; the runbook is its whole brief. When news.json's schema or the sweep's allowed files change, update the runbook in the same change.
+
+**What it reads:** Instagram (@bslfor25, Byron's account, Chicago DSA), the Facebook page `bslfor25`, and Chicago DSA's events pages. Read only: it never likes, follows, comments, DMs or enters credentials, and it uses the in-app Browser pane or the Claude in Chrome extension, never the real Chrome app in headless or automation mode.
+
+**What it may change** (and nothing else): `src/data/news.json`, ledger rows in `src/components/NextUp.astro` (inside `.nextup-dates` only, in date order), and the matching `nextup.d_*` keys in `src/i18n/en.json` and `es.json`. It commits with a subject starting `Latest: `, adds files by name, and pushes to `main`.
+
+**What it may not change:** any other file; `bsl-social-videos/` or `remotion-video/`; settings, hooks, memory or CLAUDE.md; the frozen forms (`PetitionModal.astro`, `volunteer/SignupForm.astro`); the hand-curated `.nextup-card` flyers; existing published slugs (it corrects a verified fact only, and says so in its report).
+
+**Gates before it writes:** a clean working tree and not behind origin, then after editing a passing `npm run build`, en/es key parity, no emdash in `src`, forms unchanged, and a watched deploy. Any failure means it stops, leaves the tree as is and reports. Publishing rules are the same as for any post: verified facts only, a source on every post, no opponents, no cap-style goals. It reports in under 15 lines, including what it saw and did not publish.
 
 ---
 
@@ -994,7 +1139,7 @@ Run through this before you ship a change:
 - [ ] **PolicyGrid multi-paragraph?** Only ¶1 has `data-i18n`; ¶2/¶3 are static English. Add new keys if you need them translated.
 - [ ] **Sketch language swap** — Did you update both `data-src-en` and `data-src-es` if you changed the footer image?
 - [ ] **Base URL** — All internal links and image `src` values use `${base}/...`?
-- [ ] **Petition link reserved** — You did NOT use `href="#petition"` for an actual anchor target?
+- [ ] **Petition link reserved**: You did NOT use `href="#petition"` for an actual anchor target? Links that should scroll to the petition card use `/volunteer#sign-petition`, with `data-expires="2026-10-26"` if season-bound.
 - [ ] **Anchor-IDs unchanged** — If you renamed a section ID, did you grep for inbound links (especially the `/platform#<plank>` deep links)?
 - [ ] **Platform consistency** — If you updated PlatformGrid (homepage), did you also check PolicyGrid (`/platform`) for the same plank? They share the candidate's verbatim text.
 - [ ] **Mobile responsive** — Tested at 1024 and 768 breakpoints? Sticky columns disabled?
@@ -1003,6 +1148,8 @@ Run through this before you ship a change:
 - [ ] **Build clean** — `npx astro build` succeeds with no errors?
 - [ ] **Google Form `entry.NNNN` IDs** — If you added a form field, the ID matches the actual Google Form question ID? (Wrong ID = silent data loss.)
 - [ ] **Three sets of social icons** — If you updated a social URL, you updated it in Navbar, Footer, AND Links?
-- [ ] **YouTube video** — If you changed the hero video, you updated **both** the iframe `src` AND the `playlist=` query param (so the loop works)?
+- [ ] **Hero video**: If you changed a video, did you replace the file in `public/video/` (loop, sound copy and poster stay in sync) and check the phone and landscape `object-position` crops?
+- [ ] **Walk card numbers**: Do the nine results and eight planks still match the printed walk card, and the stamps (800+, 50%, $7M+, $6.4M) agree everywhere they appear?
+- [ ] **Latest posts**: Does every post have a source, both languages, no emdash, and an `expires` if time-bound? Does `npm run build` pass?
 - [ ] **OG image** — Layout.astro hardcodes `/images/hero-rally.jpeg` for every page; that file still exists if you removed the homepage hero image?
 - [ ] **No em-dashes** — Copy should use regular dashes (` - `), not em-dashes (`—`). Check `.astro`, `en.json`, and `es.json`.
