@@ -97,7 +97,21 @@ Never publish:
 - Amplifying fights that are not the ward's (the Pritzker exchange), the federal ballot-access suit, or personal/family news.
 - Claims contradicting the site's verified facts (see `voice.md`; Chinatown is not part of the 25th; never state that anyone
   coordinated the ballot objections).
-When in doubt, do not publish: list it in the report under "seen, not published".
+- Memes, jokes, reaction images, screenshots of other people's posts, trend formats, and anything whose only point is humor.
+- Reposts or shares from accounts that are not the campaign, Byron, Chicago DSA, a slate member's campaign, an endorsing
+  organization, the 25th Ward office, the Chicago Board of Elections, or an established news outlet. A repost from an
+  unknown page, a personal account, an anonymous page or a page with no track record is not a source, even if the
+  campaign shared it.
+- National or citywide content with no ward or campaign tie (general political commentary, other races, celebrity posts).
+- Anything off-tone for the site: profanity, attacks on people, speculation, unverified rumors, fundraising for other causes.
+- Collab posts: publish only the part that concerns Byron, the slate or the 25th Ward, and only with its own source.
+
+Relevance test, all four must hold: (1) it is about Byron, the 25th Ward campaign, the Socialist Slate, or a ward event
+neighbors can attend; (2) it comes from an account or outlet in the allowed list above; (3) it would read naturally on a
+campaign website in the voice of voice.md; (4) a volunteer could act on it or learn a verified fact from it. If any one fails,
+leave it out.
+
+When in doubt, do not publish: list it in the report under "seen, not published", with the reason.
 
 ## 3. De-duplication
 
