@@ -1,0 +1,326 @@
+[
+  {
+    "id": "canvass-2026-10-11-anticonquista",
+    "kind": "canvass",
+    "title": {
+      "en": "Petition Canvass",
+      "es": "Caminata para la petición"
+    },
+    "line": {
+      "en": "Meet at the cafe, then head out on the doors to gather the signatures that put Byron on the February 23 ballot.",
+      "es": "Nos encontramos en el café y salimos a tocar puertas para juntar las firmas que ponen a Byron en la boleta del 23 de febrero."
+    },
+    "start": "2026-10-11T11:00:00-05:00",
+    "end": "2026-10-11T14:00:00-05:00",
+    "location": "Anticonquista Cafe",
+    "address": "952 W 18th St, Chicago",
+    "rsvp": "https://actionnetwork.org/events/byronfor25-1025-signature-collection-canvass-2",
+    "action": {
+      "en": "RSVP",
+      "es": "Confirmar asistencia"
+    },
+    "sponsor": "Chicago DSA Southside Branch",
+    "source": "https://actionnetwork.org/events/byronfor25-1025-signature-collection-canvass-2",
+    "expires": "2026-10-11"
+  },
+  {
+    "id": "canvass-2026-10-18-cermak",
+    "kind": "canvass",
+    "title": {
+      "en": "Petition Canvass",
+      "es": "Caminata para la petición"
+    },
+    "line": {
+      "en": "Knock doors with neighbors and gather the signatures that put Byron on the February 23 ballot.",
+      "es": "Toca puertas con tus vecinos y junta las firmas que ponen a Byron en la boleta del 23 de febrero."
+    },
+    "start": "2026-10-18T11:00:00-05:00",
+    "end": "2026-10-18T14:00:00-05:00",
+    "location": {
+      "en": "25th Ward IPO office",
+      "es": "Oficina del 25th Ward IPO"
+    },
+    "address": "2102 W Cermak Rd, Chicago",
+    "rsvp": "https://actionnetwork.org/events/byronfor25-1010-signature-collection-canvass-2/",
+    "action": {
+      "en": "RSVP",
+      "es": "Confirmar asistencia"
+    },
+    "sponsor": "Chicago DSA Southside Branch",
+    "source": "https://actionnetwork.org/events/byronfor25-1010-signature-collection-canvass-2/",
+    "expires": "2026-10-18"
+  },
+  {
+    "id": "canvass-2026-10-21-cermak",
+    "kind": "canvass",
+    "title": {
+      "en": "Weeknight Petition Canvass",
+      "es": "Caminata entre semana para la petición"
+    },
+    "line": {
+      "en": "Come after work, knock doors with neighbors, and gather the signatures that put Byron on the ballot.",
+      "es": "Ven después del trabajo, toca puertas con tus vecinos y junta las firmas que ponen a Byron en la boleta."
+    },
+    "start": "2026-10-21T17:30:00-05:00",
+    "end": "2026-10-21T19:30:00-05:00",
+    "location": {
+      "en": "25th Ward IPO office",
+      "es": "Oficina del 25th Ward IPO"
+    },
+    "address": "2102 W Cermak Rd, Chicago",
+    "rsvp": "https://actionnetwork.org/events/byronfor25-1021-signature-collection-canvass/",
+    "action": {
+      "en": "RSVP",
+      "es": "Confirmar asistencia"
+    },
+    "sponsor": "Chicago DSA Southside Branch",
+    "source": "https://actionnetwork.org/events/byronfor25-1021-signature-collection-canvass/",
+    "expires": "2026-10-21"
+  },
+  {
+    "id": "canvass-2026-10-25-latteaa",
+    "kind": "canvass",
+    "title": {
+      "en": "Petition Canvass",
+      "es": "Caminata para la petición"
+    },
+    "line": {
+      "en": "The last Sunday before filing closes: knock doors and gather the signatures that put Byron on the ballot.",
+      "es": "El último domingo antes de que cierre la entrega: toca puertas y junta las firmas que ponen a Byron en la boleta."
+    },
+    "start": "2026-10-25T10:00:00-05:00",
+    "end": "2026-10-25T13:00:00-05:00",
+    "location": "Cafe Latteaa",
+    "address": "3536 W 26th St, Chicago",
+    "rsvp": "https://actionnetwork.org/events/byronfor25-1025-signature-collection-canvass/",
+    "action": {
+      "en": "RSVP",
+      "es": "Confirmar asistencia"
+    },
+    "sponsor": "Chicago DSA Southside Branch",
+    "source": "https://actionnetwork.org/events/byronfor25-1025-signature-collection-canvass/",
+    "expires": "2026-10-25"
+  },
+  {
+    "id": "petition-filing-2026",
+    "kind": "deadline",
+    "title": {
+      "en": "Petition filing at the Board of Elections",
+      "es": "Entrega de peticiones en la Junta Electoral"
+    },
+    "line": {
+      "en": "Candidates file their nominating petitions. The signatures we gather go in this week.",
+      "es": "Los candidatos entregan sus peticiones de nominación. Las firmas que juntamos se entregan esta semana."
+    },
+    "start": "2026-10-19",
+    "end": "2026-10-26",
+    "location": {
+      "en": "Chicago Board of Elections",
+      "es": "Junta Electoral de Chicago"
+    },
+    "address": null,
+    "rsvp": null,
+    "action": {
+      "en": "Add to calendar",
+      "es": "Agregar al calendario"
+    },
+    "sponsor": null,
+    "source": "https://cboeprod.blob.core.usgovcloudapi.net/prod/2026-08/2027%20Election%20Calendar-REV%2001-ADOPTED%2007-28-2026%20typo%20corrected.pdf",
+    "expires": "2026-10-26"
+  },
+  {
+    "id": "objections-2026",
+    "kind": "deadline",
+    "title": {
+      "en": "Objection period for candidate petitions",
+      "es": "Periodo de objeciones a las peticiones"
+    },
+    "line": {
+      "en": "Objections to candidate petitions can be filed in this window.",
+      "es": "En este periodo se pueden presentar objeciones a las peticiones de los candidatos."
+    },
+    "start": "2026-10-27",
+    "end": "2026-11-02",
+    "location": {
+      "en": "Chicago Board of Elections",
+      "es": "Junta Electoral de Chicago"
+    },
+    "address": null,
+    "rsvp": null,
+    "action": {
+      "en": "Add to calendar",
+      "es": "Agregar al calendario"
+    },
+    "sponsor": null,
+    "source": "https://cboeprod.blob.core.usgovcloudapi.net/prod/2026-08/2027%20Election%20Calendar-REV%2001-ADOPTED%2007-28-2026%20typo%20corrected.pdf",
+    "expires": "2026-11-02"
+  },
+  {
+    "id": "vote-by-mail-opens-2026",
+    "kind": "deadline",
+    "title": {
+      "en": "Vote-by-mail applications open",
+      "es": "Abren las solicitudes de voto por correo"
+    },
+    "line": {
+      "en": "Apply to vote by mail with the Chicago Board of Elections.",
+      "es": "Solicita votar por correo con la Junta Electoral de Chicago."
+    },
+    "start": "2026-11-25",
+    "end": null,
+    "location": {
+      "en": "Chicago Board of Elections",
+      "es": "Junta Electoral de Chicago"
+    },
+    "address": null,
+    "rsvp": null,
+    "action": {
+      "en": "Add to calendar",
+      "es": "Agregar al calendario"
+    },
+    "sponsor": null,
+    "source": "https://cboeprod.blob.core.usgovcloudapi.net/prod/2026-08/2027%20Election%20Calendar-REV%2001-ADOPTED%2007-28-2026%20typo%20corrected.pdf",
+    "expires": "2026-11-25"
+  },
+  {
+    "id": "early-voting-2027",
+    "kind": "deadline",
+    "title": {
+      "en": "Early voting can begin",
+      "es": "Puede comenzar la votación anticipada"
+    },
+    "line": {
+      "en": "Early voting starts no earlier than this date.",
+      "es": "La votación anticipada no empieza antes de esta fecha."
+    },
+    "start": "2027-01-14",
+    "end": null,
+    "location": {
+      "en": "Chicago Board of Elections",
+      "es": "Junta Electoral de Chicago"
+    },
+    "address": null,
+    "rsvp": null,
+    "action": {
+      "en": "Add to calendar",
+      "es": "Agregar al calendario"
+    },
+    "sponsor": null,
+    "source": "https://cboeprod.blob.core.usgovcloudapi.net/prod/2026-08/2027%20Election%20Calendar-REV%2001-ADOPTED%2007-28-2026%20typo%20corrected.pdf",
+    "expires": "2027-01-14"
+  },
+  {
+    "id": "registration-closes-2027",
+    "kind": "deadline",
+    "title": {
+      "en": "Regular voter registration closes",
+      "es": "Cierra el registro regular de votantes"
+    },
+    "line": {
+      "en": "Last day for regular registration. Grace registration follows.",
+      "es": "Último día del registro regular. Después sigue el registro de gracia."
+    },
+    "start": "2027-01-26",
+    "end": null,
+    "location": {
+      "en": "Chicago Board of Elections",
+      "es": "Junta Electoral de Chicago"
+    },
+    "address": null,
+    "rsvp": null,
+    "action": {
+      "en": "Add to calendar",
+      "es": "Agregar al calendario"
+    },
+    "sponsor": null,
+    "source": "https://cboeprod.blob.core.usgovcloudapi.net/prod/2026-08/2027%20Election%20Calendar-REV%2001-ADOPTED%2007-28-2026%20typo%20corrected.pdf",
+    "expires": "2027-01-26"
+  },
+  {
+    "id": "election-day-2027",
+    "kind": "election",
+    "title": {
+      "en": "Election Day",
+      "es": "Día de la Elección"
+    },
+    "line": {
+      "en": "Polls are open from 6 AM to 7 PM. The 25th Ward decides.",
+      "es": "Las urnas abren de 6 AM a 7 PM. El Distrito 25 decide."
+    },
+    "start": "2027-02-23T06:00:00-06:00",
+    "end": "2027-02-23T19:00:00-06:00",
+    "location": {
+      "en": "Your polling place in the 25th Ward",
+      "es": "Tu lugar de votación en el Distrito 25"
+    },
+    "address": null,
+    "rsvp": null,
+    "action": {
+      "en": "Add to calendar",
+      "es": "Agregar al calendario"
+    },
+    "sponsor": null,
+    "source": "https://cboeprod.blob.core.usgovcloudapi.net/prod/2026-08/2027%20Election%20Calendar-REV%2001-ADOPTED%2007-28-2026%20typo%20corrected.pdf",
+    "expires": "2027-02-23"
+  },
+  {
+    "id": "ward-night-weekly",
+    "kind": "wardnight",
+    "recurring": true,
+    "rule": "weekly:TU",
+    "title": {
+      "en": "Ward Night",
+      "es": "Noche del Distrito"
+    },
+    "line": {
+      "en": "The ward office, every Tuesday since 2019. Bring a question or come to help.",
+      "es": "La oficina del distrito, cada martes desde 2019. Trae una pregunta o ven a ayudar."
+    },
+    "when": {
+      "en": "Every Tuesday",
+      "es": "Cada martes"
+    },
+    "location": {
+      "en": "25th Ward office",
+      "es": "Oficina del Distrito 25"
+    },
+    "address": null,
+    "link": "https://25thward.org/",
+    "action": {
+      "en": "Plan your visit",
+      "es": "Planea tu visita"
+    },
+    "sponsor": null,
+    "source": "https://25thward.org/"
+  },
+  {
+    "id": "sunday-canvass-weekly",
+    "kind": "canvass",
+    "recurring": true,
+    "rule": "weekly:SU",
+    "title": {
+      "en": "Sunday Canvasses",
+      "es": "Caminatas de Domingo"
+    },
+    "line": {
+      "en": "Neighbors and the citywide crew, most Sundays. Find the shift nearest you on the map.",
+      "es": "Vecinos y el equipo de toda la ciudad, casi cada domingo. Encuentra el turno más cercano en el mapa."
+    },
+    "when": {
+      "en": "Most Sundays",
+      "es": "Casi cada domingo"
+    },
+    "location": {
+      "en": "The canvass map",
+      "es": "El mapa de caminatas"
+    },
+    "address": null,
+    "link": "https://canvass.chicagodsa.org",
+    "action": {
+      "en": "Find your shift",
+      "es": "Busca tu turno"
+    },
+    "sponsor": "Chicago DSA",
+    "source": "https://canvass.chicagodsa.org"
+  }
+]

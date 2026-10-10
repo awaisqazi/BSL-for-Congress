@@ -5,7 +5,9 @@
     "movement": "Maquinaria vs. Movimiento",
     "volunteer": "Voluntariado",
     "volunteer_cta": "Hazte voluntario/a",
-    "donate": "Donar"
+    "donate": "Donar",
+    "latest": "Lo último",
+    "events": "Preséntate"
   },
   "hero": {
     "badge": "REELIGE A BYRON SIGCHO-LOPEZ • EL LUCHADOR DEL PUEBLO",
@@ -545,6 +547,14 @@
     "dates_headline": "El Camino al 23 de Febrero",
     "d_filing_date": "19 al 26 de oct, 2026",
     "d_filing": "Registro de candidatos en la Junta Electoral",
+    "d_canvass18_date": "18 de oct, 2026",
+    "d_canvass18": "Caminata para la petición, 11 AM a 2 PM, 2102 W Cermak Rd",
+    "d_canvass21_date": "21 de oct, 2026",
+    "d_canvass21": "Caminata para la petición, 5:30 a 7:30 PM, 2102 W Cermak Rd",
+    "d_canvass25_date": "25 de oct, 2026",
+    "d_canvass25": "Caminata para la petición, 10 AM a 1 PM, Cafe Latteaa, 3536 W 26th St",
+    "d_objections_date": "27 de oct al 2 de nov, 2026",
+    "d_objections": "Periodo de objeciones a las peticiones de candidatos",
     "d_vbm_date": "25 de nov, 2026",
     "d_vbm": "Abren las solicitudes de voto por correo",
     "d_early_date": "14 de ene, 2027",
@@ -557,10 +567,61 @@
     "today_word": "Hoy",
     "now_word": "Ahora"
   },
+  "linkspage": {
+    "canvass_team": "Únete al equipo de caminatas",
+    "petition_rsvp": "Caminatas para la petición (confirma tu asistencia)"
+  },
   "bar": {
     "ask": "Toca puertas con nosotros.",
     "signup": "Apúntate",
     "canvass": "Busca una caminata",
+    "showup": "Preséntate",
     "dismiss": "Cerrar"
+  },
+  "latest": {
+    "label": "Lo último",
+    "headline": "Directo desde el distrito",
+    "sub": "Lo que construimos, dónde sumarte y el comprobante de cada palabra. Lo más nuevo primero.",
+    "cta": "Todo lo último",
+    "read": "Lee más",
+    "receipt": "El comprobante:",
+    "past": "Ya pasó",
+    "rsvp": "Confirma tu asistencia",
+    "event_label": "Marca la fecha",
+    "when": "Cuándo",
+    "where": "Dónde",
+    "links_label": "Próximos pasos",
+    "join_lead": "Cada historia aquí termina igual: ven a tocar puertas con nosotros.",
+    "join": "Toca Puertas con Nosotros"
+  },
+  "events": {
+    "label": "Preséntate",
+    "headline": "Las Próximas Puertas que Tocamos",
+    "sub": "Escoge un turno y trae a un vecino. Cada firma en la petición es el nombre de un vecino.",
+    "all_link": "Ver todas las fechas",
+    "empty": "Por ahora no hay turnos con fecha. Los turnos fijos de abajo siguen.",
+    "standing_wardnight": "Noche del Distrito, cada martes",
+    "standing_sunday": "Caminatas de domingo: busca tu turno",
+    "team_link": "¿No puedes en estas fechas? Únete al equipo de puertas",
+    "hosted_by": "Organiza:",
+    "add_calendar": "Agregar al calendario",
+    "today": "Hoy",
+    "tomorrow": "Mañana",
+    "in_days": "En {n} días",
+    "page_headline": "Busca un Turno. Trae a un Vecino.",
+    "page_sub": "Nunca ha sido sobre una sola persona. Son los domingos en las puertas, los martes en la oficina del distrito y una mañana de febrero en las urnas. Escoge una fecha abajo.",
+    "page_cta": "Toca Puertas con Nosotros",
+    "this_week": "Esta Semana",
+    "coming_up": "Próximamente",
+    "every_week": "Cada Semana",
+    "dates_label": "Fechas que Importan",
+    "dates_headline": "El Camino al 23 de Febrero",
+    "dates_source": "Junta Electoral de Chicago, calendario electoral 2027",
+    "team_title": "¿No puedes en estas fechas?",
+    "team_desc": "Únete al equipo de puertas y dinos cuándo puedes salir.",
+    "team_cta": "Únete al Equipo de Puertas",
+    "volunteer_label": "Lo Próximo en las Puertas",
+    "news_pointer": "¿Buscas dónde presentarte?",
+    "news_pointer_cta": "Ver todos los turnos"
   }
 }

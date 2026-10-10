@@ -1,0 +1,259 @@
+---
+// Home strip: the three newest posts from src/data/news.json that have not
+// expired. Up to six candidates ship in the page; the script drops any whose
+// `expires` date has passed since the last deploy and keeps the first three.
+import { posts, stampDate, pick, eventWhen, todayChicago } from '../data/news.js';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const today = todayChicago();
+const candidates = posts.filter((p) => !p.expires || p.expires >= today).slice(0, 6);
+const tilts = ['-0.6deg', '0.6deg', '-0.4deg'];
+---
+
+{candidates.length > 0 && (
+  <section class="latest section-padding" id="latest">
+    <div class="container">
+      <div class="latest-head">
+        <div>
+          <span class="section-label animate-in" data-i18n="latest.label">Latest</span>
+          <h2 class="section-title animate-in" data-i18n="latest.headline">Straight From the Ward</h2>
+        </div>
+        <a href={`${base}/news/`} class="latest-all animate-in">
+          <span data-i18n="latest.cta">All the latest</span> <span class="latest-all-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <ul class="latest-grid">
+        {candidates.map((post, i) => (
+          <li class="latest-card animate-in anim-pin" style={`--tilt: ${tilts[i % tilts.length]}; --reveal-delay: ${i * 0.08}s`} data-latest-expires={post.expires} hidden={i >= 3 ? true : undefined}>
+            <span class="latest-stamp">
+              <time datetime={post.date}>
+                <span data-lang="en">{stampDate(post.date, 'en')}</span><span data-lang="es" hidden>{stampDate(post.date, 'es')}</span>
+              </time>
+            </span>
+            <h3 class="latest-title-wrap">
+              <a href={`${base}/news/${post.slug}/`} class="latest-title">
+                <span data-lang="en">{post.title.en}</span><span data-lang="es" hidden>{post.title.es}</span>
+              </a>
+            </h3>
+            <p class="latest-line">
+              {post.event ? (
+                <><span data-lang="en">{eventWhen(post.event, 'en')} • {pick(post.event.location, 'en')}</span><span data-lang="es" hidden>{eventWhen(post.event, 'es')} • {pick(post.event.location, 'es')}</span></>
+              ) : (
+                <><span data-lang="en">{post.summary.en}</span><span data-lang="es" hidden>{post.summary.es}</span></>
+              )}
+            </p>
+            <a href={`${base}/news/${post.slug}/`} class="latest-read" tabindex="-1" aria-hidden="true">
+              <span data-i18n="latest.read">Read more</span> <span class="latest-read-arrow">→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
+
+<script>
+  // The site is static, so expiry is re-checked in the browser. Cards whose
+  // date has passed come off the wall; the first three that remain show.
+  // (Uses its own attribute: data-expires is removed outright by other
+  // components' scripts, which would skip the re-count.)
+  const grid = document.querySelector('.latest-grid');
+  if (grid) {
+    grid.querySelectorAll('[data-latest-expires]').forEach((el) => {
+      const end = new Date(el.getAttribute('data-latest-expires') + 'T23:59:59');
+      if (Date.now() > end.getTime()) el.remove();
+    });
+    const cards = Array.from(grid.children);
+    cards.forEach((el, i) => { el.hidden = i >= 3; });
+    if (!cards.length) grid.closest('section')?.remove();
+  }
+</script>
+
+<style>
+  :global([data-lang][hidden]) {
+    display: none !important;
+  }
+
+  /* cream-light so the Summer band's slanted top edge below blends in */
+  .latest {
+    background: var(--cream-light);
+    padding-bottom: calc(var(--space-4xl) + 20px);
+  }
+
+  .latest-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+  }
+
+  .latest-head .section-label {
+    display: block;
+  }
+
+  .latest-head .section-title {
+    margin-bottom: 0;
+  }
+
+  .latest-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue-dark);
+    border-bottom: 2px dashed rgba(3, 109, 153, 0.4);
+    padding-bottom: 2px;
+  }
+
+  .latest-all:hover {
+    color: var(--orange-dark);
+    border-color: var(--orange-dark);
+  }
+
+  .latest-all-arrow,
+  .latest-read-arrow {
+    transition: translate var(--duration-fast) var(--ease-default);
+  }
+
+  .latest-all:hover .latest-all-arrow {
+    translate: 4px 0;
+  }
+
+  .latest-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-xl);
+    margin-top: var(--space-2xl);
+    align-items: stretch;
+  }
+
+  .latest-card[hidden] {
+    display: none;
+  }
+
+  /* White paper on the cream-light wall, taped */
+  .latest-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: var(--white);
+    padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    box-shadow: var(--shadow-md);
+    rotate: var(--tilt, 0deg);
+    transition: rotate var(--duration-normal) var(--ease-default), translate var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
+  }
+
+  .latest-card::before {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 19px;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    background: rgba(245, 208, 138, 0.7);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+  }
+
+  .latest-card:hover {
+    rotate: 0deg;
+    translate: 0 -4px;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .latest-stamp {
+    align-self: flex-start;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--orange-dark);
+    border: 2px dashed rgba(230, 136, 28, 0.55);
+    border-radius: 3px;
+    padding: 3px 10px;
+    rotate: -1deg;
+    margin-bottom: var(--space-md);
+  }
+
+  .latest-title-wrap {
+    margin: 0 0 var(--space-sm);
+    rotate: -0.6deg;
+  }
+
+  .latest-title {
+    display: inline;
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 900;
+    line-height: 1.6;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--cream-light);
+    background: var(--blue-deeper);
+    padding: 0.14em 0.5em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .latest-card:nth-child(even) .latest-title {
+    background: var(--orange-dark);
+  }
+
+  /* One line: clamp so the three cards stay level */
+  .latest-line {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--gray-700);
+    margin: var(--space-sm) 0 var(--space-md);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .latest-read {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--space-sm);
+    border-top: 2px dashed var(--cream-dark);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue-dark);
+  }
+
+  .latest-read:hover {
+    color: var(--orange-dark);
+  }
+
+  .latest-read:hover .latest-read-arrow {
+    translate: 4px 0;
+  }
+
+  @media (max-width: 1024px) {
+    .latest-grid {
+      grid-template-columns: 1fr;
+      max-width: 560px;
+      gap: var(--space-2xl);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .latest {
+      padding-bottom: calc(var(--space-3xl) + 20px);
+    }
+  }
+</style>

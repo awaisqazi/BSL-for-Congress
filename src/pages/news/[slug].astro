@@ -1,0 +1,487 @@
+---
+// One post from src/data/news.json: date stamp, kind, painted title,
+// paragraphs on ruled paper, an event flyer when there is one, link
+// strips, the receipt, and the standing volunteer ask. Both languages
+// are in the DOM; i18n.js toggles the data-lang wrappers.
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import { posts, stampDate, longDate, eventWhen, eventLastDay, pick, linkAttrs, KIND_LABELS } from '../../data/news.js';
+
+export function getStaticPaths() {
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const rsvp = post.event && post.event.rsvp ? linkAttrs(post.event.rsvp, base) : null;
+const source = linkAttrs(post.source.href, base);
+const tilts = ['-0.7deg', '0.6deg', '-0.5deg', '0.5deg'];
+---
+
+<Layout title={`${post.title.en} | Byron Sigcho-Lopez for 25th Ward Alderman`} description={post.summary.en}>
+  <Navbar />
+  <main>
+    <article class:list={['post', `post-kind-${post.kind}`]} data-past-after={post.event ? eventLastDay(post.event) : undefined}>
+      <div class="container post-container">
+        <a href={`${base}/news/`} class="post-back">
+          <span aria-hidden="true">←</span> <span data-i18n="latest.cta">All the latest</span>
+        </a>
+
+        <header class="post-head">
+          <div class="post-meta animate-in">
+            <span class="post-stamp">
+              <time datetime={post.date}>
+                <span data-lang="en">{longDate(post.date, 'en')}</span><span data-lang="es" hidden>{longDate(post.date, 'es')}</span>
+              </time>
+            </span>
+            <span class="post-kind">
+              <span data-lang="en">{KIND_LABELS[post.kind].en}</span><span data-lang="es" hidden>{KIND_LABELS[post.kind].es}</span>
+            </span>
+            {post.event && <span class="post-past" data-i18n="latest.past">Past</span>}
+          </div>
+
+          <h1 class="post-title-wrap animate-in">
+            <span class="post-title" data-lang="en">{post.title.en}</span><span class="post-title" data-lang="es" hidden>{post.title.es}</span>
+          </h1>
+
+          <p class="post-lead animate-in">
+            <span data-lang="en">{post.summary.en}</span><span data-lang="es" hidden>{post.summary.es}</span>
+          </p>
+        </header>
+
+        {post.image && (
+          <figure class="post-image animate-in">
+            <img src={`${base}${post.image.startsWith('/') ? '' : '/'}${post.image}`} alt="" />
+          </figure>
+        )}
+
+        {post.event && (
+          <aside class="post-event animate-in anim-pin" style="--tilt: 0.6deg">
+            <span class="post-event-label" data-i18n="latest.event_label">Mark the date</span>
+            <dl class="post-event-rows">
+              <div class="post-event-row">
+                <dt data-i18n="latest.when">When</dt>
+                <dd><span data-lang="en">{eventWhen(post.event, 'en')}</span><span data-lang="es" hidden>{eventWhen(post.event, 'es')}</span></dd>
+              </div>
+              <div class="post-event-row">
+                <dt data-i18n="latest.where">Where</dt>
+                <dd><span data-lang="en">{pick(post.event.location, 'en')}</span><span data-lang="es" hidden>{pick(post.event.location, 'es')}</span></dd>
+              </div>
+            </dl>
+            {rsvp && <a {...rsvp} class="btn btn-orange post-rsvp" data-i18n="latest.rsvp">RSVP</a>}
+          </aside>
+        )}
+
+        <div class="post-paper animate-in">
+          <div class="post-body" data-lang="en">
+            {post.body.en.map((para) => <p>{para}</p>)}
+          </div>
+          <div class="post-body" data-lang="es" hidden>
+            {post.body.es.map((para) => <p>{para}</p>)}
+          </div>
+
+          <a {...source} class="post-receipt">
+            <span data-i18n="latest.receipt">The receipt:</span>
+            <span data-lang="en">{pick(post.source.label, 'en')}</span><span data-lang="es" hidden>{pick(post.source.label, 'es')}</span>
+          </a>
+        </div>
+
+        {post.links && post.links.length > 0 && (
+          <nav class="post-links" aria-labelledby="post-links-label">
+            <span class="post-links-label" id="post-links-label" data-i18n="latest.links_label">Next steps</span>
+            <ul class="post-strips">
+              {post.links.map((l, i) => (
+                <li>
+                  <a {...linkAttrs(l.href, base)} class="post-strip animate-in anim-pin" style={`--tilt: ${tilts[i % tilts.length]}`}>
+                    <span><span data-lang="en">{l.label.en}</span><span data-lang="es" hidden>{l.label.es}</span></span>
+                    <span class="post-strip-arrow" aria-hidden="true">→</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+
+        <div class="post-ask animate-in">
+          <p class="post-ask-lead" data-i18n="latest.join_lead">Every story here ends the same way: come knock doors with us.</p>
+          <a href={`${base}/volunteer#signup`} class="btn btn-orange post-ask-pill" data-i18n="latest.join">Knock Doors With Us</a>
+        </div>
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  // An event post stays up after the date, marked "Past".
+  document.querySelectorAll('.post[data-past-after]').forEach((el) => {
+    const end = new Date(el.getAttribute('data-past-after') + 'T23:59:59');
+    if (Date.now() > end.getTime()) el.classList.add('is-past');
+  });
+</script>
+
+<style>
+  :global([data-lang][hidden]) {
+    display: none !important;
+  }
+
+  .post {
+    background: var(--cream);
+    padding: calc(var(--nav-height) + var(--space-2xl)) 0 var(--space-4xl);
+  }
+
+  .post-container {
+    max-width: 820px;
+  }
+
+  .post-back {
+    display: inline-flex;
+    gap: 6px;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--blue-dark);
+    margin-bottom: var(--space-xl);
+  }
+
+  .post-back:hover {
+    color: var(--orange-dark);
+  }
+
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+  }
+
+  .post-stamp {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--orange-dark);
+    border: 2px dashed rgba(230, 136, 28, 0.55);
+    border-radius: 3px;
+    padding: 3px 10px;
+    rotate: -1deg;
+  }
+
+  .post-kind,
+  .post-past {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue-deeper);
+    background: rgba(27, 54, 93, 0.08);
+    padding: 3px 10px;
+    rotate: 1deg;
+  }
+
+  .post-kind-action .post-kind {
+    color: var(--white);
+    background: var(--orange-dark);
+  }
+
+  .post-past {
+    display: none;
+    color: var(--gray-500);
+    background: var(--gray-100);
+  }
+
+  .post.is-past .post-past {
+    display: inline-block;
+  }
+
+  .post.is-past .post-rsvp {
+    display: none;
+  }
+
+  /* Painted placard headline */
+  .post-title-wrap {
+    margin: 0 0 var(--space-lg);
+    rotate: -0.8deg;
+  }
+
+  .post-title {
+    display: inline;
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 900;
+    line-height: 1.45;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    color: var(--cream-light);
+    background: var(--blue-deeper);
+    padding: 0.08em 0.4em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .post-lead {
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    font-weight: 500;
+    color: var(--gray-700);
+    max-width: 62ch;
+  }
+
+  .post-image {
+    margin: var(--space-2xl) 0 0;
+    box-shadow: var(--shadow-md);
+  }
+
+  .post-image img {
+    width: 100%;
+  }
+
+  /* Event flyer */
+  .post-event {
+    position: relative;
+    margin: var(--space-2xl) 0 0;
+    background: var(--white);
+    padding: var(--space-xl);
+    box-shadow: var(--shadow-md);
+    rotate: var(--tilt, 0deg);
+    max-width: 520px;
+  }
+
+  .post-event::before {
+    content: '';
+    position: absolute;
+    width: 64px;
+    height: 20px;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%) rotate(3deg);
+    background: rgba(245, 208, 138, 0.7);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+  }
+
+  .post-event-label {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--orange-dark);
+    margin-bottom: var(--space-sm);
+  }
+
+  .post-event-row {
+    display: grid;
+    grid-template-columns: 84px 1fr;
+    gap: var(--space-md);
+    padding: var(--space-sm) 0;
+    border-bottom: 1px dashed rgba(27, 54, 93, 0.15);
+  }
+
+  .post-event-row:last-child {
+    border-bottom: none;
+  }
+
+  .post-event-row dt {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gray-500);
+    padding-top: 3px;
+  }
+
+  .post-event-row dd {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 800;
+    color: var(--blue-deeper);
+    line-height: 1.4;
+  }
+
+  .post-rsvp {
+    margin-top: var(--space-md);
+    font-size: var(--text-sm);
+    padding: 0.6rem 1.3rem;
+  }
+
+  /* Body on ruled ledger paper */
+  .post-paper {
+    position: relative;
+    margin-top: var(--space-2xl);
+    background: var(--cream-light);
+    padding: var(--space-2xl) var(--space-2xl) var(--space-xl);
+    box-shadow: var(--shadow-md);
+    background-image: repeating-linear-gradient(
+      180deg,
+      transparent,
+      transparent 35px,
+      rgba(27, 54, 93, 0.07) 35px,
+      rgba(27, 54, 93, 0.07) 36px
+    );
+  }
+
+  .post-paper::before {
+    content: '';
+    position: absolute;
+    width: 88px;
+    height: 22px;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    background: rgba(245, 208, 138, 0.65);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+  }
+
+  .post-body p {
+    font-size: var(--text-base);
+    line-height: 1.8;
+    color: var(--black);
+    margin-bottom: var(--space-lg);
+  }
+
+  /* The receipt: dashed stamp, like the Summer band's press tag */
+  .post-receipt {
+    display: inline-block;
+    max-width: 100%;
+    margin-top: var(--space-sm);
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+    color: var(--blue-deeper);
+    border: 2px dashed rgba(3, 109, 153, 0.45);
+    border-radius: 3px;
+    padding: 4px 10px;
+    rotate: -1deg;
+    text-decoration: none;
+  }
+
+  .post-receipt:hover {
+    color: var(--orange-dark);
+    border-color: var(--orange-dark);
+  }
+
+  /* Link strips */
+  .post-links {
+    margin-top: var(--space-3xl);
+  }
+
+  .post-links-label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--orange-dark);
+    margin-bottom: var(--space-lg);
+  }
+
+  .post-strips {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .post-strip {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: 15px 20px;
+    background: var(--cream-light);
+    box-shadow: var(--shadow-md);
+    color: var(--blue-deeper);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    rotate: var(--tilt, 0deg);
+    transition: rotate var(--duration-normal) var(--ease-default), translate var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default), color var(--duration-fast) var(--ease-default);
+  }
+
+  .post-strip::before {
+    content: '';
+    position: absolute;
+    width: 58px;
+    height: 18px;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    background: rgba(245, 208, 138, 0.7);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+  }
+
+  .post-strip:hover {
+    rotate: 0deg;
+    translate: 0 -3px;
+    box-shadow: var(--shadow-lg);
+    color: var(--orange-dark);
+  }
+
+  .post-strip-arrow {
+    flex-shrink: 0;
+  }
+
+  /* Standing ask */
+  .post-ask {
+    margin-top: var(--space-3xl);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .post-ask-lead {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 800;
+    color: var(--blue-deeper);
+    max-width: 36ch;
+  }
+
+  .post-ask-pill {
+    border-radius: 999px;
+    font-size: var(--text-base);
+    padding: 0.85rem 1.9rem;
+  }
+
+  @media (max-width: 768px) {
+    .post {
+      padding: calc(var(--nav-height) + var(--space-xl)) 0 var(--space-3xl);
+    }
+
+    .post-title {
+      font-size: var(--text-2xl);
+    }
+
+    .post-paper {
+      padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    }
+
+    .post-event {
+      padding: var(--space-lg);
+    }
+
+    .post-event-row {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+  }
+</style>

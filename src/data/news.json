@@ -1,0 +1,513 @@
+[
+  {
+    "slug": "petition-canvasses-october",
+    "date": "2026-10-10",
+    "kind": "action",
+    "title": {
+      "en": "Help Put Byron on the Ballot: Petition Canvasses in October",
+      "es": "Ayuda a poner a Byron en la boleta: caminatas en octubre"
+    },
+    "summary": {
+      "en": "Chicago DSA's Southside Branch is hosting petition canvasses on October 18, 21 and 25 to gather the signatures that put Byron on the February 23 ballot.",
+      "es": "La Rama Southside de Chicago DSA organiza caminatas el 18, 21 y 25 de octubre para juntar las firmas que ponen a Byron en la boleta del 23 de febrero."
+    },
+    "body": {
+      "en": [
+        "To get on the February 23, 2027 ballot, every candidate for alderperson files a nominating petition signed by registered voters who live in the ward. The law sets the floor at 473 valid signatures. Petitions go to the Chicago Board of Elections between October 19 and 26, 2026.",
+        "We gather those signatures the way we do everything, neighbor to neighbor at the door. Chicago DSA's Southside Branch is sponsoring these petition canvasses, and each one has an RSVP page: Sunday, October 18, 11 AM to 2 PM, at the 25th Ward IPO office, 2102 W Cermak Rd. Wednesday, October 21, 5:30 to 7:30 PM, at 2102 W Cermak Rd. Sunday, October 25, 10 AM to 1 PM, at Cafe Latteaa, 3536 W 26th St.",
+        "There is also a canvass on Sunday, October 11, from 11 AM to 2 PM, meeting at Anticonquista Cafe, 952 W 18th St.",
+        "First time on the doors? Join the canvass team and tell us when you can go out. Every signature on that petition is a neighbor's name."
+      ],
+      "es": [
+        "Para aparecer en la boleta del 23 de febrero de 2027, cada candidato a concejal entrega una petición de nominación firmada por votantes registrados que viven en el distrito. La ley pone el mínimo en 473 firmas válidas. Las peticiones se entregan a la Junta Electoral de Chicago entre el 19 y el 26 de octubre de 2026.",
+        "Juntamos esas firmas como hacemos todo, de vecino a vecino, en la puerta. La Rama Southside de Chicago DSA organiza estas caminatas, y cada una tiene su página para confirmar asistencia: domingo 18 de octubre, de 11 AM a 2 PM, en la oficina del 25th Ward IPO (Organización Política Independiente del Distrito 25), 2102 W Cermak Rd. Miércoles 21 de octubre, de 5:30 a 7:30 PM, en el 2102 W Cermak Rd. Domingo 25 de octubre, de 10 AM a 1 PM, en Cafe Latteaa, 3536 W 26th St.",
+        "También hay una caminata el domingo 11 de octubre, de 11 AM a 2 PM, con punto de encuentro en Anticonquista Cafe, 952 W 18th St.",
+        "¿Primera vez tocando puertas? Únete al equipo de caminatas y dinos cuándo puedes salir a tocar puertas. Cada firma en esa petición es el nombre de un vecino."
+      ]
+    },
+    "event": {
+      "start": "2026-10-11T11:00:00-05:00",
+      "end": "2026-10-25T13:00:00-05:00",
+      "location": {
+        "en": "Four canvasses, October 11 to 25 (see each below)",
+        "es": "Cuatro caminatas, del 11 al 25 de octubre (mira cada una abajo)"
+      },
+      "rsvp": "https://actionnetwork.org/events/byronfor25-1010-signature-collection-canvass-2/"
+    },
+    "links": [
+      {
+        "label": {
+          "en": "RSVP: Sunday, October 11",
+          "es": "Confirma: domingo 11 de octubre"
+        },
+        "href": "https://actionnetwork.org/events/byronfor25-1025-signature-collection-canvass-2"
+      },
+      {
+        "label": {
+          "en": "RSVP: Sunday, October 18",
+          "es": "Confirma: domingo 18 de octubre"
+        },
+        "href": "https://actionnetwork.org/events/byronfor25-1010-signature-collection-canvass-2/"
+      },
+      {
+        "label": {
+          "en": "RSVP: Wednesday, October 21",
+          "es": "Confirma: miércoles 21 de octubre"
+        },
+        "href": "https://actionnetwork.org/events/byronfor25-1021-signature-collection-canvass/"
+      },
+      {
+        "label": {
+          "en": "RSVP: Sunday, October 25",
+          "es": "Confirma: domingo 25 de octubre"
+        },
+        "href": "https://actionnetwork.org/events/byronfor25-1025-signature-collection-canvass/"
+      },
+      {
+        "label": {
+          "en": "Join the canvass team",
+          "es": "Únete al equipo de caminatas"
+        },
+        "href": "https://forms.gle/aBc3EsoUhraW2A4Q8"
+      },
+      {
+        "label": {
+          "en": "Sign the petition",
+          "es": "Firma la petición"
+        },
+        "href": "/volunteer#sign-petition"
+      }
+    ],
+    "source": {
+      "label": {
+        "en": "Chicago Board of Elections, 2027 election pamphlet and calendar",
+        "es": "Junta Electoral de Chicago, folleto y calendario electoral 2027"
+      },
+      "href": "https://cboeprod.blob.core.usgovcloudapi.net/prod/2026-08/2027%20Election%20Calendar-REV%2001-ADOPTED%2007-28-2026%20typo%20corrected.pdf"
+    },
+    "expires": "2026-10-25"
+  },
+  {
+    "slug": "election-calendar-2027",
+    "date": "2026-10-10",
+    "kind": "action",
+    "title": {
+      "en": "The 2027 Election Calendar, Date by Date",
+      "es": "El calendario electoral 2027, fecha por fecha"
+    },
+    "summary": {
+      "en": "Every official date from candidate filing on October 19 to Election Day on February 23, 2027, from the Chicago Board of Elections.",
+      "es": "Todas las fechas oficiales, desde el registro de candidatos el 19 de octubre hasta el Día de la Elección el 23 de febrero de 2027, según la Junta Electoral de Chicago."
+    },
+    "body": {
+      "en": [
+        "Candidate filing runs October 19 to 26, 2026, 9 AM to 5 PM on weekdays. On October 19 and October 26, petitions are filed at 203 S. State St. From October 20 to 23, they are filed at 11 E. Adams St., Suite 300. Objections to petitions can be filed October 27 through November 2.",
+        "Vote-by-mail applications open November 25, 2026. Regular voter registration closes January 26, 2027, and grace period registration and voting runs from January 27 through Election Day. Early voting can begin no earlier than January 14, 2027.",
+        "Election Day is Tuesday, February 23, 2027, and polls are open 6 AM to 7 PM. If no candidate in a ward wins a majority, a runoff between the top two follows on April 6, 2027.",
+        "Mark the dates, share them with a neighbor, and knock doors with us between now and then."
+      ],
+      "es": [
+        "El registro de candidatos es del 19 al 26 de octubre de 2026, de 9 AM a 5 PM entre semana. El 19 y el 26 de octubre, las peticiones se entregan en el 203 S. State St. Del 20 al 23 de octubre, se entregan en el 11 E. Adams St., Suite 300. Las objeciones a las peticiones se pueden presentar del 27 de octubre al 2 de noviembre.",
+        "Las solicitudes de voto por correo abren el 25 de noviembre de 2026. El registro regular de votantes cierra el 26 de enero de 2027, y el periodo de gracia para registrarse y votar va del 27 de enero hasta el Día de la Elección. La votación anticipada puede comenzar a partir del 14 de enero de 2027.",
+        "El Día de la Elección es el martes 23 de febrero de 2027, y las urnas abren de 6 AM a 7 PM. Si ningún candidato en un distrito gana la mayoría, habrá una segunda vuelta entre los dos primeros el 6 de abril de 2027.",
+        "Anota las fechas, compártelas con un vecino y toca puertas con nosotros de aquí a entonces."
+      ]
+    },
+    "links": [
+      {
+        "label": {
+          "en": "Filing days and locations",
+          "es": "Días y lugares de registro"
+        },
+        "href": "https://www.chicagoelections.gov/news/2027-municipal-and-aldermanic-election-candidate-filing-schedule-and-locations"
+      },
+      {
+        "label": {
+          "en": "Board of Elections: candidates",
+          "es": "Junta Electoral: candidatos"
+        },
+        "href": "https://www.chicagoelections.gov/getting-ballot/candidates"
+      },
+      {
+        "label": {
+          "en": "Knock doors with us",
+          "es": "Toca puertas con nosotros"
+        },
+        "href": "/volunteer#signup"
+      }
+    ],
+    "source": {
+      "label": {
+        "en": "Chicago Board of Elections, election calendars",
+        "es": "Junta Electoral de Chicago, calendarios electorales"
+      },
+      "href": "https://www.chicagoelections.gov/getting-ballot/election-calendars"
+    },
+    "expires": "2027-02-23"
+  },
+  {
+    "slug": "petition-filing-week",
+    "date": "2026-10-10",
+    "kind": "action",
+    "title": {
+      "en": "Filing Week at the Board of Elections",
+      "es": "Semana de entrega de peticiones en la Junta Electoral de Chicago"
+    },
+    "summary": {
+      "en": "From October 19 to 26, 2026, candidate petitions for the February 23 ballot go to the Chicago Board of Elections.",
+      "es": "Del 19 al 26 de octubre de 2026, las peticiones de los candidatos para la boleta del 23 de febrero se entregan a la Junta Electoral de Chicago."
+    },
+    "body": {
+      "en": [
+        "Candidate filing for the February 23, 2027 election runs October 19 to 26, 2026 at the Chicago Board of Elections. That is the week petitions are turned in.",
+        "Signatures put a name on the ballot. Every signature on a petition is a neighbor's name.",
+        "Sign the petition, or help gather signatures, before the window closes."
+      ],
+      "es": [
+        "El registro de candidatos para la elección del 23 de febrero de 2027 es del 19 al 26 de octubre de 2026 en la Junta Electoral de Chicago. Esa es la semana en que se entregan las peticiones.",
+        "Las firmas ponen un nombre en la boleta. Cada firma en una petición es el nombre de un vecino.",
+        "Firma la petición, o ayuda a recolectar firmas, antes de que cierre el plazo."
+      ]
+    },
+    "event": {
+      "start": "2026-10-19",
+      "end": "2026-10-26",
+      "location": {
+        "en": "Chicago Board of Elections",
+        "es": "Junta Electoral de Chicago"
+      }
+    },
+    "links": [
+      {
+        "label": {
+          "en": "Sign the petition",
+          "es": "Firma la petición"
+        },
+        "href": "/volunteer#sign-petition"
+      },
+      {
+        "label": {
+          "en": "Chicago Board of Elections",
+          "es": "Junta Electoral de Chicago"
+        },
+        "href": "https://chicagoelections.gov"
+      }
+    ],
+    "source": {
+      "label": {
+        "en": "Chicago Board of Elections, 2027 election calendar",
+        "es": "Junta Electoral de Chicago, calendario electoral 2027"
+      },
+      "href": "https://chicagoelections.gov"
+    },
+    "expires": "2026-10-26"
+  },
+  {
+    "slug": "election-day-2027",
+    "date": "2026-10-10",
+    "kind": "action",
+    "title": {
+      "en": "Election Day Is February 23, 2027",
+      "es": "El Día de la Elección es el 23 de febrero de 2027"
+    },
+    "summary": {
+      "en": "The 25th Ward votes from 6 AM to 7 PM, and until then we meet every Tuesday at Ward Night and on the doors.",
+      "es": "El Distrito 25 vota de 6 AM a 7 PM, y hasta entonces nos vemos cada martes en la Noche del Distrito y tocando puertas."
+    },
+    "body": {
+      "en": [
+        "On February 23, 2027, the neighbors of the 25th Ward decide who represents them at City Hall. Polls are open from 6 AM to 7 PM.",
+        "The dates on the way there: vote-by-mail applications open November 25, early voting can begin January 14, and regular voter registration closes January 26, with grace registration after that.",
+        "The vote is the date stamp. The work is every Tuesday. Ward Night is every Tuesday. Come by with your question, bring a neighbor, and knock doors with us."
+      ],
+      "es": [
+        "El 23 de febrero de 2027, los vecinos del Distrito 25 deciden quién los representa en el Ayuntamiento. Las urnas abren de 6 AM a 7 PM.",
+        "Las fechas del camino: las solicitudes de voto por correo abren el 25 de noviembre, la votación anticipada puede comenzar el 14 de enero y el registro regular de votantes cierra el 26 de enero, con registro de gracia después.",
+        "La votación es la fecha en el calendario. El trabajo es cada martes. La Noche del Distrito es cada martes. Ven con tu pregunta, trae a un vecino y toca puertas con nosotros."
+      ]
+    },
+    "event": {
+      "start": "2027-02-23T06:00:00-06:00",
+      "end": "2027-02-23T19:00:00-06:00",
+      "location": {
+        "en": "Your polling place in the 25th Ward",
+        "es": "Tu lugar de votación en el Distrito 25"
+      }
+    },
+    "links": [
+      {
+        "label": {
+          "en": "Volunteer with the campaign",
+          "es": "Hazte voluntario/a"
+        },
+        "href": "/volunteer"
+      },
+      {
+        "label": {
+          "en": "Plan a Ward Night visit",
+          "es": "Planea tu visita a la Noche del Distrito"
+        },
+        "href": "/volunteer"
+      },
+      {
+        "label": {
+          "en": "Chicago Board of Elections",
+          "es": "Junta Electoral de Chicago"
+        },
+        "href": "https://chicagoelections.gov"
+      }
+    ],
+    "source": {
+      "label": {
+        "en": "Chicago Board of Elections, 2027 election calendar",
+        "es": "Junta Electoral de Chicago, calendario electoral 2027"
+      },
+      "href": "https://chicagoelections.gov"
+    },
+    "expires": "2027-02-23"
+  },
+  {
+    "slug": "socialist-slate-homestretch",
+    "date": "2026-10-08",
+    "kind": "news",
+    "title": {
+      "en": "On the Socialist Slate, in the Homestretch",
+      "es": "En la Planilla Socialista, en la recta final"
+    },
+    "summary": {
+      "en": "Byron is one of six candidates on Chicago DSA's Socialist Slate for the 2027 City Council elections, and on October 8 DSA called members out for the homestretch of petition season.",
+      "es": "Byron es uno de los seis candidatos de la Planilla Socialista de Chicago DSA para las elecciones del Concejo Municipal de 2027, y el 8 de octubre DSA llamó a sus miembros a la recta final de las peticiones."
+    },
+    "body": {
+      "en": [
+        "In August, Chicago DSA endorsed Byron and announced its slate for the 2027 City Council elections: six candidates on one Socialist Slate. Byron is on it for the 25th Ward, alongside Rossana Rodríguez Sánchez in the 33rd Ward, Anthony Quezada in the 35th, Angela Clay in the 46th, Raheem Uqdah in the 3rd and Kalen Luciano in the 44th.",
+        "The slate is in the homestretch of petition canvassing season, and DSA's October 8 call is simple: if you have not come out yet, now is the time. The shifts are on the canvass map at canvass.chicagodsa.org, and new members are welcome.",
+        "In the 25th Ward, the homestretch means the petition canvasses on October 18, 21 and 25. It has never been about one candidate. It has always been about we."
+      ],
+      "es": [
+        "En agosto, Chicago DSA respaldó a Byron y anunció su planilla para las elecciones del Concejo Municipal de 2027: seis candidatos en una sola Planilla Socialista. Byron va por el Distrito 25, junto a Rossana Rodríguez Sánchez en el Distrito 33, Anthony Quezada en el 35, Angela Clay en el 46, Raheem Uqdah en el 3 y Kalen Luciano en el 44.",
+        "La planilla está en la recta final de la temporada de peticiones, y el llamado de DSA del 8 de octubre es sencillo: si todavía no has salido, este es el momento. Los turnos están en el mapa de caminatas, canvass.chicagodsa.org, y los nuevos miembros son bienvenidos.",
+        "En el Distrito 25, la recta final son las caminatas del 18, 21 y 25 de octubre. Nunca se ha tratado de un solo candidato. Siempre se ha tratado de nosotros."
+      ]
+    },
+    "links": [
+      {
+        "label": {
+          "en": "Chicago DSA's 2027 endorsements",
+          "es": "Los respaldos 2027 de Chicago DSA"
+        },
+        "href": "https://chicagodsa.org/2026/08/15/announcing-chicago-dsas-2027-endorsements/"
+      },
+      {
+        "label": {
+          "en": "DSA's October 8 canvass call",
+          "es": "El llamado de DSA del 8 de octubre"
+        },
+        "href": "https://www.instagram.com/p/DePKAHVMFSS/"
+      },
+      {
+        "label": {
+          "en": "Open the canvass map",
+          "es": "Abrir el mapa de caminatas"
+        },
+        "href": "https://canvass.chicagodsa.org"
+      },
+      {
+        "label": {
+          "en": "The 25th Ward petition canvasses",
+          "es": "Las caminatas del Distrito 25"
+        },
+        "href": "/news/petition-canvasses-october/"
+      }
+    ],
+    "source": {
+      "label": {
+        "en": "Chicago DSA, Aug 15, 2026",
+        "es": "Chicago DSA, 15 de agosto de 2026"
+      },
+      "href": "https://chicagodsa.org/2026/08/15/announcing-chicago-dsas-2027-endorsements/"
+    },
+    "expires": "2026-10-26"
+  },
+  {
+    "slug": "casa-cafe-licensing",
+    "date": "2026-10-06",
+    "kind": "news",
+    "title": {
+      "en": "Helping a Pilsen Venue Through City Hall",
+      "es": "Acompañando a un espacio de Pilsen en el Ayuntamiento"
+    },
+    "summary": {
+      "en": "Casa Cafe, a Pilsen venue for all-ages shows, is working toward its Public Place of Amusement license, and Byron set up its first meeting at City Hall to get the process underway.",
+      "es": "Casa Cafe, un espacio de Pilsen para conciertos para todas las edades, está tramitando su licencia de Lugar Público de Entretenimiento, y Byron le consiguió su primera reunión en el Ayuntamiento para arrancar el proceso."
+    },
+    "body": {
+      "en": [
+        "Casa Cafe in Pilsen has put its all-ages hardcore shows on pause while it works toward a Public Place of Amusement license from the city.",
+        "Byron set the venue up with its first meeting at City Hall to get the process underway. A venue should not have to figure out City Hall alone, and neither should the places where our young people play music.",
+        "The record includes more than $7 million invested in local businesses. This is the same work up close: one venue, one meeting."
+      ],
+      "es": [
+        "Casa Cafe, en Pilsen, puso en pausa sus conciertos de hardcore para todas las edades mientras tramita una licencia de Lugar Público de Entretenimiento (PPA) con la ciudad.",
+        "Byron le consiguió al espacio su primera reunión en el Ayuntamiento para arrancar el trámite. Un espacio no debería tener que descifrar el Ayuntamiento solo, y tampoco los lugares donde nuestros jóvenes hacen música.",
+        "El historial incluye más de $7 millones invertidos en negocios locales. Así se ve de cerca: un espacio, una reunión."
+      ]
+    },
+    "links": [
+      {
+        "label": {
+          "en": "The full record",
+          "es": "El historial completo"
+        },
+        "href": "/platform/"
+      }
+    ],
+    "source": {
+      "label": "Chicago Reader, Oct 6, 2026",
+      "href": "https://chicagoreader.com/music/gossip-wolf/casa-cafe-hardcore-garcia-happy-home-records-nixon-community-fest/"
+    }
+  },
+  {
+    "slug": "parking-meter-no-vote",
+    "date": "2026-09-29",
+    "kind": "press",
+    "title": {
+      "en": "One of Three No Votes on the Parking Meter Sale",
+      "es": "Uno de los tres votos en contra de la venta de los parquímetros"
+    },
+    "summary": {
+      "en": "On September 29, 2026, City Council approved the $2.53 billion sale of the parking meter concession 46 to 3, and Byron was one of the three no votes.",
+      "es": "El 29 de septiembre de 2026, el Concejo Municipal aprobó 46 a 3 la venta de la concesión de los parquímetros por $2,530 millones, y Byron fue uno de los tres votos en contra."
+    },
+    "body": {
+      "en": [
+        "On September 29, 2026, City Council approved the $2.53 billion sale of Chicago's parking meter concession to Stonepeak Partners. The vote was 46 to 3. Byron voted no.",
+        "That is the record, and it is the kind of record we ask every neighbor to check for themselves. The vote count and the three names are in the receipts below."
+      ],
+      "es": [
+        "El 29 de septiembre de 2026, el Concejo Municipal aprobó la venta de la concesión de los parquímetros de Chicago a Stonepeak Partners por $2,530 millones. La votación fue 46 a 3. Byron votó en contra.",
+        "Ese es el historial, y es el tipo de historial que le pedimos a cada vecino que revise por su cuenta. El conteo de votos y los tres nombres están en los comprobantes de abajo."
+      ]
+    },
+    "links": [
+      {
+        "label": {
+          "en": "WTTW News, Sep 29, 2026",
+          "es": "WTTW News, 29 de septiembre de 2026"
+        },
+        "href": "https://news.wttw.com/2026/09/29/chicago-s-parking-meters-have-been-sold-again-here-s-what-know"
+      },
+      {
+        "label": {
+          "en": "Block Club Chicago, Sep 29, 2026",
+          "es": "Block Club Chicago, 29 de septiembre de 2026"
+        },
+        "href": "https://blockclubchicago.org/2026/09/29/council-approves-2-5-billion-parking-meter-sale-with-city-set-to-get-share-of-profits/"
+      }
+    ],
+    "source": {
+      "label": "Chicago Sun-Times, Sep 29, 2026",
+      "href": "https://chicago.suntimes.com/city-hall/2026/09/29/city-council-parking-meters-deal-compromise-stonepeak-partners"
+    }
+  },
+  {
+    "slug": "byronfor25-walk-card",
+    "date": "2026-09-27",
+    "kind": "news",
+    "title": {
+      "en": "A New Address, and the Card We Carry to Every Door",
+      "es": "Una nueva dirección y la tarjeta que llevamos a cada puerta"
+    },
+    "summary": {
+      "en": "The campaign now lives at byronfor25.com, built on the walk card: nine results and eight fights for the next term.",
+      "es": "La campaña ahora vive en byronfor25.com, construida sobre la tarjeta de campaña: nueve resultados y ocho luchas para el próximo mandato."
+    },
+    "body": {
+      "en": [
+        "The campaign has a new address: byronfor25.com. Everything on it starts from the walk card our volunteers carry to every door in the 25th Ward.",
+        "Nine results. More than 800 affordable units created and preserved. Tenant protections and property tax relief. Community Violence Intervention teams on our blocks, with crime down 50 percent since 2024. Machine politics held to account. A reopened mental health clinic and an affordable dental clinic. The largest community air quality monitoring network in the country. More than $7 million in local businesses. $6.4 million in streets, alleys, sidewalks and streetlights since 2023. Sanctuary City policies preserved, and a ward that stood up to ICE.",
+        "Eight fights Up Next. Bring our money back to our community. Push Springfield for a millionaire's tax. Universal pre-K and fully funded Chicago Public Schools. More neighborhood affordable housing and infrastructure. Protect workers, not big corporations. End leisure helicopter noise. More violence prevention. Reconnect the Pink and Blue Lines, with more frequent 18th Street bus service.",
+        "Read the record, then carry it with us, door to door, until February 23."
+      ],
+      "es": [
+        "La campaña tiene una nueva dirección: byronfor25.com. Todo lo que hay ahí sale de la tarjeta que nuestros voluntarios llevan a cada puerta del Distrito 25.",
+        "Nueve resultados. Más de 800 unidades de vivienda asequible creadas y preservadas. Protecciones para inquilinos y alivio en los impuestos a la propiedad. Equipos de intervención comunitaria contra la violencia en nuestras cuadras, y el crimen ha bajado 50 por ciento desde 2024. La política de maquinaria, obligada a rendir cuentas. Una clínica de salud mental reabierta y una clínica dental asequible. La red comunitaria de monitoreo de la calidad del aire más grande del país. Más de $7 millones en negocios locales. $6.4 millones en calles, callejones, banquetas y alumbrado público desde 2023. Las políticas de Ciudad Santuario preservadas, y un distrito que le hizo frente a ICE.",
+        "Ocho luchas para lo que sigue. Que nuestro dinero regrese a nuestra comunidad. Exigirle a Springfield un impuesto a los millonarios. Pre-kínder universal y fondos completos para las Escuelas Públicas de Chicago. Más vivienda asequible e infraestructura para nuestros barrios. Proteger a los trabajadores, no a las grandes corporaciones. Acabar con el ruido de los helicópteros de paseo. Más prevención de la violencia. Volver a conectar la Línea Rosa y la Línea Azul, y que el camión de la 18 pase más seguido.",
+        "Lee el historial y luego llévalo con nosotros, puerta por puerta, hasta el 23 de febrero."
+      ]
+    },
+    "links": [
+      {
+        "label": {
+          "en": "The full record",
+          "es": "El historial completo"
+        },
+        "href": "/platform/"
+      },
+      {
+        "label": {
+          "en": "The eight fights Up Next",
+          "es": "Las ocho luchas de lo que sigue"
+        },
+        "href": "/#up-next"
+      }
+    ],
+    "source": {
+      "label": {
+        "en": "The campaign walk card",
+        "es": "La tarjeta de campaña"
+      },
+      "href": "/platform/"
+    }
+  },
+  {
+    "slug": "reelection-launch-pilsen",
+    "date": "2026-08-18",
+    "kind": "news",
+    "title": {
+      "en": "It Has Always Been About We: The Campaign Launches in Pilsen",
+      "es": "Siempre ha sido sobre nosotros: la campaña arranca en Pilsen"
+    },
+    "summary": {
+      "en": "On August 18, 2026, neighbors filled Indígó MRKTŌ at 2100 S Morgan St to launch the campaign for a third term in the 25th Ward.",
+      "es": "El 18 de agosto de 2026, los vecinos llenaron Indígó MRKTŌ, en el 2100 S Morgan St, para lanzar la campaña por un tercer mandato en el Distrito 25."
+    },
+    "body": {
+      "en": [
+        "On August 18, 2026, the 25th Ward filled Indígó MRKTŌ at 2100 S Morgan St in Pilsen to launch the campaign for a third term. Teachers, small businesses, elected school board members and neighbors packed the room, and Byron named what the night was about: \"It has never been about me. It has always been about we. We, the people.\"",
+        "He told the story the way the ward lived it. We kept our schools open. When the pandemic hit, Ward Night never stopped, and neighbors raised more than $100,000 for families, not from billionaires, from the people. When almost 400 new neighbors needed a roof, this community opened a shelter in 48 hours, and a baby was born there instead of in a police station.",
+        "Then the receipts. A mental health clinic reopened. A new clinic with dental care for our kids. The largest community air monitoring network in the country. And 6.3 acres at 18th and Peoria, where 500 luxury units were stopped and affordable homes are on the way.",
+        "And the fights still ahead: tax the rich, fund the schools, and give property tax relief to our people. \"We do not only show up when the cameras are there. We show up every single day.\" When we fight, we win. Hoy por mí, mañana por ti."
+      ],
+      "es": [
+        "El 18 de agosto de 2026, el Distrito 25 llenó Indígó MRKTŌ, en el 2100 S Morgan St en Pilsen, para lanzar la campaña por un tercer mandato. Maestras y maestros, pequeños negocios, miembros electos de la junta escolar y vecinos llenaron el salón, y Byron dijo de qué se trataba la noche: \"Nunca ha sido sobre mí. Siempre ha sido sobre nosotros. Nosotros, el pueblo.\"",
+        "Contó la historia como la vivió el distrito. Mantuvimos abiertas nuestras escuelas. Cuando llegó la pandemia, la Noche del Distrito nunca se detuvo, y los vecinos juntaron más de $100,000 para las familias, no de los multimillonarios, sino del pueblo. Cuando casi 400 nuevos vecinos necesitaron un techo, esta comunidad abrió un albergue en 48 horas, y ahí nació un bebé, y no en una estación de policía.",
+        "Después, los resultados. Una clínica de salud mental reabierta. Una clínica nueva con atención dental para nuestros niños. La red comunitaria de monitoreo del aire más grande del país. Y 6.3 acres en la 18 y Peoria, donde paramos 500 unidades de lujo y donde vienen viviendas asequibles.",
+        "Y las luchas que siguen: que paguen los ricos, que se financien las escuelas, alivio en los impuestos a la propiedad. \"No solo nos presentamos cuando están las cámaras. Nos presentamos todos los días.\" Cuando luchamos, ganamos. Hoy por mí, mañana por ti."
+      ]
+    },
+    "links": [
+      {
+        "label": {
+          "en": "Watch the launch video",
+          "es": "Mira el video del lanzamiento"
+        },
+        "href": "/#hero"
+      },
+      {
+        "label": {
+          "en": "Meet Byron",
+          "es": "Conoce a Byron"
+        },
+        "href": "/meet"
+      }
+    ],
+    "source": {
+      "label": {
+        "en": "The campaign's own recording of the August 18 launch",
+        "es": "La grabación de la campaña del lanzamiento del 18 de agosto"
+      },
+      "href": "/#hero"
+    }
+  }
+]

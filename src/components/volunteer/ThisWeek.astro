@@ -1,11 +1,28 @@
 ---
 // "This week": the two standing shifts and the sign-up, as three taped strips
 // right under the hero, so the next time-and-place is one screen in.
-// Evergreen on purpose (dated shifts live on the canvass map and in NextUp).
+// Above them, the next three dated shifts from src/data/events.json (the same
+// cards as the home page's Show Up block, so both pages agree).
+import EventCard from '../EventCard.astro';
+import { upcoming } from '../../data/events.js';
+
+const nextShifts = upcoming().slice(0, 6);
+const tilts = ['-0.6deg', '0.5deg', '-0.4deg'];
 ---
 
 <section class="thisweek" id="this-week">
   <div class="container">
+    {nextShifts.length > 0 && (
+      <div class="thisweek-next" data-thisweek-next>
+        <span class="section-label animate-in" style="text-align:center;display:block;" data-i18n="events.volunteer_label">Next on the Doors</span>
+        <ul class="thisweek-next-grid" data-thisweek-list>
+          {nextShifts.map((e, i) => (
+            <EventCard event={e} signupHref="#signup" tilt={tilts[i % 3]} delay={i * 0.08} hidden={i >= 3} pulse={i === 0} />
+          ))}
+        </ul>
+      </div>
+    )}
+
     <span class="section-label animate-in" style="text-align:center;display:block;" data-i18n="volunteer.week_label">This Week</span>
     <h2 class="section-title thisweek-title animate-in" data-i18n="volunteer.week_headline">Two standing shifts. Pick one.</h2>
 
@@ -37,7 +54,38 @@
   </div>
 </section>
 
+<script>
+  import { pruneList, watchCountdowns } from '../../scripts/events-client.js';
+
+  const list = document.querySelector('[data-thisweek-list]');
+  if (list && !pruneList(list, 3)) document.querySelector('[data-thisweek-next]')?.remove();
+  watchCountdowns();
+</script>
+
 <style>
+  .thisweek-next {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .thisweek-next-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-xl);
+    margin-top: var(--space-xl);
+    align-items: stretch;
+    padding: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .thisweek-next-grid {
+      grid-template-columns: 1fr;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+      gap: var(--space-2xl);
+    }
+  }
+
   .thisweek {
     background: var(--cream);
     padding: var(--space-3xl) 0 var(--space-2xl);

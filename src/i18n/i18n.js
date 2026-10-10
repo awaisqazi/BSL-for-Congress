@@ -45,6 +45,14 @@ export function applyTranslations(lang) {
       }
     }
   });
+
+  // Rich content (news posts) ships both languages in the DOM; show only
+  // the current one. Spanish blocks carry `hidden` in markup so English
+  // paints first without a flash.
+  const current = translations[lang] ? lang : 'en';
+  document.querySelectorAll('[data-lang="en"], [data-lang="es"]').forEach(el => {
+    el.hidden = el.dataset.lang !== current;
+  });
 }
 
 export function initI18n() {

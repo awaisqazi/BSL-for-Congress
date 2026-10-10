@@ -5,7 +5,9 @@
     "movement": "Machine vs. Movement",
     "volunteer": "Volunteer",
     "volunteer_cta": "Volunteer",
-    "donate": "Donate"
+    "donate": "Donate",
+    "latest": "Latest",
+    "events": "Show Up"
   },
   "hero": {
     "badge": "RE-ELECT BYRON SIGCHO-LOPEZ • THE PEOPLE'S FIGHTER",
@@ -545,6 +547,14 @@
     "dates_headline": "The Road to February 23",
     "d_filing_date": "Oct 19 to 26, 2026",
     "d_filing": "Candidate filing at the Board of Elections",
+    "d_canvass18_date": "Oct 18, 2026",
+    "d_canvass18": "Petition canvass, 11 AM to 2 PM, 2102 W Cermak Rd",
+    "d_canvass21_date": "Oct 21, 2026",
+    "d_canvass21": "Petition canvass, 5:30 to 7:30 PM, 2102 W Cermak Rd",
+    "d_canvass25_date": "Oct 25, 2026",
+    "d_canvass25": "Petition canvass, 10 AM to 1 PM, Cafe Latteaa, 3536 W 26th St",
+    "d_objections_date": "Oct 27 to Nov 2, 2026",
+    "d_objections": "Objection period for candidate petitions",
     "d_vbm_date": "Nov 25, 2026",
     "d_vbm": "Vote-by-mail applications open",
     "d_early_date": "Jan 14, 2027",
@@ -557,10 +567,61 @@
     "today_word": "Today",
     "now_word": "Now"
   },
+  "linkspage": {
+    "canvass_team": "Join the Canvass Team",
+    "petition_rsvp": "Petition Canvasses (RSVP)"
+  },
   "bar": {
     "ask": "Knock doors with us.",
     "signup": "Sign up",
     "canvass": "Find a canvass",
+    "showup": "Show up",
     "dismiss": "Dismiss"
+  },
+  "latest": {
+    "label": "Latest",
+    "headline": "Straight From the Ward",
+    "sub": "What we built, where to show up, and the receipt for every word. Newest first.",
+    "cta": "All the latest",
+    "read": "Read more",
+    "receipt": "The receipt:",
+    "past": "Past",
+    "rsvp": "RSVP",
+    "event_label": "Mark the date",
+    "when": "When",
+    "where": "Where",
+    "links_label": "Next steps",
+    "join_lead": "Every story here ends the same way: come knock doors with us.",
+    "join": "Knock Doors With Us"
+  },
+  "events": {
+    "label": "Show Up",
+    "headline": "The Next Doors We Knock",
+    "sub": "Pick a shift and bring a neighbor. Every signature on the petition is a neighbor's name.",
+    "all_link": "See every date",
+    "empty": "No dated shifts are posted right now. The standing shifts below keep going.",
+    "standing_wardnight": "Ward Night, every Tuesday",
+    "standing_sunday": "Sunday canvasses: find your shift",
+    "team_link": "Can't make these? Join the canvass team",
+    "hosted_by": "Hosted by",
+    "add_calendar": "Add to calendar",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "in_days": "In {n} days",
+    "page_headline": "Find a Shift. Bring a Neighbor.",
+    "page_sub": "It has never been about one person. It is Sundays on the doors, Tuesdays at the ward office, and a February morning at the polls. Pick a date below.",
+    "page_cta": "Knock Doors With Us",
+    "this_week": "This Week",
+    "coming_up": "Coming Up",
+    "every_week": "Every Week",
+    "dates_label": "Dates That Matter",
+    "dates_headline": "The Road to February 23",
+    "dates_source": "Chicago Board of Elections, 2027 election calendar",
+    "team_title": "Can't make these dates?",
+    "team_desc": "Join the canvass team and tell us when you can go out.",
+    "team_cta": "Join the Canvass Team",
+    "volunteer_label": "Next on the Doors",
+    "news_pointer": "Looking for where to show up?",
+    "news_pointer_cta": "See every shift"
   }
 }

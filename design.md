@@ -13,6 +13,7 @@
 5. [Typography](#typography)
 6. [Component Architecture](#component-architecture)
 7. [Page Structure & Routing](#page-structure--routing)
+7a. [Events Surface: Show Up, /events, events.json](#events-surface-show-up-events-eventsjson)
 8. [Hero Video Background — CRITICAL](#hero-video-background--critical)
 9. [Sub-Page Hero Pattern (Parallax + Overlay + Noise)](#sub-page-hero-pattern-parallax--overlay--noise)
 10. [Platform / Issues Content — CRITICAL](#platform--issues-content--critical)
@@ -62,8 +63,10 @@ BSL-for-Congress/
 │   └── images/                 # See "Image Assets Reference" below
 ├── src/
 │   ├── components/
-│   │   ├── Navbar.astro        # Fixed top nav + lang toggle + mobile drawer
+│   │   ├── Navbar.astro        # Fixed top nav + lang toggle + mobile drawer (Meet Byron, The Record, Machine vs. Movement, Show Up)
 │   │   ├── Hero.astro          # Homepage hero — YouTube video bg + sound toggle
+│   │   ├── ShowUp.astro        # Homepage, right after Hero: next three dated shifts + standing-shift chips
+│   │   ├── EventCard.astro     # One dated shift as a taped flyer (ShowUp, /events, ThisWeek)
 │   │   ├── MeetOrganizer.astro # Homepage bio block
 │   │   ├── PlatformGrid.astro  # Homepage — 4-card summarized platform
 │   │   ├── AnointmentBanner.astro
@@ -86,12 +89,18 @@ BSL-for-Congress/
 │   │   │   └── BallotFight.astro     # 697 → 10,816 → 50,000 stats + CTA
 │   │   └── volunteer/
 │   │       ├── VolunteerHero.astro   # + "Knock Doors With Us" CTA → #signup
-│   │       ├── ThisWeek.astro        # Three taped strips: Sundays (canvass map), Tuesdays (Ward Night), Today (#signup)
+│   │       ├── ThisWeek.astro        # Next three dated shifts (EventCard, from events.json), then three taped strips: Sundays (canvass map), Tuesdays (Ward Night), Today (#signup)
 │   │       ├── RolePicker.astro      # Situation chips that pre-check the form, then scroll to #signup
 │   │       ├── PetitionBlitz.astro   # Orange banner, CTA → #signup
 │   │       ├── ActionBlocks.astro    # 6 action cards (3-col → 2 → 1), "Count me in" → #signup
 │   │       ├── SignupForm.astro      # Google Form, sticky text on desktop, next-steps state after submit
 │   │       └── FundCTA.astro         # Donate band, after the form (was inside SignupForm)
+│   ├── data/
+│   │   ├── events.json               # Single source for shifts and official dates (schema: EVENTS-README.md)
+│   │   ├── events.js                 # Build-time checks + date/time/.ics helpers
+│   │   ├── news.json, news.js        # "Latest" posts (schema: NEWS-README.md)
+│   ├── scripts/
+│   │   └── events-client.js          # Browser-side expiry, regrouping and Today/Tomorrow chips for event cards
 │   ├── i18n/
 │   │   ├── i18n.js                   # Translation engine (text + INPUT placeholder)
 │   │   ├── en.json                   # English — runtime source of truth
@@ -104,6 +113,9 @@ BSL-for-Congress/
 │   │   ├── meet.astro
 │   │   ├── movement.astro
 │   │   ├── volunteer.astro
+│   │   ├── events/index.astro        # /events/ ("Show Up")
+│   │   ├── events/[file].ics.js      # Calendar files, one per dated entry per language
+│   │   ├── news/                     # /news/ list + /news/<slug>/ posts
 │   │   └── links.astro               # Linktree-style; uses Layout, no Navbar/Footer
 │   └── styles/
 │       └── global.css                # All design tokens + reset + utilities + buttons + animations
@@ -167,6 +179,8 @@ machine.*              → /movement page — hero, movement, machine expose, ti
 volunteer.*            → /volunteer page — hero, blitz, action cards, signup form labels, CTA
 petition_modal.*       → Global petition modal overlay
 bar.*                  → Mobile action bar (MobileActionBar.astro)
+latest.*               → Latest strip (home) + /news pages
+events.*               → Show Up block, /events page, ThisWeek dated cards, /news pointer
 ```
 
 ### Dead i18n Keys
@@ -312,16 +326,74 @@ Each page (except `links.astro`) imports `Layout`, `Navbar`, page-specific compo
 
 | Route | File | Composition |
 |---|---|---|
-| `/` | [src/pages/index.astro](src/pages/index.astro) | Hero → MeetOrganizer → PlatformGrid → AnointmentBanner |
+| `/` | [src/pages/index.astro](src/pages/index.astro) | Hero > ShowUp > ThePromise > MeetOrganizer > PlatformGrid (results) > UpNext > LatestStrip > AnointmentBanner > NextUp > RoadCTA > SolidarityTicker |
 | `/platform` | [src/pages/platform.astro](src/pages/platform.astro) | PlatformHero → PolicyGrid → UnboughtBanner |
 | `/meet` | [src/pages/meet.astro](src/pages/meet.astro) | MeetHero → EarlyLife → WardRecord → SocialistValues |
 | `/movement` | [src/pages/movement.astro](src/pages/movement.astro) | MachineHero → MovementSection → MachineSection → BallotFight |
-| `/volunteer` | [src/pages/volunteer.astro](src/pages/volunteer.astro) | VolunteerHero → ThisWeek → RolePicker → SignupForm → ActionBlocks → PetitionBlitz → NextUp → FundCTA → SolidarityTicker (the form sits before the roles on purpose; every card and the blitz CTA scroll back up to `#signup`) |
+| `/events` | [src/pages/events/index.astro](src/pages/events/index.astro) | Header (badge, headline, standing ask) > This Week > Coming Up > Every Week > Dates That Matter (ledger) > canvass team card > SignupForm (`#signup`) > "All the latest" link |
+| `/news` | [src/pages/news/index.astro](src/pages/news/index.astro) | One-line pointer to /events > every post in news.json, newest first; `/news/<slug>/` per post |
+| `/volunteer` | [src/pages/volunteer.astro](src/pages/volunteer.astro) | VolunteerHero → ThisWeek (next three dated shifts, then the standing strips) → RolePicker → SignupForm → ActionBlocks → PetitionBlitz → NextUp → FundCTA → SolidarityTicker (the form sits before the roles on purpose; every card and the blitz CTA scroll back up to `#signup`) |
 | `/links` | [src/pages/links.astro](src/pages/links.astro) | Linktree-style; uses Layout but **omits** Navbar/Footer |
 
 ### Per-Page SEO
 
 Every page passes a custom `title` and `description` to `<Layout>`. The OG image is hardcoded in Layout.astro to `/images/hero-rally.jpeg` regardless of page — change Layout.astro if you need per-page OG images.
+
+---
+
+## Events Surface: Show Up, /events, events.json
+
+The site's job is to turn a reader into a body on a shift, so the next place to show up is never more than one scroll away. Every shift and official date lives in one file, and every surface reads from it.
+
+### The single source: `src/data/events.json`
+
+- [src/data/events.json](src/data/events.json) holds every dated shift (`canvass`, `meetup`, `wardnight`), every official date (`deadline`, `election`) and the two weekly standing shifts (`recurring: true` with a `rule` like `weekly:TU`). Schema and rules: [src/data/EVENTS-README.md](src/data/EVENTS-README.md).
+- [src/data/events.js](src/data/events.js) validates the file at build time (bad entry = failed build, emdashes rejected, every entry needs a `source` URL) and exports the helpers: `upcoming()`, `stamp()`, `timeRange()`, `ledgerDate()`, `ics()`.
+- Verified facts only. Every date, time, address, host and RSVP link must be in the linked source. Do not add an event because it sounds likely.
+- Calendar files are built by [src/pages/events/[file].ics.js](src/pages/events/[file].ics.js): `/events/<id>.ics` (English) and `/events/<id>-es.ics` (Spanish) for every dated entry. Nothing is hand-written into `public/`.
+
+### The card: `EventCard.astro`
+
+One dated shift as a taped paper flyer: a dashed date stamp (weekday over month and day), a Today / Tomorrow / In N days chip (filled in the browser, only within 14 days), the time, a blue placard title (orange for meetups), the place with the address linked to a map, the one-line from the data, the host, then **one** orange pill button: "RSVP" / "Confirmar asistencia" to the Action Network page, or "Tell us you're coming" / "Avísanos que vienes" to the sign-up form when there is no RSVP page. Never a second competing button; the optional "Add to calendar" is a quiet text link under it (on /events only). The button is full width, at least 48 px tall (52 px min-height), and the first card's button carries the `pulse-glow` breathing. Event copy ships in both languages with `data-lang` wrappers; short labels go through `events.*` keys.
+
+### Expiry between deploys
+
+The site only rebuilds on deploy, so dates are re-checked in the browser by [src/scripts/events-client.js](src/scripts/events-client.js):
+
+- Build time: only entries whose `expires` is today or later (Chicago) are rendered; up to six candidates ship.
+- Browser: each card carries `data-expires`; after 23:59:59 that day it is removed, then the first three that remain are shown (`pruneList(list, 3)`). If none remain, the block shows the `events.empty` line (home) or removes itself (ThisWeek).
+- NextUp's script also removes any `[data-expires]` element on the page. That is harmless: the events script re-counts after.
+- Ledger rows use `data-past-after`: they gray out with a strikethrough and lose their calendar link.
+
+### Home: the Show Up block (`ShowUp.astro`)
+
+Placed directly after the Hero, before ThePromise. Label "Show Up" / "Preséntate", headline "The Next Doors We Knock" / "Las Próximas Puertas que Tocamos", a "See every date" link to /events. Then the **three-card rule**: exactly the next three upcoming dated shifts, never more (desktop 3 columns; stacked single column from 1024 px down). Under the cards, two compact standing-shift chips ("Ward Night, every Tuesday" to 25thward.org, "Sunday canvasses: find your shift" to the canvass map) and a text link "Can't make these? Join the canvass team" to the canvass team Google Form. Official deadlines never take a home card; they live on the /events ledger and in NextUp.
+
+### The /events page
+
+[src/pages/events/index.astro](src/pages/events/index.astro), nav label "Show Up" / "Preséntate". Sections in order:
+
+1. **Header**: blue gradient over `volunteer-hero.jpg`, badge, headline, the standing ask as a `btn-massive` ("Knock Doors With Us", scrolls to `#upcoming`). Shorter than the sub-page heroes on purpose so the first card shows sooner.
+2. **This Week** and **Coming Up**: grouped at build time (next seven days vs later) and regrouped in the browser by today's date; an empty group hides.
+3. **Every Week**: the two recurring entries as white taped cards.
+4. **Dates That Matter**: the deadlines as a ruled ledger with "Add to calendar" per row and the Board of Elections receipt.
+5. **Canvass team card** (blue-deeper) with the Google Form button.
+6. **SignupForm** (`#signup`), included exactly as on /volunteer. Frozen form values untouched.
+7. A small "All the latest" link to /news.
+
+### The other readers
+
+- **ThisWeek.astro** (volunteer page) shows the same next three dated shifts above its standing strips, so /, /volunteer and /events always agree. On /volunteer the no-RSVP button goes to `#signup` on the same page.
+- **MobileActionBar.astro** now has three buttons: "Show up" / "Preséntate" (orange pulse, to /events) first, then "Sign up" (blue-deeper fill, to /volunteer#signup) and "Find a canvass" (outline, canvass map). Same behavior as before: hides over the form and the paid-for banner, dismissible.
+- **/news** opens with a one-line pointer: "Looking for where to show up?" / "¿Buscas dónde presentarte?" to /events.
+
+### Navigation
+
+Main nav (desktop and mobile drawer): Meet Byron, The Record, Machine vs. Movement, **Show Up** (`nav.events`, to /events/), then the EN/ES toggle, Volunteer (orange pill), Donate. "Latest" left the main nav; it lives in the footer links (`nav.latest`, after Show Up) and in the Latest strip's "All the latest" link.
+
+### Adding or retiring an event
+
+Edit `events.json` only, following EVENTS-README.md, then `npm run build`. Do not hand-edit cards in components. Past entries can stay in the file; the pages hide them.
 
 ---
 
@@ -731,6 +803,8 @@ Many sections have stable IDs that act as deep-link targets. **Don't rename thes
 | `/platform` | `#platform-hero`, `#issues`, `#housing`, `#healthcare`, `#economic`, `#immigration`, `#foreign-policy`, `#democracy`, `#education`, `#unbought` |
 | `/meet` | `#meet-hero`, `#early-life`, `#ward-record`, `#elected-by-the-people`, `#family` |
 | `/movement` | `#machine-hero`, `#the-movement`, `#the-machine`, `#ballot-fight` |
+| `/` (new) | `#show-up` |
+| `/events` | `#events-hero`, `#upcoming`, `#every-week`, `#dates`, `#canvass-team`, `#signup` |
 | `/volunteer` | `#volunteer-hero`, `#this-week`, `#find-your-post`, `#signup`, `#ways-to-fight`, `#petition-blitz`, `#next-up` |
 | **Global** | `#petition` — **does NOT scroll**; opens Petition Modal |
 

@@ -1,7 +1,8 @@
 ---
 // Mobile-only standing ask, pinned to the bottom of the screen like a strip
-// of paper taped to the wall: "Knock doors with us." plus the two links that
-// turn a reader into a body on a shift (the sign-up form, the canvass map).
+// of paper taped to the wall: "Knock doors with us." plus the three links that
+// turn a reader into a body on a shift (the /events list of dated shifts from
+// src/data/events.json, the sign-up form, the canvass map).
 // Slides in after the first scroll, steps aside while the signup form or the
 // footer's paid-for banner is on screen, and stays dismissed via localStorage.
 // Layout.astro injects it on every page except /links (actionBar={false}).
@@ -19,7 +20,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </button>
   </div>
   <div class="action-bar-links">
-    <a href={`${base}/volunteer#signup`} class="action-bar-primary" data-i18n="bar.signup">Sign up</a>
+    <a href={`${base}/events/`} class="action-bar-primary" data-i18n="bar.showup">Show up</a>
+    <a href={`${base}/volunteer#signup`} class="action-bar-signup" data-i18n="bar.signup">Sign up</a>
     <a href="https://canvass.chicagodsa.org" class="action-bar-secondary" target="_blank" rel="noopener" data-i18n="bar.canvass">Find a canvass</a>
   </div>
 </div>
@@ -170,16 +172,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     .action-bar-links {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: var(--space-sm);
     }
 
     .action-bar-primary,
+    .action-bar-signup,
     .action-bar-secondary {
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 40px;
+      min-height: 44px;
       padding: 8px 10px;
       font-family: var(--font-display);
       font-size: 12px;
@@ -196,6 +199,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       background: var(--orange);
       color: var(--white);
       animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    .action-bar-signup {
+      background: var(--blue-deeper);
+      color: var(--cream-light);
+      border: 2px solid var(--blue-deeper);
     }
 
     .action-bar-secondary {
