@@ -49,7 +49,7 @@ Standing shifts carry `"recurring": true` and a `rule` instead of `start`/`end`/
 {
   "id": "canvass-2026-11-01-example",
   "kind": "canvass",
-  "title": { "en": "Petition Canvass", "es": "Jornada de Firmas" },
+  "title": { "en": "Petition Canvass", "es": "Caminata para la petición" },
   "line": {
     "en": "Knock doors with neighbors and talk to them about the ward.",
     "es": "Toca puertas con tus vecinos y habla con ellos sobre el distrito."
@@ -78,7 +78,7 @@ Standing shifts carry `"recurring": true` and a `rule` instead of `start`/`end`/
 4. **Never name an opponent** in the ward race.
 5. **Spanish is real Spanish,** written for neighbors in Pilsen and La Villita. Same facts in both
    languages. Fixed phrases: "Noche del Distrito" (Ward Night), "Toca Puertas con Nosotros",
-   "Distrito 25", "Jornada de Firmas" (petition canvass), "mapa de caminatas" (canvass map).
+   "Distrito 25", "Caminata para la petición" (petition canvass), "mapa de caminatas" (canvass map).
 6. **One action per card.** The button is the RSVP, or the sign-up form when there is no RSVP.
 7. **Do not duplicate.** Check existing ids and dates first. When an event is also news, it can have
    a post in `news.json` too, but the shift itself lives here.
