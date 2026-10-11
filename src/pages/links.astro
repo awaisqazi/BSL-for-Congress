@@ -1,6 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import "../styles/calendar.css";
+import { payloadJson } from "../data/calendar-data.js";
+import { feedPath } from "../data/events.js";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const host = Astro.site ? Astro.site.host : "byronfor25.com";
 ---
 
 <Layout
@@ -40,6 +44,33 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
           </video>
         </div>
       </div>
+
+      <!-- Plan your month: the compact month grid (calendar-core.js, the same
+           grid as the nav popover and the mobile drawer), the next three
+           shifts, the full calendar and the feed. /links has no Navbar, so the
+           calendar payload is inlined here, once. -->
+      <section class="links-cal calg-touch animate-in anim-pin" style="--tilt: 0.4deg" aria-labelledby="links-cal-label" data-linkscal>
+        <h2 class="links-cal-placard" id="links-cal-label"><span data-i18n="events.cal_label">Plan Your Month</span></h2>
+        <div class="calg-head">
+          <button type="button" class="calg-arrow" data-linkscal-prev><span class="calg-sr" data-i18n="events.cal_prev">Previous month</span><span aria-hidden="true">←</span></button>
+          <p class="calg-month" data-linkscal-month aria-live="polite"></p>
+          <button type="button" class="calg-arrow" data-linkscal-next><span class="calg-sr" data-i18n="events.cal_next">Next month</span><span aria-hidden="true">→</span></button>
+        </div>
+        <div data-linkscal-grid></div>
+        <ul class="links-cal-legend">
+          <li><span class="calg-dot calg-dot-shift" aria-hidden="true"></span><span data-i18n="events.cal_legend_shift">Canvass or meetup</span></li>
+          <li><span class="calg-dot calg-dot-ward" aria-hidden="true"></span><span data-i18n="events.cal_legend_wardnight">Ward Night</span></li>
+          <li><span class="calg-dot calg-dot-date" aria-hidden="true"></span><span data-i18n="events.cal_legend_date">Board deadline or election</span></li>
+        </ul>
+        <p class="caln-label" data-i18n="events.cal_next_up">Next up</p>
+        <ul class="caln-rows" data-linkscal-rows></ul>
+        <div class="links-cal-more">
+          <a class="caln-full" href={`${base}/volunteer/#calendar`}><span data-i18n="events.cal_full">See the full calendar</span> <span aria-hidden="true">→</span></a>
+          <a class="caln-full" data-lang="en" href={`webcal://${host}${feedPath("en")}`}><span data-i18n="events.cal_subscribe">Subscribe to all dates</span> <span aria-hidden="true">+</span></a>
+          <a class="caln-full" data-lang="es" hidden href={`webcal://${host}${feedPath("es")}`}><span data-i18n="events.cal_subscribe">Suscríbete a todas las fechas</span> <span aria-hidden="true">+</span></a>
+        </div>
+      </section>
+      <script type="application/json" id="bsl-cal-data" set:html={payloadJson(base)}></script>
 
       <!-- Primary Links: taped flyer strips. The body ask first (volunteer,
            canvass, Ward Night), then Donate, then the reading. -->
@@ -213,6 +244,59 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   </main>
 </Layout>
 
+<script>
+  // Same mount as Navbar.astro's mountMini(): arrows, a grid of day links to
+  // /volunteer/#cal-YYYY-MM-DD, and the next three shifts.
+  import {
+    readData, buildIndex, bounds, inBounds, renderMonth, keyTarget, monthTitle, monthOf,
+    todayISO, nextShifts, rowsHtml,
+  } from "../scripts/calendar-core.js";
+
+  const scope = document.querySelector<HTMLElement>("[data-linkscal]");
+  const calData = readData();
+  if (scope && calData) {
+    const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+    const today = todayISO();
+    const byDay = buildIndex(calData, today);
+    const b = bounds(calData, today);
+    const hrefFor = (day: string) => `${base}/volunteer/#cal-${day}`;
+    const grid = scope.querySelector<HTMLElement>("[data-linkscal-grid]")!;
+    const month = scope.querySelector<HTMLElement>("[data-linkscal-month]")!;
+    const prev = scope.querySelector<HTMLButtonElement>("[data-linkscal-prev]")!;
+    const next = scope.querySelector<HTMLButtonElement>("[data-linkscal-next]")!;
+    const rows = scope.querySelector<HTMLElement>("[data-linkscal-rows]")!;
+    let view = new Date(b.first);
+    let focusDay: string | null = null;
+    const render = () => {
+      month.textContent = monthTitle(view);
+      prev.disabled = view <= b.first;
+      next.disabled = view >= b.last;
+      renderMonth(grid, { view, size: "compact", byDay, today, hrefFor, focusDay });
+      rows.innerHTML = rowsHtml(nextShifts(byDay, today, calData.until, 3));
+    };
+    const step = (n: number) => {
+      view = new Date(view.getFullYear(), view.getMonth() + n, 1);
+      focusDay = null;
+      render();
+    };
+    prev.addEventListener("click", () => step(-1));
+    next.addEventListener("click", () => step(1));
+    grid.addEventListener("keydown", (ev) => {
+      const cell = (ev.target as Element).closest<HTMLElement>("[data-day]");
+      if (!cell) return;
+      const target = keyTarget(ev, cell.dataset.day);
+      if (!target || !inBounds(target, b)) return;
+      ev.preventDefault();
+      focusDay = target;
+      view = monthOf(target);
+      render();
+      grid.querySelector<HTMLElement>(`[data-day="${target}"]`)?.focus();
+    });
+    document.addEventListener("bsl:langchange", render);
+    render();
+  }
+</script>
+
 
 
 <style>
@@ -334,6 +418,95 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     height: 100%;
     object-fit: contain;
     background: #0a1a2e;
+  }
+
+  /* ── Plan your month: a ruled flyer taped at both corners, blue placard on
+     top. The grid, rows and links inside are styled by calendar.css. ── */
+  .links-cal {
+    position: relative;
+    width: 100%;
+    margin-top: var(--space-sm);
+    padding: 30px 12px 6px;
+    background: var(--cream-light);
+    background-image: repeating-linear-gradient(180deg, transparent, transparent 35px, rgba(27, 54, 93, 0.05) 35px, rgba(27, 54, 93, 0.05) 36px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    text-align: left;
+  }
+
+  .links-cal::before,
+  .links-cal::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    width: 52px;
+    height: 18px;
+    background: rgba(245, 208, 138, 0.7);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+  }
+
+  .links-cal::before {
+    left: -12px;
+    transform: rotate(-32deg);
+  }
+
+  .links-cal::after {
+    right: -12px;
+    transform: rotate(32deg);
+  }
+
+  .links-cal-placard {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    margin: 0;
+    transform: translateX(-50%) rotate(-1.5deg);
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .links-cal-placard span {
+    display: inline-block;
+    padding: 7px 14px;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--cream-light);
+    background: var(--blue-deeper);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .links-cal-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 14px;
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 11px;
+    line-height: 1.3;
+    color: var(--gray-700);
+  }
+
+  .links-cal-legend li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .links-cal-more {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0 var(--space-md);
+    border-top: 1px dashed rgba(3, 109, 153, 0.2);
+  }
+
+  .links-cal-more [hidden] {
+    display: none;
   }
 
   /* ── Link strips: flyers taped to the night wall ── */

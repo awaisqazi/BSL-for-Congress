@@ -252,7 +252,7 @@ Healthy state: all five "missing/used not in/dead" arrays empty, and the three c
 | String | Where | Why hardcoded |
 |---|---|---|
 | Photo credit `Eileen T. Meslar / Chicago Tribune` | AnointmentBanner | Proper photographer attribution stays in source language |
-| Most `links.astro` text | `/links` Linktree page | Mobile bio link, English by design. Only two strips (`linkspage.canvass_team`, `linkspage.petition_rsvp`) use i18n keys |
+| Most `links.astro` text | `/links` Linktree page | Mobile bio link, English by design. Two strips (`linkspage.canvass_team`, `linkspage.petition_rsvp`) and the calendar card (`events.cal_*`) use i18n keys |
 
 ---
 
@@ -427,7 +427,7 @@ Placed directly after the Hero, before ThePromise. Label "Show Up" / "Preséntat
 
 ### The month calendar (`MiniCalendar.astro`) and the filtered list
 
-A taped, ruled card with the placard "Plan Your Month" / "Planea Tu Mes", first in the /volunteer Show Up block. No libraries. One grid implementation for the whole site: [src/scripts/calendar-core.js](src/scripts/calendar-core.js) (`renderMonth()` with sizes `full` and `compact`, the day index, date labels, the "next up" rows), styled by the global [src/styles/calendar.css](src/styles/calendar.css) (prefixes `calg-` and `caln-`; global because the grid is written with innerHTML). Data: [src/data/calendar-data.js](src/data/calendar-data.js) builds a small payload from events.json (dates, kinds, expiry, and title, time and action link for shifts) that Navbar.astro inlines once per page as `<script type="application/json" id="bsl-cal-data">`. The /volunteer calendar, the nav popover and the drawer all read that one block.
+A taped, ruled card with the placard "Plan Your Month" / "Planea Tu Mes", first in the /volunteer Show Up block. No libraries. One grid implementation for the whole site: [src/scripts/calendar-core.js](src/scripts/calendar-core.js) (`renderMonth()` with sizes `full` and `compact`, the day index, date labels, the "next up" rows), styled by the global [src/styles/calendar.css](src/styles/calendar.css) (prefixes `calg-` and `caln-`; global because the grid is written with innerHTML). Data: [src/data/calendar-data.js](src/data/calendar-data.js) builds a small payload from events.json (dates, kinds, expiry, and title, time and action link for shifts) that Navbar.astro inlines once per page as `<script type="application/json" id="bsl-cal-data">` (/links has no Navbar, so links.astro inlines the same block once). The compact grid appears in three places: the desktop nav popover, the mobile drawer, and the /links calendar card (after the video, before the first strip). The /volunteer calendar (full size) and all compact grids read that one block.
 
 - Month grid, Sunday first, prev/next arrows (from the current month to April 2027), today with a dashed orange outline, days outside the month dimmed. The picked day is filled brand blue (`--blue-deeper`) with cream text; a picked week is a pale blue band across its row.
 - Dots: orange for canvasses and meetups (including the Sunday canvasses), blue for Ward Night, cream with an orange ring (outlined) for Board deadlines and the election. Multi-day windows mark every day. Weekly shifts are expanded in the browser from today through Election Day, except on a day that already has a dated shift of the same kind (Sun Oct 18 has the dated petition canvass, so it shows one orange dot, not two; same for a dated `wardnight` on a Tuesday). The rule lives in `buildIndex()`, so the dots, the aria counts, the "next up" rows and the list all agree; April 6, 2027 carries a runoff marker only (`events.cal_runoff_*`). Expired dated shifts drop off.
@@ -761,7 +761,7 @@ Five accounts in this exact order: Instagram, Facebook, TikTok, YouTube, X (Face
 ### Important Notes
 
 - **Uses `<Layout>`** — so it inherits Layout's PetitionModal, scroll observer, and i18n init script. (The previous design.md said it bypasses Layout — that's wrong; it just omits Navbar and Footer.)
-- **Almost no i18n.** Strings are hardcoded English by design; the two exceptions are `linkspage.canvass_team` and `linkspage.petition_rsvp` (the canvass-team and petition-canvass RSVP strips).
+- **Almost no i18n.** Strings are hardcoded English by design; the exceptions are `linkspage.canvass_team` and `linkspage.petition_rsvp` (the canvass-team and petition-canvass RSVP strips) and the calendar card, which reads `events.cal_*`.
 - **Internal links open in `target="_blank"`** — this is intentional because the page is meant for social-bio link clicks where opening a new tab is the expected behavior.
 
 ### Page Structure
@@ -771,6 +771,7 @@ Five accounts in this exact order: Instagram, Facebook, TikTok, YouTube, X (Face
 .links-container (max-width 480px, centered)
 ├── .links-header     (logo, "Byron Sigcho-Lopez", tagline)
 ├── .links-video      (self-hosted <video controls>, hero-sound.mp4 with hero-poster.jpg; the sound copy, not the muted loop)
+├── .links-cal        ("Plan Your Month" taped flyer: compact month grid with 44 px day links to /volunteer/#cal-YYYY-MM-DD, legend, Next up (three shifts), See the full calendar, Subscribe to all dates (webcal feed, ES all-es.ics); /links has no Navbar, so the page inlines #bsl-cal-data itself; bilingual via events.cal_*)
 ├── .links-list       (taped strips: home, volunteer (#signup, orange .link-strip-primary), canvass team form, petition canvasses RSVP, canvass map, Ward Night, donate, platform, movement; read the file for the current order)
 ├── .links-socials    (5 round social buttons: Instagram, Facebook, TikTok, YouTube, X)
 ├── .links-divider    ("Join the Movement" with horizontal rules)
