@@ -1,6 +1,7 @@
 // One month-grid implementation for every calendar on the site: the /volunteer
-// calendar (MiniCalendar.astro, size "full"), the desktop nav popover and the
-// mobile drawer (Navbar.astro, size "compact"). Data is the compact payload
+// calendar (MiniCalendar.astro, size "full"), and the three compact ones that
+// share mountCompact(): the desktop nav popover and the mobile drawer
+// (Navbar.astro) and the /links card. Data is the compact payload
 // from src/data/calendar-data.js, inlined once per page as
 // <script type="application/json" id="bsl-cal-data">. Styles live in
 // src/styles/calendar.css (global, prefix calg- and caln-), because the grid
@@ -215,4 +216,93 @@ export function rowsHtml(rows) {
       `<span class="caln-what"><span class="caln-title">${esc(it.t[L])}</span>${when ? `<span class="caln-time">${esc(when)}</span>` : ''}</span>` +
       `<a class="caln-act" href="${esc(it.href)}"${ext}>${esc(it.act[L])}<span aria-hidden="true"> →</span></a></li>`;
   }).join('');
+}
+
+// Mini details for one day, shown in place under a compact grid when a day is
+// tapped: each item's title, time and place with its single action, then one
+// "See more" button that jumps to that day on /volunteer.
+export function dayDetailHtml(day, byDay, base) {
+  const L = lang();
+  const d = t();
+  const items = byDay.get(day) || [];
+  const rows = items.map((it) => {
+    if (it.k === 'runoff') {
+      return `<li class="cald-item cald-date"><span class="cald-title">${esc(d.cal_runoff_title)}</span>` +
+        `<span class="cald-meta">${esc(d.cal_runoff_line)}</span></li>`;
+    }
+    const title = it.t ? it.t[L] : '';
+    if (!isShift(it)) return `<li class="cald-item cald-date"><span class="cald-title">${esc(title)}</span></li>`;
+    const when = it.weekly ? it.w[L] : it.time ? it.time[L] : '';
+    const place = it.p ? it.p[L] : '';
+    const ext = it.ext ? ' target="_blank" rel="noopener noreferrer"' : '';
+    return `<li class="cald-item cald-${kindClass(it.k)}"><span class="cald-title">${esc(title)}</span>` +
+      (when ? `<span class="cald-meta cald-when">${esc(when)}</span>` : '') +
+      (place ? `<span class="cald-meta">${esc(place)}</span>` : '') +
+      `<a class="cald-act" href="${esc(it.href)}"${ext}>${esc(it.act[L])}<span aria-hidden="true"> →</span></a></li>`;
+  }).join('');
+  return `<p class="cald-day">${esc(dayLabel(day, true))}</p>` +
+    (items.length ? `<ul class="cald-list">${rows}</ul>` : `<p class="cald-empty">${esc(d.cal_empty)}</p>`) +
+    `<a class="cald-more" href="${esc(`${base}/volunteer/#cal-${day}`)}">${esc(d.cal_see_more)}<span aria-hidden="true"> →</span></a>`;
+}
+
+// One compact month for the nav popover, the mobile drawer and the /links
+// card: arrows, a grid of day buttons, the tapped day's mini details in place
+// (tap the day again to fold it), and the next three shifts. `scope` holds
+// elements marked data-<prefix>-grid, -month, -prev, -next and -rows; the
+// details panel is created under the grid. Returns the render function.
+export function mountCompact(scope, prefix, { data, byDay, b, today, base }) {
+  const q = (name) => scope.querySelector(`[data-${prefix}-${name}]`);
+  const grid = q('grid');
+  const month = q('month');
+  const prev = q('prev');
+  const next = q('next');
+  const rows = q('rows');
+  const detail = document.createElement('div');
+  detail.className = 'cald';
+  detail.hidden = true;
+  detail.setAttribute('aria-live', 'polite');
+  grid.after(detail);
+  let view = new Date(b.first);
+  let focusDay = null;
+  let selected = null;
+  const render = () => {
+    month.textContent = monthTitle(view);
+    prev.disabled = view <= b.first;
+    next.disabled = view >= b.last;
+    renderMonth(grid, { view, size: 'compact', byDay, today, selected, focusDay });
+    rows.innerHTML = rowsHtml(nextShifts(byDay, today, data.until, 3));
+    detail.hidden = !selected;
+    detail.innerHTML = selected ? dayDetailHtml(selected, byDay, base) : '';
+  };
+  const step = (n) => {
+    view = new Date(view.getFullYear(), view.getMonth() + n, 1);
+    focusDay = null;
+    render();
+  };
+  prev.addEventListener('click', () => step(-1));
+  next.addEventListener('click', () => step(1));
+  grid.addEventListener('click', (ev) => {
+    const cell = ev.target instanceof Element ? ev.target.closest('[data-day]') : null;
+    if (!cell) return;
+    const day = cell.dataset.day;
+    if (!inBounds(day, b)) return;
+    selected = selected === day ? null : day;
+    focusDay = day;
+    view = monthOf(day);
+    render();
+    grid.querySelector(`[data-day="${day}"]`)?.focus();
+  });
+  grid.addEventListener('keydown', (ev) => {
+    const cell = ev.target instanceof Element ? ev.target.closest('[data-day]') : null;
+    if (!cell) return;
+    const target = keyTarget(ev, cell.dataset.day);
+    if (!target || !inBounds(target, b)) return;
+    ev.preventDefault();
+    focusDay = target;
+    view = monthOf(target);
+    render();
+    grid.querySelector(`[data-day="${target}"]`)?.focus();
+  });
+  document.addEventListener('bsl:langchange', render);
+  return render;
 }

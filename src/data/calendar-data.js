@@ -2,8 +2,8 @@
 // inlined once per page by Navbar.astro (<script id="bsl-cal-data">). Three
 // readers share it through src/scripts/calendar-core.js: the nav popover, the
 // mobile drawer, and the /volunteer calendar (MiniCalendar.astro). It carries
-// only what a month grid and a one-line "next up" row need; the full shift
-// details stay in the EventCards rendered on /volunteer.
+// only what a month grid, a one-line "next up" row and the tap-a-day mini
+// details need; the full shift details stay in the EventCards on /volunteer.
 import { dated, recurring, SHOWUP_KINDS, pick, timeRange, actionHref, startDate } from './events.js';
 
 export const ELECTION_DAY = '2027-02-23';
@@ -24,8 +24,15 @@ export function calendarPayload(base) {
         to: e.end ? startDate({ start: e.end }) : startDate(e),
         k: e.kind,
         x: e.expires,
+        t: e.title,
         ...(shift
-          ? { t: e.title, time: both((lang) => timeRange(e, lang)), act: e.action, href, ext: /^https?:\/\//.test(href) }
+          ? {
+              time: both((lang) => timeRange(e, lang)),
+              act: e.action,
+              href,
+              ext: /^https?:\/\//.test(href),
+              p: both((lang) => [pick(e.location, lang), e.address].filter(Boolean).join(', ')),
+            }
           : {}),
       };
     }),

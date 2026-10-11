@@ -112,8 +112,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <script>
   import {
-    readData, buildIndex, bounds, inBounds, renderMonth, keyTarget, monthTitle, monthOf,
-    todayISO, nextShifts, rowsHtml,
+    readData, buildIndex, bounds, todayISO, mountCompact,
   } from '../scripts/calendar-core.js';
 
   const hamburger = document.getElementById('hamburger');
@@ -138,7 +137,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
   });
 
-  // Close drawer on link click (delegated, so the calendar's day links count)
+  // Close drawer on link click (delegated, so the calendar's See more and action links count)
   drawer?.addEventListener('click', (e) => {
     if (!(e.target instanceof Element) || !e.target.closest('a')) return;
     drawer.classList.remove('open');
@@ -154,45 +153,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     const today = todayISO();
     const byDay = buildIndex(calData, today);
     const b = bounds(calData, today);
-    const hrefFor = (day) => `${base}/volunteer/#cal-${day}`;
 
-    // One small month: arrows, grid of day links, the next three shifts.
-    function mountMini(prefix, scope) {
-      const grid = scope.querySelector(`[data-${prefix}-grid]`);
-      const month = scope.querySelector(`[data-${prefix}-month]`);
-      const prev = scope.querySelector(`[data-${prefix}-prev]`);
-      const next = scope.querySelector(`[data-${prefix}-next]`);
-      const rows = scope.querySelector(`[data-${prefix}-rows]`);
-      let view = new Date(b.first);
-      let focusDay = null;
-      const render = () => {
-        month.textContent = monthTitle(view);
-        prev.disabled = view <= b.first;
-        next.disabled = view >= b.last;
-        renderMonth(grid, { view, size: 'compact', byDay, today, hrefFor, focusDay });
-        rows.innerHTML = rowsHtml(nextShifts(byDay, today, calData.until, 3));
-      };
-      const step = (n) => {
-        view = new Date(view.getFullYear(), view.getMonth() + n, 1);
-        focusDay = null;
-        render();
-      };
-      prev.addEventListener('click', () => step(-1));
-      next.addEventListener('click', () => step(1));
-      grid.addEventListener('keydown', (ev) => {
-        const cell = ev.target.closest('[data-day]');
-        if (!cell) return;
-        const target = keyTarget(ev, cell.dataset.day);
-        if (!target || !inBounds(target, b)) return;
-        ev.preventDefault();
-        focusDay = target;
-        view = monthOf(target);
-        render();
-        grid.querySelector(`[data-day="${target}"]`)?.focus();
-      });
-      document.addEventListener('bsl:langchange', render);
-      return render;
-    }
+    // One small month (shared with /links): arrows, day buttons, the tapped
+    // day's mini details in place, and the next three shifts.
+    const mountMini = (prefix, scope) => mountCompact(scope, prefix, { data: calData, byDay, b, today, base });
 
     // Mobile drawer: drawn on first open.
     const drawerCal = document.querySelector('[data-drawercal]');
@@ -254,7 +218,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       document.addEventListener('click', (ev) => {
         if (isOpen() && ev.target instanceof Node && !item.contains(ev.target)) close(false);
       });
-      // A day link or "See the full calendar": close on the way out.
+      // A See more, action or "See the full calendar" link: close on the way out.
       pop.addEventListener('click', (ev) => {
         if (ev.target instanceof Element && ev.target.closest('a')) close(false);
       });
