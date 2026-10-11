@@ -1,4 +1,10 @@
 ---
+// Fixed top nav. "Show Up" carries a calendar glyph that opens a small month
+// popover on desktop (hover with a mouse, click anywhere); the mobile drawer
+// opens with the same compact grid above the links. Both read the calendar
+// JSON inlined here once per page and draw with src/scripts/calendar-core.js.
+import '../styles/calendar.css';
+import { payloadJson } from '../data/calendar-data.js';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
@@ -14,7 +20,25 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <li><a href={`${base}/meet`} data-i18n="nav.meet">Meet Byron</a></li>
       <li><a href={`${base}/platform`} data-i18n="nav.platform">The Record</a></li>
       <li><a href={`${base}/movement`} data-i18n="nav.movement">Machine vs. Movement</a></li>
-      <li><a href={`${base}/volunteer/`} data-i18n="nav.events">Show Up</a></li>
+      <li class="nav-cal-item" data-navcal>
+        <a href={`${base}/volunteer/`} data-i18n="nav.events">Show Up</a>
+        <button type="button" class="nav-cal-btn" data-navcal-trigger aria-expanded="false" aria-controls="nav-cal-pop" aria-haspopup="dialog">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+          <span class="calg-sr" data-i18n="events.cal_open">Open the Show Up calendar</span>
+        </button>
+        <div class="nav-cal-pop" id="nav-cal-pop" role="dialog" aria-labelledby="nav-cal-title" data-navcal-pop hidden>
+          <span class="calg-sr" id="nav-cal-title" data-i18n="events.cal_label">Plan Your Month</span>
+          <div class="calg-head">
+            <button type="button" class="calg-arrow" data-navcal-prev><span class="calg-sr" data-i18n="events.cal_prev">Previous month</span><span aria-hidden="true">←</span></button>
+            <p class="calg-month" data-navcal-month aria-live="polite"></p>
+            <button type="button" class="calg-arrow" data-navcal-next><span class="calg-sr" data-i18n="events.cal_next">Next month</span><span aria-hidden="true">→</span></button>
+          </div>
+          <div data-navcal-grid></div>
+          <p class="caln-label" data-i18n="events.cal_next_up">Next up</p>
+          <ul class="caln-rows" data-navcal-rows></ul>
+          <a class="caln-full" href={`${base}/volunteer/#calendar`}><span data-i18n="events.cal_full">See the full calendar</span> <span aria-hidden="true">→</span></a>
+        </div>
+      </li>
     </ul>
 
     <!-- Right-side actions -->
@@ -41,6 +65,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   <!-- Mobile Drawer -->
   <div class="mobile-drawer" id="mobile-drawer">
+    <div class="drawer-cal calg-touch" data-drawercal>
+      <div class="calg-head">
+        <button type="button" class="calg-arrow" data-drawercal-prev><span class="calg-sr" data-i18n="events.cal_prev">Previous month</span><span aria-hidden="true">←</span></button>
+        <p class="calg-month" data-drawercal-month aria-live="polite"></p>
+        <button type="button" class="calg-arrow" data-drawercal-next><span class="calg-sr" data-i18n="events.cal_next">Next month</span><span aria-hidden="true">→</span></button>
+      </div>
+      <div data-drawercal-grid></div>
+      <p class="caln-label" data-i18n="events.cal_next_up">Next up</p>
+      <ul class="caln-rows" data-drawercal-rows></ul>
+      <a class="caln-full" href={`${base}/volunteer/#calendar`}><span data-i18n="events.cal_full">See the full calendar</span> <span aria-hidden="true">→</span></a>
+    </div>
     <ul class="mobile-links">
       <li><a href={`${base}/meet`} data-i18n="nav.meet">Meet Byron</a></li>
       <li><a href={`${base}/platform`} data-i18n="nav.platform">The Record</a></li>
@@ -71,9 +106,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </a>
     </div>
   </div>
+  <script type="application/json" id="bsl-cal-data" set:html={payloadJson(base)}></script>
 </nav>
 
 <script>
+  import {
+    readData, buildIndex, bounds, inBounds, renderMonth, keyTarget, monthTitle, monthOf,
+    todayISO, nextShifts, rowsHtml,
+  } from '../scripts/calendar-core.js';
+
   const hamburger = document.getElementById('hamburger');
   const drawer = document.getElementById('mobile-drawer');
   const navbar = document.getElementById('navbar');
@@ -96,14 +137,145 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
   });
 
-  // Close drawer on link click
-  drawer?.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      drawer.classList.remove('open');
-      hamburger?.classList.remove('active');
-      document.body.style.overflow = '';
-    });
+  // Close drawer on link click (delegated, so the calendar's day links count)
+  drawer?.addEventListener('click', (e) => {
+    if (!(e.target instanceof Element) || !e.target.closest('a')) return;
+    drawer.classList.remove('open');
+    hamburger?.classList.remove('active');
+    hamburger?.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
   });
+
+  // ---------- Calendar: desktop popover and mobile drawer ----------
+  const calData = readData();
+  if (calData) {
+    const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+    const today = todayISO();
+    const byDay = buildIndex(calData, today);
+    const b = bounds(calData, today);
+    const hrefFor = (day) => `${base}/volunteer/#cal-${day}`;
+
+    // One small month: arrows, grid of day links, the next three shifts.
+    function mountMini(prefix, scope) {
+      const grid = scope.querySelector(`[data-${prefix}-grid]`);
+      const month = scope.querySelector(`[data-${prefix}-month]`);
+      const prev = scope.querySelector(`[data-${prefix}-prev]`);
+      const next = scope.querySelector(`[data-${prefix}-next]`);
+      const rows = scope.querySelector(`[data-${prefix}-rows]`);
+      let view = new Date(b.first);
+      let focusDay = null;
+      const render = () => {
+        month.textContent = monthTitle(view);
+        prev.disabled = view <= b.first;
+        next.disabled = view >= b.last;
+        renderMonth(grid, { view, size: 'compact', byDay, today, hrefFor, focusDay });
+        rows.innerHTML = rowsHtml(nextShifts(byDay, today, calData.until, 3));
+      };
+      const step = (n) => {
+        view = new Date(view.getFullYear(), view.getMonth() + n, 1);
+        focusDay = null;
+        render();
+      };
+      prev.addEventListener('click', () => step(-1));
+      next.addEventListener('click', () => step(1));
+      grid.addEventListener('keydown', (ev) => {
+        const cell = ev.target.closest('[data-day]');
+        if (!cell) return;
+        const target = keyTarget(ev, cell.dataset.day);
+        if (!target || !inBounds(target, b)) return;
+        ev.preventDefault();
+        focusDay = target;
+        view = monthOf(target);
+        render();
+        grid.querySelector(`[data-day="${target}"]`)?.focus();
+      });
+      document.addEventListener('bsl:langchange', render);
+      return render;
+    }
+
+    // Mobile drawer: drawn on first open.
+    const drawerCal = document.querySelector('[data-drawercal]');
+    if (drawerCal) {
+      const renderDrawer = mountMini('drawercal', drawerCal);
+      let drawn = false;
+      hamburger?.addEventListener('click', () => {
+        if (!drawn) {
+          renderDrawer();
+          drawn = true;
+        }
+      });
+    }
+
+    // Desktop popover. Mouse hover peeks; a click (or Enter) pins it open,
+    // moves focus inside and traps Tab there. Touch never opens it by hover.
+    const item = document.querySelector('[data-navcal]');
+    const trigger = item?.querySelector('[data-navcal-trigger]');
+    const pop = item?.querySelector('[data-navcal-pop]');
+    if (item && trigger && pop) {
+      const renderPop = mountMini('navcal', pop);
+      const fine = matchMedia('(hover: hover) and (pointer: fine)');
+      let pinned = false;
+      let timer = 0;
+      const isOpen = () => !pop.hidden;
+      const focusables = () =>
+        [...pop.querySelectorAll('button:not(:disabled), a[href]')].filter((el) => el.getAttribute('tabindex') !== '-1' && el.offsetParent !== null);
+
+      const open = (pin) => {
+        clearTimeout(timer);
+        if (!isOpen()) renderPop();
+        pop.hidden = false;
+        trigger.setAttribute('aria-expanded', 'true');
+        if (pin && !pinned) {
+          pinned = true;
+          (pop.querySelector('[data-navcal-grid] [tabindex="0"]') || focusables()[0])?.focus();
+        }
+      };
+      const close = (returnFocus) => {
+        clearTimeout(timer);
+        if (!isOpen()) return;
+        pop.hidden = true;
+        pinned = false;
+        trigger.setAttribute('aria-expanded', 'false');
+        if (returnFocus) trigger.focus();
+      };
+
+      trigger.addEventListener('click', () => (isOpen() && pinned ? close(true) : open(true)));
+      item.addEventListener('pointerenter', (ev) => {
+        if (ev.pointerType !== 'mouse' || !fine.matches) return;
+        clearTimeout(timer);
+        timer = window.setTimeout(() => open(false), 120);
+      });
+      item.addEventListener('pointerleave', (ev) => {
+        if (ev.pointerType !== 'mouse' || pinned) return;
+        clearTimeout(timer);
+        timer = window.setTimeout(() => close(false), 220);
+      });
+      document.addEventListener('click', (ev) => {
+        if (isOpen() && ev.target instanceof Node && !item.contains(ev.target)) close(false);
+      });
+      // A day link or "See the full calendar": close on the way out.
+      pop.addEventListener('click', (ev) => {
+        if (ev.target instanceof Element && ev.target.closest('a')) close(false);
+      });
+      pop.addEventListener('keydown', (ev) => {
+        if (ev.key !== 'Tab' || !pinned) return;
+        const els = focusables();
+        if (!els.length) return;
+        const first = els[0];
+        const last = els[els.length - 1];
+        if (ev.shiftKey && document.activeElement === first) {
+          ev.preventDefault();
+          last.focus();
+        } else if (!ev.shiftKey && document.activeElement === last) {
+          ev.preventDefault();
+          first.focus();
+        }
+      });
+      document.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Escape' && isOpen()) close(pinned || pop.contains(document.activeElement));
+      });
+    }
+  }
 
   // Navbar background on scroll
   window.addEventListener('scroll', () => {
@@ -167,7 +339,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     gap: var(--space-xl);
   }
 
-  .nav-links a {
+  .nav-links > li > a {
     font-family: var(--font-display);
     font-weight: 600;
     font-size: var(--text-sm);
@@ -178,7 +350,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     position: relative;
   }
 
-  .nav-links a::after {
+  .nav-links > li > a::after {
     content: '';
     position: absolute;
     bottom: -4px;
@@ -189,12 +361,84 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     transition: width var(--duration-normal) var(--ease-default);
   }
 
-  .nav-links a:hover {
+  .nav-links > li > a:hover {
     color: var(--orange);
   }
 
-  .nav-links a:hover::after {
+  .nav-links > li > a:hover::after {
     width: 100%;
+  }
+
+  /* Show Up + calendar glyph + popover */
+  .nav-cal-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .nav-cal-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: 2px dashed rgba(3, 109, 153, 0.35);
+    border-radius: 6px;
+    color: var(--blue-deeper);
+    transition: color var(--duration-fast) var(--ease-default), border-color var(--duration-fast) var(--ease-default);
+  }
+
+  .nav-cal-btn:hover,
+  .nav-cal-btn[aria-expanded='true'] {
+    color: var(--orange-dark);
+    border-color: var(--orange-dark);
+  }
+
+  .nav-cal-btn:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 2px;
+  }
+
+  .nav-cal-pop {
+    position: absolute;
+    top: calc(100% + 22px);
+    left: 50%;
+    z-index: 2;
+    width: 340px;
+    transform: translateX(-50%);
+    padding: var(--space-lg) var(--space-md) var(--space-sm);
+    background: var(--cream-light);
+    background-image: repeating-linear-gradient(180deg, transparent, transparent 35px, rgba(27, 54, 93, 0.05) 35px, rgba(27, 54, 93, 0.05) 36px);
+    box-shadow: var(--shadow-lg);
+    text-align: left;
+  }
+
+  .nav-cal-pop[hidden] {
+    display: none;
+  }
+
+  /* Tape on top */
+  .nav-cal-pop::before {
+    content: '';
+    position: absolute;
+    width: 72px;
+    height: 18px;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    background: rgba(245, 208, 138, 0.8);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Hover bridge across the gap under the trigger */
+  .nav-cal-pop::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -24px;
+    height: 24px;
   }
 
   /* Actions */
@@ -312,6 +556,21 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   .mobile-drawer.open {
     transform: translateX(0);
+  }
+
+  @media (max-width: 768px) {
+    .mobile-drawer {
+      padding: var(--space-xl) var(--space-lg) var(--space-3xl);
+    }
+  }
+
+  /* Drawer calendar: compact grid and the next three shifts, above the links */
+  .drawer-cal {
+    max-width: 480px;
+    margin: 0 auto var(--space-xl);
+    padding: var(--space-md) var(--space-sm) var(--space-xs);
+    background: var(--cream-light);
+    box-shadow: var(--shadow-sm);
   }
 
   .mobile-links {

@@ -76,10 +76,10 @@ BSL-for-Congress/
 │   └── images/                 # See "Image Assets Reference" below
 ├── src/
 │   ├── components/
-│   │   ├── Navbar.astro        # Fixed top nav + lang toggle + mobile drawer (Meet Byron, The Record, Machine vs. Movement, Show Up)
+│   │   ├── Navbar.astro        # Fixed top nav + lang toggle + mobile drawer (Meet Byron, The Record, Machine vs. Movement, Show Up); Show Up calendar popover, drawer calendar, inlines #bsl-cal-data
 │   │   ├── Hero.astro          # Homepage hero: self-hosted <video> bg + sound toggle
 │   │   ├── ShowUp.astro        # Home (next three shifts + standing chips) and, with `full`, the /volunteer Show Up block
-│   │   ├── MiniCalendar.astro  # "Plan your month" calendar inside the /volunteer Show Up block (#calendar)
+│   │   ├── MiniCalendar.astro  # "Plan your month" calendar that filters the /volunteer shift list (#calendar, #cal-/#week- hashes)
 │   │   ├── EventCard.astro     # One dated shift as a taped flyer (ShowUp on / and /volunteer)
 │   │   ├── MeetOrganizer.astro # Homepage bio block
 │   │   ├── PlatformGrid.astro  # Homepage "Byron Gets Results": nine results (platform.r1..r9)
@@ -372,7 +372,7 @@ Each page (except `links.astro`) imports `Layout`, `Navbar`, page-specific compo
 | `/news/<slug>/` | [src/pages/news/[slug].astro](src/pages/news/[slug].astro) | One page per post: stamp, kind, title, summary, event flyer, paragraphs, link strips, the receipt, the Knock Doors pill. Details in 7b |
 | `/events/<id>.ics`, `/events/<id>-es.ics` | [src/pages/events/[file].ics.js](src/pages/events/[file].ics.js) | Calendar files built per dated entry and language; see 7a |
 | `/events/all.ics`, `/events/all-es.ics` | [src/pages/events/all.ics.js](src/pages/events/all.ics.js), [all-es.ics.js](src/pages/events/all-es.ics.js) | One feed per language: every dated entry plus the next 20 weeks of the weekly shifts (subscribe link in MiniCalendar) |
-| `/volunteer` | [src/pages/volunteer.astro](src/pages/volunteer.astro) | The one action page: VolunteerHero (short) → ShowUp `full` (`#show-up`: This Week / Coming Up `#this-week`, MiniCalendar `#calendar`, Every Week `#every-week`, Dates That Matter `#dates`, canvass team `#canvass-team`) → RolePicker + ActionBlocks (one "Ways to Help" unit) → PetitionBlitz (`#sign-petition`) → SignupForm (`#signup`) → FundCTA → SolidarityTicker |
+| `/volunteer` | [src/pages/volunteer.astro](src/pages/volunteer.astro) | The one action page: VolunteerHero (short) → ShowUp `full` (`#show-up`: MiniCalendar `#calendar` beside the filtered shift list `#this-week`, Every Week `#every-week`, Dates That Matter `#dates`, canvass team `#canvass-team`) → RolePicker + ActionBlocks (one "Ways to Help" unit) → PetitionBlitz (`#sign-petition`) → SignupForm (`#signup`) → FundCTA → SolidarityTicker |
 | `/links` | [src/pages/links.astro](src/pages/links.astro) | Linktree-style; uses Layout but **omits** Navbar/Footer |
 
 ### Per-Page SEO
@@ -415,8 +415,7 @@ Placed directly after the Hero, before ThePromise. Label "Show Up" / "Preséntat
 
 1. **VolunteerHero**: badge, headline, one line (`volunteer.hero_sub`). No CTA pill and a short height, so the first card shows sooner.
 2. **Show Up** (`<ShowUp full />`, `#show-up`): label "Show Up" / "Preséntate", headline `events.page_headline`, then:
-   - **This Week** and **Coming Up** (`#this-week`): every upcoming dated shift, grouped at build time (next seven days vs later) and regrouped in the browser by today's date; an empty group hides. Cards carry "Add to calendar" and their no-RSVP button goes to `#signup` on the same page.
-   - **Plan your month** (`#calendar`, `MiniCalendar.astro`), see below.
+   - **The calendar and the shift list, first** (`[data-cal-layout]`): "Plan your month" (`#calendar`, `MiniCalendar.astro`) beside the list it filters (`#this-week`). From 1024 px: two columns, calendar about 40 percent on the left and sticky under the nav (only when the screen is at least 800 px tall, so the card always fits), list on the right (one column of cards, two from 1280 px). Below 1024 px the calendar stacks above the list. Every upcoming dated shift is rendered once at build time as an EventCard (with "Add to calendar"; no-RSVP buttons go to `#signup`); the calendar script shows only the picked day or week. See below.
    - **Every Week** (`#every-week`): the two recurring entries as white taped cards.
    - **Dates That Matter** (`#dates`): the deadlines as a ruled ledger with "Add to calendar" per row and the Board of Elections receipt. This replaces the NextUp ledger on /volunteer (NextUp stays on the home page).
    - **Canvass team card** (`#canvass-team`, blue-deeper) with the Google Form button.
@@ -425,16 +424,21 @@ Placed directly after the Hero, before ThePromise. Label "Show Up" / "Preséntat
 5. **SignupForm** (`#signup`). Frozen form values untouched.
 6. **FundCTA**, then SolidarityTicker.
 
-### The month calendar (`MiniCalendar.astro`)
+### The month calendar (`MiniCalendar.astro`) and the filtered list
 
-A taped, ruled card with the placard "Plan Your Month" / "Planea Tu Mes" between the Show Up cards and Every Week. Data is events.json inlined as JSON at build time; no libraries.
+A taped, ruled card with the placard "Plan Your Month" / "Planea Tu Mes", first in the /volunteer Show Up block. No libraries. One grid implementation for the whole site: [src/scripts/calendar-core.js](src/scripts/calendar-core.js) (`renderMonth()` with sizes `full` and `compact`, the day index, date labels, the "next up" rows), styled by the global [src/styles/calendar.css](src/styles/calendar.css) (prefixes `calg-` and `caln-`; global because the grid is written with innerHTML). Data: [src/data/calendar-data.js](src/data/calendar-data.js) builds a small payload from events.json (dates, kinds, expiry, and title, time and action link for shifts) that Navbar.astro inlines once per page as `<script type="application/json" id="bsl-cal-data">`. The /volunteer calendar, the nav popover and the drawer all read that one block.
 
-- Month grid, Sunday first, prev/next arrows (from the current month to April 2027), today with a dashed orange outline, days outside the month dimmed.
-- Each day shows up to three dots: orange for canvasses and meetups (including the Sunday canvasses), blue for Ward Night, cream with an orange ring for Board deadlines and the election. Multi-day windows (petition filing, objections) mark every day. The weekly shifts are expanded in the browser from today through Election Day; April 6, 2027 carries a runoff marker only ("Runoff, if needed", `events.cal_runoff_*`).
-- Days are buttons with aria-labels like "October 18, 2 events"; arrow keys move a day or a week, Home/End jump to the week's ends.
-- Selecting a day opens a panel under the grid (not a modal) with each item's time, place and the same single action as EventCard: RSVP link, the sign-up form (`#signup`) when there is no RSVP, the recurring entry's link, or "Add to calendar" (the existing .ics) for deadlines. Default selection: today, or the next day with something on it. Selecting a day writes `#cal-YYYY-MM-DD` into the URL (replaceState), and opening such a link selects that day and scrolls to the calendar.
-- Under it: "Subscribe to all dates" (`webcal://` to the feed), a one-line hint, a Google Calendar subscribe link, and "Add all upcoming" (download of the same `/events/all.ics`; Spanish uses `all-es.ics`).
-- Labels, month and weekday names come from `events.cal_*` keys (comma-separated lists for months and weekdays; Spanish weekdays Dom Lun Mar Mié Jue Vie Sáb). Seven columns fit 390 px with tap targets at least 44 px wide and 48 px tall.
+- Month grid, Sunday first, prev/next arrows (from the current month to April 2027), today with a dashed orange outline, days outside the month dimmed. The picked day is filled brand blue (`--blue-deeper`) with cream text; a picked week is a pale blue band across its row.
+- Dots: orange for canvasses and meetups (including the Sunday canvasses), blue for Ward Night, cream with an orange ring (outlined) for Board deadlines and the election. Multi-day windows mark every day. Weekly shifts are expanded in the browser from today through Election Day; April 6, 2027 carries a runoff marker only (`events.cal_runoff_*`). Expired dated shifts drop off.
+- Week selector: a row of dashed stamp chips above the grid, "This week", "Next week", "All upcoming", plus "Whole week" that appears once a day is picked and widens the pick to that day's Sunday to Saturday week. Chosen over a clickable left gutter on the grid rows because the chips keep 44 px targets on a 390 px phone and say what they do. The active chip is filled brand blue.
+- The list (`#this-week`, in ShowUp.astro): every upcoming EventCard plus one ruled ledger line per deadline (and the runoff), all rendered at build time, plus the two weekly cards in a `<template>`. The script prunes expired cards (`pruneList`), then shows only the selection: a day shows that day's dated shifts, the weekly card if it is a Tuesday or Sunday, and a ledger line with "Add to calendar" when a Board date covers it; a week shows the same grouped under day headings; "All upcoming" shows every dated shift under day headings plus a pointer to Every Week. The heading names the selection ("Sunday, October 18", "Week of October 18", "Every upcoming shift") with a shift count. The old day panel is gone; nothing renders twice.
+- Empty state: "No shifts that day. Try the next dot." (`events.cal_empty`, week: `cal_empty_week`) with a "Next day with a shift" button that picks the next day that has one.
+- Default on load: this week (Sunday to Saturday) if a shift is still ahead in it, else the week of the next shift, else All upcoming.
+- URL: picking writes `#cal-YYYY-MM-DD`, `#week-YYYY-MM-DD` (the Sunday; any day of the week is normalized) or `#cal-all` with replaceState. Opening such a link (or a hashchange from the nav) applies it and scrolls: to the two-column block from 1024 px, straight to the list below that. `#calendar`, `#this-week` and `#show-up` load the default.
+- Stacked layouts (under 1024 px) add a blue strip under the grid ("Sunday, October 18: 2 shifts, See the shifts") that scrolls to the list without touching the hash.
+- Days are buttons with aria-labels like "October 18, 2 events" and `aria-pressed`; roving tabindex; arrow keys move a day or a week, Home/End jump to the week's ends.
+- Under it: "Subscribe to all dates" (`webcal://` to the feed), a one-line hint, a Google Calendar subscribe link, and "Add all upcoming" (download of `/events/all.ics`; Spanish uses `all-es.ics`).
+- Labels come from `events.cal_*` keys (comma-separated lists for months and weekdays; Spanish weekdays Dom Lun Mar Mié Jue Vie Sáb). Seven columns fit 390 px with tap targets at least 44 px wide and 48 px tall. `events.this_week` and `events.coming_up` are no longer read (dead keys, kept for parity).
 
 ### The other readers
 
@@ -443,7 +447,11 @@ A taped, ruled card with the placard "Plan Your Month" / "Planea Tu Mes" between
 
 ### Navigation
 
-Main nav (desktop and mobile drawer): Meet Byron, The Record, Machine vs. Movement, **Show Up** (`nav.events`, to /volunteer/), then the EN/ES toggle, Sign Up (`nav.volunteer_cta`, orange pill, to /volunteer/#signup), Donate. "Latest" left the main nav; it lives in the footer links (`nav.latest`, after Show Up) and in the Latest strip's "All the latest" link.
+Main nav (desktop and mobile drawer): Meet Byron, The Record, Machine vs. Movement, **Show Up** (`nav.events`, to /volunteer/), then the EN/ES toggle, Sign Up (`nav.volunteer_cta`, orange pill, to /volunteer/#signup), Donate.
+
+**Calendar popover (desktop).** Next to the Show Up link sits a small dashed calendar glyph button (`aria-expanded`, `aria-controls="nav-cal-pop"`, label `events.cal_open`). With a mouse, hovering the Show Up item peeks the popover after 120 ms and it closes 220 ms after the pointer leaves (a transparent bridge covers the gap). Clicking the glyph (or Enter) pins it: focus moves to the grid's focus day and Tab is trapped inside; Escape closes and returns focus to the glyph; a click outside closes. Touch and pen never open it by hover (pointer type and `(hover: hover) and (pointer: fine)` are checked), only by tapping the glyph. It is absolutely positioned under the item (340 px, taped ruled paper, z-index 2 inside the navbar), so it never pushes the layout. Contents: the compact month grid (dots, 11 px numbers, today outlined, prev/next arrows, each day a link to `/volunteer/#cal-YYYY-MM-DD`), "Next up" (`events.cal_next_up`) with the next three shifts as one-line rows (date stamp, title and time, the single action link; a weekly entry is skipped on a day that already has a dated shift of the same kind), and "See the full calendar" (`events.cal_full`, to `/volunteer/#calendar`). The top-level nav link styles are scoped to `.nav-links > li > a` so they do not leak into the popover.
+
+**Mobile drawer.** The drawer opens with the same compact grid at the top, above the links (44 px day cells, 44 px arrows; the drawer's side padding drops to `--space-lg` on phones so seven columns fit 390 px), then the next three shifts and "See the full calendar". It renders on first open. Tapping a day goes to `/volunteer/#cal-YYYY-MM-DD` and closes the drawer (link clicks in the drawer are now delegated and also reset `aria-expanded`). The hamburger's `aria-controls`, `aria-expanded` and Escape behavior are unchanged. MobileActionBar is unchanged. "Latest" left the main nav; it lives in the footer links (`nav.latest`, after Show Up) and in the Latest strip's "All the latest" link.
 
 Footer links, in order (`Footer.astro`): Meet Byron, The Record, Machine vs. Movement, Show Up (to /volunteer/), Latest. The separate Volunteer link was dropped as a duplicate of Show Up. The drawer and footer social icons are covered in [Social Media Accounts](#social-media-accounts).
 
@@ -932,7 +940,7 @@ Many sections have stable IDs that act as deep-link targets. **Don't rename thes
 | `/platform` | `#issues`, `#public-safety`, `#housing`, `#schools`, `#environment`, `#gender-equity`, `#constituent-services`, `#economic`, `#transparency`, `#up-next`, `#unbought` |
 | `/meet` | `#meet-hero`, `#early-life`, `#ward-record`, `#elected-by-the-people`, `#family` |
 | `/movement` | `#machine-hero`, `#the-movement`, `#the-machine`, `#ballot-fight` |
-| `/volunteer` | `#volunteer-hero`, `#show-up`, `#this-week`, `#calendar` (and `#cal-YYYY-MM-DD` deep links), `#every-week`, `#dates`, `#canvass-team`, `#find-your-post`, `#ways-to-fight`, `#sign-petition` (the petition card), `#signup` |
+| `/volunteer` | `#volunteer-hero`, `#show-up`, `#calendar` (the calendar card), `#this-week` (the filtered shift list), plus `#cal-YYYY-MM-DD`, `#week-YYYY-MM-DD` and `#cal-all` deep links, `#every-week`, `#dates`, `#canvass-team`, `#find-your-post`, `#ways-to-fight`, `#sign-petition` (the petition card), `#signup` |
 | `/events` | Redirects to `/volunteer/#show-up` |
 | **Global** | `#petition`: **does NOT scroll**; opens Petition Modal. Use `#sign-petition` for the real anchor |
 
@@ -942,11 +950,12 @@ Treat `#petition` as a reserved sentinel — never use it as an actual anchor ta
 
 ## Sticky Elements
 
-Two desktop-only sticky behaviors to be aware of:
+Three desktop-only sticky behaviors to be aware of:
 
 | Element | File | Sticky offset |
 |---|---|---|
 | `.movement-image-stack` (image + pull-quote stack) | [src/components/machine/MovementSection.astro](src/components/machine/MovementSection.astro) | `top: calc(var(--nav-height) + var(--space-xl))` |
+| `.cal-aside` (the /volunteer calendar column) | [src/components/ShowUp.astro](src/components/ShowUp.astro) | `top: calc(var(--nav-height) + var(--space-md))`, only at `min-width: 1024px` and `min-height: 800px` |
 | `.signup-text` (form headline column) | [src/components/volunteer/SignupForm.astro](src/components/volunteer/SignupForm.astro) | `top: calc(var(--nav-height, 80px) + var(--space-xl))` |
 
 Both fall back to `position: static` at `≤1024px` (when the grid collapses to one column). If you change the grid breakpoint, change the sticky breakpoint too — otherwise sticky elements will overlap stacked content.

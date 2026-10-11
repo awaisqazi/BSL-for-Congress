@@ -1,0 +1,349 @@
+/* Month grid and "next up" rows shared by MiniCalendar (full) and the nav
+   popover / mobile drawer (compact). Written by src/scripts/calendar-core.js
+   with innerHTML, so these are global on purpose. Organizing-wall look:
+   dashed orange ring for today, brand blue fill with cream text when picked. */
+
+.calg-weekdays,
+.calg-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.calg-weekdays span {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gray-500);
+  text-align: center;
+  padding: 4px 0;
+}
+
+.calg-day {
+  position: relative;
+  min-height: 52px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px 0;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--blue-deeper);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-default), background var(--duration-fast) var(--ease-default);
+}
+
+.calg-day:hover {
+  border-color: rgba(201, 116, 22, 0.5);
+}
+
+.calg-day:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 1px;
+  z-index: 1;
+}
+
+.calg-day.is-outside {
+  opacity: 0.35;
+}
+
+.calg-day.is-past {
+  color: var(--gray-500);
+}
+
+/* A selected week: a pale blue band across the row */
+.calg-day.is-inrange {
+  background: rgba(3, 109, 153, 0.14);
+  border-color: rgba(3, 109, 153, 0.18);
+  opacity: 1;
+}
+
+.calg-day.is-today {
+  border: 2px dashed var(--orange-dark);
+}
+
+.calg-day.is-today .calg-num {
+  color: var(--orange-dark);
+}
+
+.calg-day.is-selected {
+  background: var(--blue-deeper);
+  border: 2px solid var(--blue-deeper);
+  color: var(--cream-light);
+  opacity: 1;
+}
+
+.calg-day.is-selected .calg-num {
+  color: var(--cream-light);
+}
+
+.calg-day.is-selected.is-today {
+  box-shadow: inset 0 0 0 2px var(--cream-light);
+}
+
+.calg-dots {
+  display: flex;
+  gap: 3px;
+  min-height: 8px;
+}
+
+.calg-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.calg-dot-shift {
+  background: var(--orange);
+}
+
+.calg-dot-ward {
+  background: var(--blue-dark);
+}
+
+.calg-dot-date {
+  background: var(--cream);
+  box-shadow: inset 0 0 0 2px var(--orange-dark);
+}
+
+.calg-day.is-selected .calg-dot-ward {
+  background: var(--blue);
+  box-shadow: 0 0 0 1.5px var(--cream-light);
+}
+
+/* Compact: popover and drawer. Small numbers (11 px), small dots. */
+.calg-compact .calg-weekdays,
+.calg-compact .calg-grid {
+  gap: 2px;
+}
+
+.calg-compact .calg-weekdays span {
+  font-size: 10px;
+  padding: 2px 0;
+}
+
+.calg-compact .calg-day {
+  min-height: 36px;
+  gap: 3px;
+  font-size: 11px;
+  border-radius: 5px;
+}
+
+.calg-compact .calg-dots {
+  gap: 2px;
+  min-height: 5px;
+}
+
+.calg-compact .calg-dot {
+  width: 5px;
+  height: 5px;
+}
+
+.calg-compact .calg-dot-date {
+  box-shadow: inset 0 0 0 1.5px var(--orange-dark);
+}
+
+/* Touch screens (the drawer): 44 px tap targets */
+.calg-touch .calg-compact .calg-day {
+  min-height: 44px;
+}
+
+@media (max-width: 768px) {
+  .calg-full .calg-weekdays,
+  .calg-full .calg-grid {
+    gap: 2px;
+  }
+
+  .calg-full .calg-day {
+    min-height: 48px;
+  }
+}
+
+/* Compact month header: arrows and the month name */
+.calg-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: 6px;
+}
+
+.calg-month {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--blue-deeper);
+}
+
+.calg-arrow {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed rgba(3, 109, 153, 0.35);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--blue-deeper);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.calg-touch .calg-arrow {
+  width: 44px;
+  height: 44px;
+}
+
+.calg-arrow:hover:not(:disabled) {
+  border-color: var(--orange-dark);
+  color: var(--orange-dark);
+}
+
+.calg-arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.calg-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* "Next up": one row per shift, day stamp, title and time, one action */
+.caln-label {
+  margin: var(--space-md) 0 6px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--orange-dark);
+}
+
+.caln-rows {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.caln-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  border-top: 1px dashed rgba(3, 109, 153, 0.2);
+  list-style: none;
+}
+
+.caln-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 50px;
+  padding: 2px 6px;
+  border: 2px dashed rgba(230, 136, 28, 0.6);
+  border-radius: 3px;
+  rotate: -2deg;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.caln-wd {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--orange-dark);
+}
+
+.caln-date {
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--blue-deeper);
+  white-space: nowrap;
+}
+
+.caln-what {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.caln-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.2;
+  color: var(--blue-deeper);
+}
+
+.caln-time {
+  font-size: 12px;
+  color: var(--gray-700);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.caln-act {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--orange-dark);
+  max-width: 9.5em;
+  line-height: 1.2;
+  text-align: right;
+}
+
+.caln-act:hover {
+  color: var(--blue-deeper);
+}
+
+.caln-full {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--blue-dark);
+  border-bottom: 2px dashed rgba(3, 109, 153, 0.35);
+}
+
+.caln-full:hover {
+  color: var(--orange-dark);
+}
