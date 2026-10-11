@@ -1,8 +1,9 @@
 # byronfor25 database (Supabase)
 
 Status (Oct 10, 2026): project `byronfor25` (ref `rsxddnoymkebahumcfnc`,
-us-east-2) is live with both migrations applied. GitHub repository variables
-`PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_ANON_KEY` are set. The site code
+us-east-2) is live with all three migrations applied (`0003_admin.sql` adds the
+staff-only campaign desk at `/admin/`, see "Campaign desk" below). GitHub
+repository variables `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_ANON_KEY` are set. The site code
 (`src/scripts/supa.js`, the two form dual-writes, the "I'm coming" card form)
 is written and tested locally; it goes live on the next deploy.
 
@@ -30,8 +31,9 @@ Two dashboard views: `campaign_daily_summary` (submissions per day per table,
 Chicago time) and `rsvps_by_event` (RSVPs, plus-ones and expected headcount per
 event).
 
-SQL: `migrations/0001_init.sql` (tables, rules, security) and
-`migrations/0002_views.sql` (views). Both were test-run against Postgres with
+SQL: `migrations/0001_init.sql` (tables, rules, security),
+`migrations/0002_views.sql` (views) and `migrations/0003_admin.sql` (admin
+list, follow-up columns, staff read/update policies). Both were test-run against Postgres with
 the Supabase roles: the public role can insert valid rows and nothing else;
 reads, edits, deletes and bad data are refused.
 
@@ -57,7 +59,9 @@ reads, edits, deletes and bad data are refused.
   the database or a Cloudflare Turnstile check; neither is needed on day one.
 - **No new third-party script on the page.** The site calls the Supabase REST
   endpoint with plain `fetch` (about 40 lines, see `site-integration.md`), so
-  `Layout.astro` keeps loading nothing beyond fonts.
+  `Layout.astro` keeps loading nothing beyond fonts. The one exception is the
+  staff-only `/admin/` page, which loads supabase-js (pinned, with an SRI
+  hash) for sign-in.
 - **Never blocks the Google post.** The Supabase write is fire-and-forget,
   sent alongside the existing form submit. If Supabase is down, slow, or not
   configured, the visitor and the Google sheet see no difference.
@@ -88,13 +92,100 @@ Only people invited to the Supabase organization can see the data. Invite
 staff from Organization settings > Team; give the Read-only role to anyone
 who only needs to look.
 
+5. **The campaign desk, `byronfor25.com/admin/`.** A staff-only page with the
+   four tables, counts, follow-up status, notes and CSV download. See below.
+
+## Campaign desk (`/admin/`)
+
+A password-protected page on the site for working the lists without the
+Supabase dashboard. It is not linked anywhere, is `noindex`, and shows nothing
+without a staff login that is also on the admin list.
+
+### How it is locked
+
+- **Logins:** Supabase email + password. "Allow new users to sign up" is off
+  (Authentication > Sign In / Providers), so nobody can create their own
+  login. Every login is made by hand in the dashboard.
+- **Admin list:** `private.campaign_admins` (one row per email). The database
+  shows rows only when the signed-in email is on that list
+  (`private.is_campaign_admin()`, used by every policy in `0003_admin.sql`).
+  A login that is not on the list signs in fine but sees zero rows and gets the
+  message "This email is not on the admin list".
+- **Public site unchanged:** the public key can still only insert. It cannot
+  read anything, including the admin list.
+
+### First time: create your login (Fez)
+
+1. Supabase dashboard > project `byronfor25` > **Authentication > Users** >
+   **Add user** > **Create new user**. Type your email and a strong password
+   (save it in your password manager), keep **Auto Confirm User** checked,
+   press **Create user**.
+2. **SQL Editor > New query**, paste this with your email, **Run**:
+
+   ```sql
+   insert into private.campaign_admins (email) values ('you@example.com');
+   ```
+
+   (Upper or lower case does not matter. Check it with
+   `select * from private.campaign_admins;`.)
+3. Open `https://byronfor25.com/admin/` and sign in. (The page goes live with
+   the next deploy.)
+
+### Adding staff later
+
+Do both steps for each person: **Add user** (their email, a temporary
+password you send them privately, Auto Confirm on), then the same `insert`
+line with their email. They can change the password with "Forgot password?".
+
+To remove someone: `delete from private.campaign_admins where email = 'them@example.com';`
+and, to end their login entirely, Authentication > Users > the user > Delete
+user. A removed person's open tab stops getting rows on its next load.
+
+### Resetting a password
+
+- **Self-serve:** on `/admin/`, type the email, press **Forgot password?**.
+  Supabase emails a link that opens `/admin/` with a "Set a new password" form.
+  (Site URL is `https://byronfor25.com` and `https://byronfor25.com/admin/` is
+  on the redirect allow list, Authentication > URL Configuration.)
+- **Email limits:** the project uses Supabase's built-in email sender, which
+  allows only a few auth emails per hour and on the Free plan may deliver only
+  to addresses of members of the Supabase organization. If a reset email does
+  not arrive, use the next option, or set up custom SMTP (Authentication >
+  Emails) later.
+- **By hand:** Authentication > Users > the user > the three-dot menu >
+  **Send password recovery**, or delete the user and add them again with a new
+  password (the admin-list row can stay).
+
+### What the desk can and cannot do
+
+Can:
+- Show today / last 7 days / total per table (Chicago days, bot-flagged rows
+  counted separately) from `campaign_daily_summary`.
+- List volunteers, RSVPs (grouped by event, with the title from
+  `src/data/events.json` and the headcount from `rsvps_by_event`), petition
+  requests and actions; search and sort; show bot-flagged rows on request.
+- Set a follow-up **status** and a **note** on volunteers, RSVPs and petition
+  requests; they save as soon as you change them. Volunteers and petition
+  requests use new / contacted / confirmed / no, and the first move off "new"
+  stamps `contacted_at`. RSVPs keep their attendance status (going / maybe /
+  cancelled / attended / no_show) because the headcount view counts those.
+- Download the rows on screen as CSV (honeypot and browser fields left out).
+
+Cannot (by design, enforced in the database):
+- Change names, contact details, ZIPs, interests or dates, or delete rows.
+  Use the Supabase Table Editor for corrections and removal requests.
+- Create logins or add admins. That stays in the Supabase dashboard.
+- Set `petition_requests.handled_at` (still a Table Editor field; the desk's
+  status and `contacted_at` replace it for day-to-day use).
+
 ## Privacy
 
 - **What is personal:** names, email, phone, ZIP, street address (petition
   requests only), and the browser's user-agent string. No passwords, no
   payment data, no IP addresses are stored.
-- **Who can see it:** members of the Supabase organization, and any trusted
-  script holding the service-role key. Never the public, never the site.
+- **Who can see it:** members of the Supabase organization, logins on the
+  campaign desk admin list (`private.campaign_admins`), and any trusted script
+  holding the service-role key. Never the public.
 - **The service-role / secret key** never goes in the repo, in GitHub Pages,
   or in any browser code. Only the publishable key does.
 - **Same promise as the form:** the sign-up form already says submitting opts

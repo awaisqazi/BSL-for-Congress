@@ -34,7 +34,7 @@
 22. [External Services Reference](#external-services-reference)
 23. [Z-Index Hierarchy](#z-index-hierarchy)
 24. [Deployment](#deployment)
-24a. [Backend (planned)](#backend-planned)
+24a. [Backend (Supabase) and the Admin Desk](#backend-supabase-and-the-admin-desk)
 24b. [Ops: Daily Sweep](#ops-daily-sweep)
 25. [Common Pitfalls Checklist](#common-pitfalls-checklist)
 
@@ -54,7 +54,7 @@
 | Newsletter / signup form | **RaiseMore** embedded iframe |
 | Hero video | **Self-hosted MP4** in `public/video/`: `hero-loop.mp4` (muted background loop), `hero-sound.mp4` (Watch with Sound copy), `hero-poster.jpg`. The Links page plays `hero-sound.mp4`. No YouTube embed remains. |
 | Data files | `src/data/events.json` (shifts and dates), `src/data/news.json` (Latest posts); both validated at build time |
-| Backend | None live. Supabase is planned as an insert-only second copy of form data; see [Backend (planned)](#backend-planned) |
+| Backend | Supabase project `byronfor25`: an insert-only second copy of form data from the public site, plus the staff-only Admin desk at `/admin/`; see [Backend](#backend-supabase-and-the-admin-desk) |
 
 ---
 
@@ -65,7 +65,7 @@ BSL-for-Congress/
 ├── astro.config.mjs            # site = https://byronfor25.com, base = /
 ├── ops/
 │   └── DAILY-SWEEP.md          # Runbook for the daily scheduled task (socials to Latest)
-├── supabase/                   # Planned backend: README.md, site-integration.md, migrations/ (not live)
+├── supabase/                   # Backend: README.md, site-integration.md, migrations/ 0001 to 0003
 ├── voice.md                    # Campaign voice rules for all copy
 ├── public/
 │   ├── BSL_Official.png, BSL_Alderman25.png   # Logos (Navbar, Links page header)
@@ -374,6 +374,7 @@ Each page (except `links.astro`) imports `Layout`, `Navbar`, page-specific compo
 | `/events/all.ics`, `/events/all-es.ics` | [src/pages/events/all.ics.js](src/pages/events/all.ics.js), [all-es.ics.js](src/pages/events/all-es.ics.js) | One feed per language: every dated entry plus the next 20 weeks of the weekly shifts (subscribe link in MiniCalendar) |
 | `/volunteer` | [src/pages/volunteer.astro](src/pages/volunteer.astro) | The one action page: VolunteerHero (short) → ShowUp `full` (`#show-up`: MiniCalendar `#calendar` beside the filtered shift list `#this-week`, Every Week `#every-week`, Dates That Matter `#dates`, canvass team `#canvass-team`) → RolePicker + ActionBlocks (one "Ways to Help" unit) → PetitionBlitz (`#sign-petition`) → SignupForm (`#signup`) → FundCTA → SolidarityTicker |
 | `/links` | [src/pages/links.astro](src/pages/links.astro) | Linktree-style; uses Layout but **omits** Navbar/Footer |
+| `/admin/` | [src/pages/admin/index.astro](src/pages/admin/index.astro) | Staff-only Admin desk. Standalone page (no Layout, Navbar, Footer, PetitionModal or i18n), `noindex,nofollow`, not linked anywhere. See [Admin desk](#admin-desk) |
 
 ### Per-Page SEO
 
@@ -1074,7 +1075,8 @@ Five icons, in the order of this table (Instagram, Facebook, TikTok, YouTube, X)
 | Google Form (Petition) | ID `1FAIpQLSeYiVz1TB2tsAFdh1OakH62dM7XGCNBnaJz57Mn1beP0dqE6A` | PetitionModal |
 | Google Form (Volunteer) | ID `1FAIpQLSeUKnQVp4auTqHdFZeDrGlAOYAjmOO0sE19Xm11Pee2ayuuWQ` | volunteer/SignupForm |
 | Hero / links video | Self-hosted `public/video/hero-loop.mp4`, `hero-sound.mp4`, `hero-poster.jpg` | Hero (muted loop + sound toggle) + Links page (sound copy) |
-| Supabase (planned) | Project `byronfor25`, region `us-east-2` | Not live; see Backend (planned) |
+| Supabase | Project `byronfor25` (ref `rsxddnoymkebahumcfnc`), region `us-east-2` | Form dual-writes (`src/scripts/supa.js`) and the Admin desk; see [Backend](#backend-supabase-and-the-admin-desk) |
+| supabase-js (CDN) | `https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js`, pinned with an SRI hash | `/admin/` only. The only external script on the site |
 | Press receipt | Block Club Chicago, July 21, 2026 | AnointmentBanner dashed stamp |
 
 ---
@@ -1121,21 +1123,29 @@ The site is served from the custom domain root (`public/CNAME`), so `base` is `/
 
 ---
 
-## Backend (planned)
+## Backend (Supabase) and the Admin Desk
 
-Nothing here is live. The full plan is in [supabase/README.md](supabase/README.md) (what is stored, the safety model, setup steps) and [supabase/site-integration.md](supabase/site-integration.md) (the code changes to make once the project exists). The SQL is in `supabase/migrations/`.
+Live since Oct 10, 2026. The details are in [supabase/README.md](supabase/README.md) (what is stored, the safety model, the Campaign desk setup) and [supabase/site-integration.md](supabase/site-integration.md) (how the public forms write). The SQL is in `supabase/migrations/` (`0001_init.sql`, `0002_views.sql`, `0003_admin.sql`).
 
-| Item | Plan |
+| Item | Setup |
 |---|---|
 | Project | Supabase `byronfor25`, region East US (Ohio) `us-east-2` |
 | Tables | `volunteers`, `event_rsvps`, `petition_requests`, `actions`; views `campaign_daily_summary` and `rsvps_by_event` |
-| Access | **Insert-only** for the public role on a fixed column list: no reads, edits or deletes from the browser. Validation (ZIP, email shape, guest count, language) lives in the database. Honeypot field marks bots `flagged`. |
+| Access | **Insert-only** for the public role on a fixed column list: no reads, edits or deletes from the browser. Validation (ZIP, email shape, guest count, language) lives in the database. Honeypot field marks bots `flagged`. Signed-in staff on the admin list can read everything and update follow-up fields only (see Admin desk). |
 | Keys | The project URL and publishable (anon) key are public by design. They go in as GitHub **repository variables** (not secrets), passed to the build as `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_ANON_KEY`. Unset variables leave the feature off. |
-| Client | About 40 lines of plain `fetch` in a new `src/scripts/supa.js`; no new script tag, nothing added to `Layout.astro` |
+| Client | About 40 lines of plain `fetch` in `src/scripts/supa.js`; no new script tag on public pages, nothing added to `Layout.astro` |
 | Dual-write | The Supabase insert is fire-and-forget, sent alongside the existing Google Form post. **It never blocks or replaces the Google post**: if Supabase is down, slow or unconfigured, visitors and the Google sheet see no difference. |
 | Frozen values | The Google Form action URLs, `entry.*` names and checkbox `value`s stay exactly as documented in [Forms & Embeds](#forms--embeds). The integration reads those existing names; it does not change the markup. |
 
-Until the project exists, do not add code that calls Supabase.
+### Admin desk
+
+| Item | Setup |
+|---|---|
+| Route | `/admin/` ([src/pages/admin/index.astro](src/pages/admin/index.astro)). Standalone HTML with `global.css` tokens; `<meta name="robots" content="noindex,nofollow">`; not in the nav, footer or any link; there is no sitemap. English-only staff UI: no `data-i18n`, no keys in en/es.json. |
+| Auth | Supabase email + password. Self sign-up is off in the Supabase Auth settings; logins are created in the dashboard and must also be in `private.campaign_admins`. RLS in `0003_admin.sql` decides what a login sees (`private.is_campaign_admin()`); a login not on the list gets "This email is not on the admin list". "Forgot password?" sends a reset link back to `/admin/`, which shows "Set a new password" (Site URL and the redirect allow list are set in Auth > URL Configuration). |
+| External script | supabase-js 2.117.2 UMD from jsDelivr, pinned to an exact version with a `sha384` SRI hash and `crossorigin`. **The only external script on the site**, loaded only on `/admin/` and only when the build has the two `PUBLIC_SUPABASE_*` values. Without them the page shows "Backend not configured" and loads no script. |
+| UI | Placard title "Campaign desk", taped paper sign-in card, a summary strip (today / 7 days / total per table, Chicago days, from `campaign_daily_summary`), dashed-stamp tabs (Volunteers, RSVPs grouped by events.json title with the `rsvps_by_event` headcount, Petition requests, Actions), search, sortable headers, a status dropdown and notes field that save on change, Download CSV (client-side, formula-safe), Refresh, Sign out. Under 760 px each row becomes a labeled card. |
+| Safety | Every submitted value is written with `textContent`, never `innerHTML` (the rows come from public forms). Styles are `is:global` with an `adm-` prefix because the tables are built by script and never get Astro's scoped attribute. |
 
 ---
 

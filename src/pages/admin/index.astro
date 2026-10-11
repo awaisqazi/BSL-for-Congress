@@ -1,0 +1,1425 @@
+---
+// /admin/: the campaign desk. Staff-only view of the Supabase submissions
+// (volunteers, RSVPs, petition requests, actions) with follow-up status and
+// notes. English-only staff UI: no i18n keys, no nav link, noindex.
+// Auth: Supabase email + password (self sign-up is off). What a signed-in
+// user can read or change is decided by RLS (supabase/migrations/0003_admin.sql),
+// not by this page. Setup and limits: supabase/README.md, "Campaign desk".
+import '../../styles/global.css';
+import events from '../../data/events.json';
+
+const configured = Boolean(import.meta.env.PUBLIC_SUPABASE_URL && import.meta.env.PUBLIC_SUPABASE_ANON_KEY);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// events.json id -> English title and start, for the RSVP groups.
+const eventIndex = Object.fromEntries(
+  events.map((e) => [
+    e.id,
+    {
+      title: typeof e.title === 'string' ? e.title : e.title?.en || e.id,
+      start: e.start || null,
+      recurring: Boolean(e.recurring),
+    },
+  ])
+);
+
+// The only external script on the site, pinned with a subresource hash.
+const SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js';
+const SUPABASE_JS_SRI = 'sha384-Rj26LVGvoeRVR6+mwQmFfcR3QOBEwT+ZmuCWpuiqeTzJpCs0ER4ITAWGb4Hiy3Ok';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Campaign desk</title>
+    <link rel="icon" type="image/png" sizes="32x32" href={`${base}/favicon-32x32.png`} />
+  </head>
+  <body class="adm" data-base={base}>
+    <main class="adm-wrap">
+      <header class="adm-head">
+        <h1 class="adm-placard-wrap"><span class="adm-placard">Campaign desk</span></h1>
+        <div class="adm-head-right">
+          <span class="adm-who" id="adm-who" hidden></span>
+          <button type="button" class="adm-btn adm-btn-quiet" id="adm-signout" hidden>Sign out</button>
+        </div>
+      </header>
+
+      {!configured && (
+        <section class="adm-card adm-narrow" id="adm-unconfigured">
+          <h2 class="adm-h2">Backend not configured</h2>
+          <p>This build has no Supabase project URL or public key, so there is nothing to sign in to.</p>
+          <p class="adm-small">Set the repository variables <code>PUBLIC_SUPABASE_URL</code> and <code>PUBLIC_SUPABASE_ANON_KEY</code> and redeploy. See <code>supabase/README.md</code>.</p>
+        </section>
+      )}
+
+      {configured && (
+        <>
+          <section class="adm-card adm-narrow" id="adm-loading">
+            <p class="adm-loading-text" id="adm-loading-text">Opening the desk...</p>
+          </section>
+
+          <section class="adm-card adm-narrow" id="adm-signin" hidden>
+            <h2 class="adm-h2">Staff sign-in</h2>
+            <form id="adm-signin-form" class="adm-form" novalidate>
+              <label class="adm-field">
+                <span>Email</span>
+                <input type="email" name="email" id="adm-email" autocomplete="username" required />
+              </label>
+              <label class="adm-field">
+                <span>Password</span>
+                <input type="password" name="password" id="adm-password" autocomplete="current-password" required />
+              </label>
+              <button type="submit" class="adm-btn adm-btn-primary" id="adm-signin-btn">Sign in</button>
+              <button type="button" class="adm-link" id="adm-forgot">Forgot password?</button>
+              <p class="adm-msg" id="adm-signin-msg" role="alert" aria-live="assertive"></p>
+            </form>
+            <p class="adm-small adm-fine">Staff only. Logins are created by the campaign in Supabase; there is no sign-up.</p>
+          </section>
+
+          <section class="adm-card adm-narrow" id="adm-recovery" hidden>
+            <h2 class="adm-h2">Set a new password</h2>
+            <form id="adm-recovery-form" class="adm-form" novalidate>
+              <label class="adm-field">
+                <span>New password (at least 8 characters)</span>
+                <input type="password" name="password" id="adm-new-password" autocomplete="new-password" minlength="8" required />
+              </label>
+              <label class="adm-field">
+                <span>Type it again</span>
+                <input type="password" name="confirm" id="adm-new-password2" autocomplete="new-password" minlength="8" required />
+              </label>
+              <button type="submit" class="adm-btn adm-btn-primary">Save new password</button>
+              <p class="adm-msg" id="adm-recovery-msg" role="alert" aria-live="assertive"></p>
+            </form>
+          </section>
+
+          <section class="adm-card adm-narrow" id="adm-notadmin" hidden>
+            <h2 class="adm-h2">This email is not on the admin list</h2>
+            <p>You are signed in as <strong id="adm-notadmin-email"></strong>, but the database does not show this login any submissions.</p>
+            <p>To add it, a project owner opens the Supabase dashboard, SQL Editor, and runs:</p>
+            <pre class="adm-code"><code id="adm-notadmin-sql"></code></pre>
+            <p class="adm-small">Then sign out and back in. Full steps: <code>supabase/README.md</code>, "Campaign desk".</p>
+            <button type="button" class="adm-btn adm-btn-primary" id="adm-notadmin-signout">Sign out</button>
+          </section>
+
+          <section id="adm-dash" hidden>
+            <div class="adm-summary" id="adm-summary" aria-label="Submission counts"></div>
+
+            <div class="adm-tabs" role="tablist" aria-label="Submission tables" id="adm-tabs">
+              <button type="button" role="tab" class="adm-tab" data-tab="volunteers" id="tab-volunteers" aria-controls="adm-panel" aria-selected="true">Volunteers <span class="adm-tab-n" data-count="volunteers"></span></button>
+              <button type="button" role="tab" class="adm-tab" data-tab="event_rsvps" id="tab-event_rsvps" aria-controls="adm-panel" aria-selected="false" tabindex="-1">RSVPs <span class="adm-tab-n" data-count="event_rsvps"></span></button>
+              <button type="button" role="tab" class="adm-tab" data-tab="petition_requests" id="tab-petition_requests" aria-controls="adm-panel" aria-selected="false" tabindex="-1">Petition requests <span class="adm-tab-n" data-count="petition_requests"></span></button>
+              <button type="button" role="tab" class="adm-tab" data-tab="actions" id="tab-actions" aria-controls="adm-panel" aria-selected="false" tabindex="-1">Actions <span class="adm-tab-n" data-count="actions"></span></button>
+            </div>
+
+            <div class="adm-toolbar">
+              <label class="adm-search">
+                <span class="adm-sr">Search this tab</span>
+                <input type="search" id="adm-search" placeholder="Search this tab" autocomplete="off" />
+              </label>
+              <label class="adm-check">
+                <input type="checkbox" id="adm-show-flagged" />
+                <span>Show bot-flagged</span>
+              </label>
+              <div class="adm-toolbar-btns">
+                <button type="button" class="adm-btn adm-btn-quiet" id="adm-refresh">Refresh</button>
+                <button type="button" class="adm-btn adm-btn-primary" id="adm-csv">Download CSV</button>
+              </div>
+            </div>
+
+            <p class="adm-msg adm-dash-msg" id="adm-dash-msg" role="status" aria-live="polite"></p>
+            <div id="adm-panel" role="tabpanel" aria-labelledby="tab-volunteers" class="adm-panel"></div>
+          </section>
+        </>
+      )}
+    </main>
+
+    <script type="application/json" id="adm-events" set:html={JSON.stringify(eventIndex).replace(/</g, '\\u003c')}></script>
+    {configured && (
+      <script is:inline src={SUPABASE_JS} integrity={SUPABASE_JS_SRI} crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    )}
+
+    <script>
+      // Everything user-submitted is written with textContent, never innerHTML:
+      // the rows come from a public form.
+      const SB_URL = import.meta.env.PUBLIC_SUPABASE_URL || '';
+      const SB_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || '';
+
+      if (SB_URL && SB_KEY) init();
+
+      function init() {
+        const $ = (id) => document.getElementById(id);
+        const base = document.body.dataset.base || '';
+        const views = ['loading', 'signin', 'recovery', 'notadmin', 'dash'];
+        const show = (name) => {
+          for (const v of views) {
+            const el = $(`adm-${v}`);
+            if (el) el.hidden = v !== name;
+          }
+          const signedIn = name === 'dash' || name === 'notadmin' || name === 'recovery';
+          $('adm-signout').hidden = !(name === 'dash');
+          $('adm-who').hidden = !signedIn || !state.email;
+        };
+        const msg = (id, text, kind = 'error') => {
+          const el = $(id);
+          el.textContent = text || '';
+          el.dataset.kind = kind;
+        };
+
+        const state = {
+          email: '',
+          data: { volunteers: [], event_rsvps: [], petition_requests: [], actions: [] },
+          summary: [],
+          rsvpCounts: {},
+          tab: 'volunteers',
+          sort: {},
+          query: '',
+          showFlagged: false,
+        };
+
+        let events = {};
+        try {
+          events = JSON.parse($('adm-events').textContent || '{}');
+        } catch {}
+
+        if (!window.supabase || typeof window.supabase.createClient !== 'function') {
+          $('adm-loading-text').textContent = 'Could not load the sign-in library. Check the connection and reload the page.';
+          return;
+        }
+
+        // Read the reset-link hash before the client consumes it.
+        const hash = new URLSearchParams(location.hash.replace(/^#/, ''));
+        let recoveryMode = hash.get('type') === 'recovery';
+        const hashError = hash.get('error_description') || hash.get('error');
+
+        const sb = window.supabase.createClient(SB_URL, SB_KEY);
+
+        sb.auth.onAuthStateChange((event) => {
+          // No awaits on Supabase calls inside this callback (it can deadlock).
+          if (event === 'PASSWORD_RECOVERY') {
+            recoveryMode = true;
+            setTimeout(() => show('recovery'), 0);
+          } else if (event === 'SIGNED_OUT') {
+            state.email = '';
+            state.data = { volunteers: [], event_rsvps: [], petition_requests: [], actions: [] };
+            $('adm-panel').replaceChildren();
+            setTimeout(() => show('signin'), 0);
+          }
+        });
+
+        // ---------------------------------------------------------------
+        // Formatting helpers
+        // ---------------------------------------------------------------
+        const CHI = 'America/Chicago';
+        const dayFmt = new Intl.DateTimeFormat('en-CA', { timeZone: CHI, year: 'numeric', month: '2-digit', day: '2-digit' });
+        const whenFmt = new Intl.DateTimeFormat('en-US', { timeZone: CHI, month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+        const evFmt = new Intl.DateTimeFormat('en-US', { timeZone: CHI, weekday: 'short', month: 'short', day: 'numeric' });
+        const chicagoDay = (d) => dayFmt.format(d);
+        const when = (iso) => (iso ? whenFmt.format(new Date(iso)) : '');
+        const list = (a) => (Array.isArray(a) ? a.filter(Boolean).join(', ') : '');
+        const contactText = (r) => [r.email, r.phone].filter(Boolean).join(' / ');
+        const prettyPhone = (p) => {
+          const d = String(p || '').replace(/\D/g, '');
+          const ten = d.length === 11 && d[0] === '1' ? d.slice(1) : d;
+          return ten.length === 10 ? `(${ten.slice(0, 3)}) ${ten.slice(3, 6)}-${ten.slice(6)}` : p;
+        };
+        const el = (tag, props = {}, ...kids) => {
+          const n = document.createElement(tag);
+          for (const [k, v] of Object.entries(props)) {
+            if (v == null || v === false) continue;
+            if (k === 'class') n.className = v;
+            else if (k === 'text') n.textContent = v;
+            else if (k.startsWith('data-') || k.startsWith('aria-') || k === 'role' || k === 'for') n.setAttribute(k, v);
+            else n[k] = v;
+          }
+          for (const kid of kids) if (kid != null) n.append(kid);
+          return n;
+        };
+
+        // ---------------------------------------------------------------
+        // Tab definitions
+        // ---------------------------------------------------------------
+        const FOLLOW_UP = ['new', 'contacted', 'confirmed', 'no'];
+        const RSVP_STATUS = ['going', 'maybe', 'cancelled', 'attended', 'no_show'];
+        const STATUS_LABEL = { new: 'New', contacted: 'Contacted', confirmed: 'Confirmed', no: 'No', going: 'Going', maybe: 'Maybe', cancelled: 'Cancelled', attended: 'Attended', no_show: 'No show' };
+
+        const contactCell = (r) => {
+          const wrap = el('span', { class: 'adm-contact' });
+          if (r.email) wrap.append(el('a', { href: `mailto:${r.email}`, text: r.email }));
+          if (r.phone) wrap.append(el('a', { href: `tel:${String(r.phone).replace(/[^0-9+]/g, '')}`, text: prettyPhone(r.phone) }));
+          return wrap;
+        };
+        const langCell = (r) => (r.language === 'es' ? 'Español' : 'English');
+        const eventTitle = (id) => events[id]?.title || id;
+
+        const COLS = {
+          name: { label: 'Name' },
+          contact: { label: 'Contact', get: contactText, render: contactCell },
+          zip: { label: 'ZIP', get: (r) => r.zip || '' },
+          language: { label: 'Lang', get: langCell },
+          source: { label: 'Source page', get: (r) => r.source_page || '' },
+          created: { label: 'Created', get: (r) => r.created_at || '', render: (r) => el('time', { dateTime: r.created_at, text: when(r.created_at) }) },
+        };
+
+        const TABS = {
+          volunteers: {
+            label: 'Volunteers',
+            statuses: FOLLOW_UP,
+            cols: [
+              { key: 'name', label: 'Name', get: (r) => `${r.first_name || ''} ${r.last_name || ''}`.trim() },
+              { key: 'contact', ...COLS.contact },
+              { key: 'zip', label: 'ZIP', get: (r) => [r.zip, r.city].filter(Boolean).join(' ') },
+              { key: 'interests', label: 'Interests', get: (r) => list(r.interests) },
+              { key: 'language', ...COLS.language },
+              { key: 'source', ...COLS.source },
+              { key: 'created', ...COLS.created },
+            ],
+          },
+          event_rsvps: {
+            label: 'RSVPs',
+            statuses: RSVP_STATUS,
+            grouped: true,
+            cols: [
+              { key: 'name', label: 'Name', get: (r) => r.name || '' },
+              { key: 'contact', ...COLS.contact },
+              { key: 'zip', ...COLS.zip },
+              { key: 'bringing', label: 'Bringing', get: (r) => (r.bringing_count ? `+${r.bringing_count}` : 'Just them'), sortVal: (r) => r.bringing_count || 0 },
+              { key: 'language', ...COLS.language },
+              { key: 'source', ...COLS.source },
+              { key: 'created', ...COLS.created },
+            ],
+          },
+          petition_requests: {
+            label: 'Petition requests',
+            statuses: FOLLOW_UP,
+            cols: [
+              { key: 'name', label: 'Name', get: (r) => r.name || '' },
+              { key: 'contact', ...COLS.contact },
+              { key: 'zip', label: 'ZIP', get: (r) => [r.zip, r.city].filter(Boolean).join(' ') },
+              { key: 'wants', label: 'Wants', get: (r) => [list(r.intents), list(r.help_with), r.address, r.preferred_time].filter(Boolean).join(' · ') },
+              { key: 'language', ...COLS.language },
+              { key: 'source', ...COLS.source },
+              { key: 'created', ...COLS.created },
+            ],
+          },
+          actions: {
+            label: 'Actions',
+            statuses: null,
+            cols: [
+              { key: 'action', label: 'Action', get: (r) => r.action || '' },
+              { key: 'payload', label: 'Details', get: (r) => (r.payload && Object.keys(r.payload).length ? JSON.stringify(r.payload) : '') },
+              { key: 'language', ...COLS.language },
+              { key: 'source', ...COLS.source },
+              { key: 'created', ...COLS.created },
+            ],
+          },
+        };
+
+        // ---------------------------------------------------------------
+        // Auth views
+        // ---------------------------------------------------------------
+        $('adm-signin-form').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const email = $('adm-email').value.trim();
+          const password = $('adm-password').value;
+          if (!email || !password) return msg('adm-signin-msg', 'Enter your email and password.');
+          const btn = $('adm-signin-btn');
+          btn.disabled = true;
+          msg('adm-signin-msg', 'Signing in...', 'info');
+          const { error } = await sb.auth.signInWithPassword({ email, password });
+          btn.disabled = false;
+          if (error) {
+            const wrong = /invalid login credentials/i.test(error.message);
+            return msg('adm-signin-msg', wrong ? 'Wrong email or password.' : `Could not sign in: ${error.message}`);
+          }
+          $('adm-password').value = '';
+          msg('adm-signin-msg', '');
+          enter();
+        });
+
+        $('adm-forgot').addEventListener('click', async () => {
+          const email = $('adm-email').value.trim();
+          if (!email) return msg('adm-signin-msg', 'Type your email above first, then press "Forgot password?" again.');
+          msg('adm-signin-msg', 'Sending...', 'info');
+          const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: `${location.origin}${base}/admin/` });
+          if (error && /rate|limit|seconds/i.test(error.message)) {
+            return msg('adm-signin-msg', 'Too many reset emails just now. Wait a few minutes and try again.');
+          }
+          if (error) console.warn('[admin] reset request:', error.message);
+          // Same answer whether or not the email has a login.
+          msg('adm-signin-msg', 'If that email has a staff login, a reset link is on its way. Open it on this device.', 'ok');
+        });
+
+        $('adm-recovery-form').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const p1 = $('adm-new-password').value;
+          const p2 = $('adm-new-password2').value;
+          if (p1.length < 8) return msg('adm-recovery-msg', 'Use at least 8 characters.');
+          if (p1 !== p2) return msg('adm-recovery-msg', 'The two passwords do not match.');
+          msg('adm-recovery-msg', 'Saving...', 'info');
+          const { error } = await sb.auth.updateUser({ password: p1 });
+          if (error) return msg('adm-recovery-msg', `Could not save: ${error.message}`);
+          $('adm-new-password').value = '';
+          $('adm-new-password2').value = '';
+          recoveryMode = false;
+          msg('adm-recovery-msg', '');
+          enter();
+        });
+
+        const signOut = async () => {
+          await sb.auth.signOut();
+          show('signin');
+        };
+        $('adm-signout').addEventListener('click', signOut);
+        $('adm-notadmin-signout').addEventListener('click', signOut);
+
+        // ---------------------------------------------------------------
+        // Data
+        // ---------------------------------------------------------------
+        async function fetchAll(table) {
+          const out = [];
+          const page = 1000;
+          for (let from = 0; ; from += page) {
+            const { data, error } = await sb.from(table).select('*').order('created_at', { ascending: false }).range(from, from + page - 1);
+            if (error) throw error;
+            out.push(...data);
+            if (data.length < page) return out;
+          }
+        }
+
+        async function loadAll() {
+          const tables = Object.keys(state.data);
+          const [rows, summary, counts] = await Promise.all([
+            Promise.all(tables.map(fetchAll)),
+            sb.from('campaign_daily_summary').select('*'),
+            sb.from('rsvps_by_event').select('*'),
+          ]);
+          tables.forEach((t, i) => (state.data[t] = rows[i]));
+          if (summary.error) throw summary.error;
+          if (counts.error) throw counts.error;
+          state.summary = summary.data || [];
+          state.rsvpCounts = Object.fromEntries((counts.data || []).map((c) => [c.event_id, c]));
+        }
+
+        async function enter() {
+          show('loading');
+          $('adm-loading-text').textContent = 'Loading submissions...';
+          const { data: u } = await sb.auth.getUser();
+          state.email = u?.user?.email || '';
+          $('adm-who').textContent = state.email;
+
+          const { data: isAdmin, error: rpcError } = await sb.rpc('am_i_campaign_admin');
+          if (!rpcError && isAdmin === false) return showNotAdmin();
+
+          try {
+            await loadAll();
+          } catch (err) {
+            show('dash');
+            msg('adm-dash-msg', `Could not load: ${err.message || err}`);
+            return;
+          }
+          // Fallback when the RPC is missing: RLS returning nothing at all
+          // usually means this login is not on the list.
+          const empty = Object.values(state.data).every((r) => r.length === 0) && state.summary.length === 0;
+          if (rpcError && empty) return showNotAdmin();
+
+          show('dash');
+          msg('adm-dash-msg', '');
+          renderSummary();
+          renderTab();
+        }
+
+        function showNotAdmin() {
+          $('adm-notadmin-email').textContent = state.email || 'this login';
+          const safe = (state.email || 'name@example.com').replace(/'/g, "''");
+          $('adm-notadmin-sql').textContent = `insert into private.campaign_admins (email) values ('${safe}');`;
+          show('notadmin');
+        }
+
+        // ---------------------------------------------------------------
+        // Summary strip
+        // ---------------------------------------------------------------
+        function renderSummary() {
+          const today = chicagoDay(new Date());
+          const weekAgo = chicagoDay(new Date(Date.now() - 6 * 864e5));
+          const box = $('adm-summary');
+          box.replaceChildren();
+          for (const [table, def] of Object.entries(TABS)) {
+            const rows = state.summary.filter((s) => s.source === table);
+            const sum = (pred) => rows.filter(pred).reduce((n, s) => n + Number(s.submissions || 0), 0);
+            const t = sum((s) => String(s.day) === today);
+            const w = sum((s) => String(s.day) >= weekAgo);
+            const all = sum(() => true);
+            const bots = rows.reduce((n, s) => n + Number(s.flagged_as_bot || 0), 0);
+            box.append(
+              el('div', { class: 'adm-stat' },
+                el('h2', { class: 'adm-stat-title', text: def.label }),
+                el('dl', { class: 'adm-stat-nums' },
+                  el('div', {}, el('dt', { text: 'Today' }), el('dd', { text: String(t) })),
+                  el('div', {}, el('dt', { text: '7 days' }), el('dd', { text: String(w) })),
+                  el('div', {}, el('dt', { text: 'Total' }), el('dd', { text: String(all) }))
+                ),
+                bots ? el('p', { class: 'adm-stat-bots', text: `${bots} bot-flagged not counted` }) : null
+              )
+            );
+          }
+          for (const t of Object.keys(TABS)) {
+            const n = state.data[t].filter((r) => !r.flagged).length;
+            document.querySelector(`[data-count="${t}"]`).textContent = String(n);
+          }
+        }
+
+        // ---------------------------------------------------------------
+        // Tabs, search, sort
+        // ---------------------------------------------------------------
+        const tabButtons = [...document.querySelectorAll('.adm-tab')];
+        const selectTab = (t, focus = false) => {
+          state.tab = t;
+          for (const b of tabButtons) {
+            const on = b.dataset.tab === t;
+            b.setAttribute('aria-selected', String(on));
+            b.tabIndex = on ? 0 : -1;
+            if (on && focus) b.focus();
+          }
+          $('adm-panel').setAttribute('aria-labelledby', `tab-${t}`);
+          renderTab();
+        };
+        tabButtons.forEach((b, i) => {
+          b.addEventListener('click', () => selectTab(b.dataset.tab));
+          b.addEventListener('keydown', (e) => {
+            if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+            const next = tabButtons[(i + (e.key === 'ArrowRight' ? 1 : tabButtons.length - 1)) % tabButtons.length];
+            selectTab(next.dataset.tab, true);
+          });
+        });
+
+        $('adm-search').addEventListener('input', (e) => {
+          state.query = e.target.value.trim().toLowerCase();
+          renderTab();
+        });
+        $('adm-show-flagged').addEventListener('change', (e) => {
+          state.showFlagged = e.target.checked;
+          renderTab();
+        });
+        $('adm-refresh').addEventListener('click', async () => {
+          msg('adm-dash-msg', 'Refreshing...', 'info');
+          try {
+            await loadAll();
+            renderSummary();
+            renderTab();
+            msg('adm-dash-msg', '');
+          } catch (err) {
+            msg('adm-dash-msg', `Could not refresh: ${err.message || err}`);
+          }
+        });
+
+        function visibleRows(t) {
+          const def = TABS[t];
+          let rows = state.data[t].filter((r) => state.showFlagged || !r.flagged);
+          if (state.query) {
+            const q = state.query;
+            rows = rows.filter((r) => {
+              const hay = def.cols.map((c) => c.get(r)).concat(r.notes || '', r.status || '', t === 'event_rsvps' ? eventTitle(r.event_id) : '');
+              return hay.join(' ').toLowerCase().includes(q);
+            });
+          }
+          const s = state.sort[t] || { key: 'created', dir: 'desc' };
+          const col = def.cols.find((c) => c.key === s.key) || def.cols[def.cols.length - 1];
+          const val = col.sortVal || col.get;
+          const mult = s.dir === 'asc' ? 1 : -1;
+          return [...rows].sort((a, b) => {
+            const x = val(a);
+            const y = val(b);
+            if (typeof x === 'number' && typeof y === 'number') return (x - y) * mult;
+            return String(x).localeCompare(String(y), 'en', { numeric: true, sensitivity: 'base' }) * mult;
+          });
+        }
+
+        function renderTab() {
+          const t = state.tab;
+          const def = TABS[t];
+          const panel = $('adm-panel');
+          panel.replaceChildren();
+          const rows = visibleRows(t);
+          if (!rows.length) {
+            const total = state.data[t].length;
+            panel.append(el('p', { class: 'adm-empty', text: total ? 'Nothing matches that search.' : `No ${def.label.toLowerCase()} yet.` }));
+            return;
+          }
+          if (!def.grouped) {
+            panel.append(table(t, rows));
+            return;
+          }
+          // RSVPs: one block per event, upcoming dated events first.
+          const groups = new Map();
+          for (const r of rows) {
+            if (!groups.has(r.event_id)) groups.set(r.event_id, []);
+            groups.get(r.event_id).push(r);
+          }
+          const order = [...groups.keys()].sort((a, b) => {
+            const sa = events[a]?.start || '9999';
+            const sb2 = events[b]?.start || '9999';
+            return sa.localeCompare(sb2);
+          });
+          for (const id of order) {
+            const ev = events[id];
+            const c = state.rsvpCounts[id];
+            const date = ev?.start ? evFmt.format(new Date(ev.start.length === 10 ? `${ev.start}T12:00:00-06:00` : ev.start)) : ev?.recurring ? 'Weekly' : '';
+            const head = el('div', { class: 'adm-group-head' },
+              el('h3', { class: 'adm-group-title' },
+                el('span', { class: 'adm-group-name', text: eventTitle(id) }),
+                date ? el('span', { class: 'adm-group-date', text: date }) : null
+              ),
+              c ? el('p', { class: 'adm-group-count', text: `${c.rsvps} ${c.rsvps === 1 ? 'RSVP' : 'RSVPs'}, +${c.plus_ones} ${c.plus_ones === 1 ? 'guest' : 'guests'}, ${c.expected_people} expected${c.attended ? `, ${c.attended} attended` : ''}` }) : null,
+              !ev ? el('p', { class: 'adm-small', text: `Not in events.json (id: ${id})` }) : null
+            );
+            panel.append(el('section', { class: 'adm-group' }, head, table(t, groups.get(id))));
+          }
+        }
+
+        function table(t, rows) {
+          const def = TABS[t];
+          const s = state.sort[t] || { key: 'created', dir: 'desc' };
+          const headRow = el('tr');
+          for (const c of def.cols) {
+            const active = s.key === c.key;
+            const btn = el('button', { type: 'button', class: 'adm-sort', text: c.label });
+            btn.append(el('span', { class: 'adm-sort-ind', 'aria-hidden': 'true', text: active ? (s.dir === 'asc' ? ' ▲' : ' ▼') : '' }));
+            btn.addEventListener('click', () => {
+              const dir = active && s.dir === 'desc' ? 'asc' : active ? 'desc' : c.key === 'created' ? 'desc' : 'asc';
+              state.sort[t] = { key: c.key, dir };
+              renderTab();
+            });
+            headRow.append(el('th', { scope: 'col', 'aria-sort': active ? (s.dir === 'asc' ? 'ascending' : 'descending') : 'none' }, btn));
+          }
+          if (def.statuses) {
+            headRow.append(el('th', { scope: 'col', text: 'Status' }), el('th', { scope: 'col', text: 'Notes' }));
+          }
+          const body = el('tbody');
+          for (const r of rows) body.append(rowEl(t, r));
+          return el('div', { class: 'adm-sheet' }, el('table', { class: 'adm-table' }, el('thead', {}, headRow), body));
+        }
+
+        function rowEl(t, r) {
+          const def = TABS[t];
+          const tr = el('tr', { class: r.flagged ? 'is-flagged' : '' });
+          def.cols.forEach((c, i) => {
+            const td = el('td', { 'data-label': c.label });
+            const content = c.render ? c.render(r) : c.get(r);
+            if (content instanceof Node) td.append(content);
+            else td.textContent = content || '';
+            if (c.key === 'source') td.classList.add('adm-dim');
+            if (c.key === 'contact') td.classList.add('adm-td-contact');
+            if (c.key === 'language' || c.key === 'created') td.classList.add('adm-nowrap');
+            if (i === 0 && r.flagged) td.append(el('span', { class: 'adm-flag', text: 'bot?' }));
+            tr.append(td);
+          });
+          if (def.statuses) {
+            const savedNote = el('span', { class: 'adm-saved', 'aria-live': 'polite' });
+            const sel = el('select', { class: 'adm-status', 'aria-label': `Status for ${def.cols[0].get(r)}` });
+            for (const v of def.statuses) sel.append(el('option', { value: v, text: STATUS_LABEL[v] || v, selected: r.status === v }));
+            sel.dataset.status = r.status;
+            sel.addEventListener('change', async () => {
+              const patch = { status: sel.value };
+              if (def.statuses === FOLLOW_UP && sel.value !== 'new' && !r.contacted_at) patch.contacted_at = new Date().toISOString();
+              const ok = await save(t, r, patch, savedNote);
+              if (!ok) sel.value = r.status;
+              sel.dataset.status = r.status;
+            });
+            const notes = el('textarea', { class: 'adm-notes', rows: 1, maxLength: 2000, value: r.notes || '', placeholder: 'Add a note', 'aria-label': `Notes for ${def.cols[0].get(r)}` });
+            notes.addEventListener('change', async () => {
+              const ok = await save(t, r, { notes: notes.value.trim() || null }, savedNote);
+              if (!ok) notes.value = r.notes || '';
+            });
+            const contacted = r.contacted_at ? el('span', { class: 'adm-contacted', text: `Contacted ${when(r.contacted_at)}` }) : null;
+            tr.append(
+              el('td', { 'data-label': 'Status', class: 'adm-td-status' }, sel, contacted),
+              el('td', { 'data-label': 'Notes', class: 'adm-td-notes' }, notes, savedNote)
+            );
+          }
+          return tr;
+        }
+
+        async function save(t, r, patch, note) {
+          note.textContent = 'Saving...';
+          note.dataset.kind = 'info';
+          const { data, error } = await sb.from(t).update(patch).eq('id', r.id).select('id, status, notes, contacted_at');
+          if (error || !data || data.length !== 1) {
+            note.textContent = 'Not saved';
+            note.dataset.kind = 'error';
+            msg('adm-dash-msg', error ? `Not saved: ${error.message}` : 'Not saved: the database did not accept the change. Is this login still on the admin list?');
+            return false;
+          }
+          Object.assign(r, data[0]);
+          note.textContent = 'Saved';
+          note.dataset.kind = 'ok';
+          setTimeout(() => {
+            if (note.textContent === 'Saved') note.textContent = '';
+          }, 2500);
+          return true;
+        }
+
+        // ---------------------------------------------------------------
+        // CSV (client-side, the rows currently shown in this tab)
+        // ---------------------------------------------------------------
+        $('adm-csv').addEventListener('click', () => {
+          const t = state.tab;
+          const rows = visibleRows(t);
+          if (!rows.length) return msg('adm-dash-msg', 'Nothing to download in this view.', 'info');
+          const skip = new Set(['honeypot', 'user_agent']);
+          const keys = [];
+          for (const r of rows) for (const k of Object.keys(r)) if (!skip.has(k) && !keys.includes(k)) keys.push(k);
+          if (t === 'event_rsvps') keys.splice(keys.indexOf('event_id') + 1, 0, 'event_title');
+          const cell = (v) => {
+            if (v == null) return '';
+            let s = Array.isArray(v) ? v.join('; ') : typeof v === 'object' ? JSON.stringify(v) : String(v);
+            if (/^[=+\-@\t\r]/.test(s)) s = `'${s}`; // no spreadsheet formulas from public input
+            return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+          };
+          const lines = [keys.join(',')];
+          for (const r of rows) lines.push(keys.map((k) => cell(k === 'event_title' ? eventTitle(r.event_id) : r[k])).join(','));
+          const blob = new Blob(['\ufeff' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+          const a = el('a', { href: URL.createObjectURL(blob), download: `byronfor25-${t.replace(/_/g, '-')}-${chicagoDay(new Date())}.csv` });
+          document.body.append(a);
+          a.click();
+          a.remove();
+          setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+          msg('adm-dash-msg', `Downloaded ${rows.length} rows.`, 'ok');
+        });
+
+        // ---------------------------------------------------------------
+        // Start
+        // ---------------------------------------------------------------
+        (async () => {
+          const { data } = await sb.auth.getSession();
+          if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+          if (hashError && !data.session) {
+            show('signin');
+            const expired = /expired|invalid/i.test(hashError);
+            msg('adm-signin-msg', expired ? 'That reset link has expired or was already used. Type your email and press "Forgot password?" for a new one.' : `Sign-in link problem: ${hashError}`);
+            return;
+          }
+          if (data.session && recoveryMode) {
+            state.email = data.session.user?.email || '';
+            $('adm-who').textContent = state.email;
+            return show('recovery');
+          }
+          if (data.session) return enter();
+          show('signin');
+        })();
+      }
+    </script>
+
+    <!-- Global on purpose: the tables are built by the script above, so they
+         never get Astro's scoped-style attribute. Every class is adm- prefixed
+         and this CSS only ships on this page. -->
+    <style is:global>
+      .adm {
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at 12% 8%, rgba(255, 255, 255, 0.35), transparent 40%),
+          var(--cream);
+      }
+
+      .adm-wrap {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: var(--space-xl) var(--space-lg) var(--space-3xl);
+      }
+
+      .adm-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: var(--space-md);
+        margin-bottom: var(--space-xl);
+      }
+
+      .adm-placard-wrap {
+        rotate: -1deg;
+      }
+
+      .adm-placard {
+        display: inline;
+        font-family: var(--font-display);
+        font-size: var(--text-2xl);
+        font-weight: 900;
+        line-height: 1.5;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        color: var(--cream-light);
+        background: var(--blue-deeper);
+        padding: 0.12em 0.5em;
+        box-decoration-break: clone;
+        -webkit-box-decoration-break: clone;
+      }
+
+      .adm-head-right {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+        flex-wrap: wrap;
+      }
+
+      .adm-who {
+        font-size: var(--text-sm);
+        color: var(--gray-700);
+        overflow-wrap: anywhere;
+      }
+
+      /* Paper card, taped */
+      .adm-card {
+        position: relative;
+        background: var(--cream-light);
+        padding: var(--space-xl) var(--space-lg) var(--space-lg);
+        box-shadow: var(--shadow-md);
+      }
+
+      .adm-card::before {
+        content: '';
+        position: absolute;
+        width: 72px;
+        height: 20px;
+        top: -9px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-3deg);
+        background: rgba(245, 208, 138, 0.75);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+        pointer-events: none;
+      }
+
+      .adm-narrow {
+        max-width: 460px;
+        margin: var(--space-2xl) auto 0;
+        rotate: -0.4deg;
+      }
+
+      .adm-h2 {
+        font-family: var(--font-display);
+        font-size: var(--text-xl);
+        font-weight: 900;
+        line-height: 1.2;
+        color: var(--blue-deeper);
+        margin-bottom: var(--space-md);
+      }
+
+      .adm-card p + p {
+        margin-top: var(--space-sm);
+      }
+
+      .adm-small {
+        font-size: var(--text-sm);
+        color: var(--gray-700);
+      }
+
+      .adm-fine {
+        margin-top: var(--space-lg);
+        padding-top: var(--space-md);
+        border-top: 1px dashed rgba(3, 109, 153, 0.25);
+      }
+
+      .adm code,
+      .adm-code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.85em;
+        background: rgba(5, 173, 237, 0.08);
+        padding: 0.05em 0.3em;
+        border-radius: 3px;
+        overflow-wrap: anywhere;
+      }
+
+      .adm-code {
+        display: block;
+        margin: var(--space-sm) 0 var(--space-md);
+        padding: var(--space-sm) var(--space-md);
+        white-space: pre-wrap;
+        border-left: 3px solid var(--orange);
+      }
+
+      .adm-code code {
+        background: none;
+        padding: 0;
+        font-size: 1em;
+      }
+
+      .adm-loading-text {
+        text-align: center;
+        color: var(--gray-700);
+        font-family: var(--font-display);
+        font-weight: 700;
+      }
+
+      /* Forms */
+      .adm-form {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+      }
+
+      .adm-field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-family: var(--font-display);
+        font-size: var(--text-sm);
+        font-weight: 700;
+        color: var(--blue-deeper);
+      }
+
+      .adm input[type='email'],
+      .adm input[type='password'],
+      .adm input[type='search'],
+      .adm select,
+      .adm textarea {
+        font: inherit;
+        font-family: var(--font-body);
+        font-weight: 400;
+        font-size: 16px; /* no iOS zoom on focus */
+        color: var(--black);
+        background: var(--white);
+        border: 2px solid rgba(3, 109, 153, 0.25);
+        border-radius: var(--radius-sm);
+        padding: 10px 12px;
+        min-height: 44px;
+        width: 100%;
+      }
+
+      .adm input:focus-visible,
+      .adm select:focus-visible,
+      .adm textarea:focus-visible,
+      .adm button:focus-visible {
+        outline: 3px solid var(--orange);
+        outline-offset: 2px;
+      }
+
+      .adm-btn {
+        min-height: 44px;
+        padding: 0 18px;
+        border-radius: var(--radius-sm);
+        font-family: var(--font-display);
+        font-size: var(--text-sm);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        transition: background var(--duration-fast) var(--ease-default), translate var(--duration-fast) var(--ease-default);
+      }
+
+      .adm-btn-primary {
+        background: var(--orange);
+        color: var(--white);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .adm-btn-primary:hover {
+        background: var(--orange-dark);
+        translate: 0 -1px;
+      }
+
+      .adm-btn-primary:disabled {
+        opacity: 0.6;
+        cursor: wait;
+      }
+
+      .adm-btn-quiet {
+        background: transparent;
+        color: var(--blue-deeper);
+        border: 2px solid rgba(3, 109, 153, 0.35);
+      }
+
+      .adm-btn-quiet:hover {
+        background: rgba(5, 173, 237, 0.1);
+      }
+
+      .adm-link {
+        align-self: flex-start;
+        color: var(--blue-deeper);
+        font-size: var(--text-sm);
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        min-height: 32px;
+      }
+
+      .adm-msg {
+        font-size: var(--text-sm);
+        min-height: 1.4em;
+        color: #b42318;
+      }
+
+      .adm-msg[data-kind='info'] {
+        color: var(--gray-700);
+      }
+
+      .adm-msg[data-kind='ok'] {
+        color: #1f7a3a;
+      }
+
+      .adm-msg:empty {
+        display: none;
+      }
+
+      /* Summary strip */
+      .adm-summary {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: var(--space-md);
+        margin-bottom: var(--space-xl);
+      }
+
+      .adm-stat {
+        position: relative;
+        background: var(--white);
+        padding: var(--space-md) var(--space-md) var(--space-sm);
+        box-shadow: var(--shadow-sm);
+        border-top: 4px solid var(--blue);
+      }
+
+      .adm-stat:nth-child(2) { border-top-color: var(--orange); }
+      .adm-stat:nth-child(3) { border-top-color: var(--blue-deeper); }
+      .adm-stat:nth-child(4) { border-top-color: var(--gold-soft); }
+
+      .adm-stat-title {
+        font-family: var(--font-display);
+        font-size: var(--text-xs);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--orange-dark);
+        margin-bottom: 4px;
+      }
+
+      .adm-stat-nums {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+      }
+
+      .adm-stat-nums dt {
+        font-size: 0.72rem;
+        color: var(--gray-500);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .adm-stat-nums dd {
+        font-family: var(--font-display);
+        font-size: var(--text-2xl);
+        font-weight: 900;
+        line-height: 1.1;
+        color: var(--blue-deeper);
+      }
+
+      .adm-stat-bots {
+        font-size: 0.72rem;
+        color: var(--gray-500);
+        margin-top: 2px;
+      }
+
+      /* Tabs: dashed stamps, active one filled */
+      .adm-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: var(--space-md);
+      }
+
+      .adm-tab {
+        min-height: 44px;
+        padding: 0 14px;
+        border: 2px dashed rgba(230, 136, 28, 0.6);
+        border-radius: 4px;
+        background: var(--white);
+        color: var(--orange-dark);
+        font-family: var(--font-display);
+        font-size: var(--text-xs);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .adm-tab[aria-selected='true'] {
+        background: var(--blue-deeper);
+        border: 2px solid var(--blue-deeper);
+        color: var(--cream-light);
+      }
+
+      .adm-tab-n {
+        display: inline-block;
+        min-width: 1.6em;
+        margin-left: 4px;
+        padding: 0 5px;
+        border-radius: 999px;
+        background: rgba(230, 136, 28, 0.15);
+        font-size: 0.9em;
+      }
+
+      .adm-tab[aria-selected='true'] .adm-tab-n {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .adm-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-sm) var(--space-md);
+        margin-bottom: var(--space-md);
+      }
+
+      .adm-search {
+        flex: 1 1 260px;
+      }
+
+      .adm-check {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: var(--text-sm);
+        color: var(--gray-700);
+        min-height: 44px;
+      }
+
+      .adm-check input {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--blue-deeper);
+      }
+
+      .adm-toolbar-btns {
+        display: flex;
+        gap: var(--space-sm);
+        margin-left: auto;
+      }
+
+      .adm-sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+
+      .adm-dash-msg {
+        margin-bottom: var(--space-sm);
+      }
+
+      /* The sheet: ruled paper table */
+      .adm-sheet {
+        background: var(--white);
+        box-shadow: var(--shadow-md);
+        overflow-x: auto;
+      }
+
+      .adm-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.875rem;
+        line-height: 1.4;
+      }
+
+      .adm-table th {
+        position: sticky;
+        top: 0;
+        background: var(--cream-light);
+        text-align: left;
+        border-bottom: 2px solid rgba(230, 136, 28, 0.5);
+        padding: 0;
+        white-space: nowrap;
+        font-weight: 400;
+      }
+
+      .adm-table th:not(:has(button)) {
+        padding: 10px 12px;
+        font-family: var(--font-display);
+        font-size: 0.72rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--blue-deeper);
+      }
+
+      .adm-sort {
+        width: 100%;
+        text-align: left;
+        padding: 10px 12px;
+        font-family: var(--font-display);
+        font-size: 0.72rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--blue-deeper);
+      }
+
+      .adm-sort:hover {
+        background: rgba(5, 173, 237, 0.08);
+      }
+
+      .adm-sort-ind {
+        color: var(--orange-dark);
+      }
+
+      .adm-table td {
+        padding: 9px 12px;
+        border-bottom: 1px solid rgba(5, 173, 237, 0.18);
+        vertical-align: top;
+        overflow-wrap: anywhere;
+      }
+
+      .adm-table tbody tr:hover {
+        background: rgba(251, 226, 186, 0.25);
+      }
+
+      .adm-table tr.is-flagged {
+        opacity: 0.6;
+      }
+
+      .adm-contact {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .adm-contact a {
+        color: var(--blue-deeper);
+        text-decoration: underline;
+        text-decoration-color: rgba(3, 109, 153, 0.3);
+        text-underline-offset: 2px;
+      }
+
+      .adm-dim {
+        color: var(--gray-500);
+        font-size: 0.8rem;
+      }
+
+      .adm-flag {
+        display: inline-block;
+        margin-left: 6px;
+        padding: 0 6px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #b42318;
+        border: 1px dashed #b42318;
+        border-radius: 3px;
+      }
+
+      .adm-td-contact {
+        min-width: 190px;
+      }
+
+      .adm-nowrap {
+        white-space: nowrap;
+      }
+
+      .adm-td-status {
+        min-width: 140px;
+      }
+
+      .adm-td-notes {
+        min-width: 200px;
+      }
+
+      .adm .adm-status,
+      .adm .adm-notes {
+        font-size: 0.875rem;
+        padding: 6px 8px;
+        min-height: 36px;
+      }
+
+      .adm .adm-status[data-status='new'],
+      .adm .adm-status[data-status='going'] {
+        border-color: rgba(230, 136, 28, 0.6);
+      }
+
+      .adm .adm-status[data-status='confirmed'],
+      .adm .adm-status[data-status='attended'] {
+        border-color: #1f7a3a;
+      }
+
+      .adm-notes {
+        resize: vertical;
+        field-sizing: content;
+        max-height: 160px;
+      }
+
+      .adm-contacted {
+        display: block;
+        margin-top: 4px;
+        font-size: 0.72rem;
+        color: var(--gray-500);
+      }
+
+      .adm-saved {
+        display: block;
+        font-size: 0.72rem;
+        min-height: 1em;
+        color: var(--gray-500);
+      }
+
+      .adm-saved[data-kind='ok'] { color: #1f7a3a; }
+      .adm-saved[data-kind='error'] { color: #b42318; }
+
+      .adm-empty {
+        background: var(--white);
+        padding: var(--space-xl);
+        text-align: center;
+        color: var(--gray-500);
+        box-shadow: var(--shadow-sm);
+      }
+
+      /* RSVP groups */
+      .adm-group + .adm-group {
+        margin-top: var(--space-xl);
+      }
+
+      .adm-group-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 4px var(--space-md);
+        margin-bottom: var(--space-sm);
+      }
+
+      .adm-group-title {
+        font-family: var(--font-display);
+        font-size: var(--text-lg);
+        font-weight: 900;
+        color: var(--blue-deeper);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 10px;
+        align-items: baseline;
+      }
+
+      .adm-group-date {
+        font-size: var(--text-xs);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--orange-dark);
+        border: 2px dashed rgba(230, 136, 28, 0.6);
+        padding: 0 8px;
+        rotate: -1.5deg;
+      }
+
+      .adm-group-count {
+        font-size: var(--text-sm);
+        color: var(--gray-700);
+      }
+
+      @media (max-width: 1024px) {
+        .adm-summary {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      /* Phones: each row becomes a small card */
+      @media (max-width: 760px) {
+        .adm-wrap {
+          padding: var(--space-lg) 16px var(--space-2xl);
+        }
+
+        .adm-placard {
+          font-size: var(--text-xl);
+        }
+
+        .adm-narrow {
+          margin-top: var(--space-lg);
+          rotate: 0deg;
+        }
+
+        .adm-summary {
+          gap: var(--space-sm);
+        }
+
+        .adm-stat {
+          padding: var(--space-sm);
+        }
+
+        .adm-stat-nums dd {
+          font-size: var(--text-xl);
+        }
+
+        .adm-toolbar-btns {
+          margin-left: 0;
+          width: 100%;
+        }
+
+        .adm-toolbar-btns .adm-btn {
+          flex: 1;
+        }
+
+        .adm-sheet {
+          background: none;
+          box-shadow: none;
+          overflow: visible;
+        }
+
+        .adm-table thead {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          overflow: hidden;
+          clip: rect(0 0 0 0);
+        }
+
+        .adm-table,
+        .adm-table tbody,
+        .adm-table tr,
+        .adm-table td {
+          display: block;
+          width: 100%;
+        }
+
+        .adm-table tr {
+          background: var(--white);
+          box-shadow: var(--shadow-sm);
+          margin-bottom: var(--space-sm);
+          padding: 6px 0;
+          border-top: 3px solid var(--blue);
+        }
+
+        .adm-table td {
+          display: grid;
+          grid-template-columns: 96px minmax(0, 1fr);
+          gap: 8px;
+          border-bottom: none;
+          padding: 4px 12px;
+        }
+
+        .adm-table td::before {
+          content: attr(data-label);
+          font-family: var(--font-display);
+          font-size: 0.68rem;
+          font-weight: 900;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+          color: var(--blue-deeper);
+          padding-top: 2px;
+        }
+
+        .adm-table td:first-child {
+          font-weight: 700;
+          font-size: 0.95rem;
+        }
+
+        .adm-td-status,
+        .adm-td-notes,
+        .adm-td-contact {
+          min-width: 0;
+        }
+
+        .adm-nowrap {
+          white-space: normal;
+        }
+
+        .adm-td-status > *,
+        .adm-td-notes > * {
+          grid-column: 2;
+        }
+      }
+    </style>
+  </body>
+</html>
