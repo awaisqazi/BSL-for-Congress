@@ -187,13 +187,17 @@ const host = (Astro.site ? Astro.site.host : 'byronfor25.com');
           shifts += items.length;
           if (day >= today && day <= data.until) {
             const dow = new Date(day + 'T12:00:00').getDay();
-            data.weekly.filter((w: any) => w.dow === dow).forEach((w: any) => {
-              const li = weeklyClone(w.dow);
-              if (li) {
-                items.push(li);
-                shifts++;
-              }
-            });
+            // Same rule as the "next up" rows: a dated shift of the same kind
+            // on this day is the specific shift, so its weekly card stays out.
+            data.weekly
+              .filter((w: any) => w.dow === dow && !items.some((c) => c.classList.contains(`ev-kind-${w.k}`)))
+              .forEach((w: any) => {
+                const li = weeklyClone(w.dow);
+                if (li) {
+                  items.push(li);
+                  shifts++;
+                }
+              });
           }
           ledgers.forEach((l) => {
             const lf = l.dataset.from!;

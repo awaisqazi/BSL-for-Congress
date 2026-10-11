@@ -57,7 +57,8 @@ export const isShift = (it) => SHIFT_KINDS.includes(it.k);
 export const kindClass = (k) => (k === 'wardnight' ? 'ward' : k === 'deadline' || k === 'election' || k === 'runoff' ? 'date' : 'shift');
 
 // Day index: dated entries (ranges mark every day; shifts drop once expired),
-// the weekly shifts from today through Election Day, the runoff marker.
+// the weekly shifts from today through Election Day (skipped on a day that
+// already has a dated shift of the same kind), the runoff marker.
 export function buildIndex(data, today = todayISO()) {
   const byDay = new Map();
   const put = (day, item) => {
@@ -70,7 +71,13 @@ export function buildIndex(data, today = todayISO()) {
   }
   for (let d = today; d <= data.until; d = addDays(d, 1)) {
     const dow = parse(d).getDay();
-    for (const w of data.weekly) if (w.dow === dow) put(d, { ...w, weekly: true });
+    for (const w of data.weekly) {
+      if (w.dow !== dow) continue;
+      // A dated shift of the same kind that day is the specific shift: one
+      // dot, one row, one card (the /volunteer list applies the same rule).
+      if ((byDay.get(d) || []).some((it) => !it.weekly && it.k === w.k)) continue;
+      put(d, { ...w, weekly: true });
+    }
   }
   put(data.last, { k: 'runoff' });
   byDay.forEach((items) => items.sort((a, b) => Number(!!a.weekly) - Number(!!b.weekly)));

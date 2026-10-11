@@ -1,7 +1,7 @@
 ---
 // Fixed top nav. "Show Up" carries a calendar glyph that opens a small month
 // popover on desktop (hover with a mouse, click anywhere); the mobile drawer
-// opens with the same compact grid above the links. Both read the calendar
+// ends with the same compact grid, below the links and social icons. Both read the calendar
 // JSON inlined here once per page and draw with src/scripts/calendar-core.js.
 import '../styles/calendar.css';
 import { payloadJson } from '../data/calendar-data.js';
@@ -65,17 +65,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   <!-- Mobile Drawer -->
   <div class="mobile-drawer" id="mobile-drawer">
-    <div class="drawer-cal calg-touch" data-drawercal>
-      <div class="calg-head">
-        <button type="button" class="calg-arrow" data-drawercal-prev><span class="calg-sr" data-i18n="events.cal_prev">Previous month</span><span aria-hidden="true">←</span></button>
-        <p class="calg-month" data-drawercal-month aria-live="polite"></p>
-        <button type="button" class="calg-arrow" data-drawercal-next><span class="calg-sr" data-i18n="events.cal_next">Next month</span><span aria-hidden="true">→</span></button>
-      </div>
-      <div data-drawercal-grid></div>
-      <p class="caln-label" data-i18n="events.cal_next_up">Next up</p>
-      <ul class="caln-rows" data-drawercal-rows></ul>
-      <a class="caln-full" href={`${base}/volunteer/#calendar`}><span data-i18n="events.cal_full">See the full calendar</span> <span aria-hidden="true">→</span></a>
-    </div>
     <ul class="mobile-links">
       <li><a href={`${base}/meet`} data-i18n="nav.meet">Meet Byron</a></li>
       <li><a href={`${base}/platform`} data-i18n="nav.platform">The Record</a></li>
@@ -104,6 +93,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <a href="https://x.com/ByronSigcho" class="mobile-social-link" aria-label="X / Twitter" target="_blank" rel="noopener">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       </a>
+    </div>
+    <div class="drawer-cal calg-touch" data-drawercal>
+      <h2 class="drawer-cal-label"><span data-i18n="events.cal_label">Plan Your Month</span></h2>
+      <div class="calg-head">
+        <button type="button" class="calg-arrow" data-drawercal-prev><span class="calg-sr" data-i18n="events.cal_prev">Previous month</span><span aria-hidden="true">←</span></button>
+        <p class="calg-month" data-drawercal-month aria-live="polite"></p>
+        <button type="button" class="calg-arrow" data-drawercal-next><span class="calg-sr" data-i18n="events.cal_next">Next month</span><span aria-hidden="true">→</span></button>
+      </div>
+      <div data-drawercal-grid></div>
+      <p class="caln-label" data-i18n="events.cal_next_up">Next up</p>
+      <ul class="caln-rows" data-drawercal-rows></ul>
+      <a class="caln-full" href={`${base}/volunteer/#calendar`}><span data-i18n="events.cal_full">See the full calendar</span> <span aria-hidden="true">→</span></a>
     </div>
   </div>
   <script type="application/json" id="bsl-cal-data" set:html={payloadJson(base)}></script>
@@ -564,13 +565,37 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
   }
 
-  /* Drawer calendar: compact grid and the next three shifts, above the links */
+  /* Drawer calendar: placard, compact grid and the next three shifts, at the bottom below the links, buttons and social icons */
   .drawer-cal {
+    position: relative;
     max-width: 480px;
-    margin: 0 auto var(--space-xl);
-    padding: var(--space-md) var(--space-sm) var(--space-xs);
+    margin: var(--space-2xl) auto 0;
+    padding: var(--space-lg) var(--space-sm) var(--space-xs);
     background: var(--cream-light);
     box-shadow: var(--shadow-sm);
+  }
+
+  /* Placard label, taped to the top edge like the /volunteer calendar */
+  .drawer-cal-label {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    margin: 0;
+    transform: translateX(-50%) rotate(-1deg);
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .drawer-cal-label span {
+    display: inline-block;
+    padding: 6px 12px;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--cream-light);
+    background: var(--blue-deeper);
   }
 
   .mobile-links {
