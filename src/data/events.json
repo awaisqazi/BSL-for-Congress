@@ -322,5 +322,107 @@
     },
     "sponsor": "Chicago DSA",
     "source": "https://canvass.chicagodsa.org"
+  },
+  {
+    "id": "meetup-2026-10-17-skylark",
+    "kind": "meetup",
+    "title": {
+      "en": "Spooky Fundraiser at Skylark",
+      "es": "Recaudación de miedo en Skylark"
+    },
+    "line": {
+      "en": "Halloween with Byron and neighbors at Skylark. Costumes encouraged, free entry, donations welcome, and no one is turned away for lack of funds.",
+      "es": "Halloween con Byron y los vecinos en Skylark. Ven disfrazado, la entrada es gratuita, se agradecen donaciones y nadie se queda fuera por falta de fondos."
+    },
+    "start": "2026-10-17T19:00:00-05:00",
+    "end": null,
+    "location": "Skylark",
+    "address": "2149 S Halsted St, Chicago",
+    "rsvp": null,
+    "action": {
+      "en": "Tell us you're coming",
+      "es": "Avísanos que vienes"
+    },
+    "sponsor": null,
+    "source": "https://www.instagram.com/bslfor25/p/DecvrrKB3ie/",
+    "expires": "2026-10-17"
+  },
+  {
+    "id": "meetup-2026-10-23-halloween-block-party",
+    "kind": "meetup",
+    "title": {
+      "en": "25th Ward Halloween Block Party",
+      "es": "Fiesta de Halloween de la Cuadra del Distrito 25"
+    },
+    "line": {
+      "en": "An afternoon for families at the ward office: costume giveaways, a bouncy house, raffles, and a movie screening at 6 PM.",
+      "es": "Una tarde para las familias en la oficina del distrito: entrega de disfraces, brincolín inflable, rifas y proyección de película a las 6 de la tarde."
+    },
+    "start": "2026-10-23T15:00:00-05:00",
+    "end": "2026-10-23T19:30:00-05:00",
+    "location": {
+      "en": "25th Ward office",
+      "es": "Oficina del Distrito 25"
+    },
+    "address": "2100 W Cermak Rd, Chicago",
+    "rsvp": null,
+    "action": {
+      "en": "Tell us you're coming",
+      "es": "Avísanos que vienes"
+    },
+    "sponsor": "25th Ward Office",
+    "source": "https://www.instagram.com/25thwardoffice/p/DehY7R5RhXD/",
+    "expires": "2026-10-23"
+  },
+  {
+    "id": "meetup-2026-10-23-citykey-printing",
+    "kind": "meetup",
+    "title": {
+      "en": "CityKey Mobile Printing Day",
+      "es": "Día de impresión móvil de CityKey"
+    },
+    "line": {
+      "en": "Get your CityKey ID printed at the ward office with the City Clerk's office. By appointment only; book at getcitykey.com.",
+      "es": "Imprime tu tarjeta CityKey en la oficina del distrito con la Oficina de la Secretaria Municipal. Solo con cita previa; agenda en getcitykey.com."
+    },
+    "start": "2026-10-23T14:00:00-05:00",
+    "end": "2026-10-23T17:00:00-05:00",
+    "location": {
+      "en": "25th Ward office",
+      "es": "Oficina del Distrito 25"
+    },
+    "address": "2100 W Cermak Rd, Chicago",
+    "rsvp": "https://www.getcitykey.com",
+    "action": {
+      "en": "RSVP",
+      "es": "Confirmar asistencia"
+    },
+    "sponsor": "Office of the City Clerk and the 25th Ward Office",
+    "source": "https://www.instagram.com/25thwardoffice/p/DehX8OwkWUj/",
+    "expires": "2026-10-23"
+  },
+  {
+    "id": "meetup-2026-12-05-art-auction-hairpin",
+    "kind": "meetup",
+    "title": {
+      "en": "Art Auction for the Socialist Slate",
+      "es": "Subasta de arte por la Planilla Socialista"
+    },
+    "line": {
+      "en": "Chicago DSA's silent art auction for its PAC and the Socialist Slate: art, food and a bar. RSVP now; tickets go on sale later.",
+      "es": "Subasta silenciosa de arte de Chicago DSA para su PAC y la Planilla Socialista: arte, comida y barra. Confirma tu asistencia; los boletos saldrán a la venta después."
+    },
+    "start": "2026-12-05T17:00:00-06:00",
+    "end": "2026-12-05T21:00:00-06:00",
+    "location": "Hairpin Arts Center",
+    "address": "2810 N Milwaukee Ave, 2nd Floor, Chicago",
+    "rsvp": "https://actionnetwork.org/events/art-auction-cdsa-socialist-slate-fundraiser",
+    "action": {
+      "en": "RSVP",
+      "es": "Confirmar asistencia"
+    },
+    "sponsor": "Chicago DSA",
+    "source": "https://actionnetwork.org/events/art-auction-cdsa-socialist-slate-fundraiser",
+    "expires": "2026-12-05"
   }
 ]
