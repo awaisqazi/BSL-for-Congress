@@ -424,5 +424,29 @@
     "sponsor": "Chicago DSA",
     "source": "https://actionnetwork.org/events/art-auction-cdsa-socialist-slate-fundraiser",
     "expires": "2026-12-05"
+  },
+  {
+    "id": "meetup-2026-10-25-souls-to-the-polls",
+    "kind": "meetup",
+    "title": {
+      "en": "Souls to the Polls",
+      "es": "Souls to the Polls: marcha al voto anticipado"
+    },
+    "line": {
+      "en": "Gather at Holy Ground, make signs with neighbors, and march together to early vote.",
+      "es": "Reúnete en Holy Ground, haz carteles con tus vecinos y marcha con todos al voto anticipado."
+    },
+    "start": "2026-10-25T11:30:00-05:00",
+    "end": null,
+    "location": "Holy Ground",
+    "address": "2242 S Damen Ave, Chicago",
+    "rsvp": null,
+    "action": {
+      "en": "Tell us you're coming",
+      "es": "Avísanos que vienes"
+    },
+    "sponsor": "Holy Ground, 25th Ward IPO and Pilsen Defense & Access",
+    "source": "https://www.instagram.com/holygroundchi/p/DexZ-CzkUrA/",
+    "expires": "2026-10-25"
   }
 ]
