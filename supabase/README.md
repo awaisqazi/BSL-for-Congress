@@ -145,8 +145,9 @@ user. A removed person's open tab stops getting rows on its next load.
 
 - **Self-serve:** on `/admin/`, type the email, press **Forgot password?**.
   Supabase emails a link that opens `/admin/` with a "Set a new password" form.
-  (Site URL is `https://byronfor25.com` and `https://byronfor25.com/admin/` is
-  on the redirect allow list, Authentication > URL Configuration.)
+  (Site URL is `https://sigchofor25.com`. `https://sigchofor25.com/admin/` and
+  `https://byronfor25.com/admin/` are on the redirect allow list,
+  Authentication > URL Configuration.)
 - **Email limits:** the project uses Supabase's built-in email sender, which
   allows only a few auth emails per hour and on the Free plan may deliver only
   to addresses of members of the Supabase organization. If a reset email does
