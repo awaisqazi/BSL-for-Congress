@@ -2,15 +2,21 @@
 import Layout from "../layouts/Layout.astro";
 import "../styles/calendar.css";
 import { payloadJson } from "../data/calendar-data.js";
-import { feedPath } from "../data/events.js";
+import Countdown from "../components/Countdown.astro";
+import { feedPath, all as allEvents, todayChicago } from "../data/events.js";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const host = Astro.site ? Astro.site.host : "sigchofor25.com";
+// Featured strip for the Nov 12 virtual fundraiser: leads to /fundraiser/;
+// start and expiry come from its events.json entry; it stops rendering once the Chicago date is past.
+const fundraiser = allEvents.find((e) => e.id === "meetup-2026-11-12-virtual-fundraiser");
+const showFundraiser = Boolean(fundraiser && fundraiser.rsvp && fundraiser.expires >= todayChicago());
 ---
 
 <Layout
   title="Links | Byron Sigcho-Lopez for 25th Ward Alderman"
   description="Quick links to Byron Sigcho-Lopez's campaign: volunteer, find a canvass, come to Ward Night, donate, and follow on social media."
   actionBar={false}
+  promo={false}
 >
   <main class="links-page">
     <div class="links-bg">
@@ -75,6 +81,29 @@ const host = Astro.site ? Astro.site.host : "sigchofor25.com";
       <!-- Primary Links: taped flyer strips. The body ask first (volunteer,
            canvass, Ward Night), then Donate, then the reading. -->
       <div class="links-list">
+        {showFundraiser && fundraiser && (
+          <a href={`${base}/fundraiser/`} class="link-strip link-strip-featured animate-in anim-pin" style="--tilt: 0.4deg" target="_blank" rel="noopener" data-expires={fundraiser.expires}>
+            <span class="link-feat-stamp" data-i18n="linkspage.fundraiser_stamp">Nov 12</span>
+            <span class="link-text link-feat-text">
+              <span class="link-feat-cd"><Countdown start={fundraiser.start} variant="strip" delay={0.9} /></span>
+              <span class="link-feat-main" data-i18n="linkspage.fundraiser_main">Virtual Fundraiser: RSVP</span>
+              <span class="link-feat-sub" data-i18n="linkspage.fundraiser_sub">Thu, Nov 12 · On Zoom · 7 PM ET · 6 CT · 5 MT · 4 PT</span>
+            </span>
+            <span class="link-arrow" aria-hidden="true">→</span>
+          </a>
+        )}
+        {showFundraiser && (
+          <script is:inline>
+            // Dated strips (data-expires) come down the morning after, even if
+            // nobody redeploys. Separate from the calendar script so neither can break the other.
+            try {
+              document.querySelectorAll(".links-list [data-expires]").forEach(function (el) {
+                if (Date.now() > new Date(el.getAttribute("data-expires") + "T23:59:59").getTime()) el.remove();
+              });
+            } catch (e) {}
+          </script>
+        )}
+
         <a href={`${base}/`} class="link-strip animate-in anim-pin" style="--tilt: -0.8deg" target="_blank" rel="noopener">
           <span class="link-text">Visit the Official Website</span>
           <span class="link-arrow">→</span>
@@ -534,6 +563,77 @@ const host = Astro.site ? Astro.site.host : "sigchofor25.com";
 
   .link-text {
     flex: 1;
+  }
+
+  /* Featured, dated strip (the Nov 12 fundraiser): bigger orange flyer with a
+     rotated date stamp and a gentle glow, above everything else. */
+  .link-strip-featured {
+    padding: 18px 20px 18px 16px;
+    gap: 14px;
+    background: var(--orange);
+    color: var(--white);
+    border: 2px solid var(--orange-light);
+    animation: pulse-glow 2.4s ease-in-out infinite;
+  }
+
+  .link-strip-featured.animate-in.visible {
+    animation:
+      pin-drop 0.55s var(--ease-out-back) forwards,
+      pulse-glow 2.4s ease-in-out 0.6s infinite;
+  }
+
+  .link-feat-stamp {
+    flex: none;
+    padding: 6px 8px;
+    font-size: 13px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    color: var(--cream-light);
+    background: var(--blue-deeper);
+    border: 2px dashed rgba(254, 245, 230, 0.6);
+    border-radius: var(--radius-sm);
+    rotate: -6deg;
+  }
+
+  .link-feat-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .link-feat-cd {
+    display: flex;
+    line-height: 1;
+  }
+
+  .link-feat-main {
+    font-size: var(--text-base);
+    line-height: 1.15;
+  }
+
+  .link-feat-sub {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    opacity: 0.95;
+  }
+
+  .link-strip-featured .link-arrow {
+    opacity: 0.9;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .link-strip-featured,
+    .link-strip-featured.animate-in.visible {
+      animation: none;
+      opacity: 1;
+    }
   }
 
   .link-arrow {

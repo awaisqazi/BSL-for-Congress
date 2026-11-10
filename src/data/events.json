@@ -448,5 +448,32 @@
     "sponsor": "Holy Ground, 25th Ward IPO and Pilsen Defense & Access",
     "source": "https://www.instagram.com/holygroundchi/p/DexZ-CzkUrA/",
     "expires": "2026-10-25"
+  },
+  {
+    "id": "meetup-2026-11-12-virtual-fundraiser",
+    "kind": "meetup",
+    "title": {
+      "en": "Back Byron From Anywhere",
+      "es": "Apoya a Byron desde donde estés"
+    },
+    "line": {
+      "en": "No developer money. No corporate PACs. This campaign runs on neighbors like you. Zoom fundraiser at 7 PM ET, 6 CT, 5 MT, 4 PT. Tickets from $25, and solidarity tickets are available too. RSVP and we email you the link.",
+      "es": "Sin dinero de desarrolladores. Sin PAC corporativos. Esta campaña la sostienen vecinos como tú. Recaudación por Zoom a las 7 PM ET, 6 CT, 5 MT, 4 PT. Boletos desde $25, y también hay boletos solidarios. Confirma y te enviamos el enlace por correo."
+    },
+    "start": "2026-11-12T18:00:00-06:00",
+    "end": null,
+    "location": {
+      "en": "Online, on Zoom",
+      "es": "En línea, por Zoom"
+    },
+    "address": null,
+    "rsvp": "https://secure.actblue.com/donate/virtualbsl",
+    "action": {
+      "en": "RSVP",
+      "es": "Confirmar asistencia"
+    },
+    "sponsor": null,
+    "source": "https://secure.actblue.com/donate/virtualbsl",
+    "expires": "2026-11-12"
   }
 ]

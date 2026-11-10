@@ -1,0 +1,148 @@
+---
+// The four start times of the Nov 12 virtual fundraiser as chips, CT (Chicago,
+// the home zone) highlighted. Shared by PromoBanner (variant "bar") and the
+// /fundraiser page (variant "page"). The chips flip in like a split-flap board
+// with a short stagger; the base state is fully visible, so the times read
+// even if no animation ever runs, and nothing moves under reduced motion.
+// Strings: promo.* in src/i18n/en.json and es.json.
+interface Props {
+  variant?: 'bar' | 'page';
+  start?: number; // seconds before the first chip flips
+}
+const { variant = 'bar', start = 0.35 } = Astro.props;
+const zones = [
+  { key: 'et', text: '7 PM ET' },
+  { key: 'ct', text: '6 PM CT', home: true },
+  { key: 'mt', text: '5 PM MT' },
+  { key: 'pt', text: '4 PM PT' },
+];
+---
+
+<span class="tz-sr" data-i18n="promo.when_sr">Start time by time zone:</span>
+<ul class:list={['tz', `tz-${variant}`]} role="list" style={`--tz-start: ${start}s`}>
+  {zones.map((z, i) => (
+    <li class:list={['tz-chip', { 'tz-home': z.home }]} style={`--i: ${i}`}>
+      <span data-i18n={`promo.${z.key}`}>{z.text}</span>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .tz-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .tz {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    perspective: 400px;
+  }
+
+  .tz-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 800;
+    line-height: 1;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    border-radius: 999px;
+    transform-origin: 50% 0;
+    animation: tz-flip 0.5s var(--ease-out-back) backwards;
+    animation-delay: calc(var(--tz-start, 0.35s) + var(--i, 0) * 0.09s);
+  }
+
+  /* Split-flap: each chip drops from the top hinge into place. */
+  @keyframes tz-flip {
+    from { opacity: 0; transform: rotateX(-88deg); }
+    60%  { opacity: 1; }
+    to   { opacity: 1; transform: rotateX(0deg); }
+  }
+
+  /* Home zone: after the flip, a slow orange ring breathes around it. */
+  .tz-home {
+    position: relative;
+    animation:
+      tz-flip 0.5s var(--ease-out-back) backwards,
+      tz-home-ring 2.8s ease-in-out infinite;
+    animation-delay:
+      calc(var(--tz-start, 0.35s) + var(--i, 0) * 0.09s),
+      calc(var(--tz-start, 0.35s) + 0.9s);
+  }
+
+  @keyframes tz-home-ring {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(230, 136, 28, 0.55); }
+    50% { box-shadow: 0 0 0 5px rgba(230, 136, 28, 0); }
+  }
+
+  /* ---- Bar variant: on the blue promo bar ---- */
+  .tz-bar .tz-chip {
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    padding: 5px 9px;
+    color: var(--cream-light);
+    background: rgba(254, 245, 230, 0.14);
+    border: 1px solid rgba(254, 245, 230, 0.38);
+  }
+
+  .tz-bar .tz-home {
+    color: var(--white);
+    background: var(--orange);
+    border-color: var(--orange-light);
+  }
+
+  /* ---- Page variant: on cream, larger ---- */
+  .tz-page {
+    gap: 10px;
+  }
+
+  .tz-page .tz-chip {
+    font-size: var(--text-base);
+    letter-spacing: 0.02em;
+    padding: 10px 16px;
+    color: var(--blue-deeper);
+    background: var(--cream-light);
+    border: 2px solid rgba(3, 109, 153, 0.25);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .tz-page .tz-home {
+    color: var(--white);
+    background: var(--orange);
+    border-color: var(--orange-dark);
+    scale: 1.08;
+  }
+
+  /* Phones: all four in one row */
+  @media (max-width: 520px) {
+    .tz-page {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+      width: 100%;
+    }
+
+    .tz-page .tz-chip {
+      font-size: 14px;
+      padding: 9px 2px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tz-chip,
+    .tz-home {
+      animation: none;
+    }
+  }
+</style>

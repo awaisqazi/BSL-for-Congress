@@ -255,7 +255,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <style>
   .navbar {
     position: fixed;
-    top: 0;
+    top: var(--promo-offset, 0px); /* below the fundraiser bar while it shows (PromoBanner.astro) */
     left: 0;
     right: 0;
     z-index: 9998;
@@ -506,10 +506,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   /* Mobile Drawer */
   .mobile-drawer {
     position: fixed;
-    top: var(--nav-height);
+    top: var(--nav-height); /* relative to the navbar: its backdrop-filter makes it the containing block */
     left: 0;
     right: 0;
-    height: calc(100dvh - var(--nav-height));
+    height: calc(100dvh - var(--nav-height) - var(--promo-offset, 0px));
     background: #fbe2ba;
     z-index: 9999;
     transform: translateX(100%);

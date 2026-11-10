@@ -1,0 +1,297 @@
+---
+// /fundraiser/: the shareable page for the Nov 12, 2026 virtual fundraiser,
+// with its own link share card (public/images/og-fundraiser.jpg).
+// Facts and copy: events/virtual-fundraiser-2026-11-12/BRIEF.md and existing
+// campaign copy in src/i18n (promise, platform, upnext, meet, hero).
+// The hero is the shared poster component (FundraiserPoster, variant "page"):
+// RSVP to ActBlue, calendar links, countdown, and the "has passed" line after
+// the event day. Below it, "Why join us": four reasons from existing site copy.
+// Its RSVP button follows the same expiry (build and browser).
+// The paid-for line and the State Board notice are in the Footer on every page.
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import FundraiserPoster from '../components/FundraiserPoster.astro';
+import { all, todayChicago } from '../data/events.js';
+
+const EVENT_ID = 'meetup-2026-11-12-virtual-fundraiser';
+const ev = all.find((e) => e.id === EVENT_ID);
+const live = Boolean(ev && ev.rsvp && ev.expires && ev.expires >= todayChicago());
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout
+  title="Back Byron From Anywhere: Virtual Fundraiser, Nov 12 | Byron Sigcho-Lopez"
+  description="Thursday, November 12 on Zoom. 7 PM ET, 6 PM CT, 5 PM MT, 4 PM PT. Tickets from $25, solidarity tickets available. RSVP and we email you the Zoom link."
+  image="/images/og-fundraiser.jpg"
+  imageAlt="Back Byron From Anywhere. Virtual fundraiser on Zoom, Thursday, November 12."
+  promo={false}
+>
+  <Navbar />
+  <main>
+    <FundraiserPoster variant="page" />
+
+    <section class="why" aria-labelledby="why-head">
+      <div class="container-wide">
+        <h2 class="why-head animate-in" id="why-head"><span data-i18n="fundraiser.why_head">Why join us</span></h2>
+
+        <ol class="why-grid" role="list">
+          <li class="why-card animate-in anim-pin" style="--tilt: -1deg; --reveal-delay: 0s">
+            <span class="why-num" aria-hidden="true">1</span>
+            <h3 class="why-title" data-i18n="fundraiser.why1_title">No developer money. No corporate PACs.</h3>
+            <p data-i18n="promise.k1_desc">Not one dollar since 2015. Byron has upheld that commitment every year in office, and he has pushed for publicly financed elections so no alderman has to depend on that money.</p>
+            <p class="why-strong" data-i18n="fundraiser.why1_body">This campaign runs on neighbors like you. Tickets from $25. Solidarity tickets are available too.</p>
+          </li>
+
+          <li class="why-card animate-in anim-pin" style="--tilt: 0.8deg; --reveal-delay: 0.1s">
+            <span class="why-num" aria-hidden="true">2</span>
+            <h3 class="why-title" data-i18n="promise.headline">He Said He Would. He Did.</h3>
+            <p data-i18n="fundraiser.why2_body">Over 800 units of affordable housing. Ward Night every Tuesday for seven years, including through the pandemic. Over $1 million for Benito Juarez and other ward schools.</p>
+            <a class="why-link" href={`${base}/platform`}><span data-i18n="platform.cta">Read the Full Record</span> <span aria-hidden="true">→</span></a>
+          </li>
+
+          <li class="why-card animate-in anim-pin" style="--tilt: -0.6deg; --reveal-delay: 0.2s">
+            <span class="why-num" aria-hidden="true">3</span>
+            <h3 class="why-title" data-i18n="fundraiser.why3_title">The work is not finished.</h3>
+            <ul class="why-list" role="list">
+              <li data-i18n="upnext.p3">Universal pre-K, and fully fund Chicago Public Schools</li>
+              <li data-i18n="upnext.p4">Expand neighborhood affordable housing and infrastructure investments</li>
+              <li data-i18n="upnext.p8">Re-connect the Pink and Blue Lines, and more frequent 18th Street bus service</li>
+            </ul>
+            <p class="why-strong" data-i18n="meet.road_ward">25th Ward: February 23, 2027</p>
+          </li>
+
+          <li class="why-card why-card-go animate-in anim-pin" style="--tilt: 1deg; --reveal-delay: 0.3s">
+            <span class="why-num" aria-hidden="true">4</span>
+            <h3 class="why-title" data-i18n="fundraiser.why4_title">Join from anywhere</h3>
+            <p data-i18n="fundraiser.why4_body">One evening on Zoom, in your time zone, wherever you live: 7 PM ET, 6 PM CT, 5 PM MT, 4 PM PT.</p>
+            {live && ev && (
+              <a class="btn btn-orange why-cta" href={ev.rsvp} target="_blank" rel="noopener noreferrer" data-why-live>
+                <span data-i18n="promo.cta">RSVP</span>
+                <span class="why-sr" data-i18n="promo.new_tab">(opens in a new tab)</span>
+              </a>
+            )}
+            <a class="why-link why-link-quiet" href={`${base}/volunteer#signup`}><span data-i18n="fundraiser.why_chicago">In Chicago? Knock doors with us</span> <span aria-hidden="true">→</span></a>
+          </li>
+        </ol>
+      </div>
+    </section>
+  </main>
+  <Footer />
+
+  {live && ev && (
+    <script is:inline define:vars={{ EXPIRES: ev.expires }}>
+      // The second RSVP goes with the first, the morning after (Chicago time).
+      (function () {
+        var today = '';
+        try {
+          today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+        } catch (e) {
+          today = '';
+        }
+        var past = /^\d{4}-\d{2}-\d{2}$/.test(today) ? today > EXPIRES : Date.now() > new Date(EXPIRES + 'T23:59:59').getTime();
+        if (past) document.querySelectorAll('[data-why-live]').forEach(function (el) { el.remove(); });
+      })();
+    </script>
+  )}
+</Layout>
+
+<style>
+  .why {
+    position: relative;
+    padding: var(--space-2xl) 0 var(--space-4xl);
+    background: var(--cream);
+  }
+
+  .why-head {
+    margin: 0 0 var(--space-xl);
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #142749;
+    text-shadow: 0.04em 0.04em 0 var(--orange);
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-xl) var(--space-lg);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Taped cards on the cream paper */
+  .why-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    background: var(--cream-light);
+    box-shadow: var(--shadow-md);
+    color: var(--gray-700);
+    font-size: var(--text-sm);
+    line-height: 1.55;
+  }
+
+  .why-card::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    width: 72px;
+    height: 20px;
+    transform: translateX(-50%) rotate(-3deg);
+    background: rgba(245, 208, 138, 0.85);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+  }
+
+  .why-num {
+    position: absolute;
+    top: -18px;
+    left: 14px;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--white);
+    background: var(--orange);
+    border: 3px dashed #142749;
+    border-radius: 8px;
+    rotate: -8deg;
+    box-shadow: 3px 3px 0 #142749;
+  }
+
+  .why-title {
+    margin: var(--space-xs) 0 0;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 900;
+    line-height: 1.1;
+    color: #142749;
+  }
+
+  .why-card p,
+  .why-list {
+    margin: 0;
+  }
+
+  .why-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .why-list li {
+    position: relative;
+    padding-left: 16px;
+  }
+
+  .why-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--orange);
+  }
+
+  .why-strong {
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--blue-deeper);
+  }
+
+  .why-card-go {
+    background: #142749;
+    color: var(--cream-light);
+  }
+
+  .why-card-go .why-title {
+    color: var(--white);
+  }
+
+  .why-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    margin-top: auto;
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--blue-deeper);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .why-link:hover {
+    color: var(--orange-dark);
+  }
+
+  .why-cta {
+    margin-top: auto;
+    width: 100%;
+    font-size: var(--text-base);
+    padding: var(--space-sm) var(--space-lg);
+    min-height: 48px;
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .why-cta + .why-link {
+    margin-top: 0;
+  }
+
+  .why-link-quiet {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--gold-soft);
+  }
+
+  .why-link-quiet:hover {
+    color: var(--white);
+  }
+
+  .why-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 1100px) {
+    .why-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .why {
+      padding-top: var(--space-xl);
+    }
+
+    .why-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-xl);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .why-cta {
+      animation: none;
+    }
+  }
+</style>

@@ -2,22 +2,29 @@
 import '../styles/global.css';
 import PetitionModal from '../components/PetitionModal.astro';
 import MobileActionBar from '../components/MobileActionBar.astro';
+import PromoBanner from '../components/PromoBanner.astro';
 
 export interface Props {
   title?: string;
   description?: string;
   actionBar?: boolean; // the mobile bottom bar; /links turns it off
+  promo?: boolean; // the fundraiser announcement bar; /links and /fundraiser turn it off
+  image?: string; // site-relative share image for og:image / twitter:image
+  imageAlt?: string;
 }
 
 const {
   title = "Byron Sigcho-Lopez for 25th Ward Alderman",
   description = "Byron Sigcho-Lopez is running for a third term as Alderman of Chicago's 25th Ward, home to Pilsen, Heart of Chicago, and Little Village. Seven years of delivering: 800+ affordable units, Ward Night every Tuesday, no developer money since 2015. This summer the machine's lawyers kept his name off a congressional ballot. The ward is a different story. Election day: February 23, 2027.",
-  actionBar = true
+  actionBar = true,
+  promo = true,
+  image = '/images/og-card.png',
+  imageAlt = 'Byron Sigcho-Lopez, Alderman 25th Ward. Re-election, February 23, 2027.'
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 // Absolute URLs for link previews (iMessage/social scrapers ignore relative og: URLs)
-const ogImage = new URL(`${base}/images/og-card.png`, Astro.site).href;
+const ogImage = new URL(`${base}${image}`, Astro.site).href;
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
@@ -40,7 +47,7 @@ const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Byron Sigcho-Lopez, Alderman 25th Ward. Re-election, February 23, 2027." />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -56,6 +63,7 @@ const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
     <!-- Styles loaded via import in frontmatter -->
   </head>
   <body data-base={base}>
+    {promo && <PromoBanner />}
     <slot />
     {actionBar && <MobileActionBar />}
     <PetitionModal />

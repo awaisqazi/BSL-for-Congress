@@ -1,0 +1,644 @@
+---
+// The Nov 12, 2026 virtual fundraiser in the poster's look
+// (events/virtual-fundraiser-2026-11-12/graphics/feed.png): navy field with a
+// faint sun-ring pattern and a slanted lower edge, the taped and tilted print,
+// the orange dashed stamp, and the varsity headline with stepped extrudes.
+// One component, two places, so the styles are shared, not copied:
+//   variant="home": the home page feature under the Hero. Its one button goes
+//     to /fundraiser/. Past the event day it renders nothing (build) and
+//     removes itself (browser, the morning after, Chicago time).
+//   variant="page": the hero of /fundraiser/. The big RSVP opens ActBlue in a
+//     new tab, with the calendar links; past the event day those go and the
+//     "has passed" line shows instead.
+// Facts come from the events.json entry (RSVP URL, start, expiry). Strings:
+// promo.*, fundraiser.* in src/i18n/en.json and es.json, English baked in.
+// Motion: home plays when scrolled into view (motion.js observeNew), page plays
+// on load. Without the script, or under reduced motion, everything is static
+// and complete.
+import { all, icsPath, startDate, todayChicago } from '../data/events.js';
+import TimeChips from './TimeChips.astro';
+import Countdown from './Countdown.astro';
+
+interface Props {
+  variant?: 'home' | 'page';
+}
+const { variant = 'home' } = Astro.props;
+const EVENT_ID = 'meetup-2026-11-12-virtual-fundraiser';
+const ev = all.find((e) => e.id === EVENT_ID);
+const live = Boolean(ev && ev.rsvp && ev.expires && ev.expires >= todayChicago());
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const isPage = variant === 'page';
+const render = isPage || live;
+const Head = isPage ? 'h1' : 'h2';
+const headId = `fp-head-${variant}`;
+---
+
+{render && (
+  <section
+    class:list={['fp', `fp-${variant}`, { 'fp-play': isPage }]}
+    id={isPage ? undefined : 'fundraiser'}
+    aria-labelledby={headId}
+    data-fp={variant}
+    data-expires={!isPage && ev ? ev.expires : undefined}
+  >
+    <div class="fp-field">
+      <div class="fp-grid container-wide">
+        <p class="fp-stamp fp-a fp-a-stamp"><span class="fp-stamp-in" data-i18n="promo.label">Virtual Fundraiser</span></p>
+
+        <figure class="fp-print fp-a fp-a-print">
+          <span class="fp-tape" aria-hidden="true"></span>
+          <span class="fp-win">
+            <img
+              src={`${base}/images/fundraiser-byron-mic.jpg`}
+              width="1400"
+              height="932"
+              alt="Byron Sigcho-Lopez speaking into a microphone with one finger raised, in a blue coat, in front of a glass wall with warm lights."
+              loading={isPage ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+          </span>
+          <span class="fp-star" aria-hidden="true"></span>
+        </figure>
+
+        <div class="fp-headwrap">
+          <Head class="fp-head" id={headId}>
+            <span class="fp-l fp-l1 fp-a fp-a-l1" data-i18n="fundraiser.head_l1">Back Byron</span>
+            <span class="fp-l fp-l2 fp-a fp-a-l2" data-i18n="fundraiser.head_l2">From Anywhere</span>
+          </Head>
+        </div>
+
+        <div class="fp-body">
+          <ul class="fp-kick" role="list">
+            <li class="fp-a fp-a-k" style="--k: 0" data-i18n="fundraiser.kick1">No developer money.</li>
+            <li class="fp-a fp-a-k" style="--k: 1" data-i18n="fundraiser.kick2">No corporate PACs.</li>
+            <li class="fp-a fp-a-k fp-punch" style="--k: 2" data-i18n="fundraiser.kick3">Just us.</li>
+          </ul>
+
+          <p class="fp-when">
+            {ev && <time class="fp-date" datetime={startDate(ev)} data-i18n="fundraiser.date_long">Thursday, November 12</time>}
+            {live && ev && <Countdown start={ev.start} variant="bar" delay={isPage ? 1.2 : 0} />}
+          </p>
+
+          {live && ev && (
+            <div class="fp-live" data-fp-live>
+              <div class="fp-chips">
+                <TimeChips variant="page" start={isPage ? 1 : 0.15} />
+              </div>
+              <p class="fp-info">
+                <span data-i18n="promo.where">On Zoom</span><span class="fp-dot" aria-hidden="true">·</span><span data-i18n="fundraiser.price">Tickets from $25</span>
+              </p>
+              <p class="fp-solid" data-i18n="fundraiser.solidarity">Solidarity tickets also available</p>
+              {isPage && <p class="fp-how" data-i18n="fundraiser.how">RSVP and we email you the Zoom link.</p>}
+              <div class="fp-actions">
+                {isPage ? (
+                  <a class="btn btn-orange btn-massive fp-cta" href={ev.rsvp} target="_blank" rel="noopener noreferrer">
+                    <span data-i18n="promo.cta">RSVP</span>
+                    <span class="fp-sr" data-i18n="promo.new_tab">(opens in a new tab)</span>
+                  </a>
+                ) : (
+                  <a class="btn btn-orange btn-massive fp-cta" href={`${base}/fundraiser/`}>
+                    <span data-i18n="promo.cta">RSVP</span>
+                  </a>
+                )}
+                {isPage && <p class="fp-solid-how" data-i18n="fundraiser.solidarity_how">Can't do $25? Choose the $0 option on the RSVP form.</p>}
+                {isPage && (
+                  <p class="fp-cal">
+                    <a data-lang="en" href={`${base}${icsPath(ev, 'en')}`}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+                      <span data-i18n="fundraiser.cal_add">Add to calendar</span>
+                    </a>
+                    <a data-lang="es" hidden href={`${base}${icsPath(ev, 'es')}`}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+                      <span data-i18n="fundraiser.cal_add">Add to calendar</span>
+                    </a>
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+
+          {isPage && (
+            <p class="fp-passed" data-fp-passed hidden={live ? true : undefined}>
+              <a href={`${base}/volunteer/#show-up`}><span data-i18n="fundraiser.passed">This one has passed. See what is coming up.</span> <span aria-hidden="true">→</span></a>
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+{live && ev && (
+  <script is:inline define:vars={{ EXPIRES: ev.expires, VARIANT: variant }}>
+    // The morning after (Chicago time): the home feature removes itself; the
+    // page swaps its RSVP block for the "has passed" line. Even with no redeploy.
+    (function () {
+      var root = document.querySelector('[data-fp="' + VARIANT + '"]');
+      if (!root) return;
+      var today = '';
+      try {
+        today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+      } catch (e) {
+        today = '';
+      }
+      var past = /^\d{4}-\d{2}-\d{2}$/.test(today) ? today > EXPIRES : Date.now() > new Date(EXPIRES + 'T23:59:59').getTime();
+      if (!past) return;
+      if (VARIANT === 'home') {
+        root.remove();
+        return;
+      }
+      root.querySelectorAll('[data-fp-live]').forEach(function (el) { el.remove(); });
+      root.querySelectorAll('[data-fp-passed]').forEach(function (el) { el.hidden = false; });
+    })();
+  </script>
+)}
+
+{live && !isPage && (
+  <script>
+    // Home: arm the entrance only when the feature starts below the fold, then
+    // play it when it scrolls in (the shared reveal observer in motion.js adds
+    // .visible). Already on screen, reduced motion, or no script: it stays static.
+    import { observeNew, REDUCED } from '../scripts/motion.js';
+    const root = document.querySelector<HTMLElement>('[data-fp="home"]');
+    if (root && !REDUCED.matches && root.getBoundingClientRect().top > window.innerHeight * 0.9) {
+      root.classList.add('fp-armed');
+      observeNew(root);
+    }
+  </script>
+)}
+
+<style>
+  .fp {
+    --fp-navy: #142749;
+    --fp-slant: clamp(28px, 4vw, 56px);
+    position: relative;
+    color: var(--white);
+    background: var(--cream);
+  }
+
+  /* Navy poster field, faint sun-ring pattern, slanted lower edge */
+  .fp-field {
+    position: relative;
+    background-color: var(--fp-navy);
+    background-image:
+      radial-gradient(circle, rgba(255, 255, 255, 0.07) 0 2px, transparent 2.5px),
+      radial-gradient(circle, transparent 0 10px, rgba(255, 255, 255, 0.045) 10.5px 12px, transparent 12.5px);
+    background-size: 44px 44px, 44px 44px;
+    background-position: 0 0, 22px 22px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - var(--fp-slant)));
+    padding: var(--space-2xl) 0 calc(var(--space-2xl) + var(--fp-slant));
+  }
+
+  .fp-page .fp-field {
+    padding-top: calc(var(--nav-height) + var(--space-xl));
+  }
+
+  .fp-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    grid-template-areas:
+      'stamp print'
+      'head print'
+      'body print';
+    grid-template-rows: auto auto 1fr;
+    column-gap: var(--space-2xl);
+    row-gap: var(--space-md);
+    align-items: start;
+  }
+
+  /* ---- Stamp ---- */
+  .fp-stamp {
+    grid-area: stamp;
+    justify-self: start;
+    margin: 0;
+    padding: 5px;
+    background: var(--orange);
+    border-radius: 8px;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.35);
+    rotate: -5deg;
+    --tilt: -5deg;
+  }
+
+  .fp-stamp-in {
+    display: block;
+    padding: 7px 14px 6px;
+    border: 3px dashed var(--fp-navy);
+    border-radius: 5px;
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 0.8rem + 0.9vw, 1.5rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--fp-navy);
+    white-space: nowrap;
+  }
+
+  /* ---- Taped, tilted print ---- */
+  .fp-print {
+    grid-area: print;
+    align-self: center;
+    position: relative;
+    margin: 0;
+    padding: 12px;
+    background: var(--white);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45), 0 2px 4px rgba(0, 0, 0, 0.3);
+    rotate: 3deg;
+    --tilt: 3deg;
+  }
+
+  .fp-win {
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 6 / 5;
+    background: #333;
+  }
+
+  /* Cropped to his face, the mic and the raised finger */
+  .fp-win img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 38% 22%;
+    scale: 1.35;
+    transform-origin: 40% 25%;
+  }
+
+  .fp-tape {
+    position: absolute;
+    z-index: 1;
+    top: -14px;
+    left: 50%;
+    width: 34%;
+    height: 30px;
+    translate: -50% 0;
+    rotate: -7deg;
+    background: rgba(251, 226, 186, 0.85);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+  }
+
+  .fp-star {
+    position: absolute;
+    left: -34px;
+    bottom: -26px;
+    width: 52px;
+    aspect-ratio: 473 / 733;
+    background: url('/images/byron-star.png') center / contain no-repeat;
+    rotate: -10deg;
+    filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.4));
+  }
+
+  /* ---- Varsity headline ---- */
+  .fp-headwrap {
+    grid-area: head;
+    container-type: inline-size;
+    min-width: 0;
+  }
+
+  .fp-head {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 900;
+    line-height: 0.92;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+  }
+
+  .fp-l {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    white-space: nowrap;
+  }
+
+  /* Sized against the column so the longest line always fits */
+  .fp-l1 {
+    font-size: 15.2cqi;
+    color: var(--white);
+    text-shadow:
+      0.012em 0.012em 0 var(--blue), 0.024em 0.024em 0 var(--blue), 0.036em 0.036em 0 var(--blue),
+      0.048em 0.048em 0 var(--blue), 0.06em 0.06em 0 var(--blue);
+  }
+
+  .fp-l2 {
+    margin-top: 0.08em;
+    font-size: 11cqi;
+    color: var(--blue);
+    text-shadow:
+      0.012em 0.012em 0 var(--orange), 0.024em 0.024em 0 var(--orange), 0.036em 0.036em 0 var(--orange),
+      0.048em 0.048em 0 var(--orange), 0.06em 0.06em 0 var(--orange);
+  }
+
+  :global(html[lang='es']) .fp-l1 { font-size: 11.6cqi; }
+  :global(html[lang='es']) .fp-l2 { font-size: 8.9cqi; }
+
+  /* ---- Body ---- */
+  .fp-body {
+    grid-area: body;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+    min-width: 0;
+  }
+
+  .fp-kick {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 0.45em;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--cream-light);
+  }
+
+  .fp-punch {
+    color: var(--orange);
+    font-weight: 900;
+    font-size: 1.3em;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 0 var(--blue-deeper);
+  }
+
+  .fp-when {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    margin: 0;
+  }
+
+  .fp-date {
+    display: inline-block;
+    padding: 9px 16px 8px;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    background: #1d3563;
+    border-radius: 10px;
+    box-shadow: 5px 5px 0 var(--blue);
+  }
+
+  .fp-live {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+    width: 100%;
+  }
+
+  .fp-chips {
+    width: 100%;
+  }
+
+  .fp-chips :global(.tz-page .tz-chip) {
+    border-color: var(--fp-navy);
+  }
+
+  .fp-chips :global(.tz-page .tz-home) {
+    box-shadow: 4px 4px 0 var(--blue);
+  }
+
+  .fp-info {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 800;
+    color: var(--white);
+  }
+
+  /* Sits right under the price line: the gap between them is tightened */
+  .fp-solid {
+    margin: calc(var(--space-md) * -1 + 2px) 0 0;
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--gold-soft);
+  }
+
+  .fp-solid-how {
+    flex-basis: 100%;
+    order: 1;
+    margin: 0;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--cream-light);
+  }
+
+  .fp-dot {
+    margin: 0 0.45em;
+    color: var(--orange);
+  }
+
+  .fp-how {
+    margin: -8px 0 0;
+    color: var(--cream-light);
+    opacity: 0.9;
+  }
+
+  .fp-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm) var(--space-lg);
+  }
+
+  .fp-cta {
+    min-width: 220px;
+    padding: var(--space-md) var(--space-2xl);
+  }
+
+  .fp-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .fp-cal {
+    margin: 0;
+  }
+
+  .fp-cal a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--cream-light);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .fp-cal a[hidden] {
+    display: none;
+  }
+
+  .fp-cal a:hover {
+    color: var(--gold-soft);
+  }
+
+  .fp-passed {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 800;
+  }
+
+  .fp-passed[hidden] {
+    display: none;
+  }
+
+  .fp-passed a {
+    color: var(--gold-soft);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  /* ---- Motion ----
+     Static by default. .fp-play (page, on load) or .fp-armed.visible (home,
+     on scroll) runs it; .fp-armed before it is seen holds the pieces back. */
+  .fp-armed:not(.visible) .fp-a,
+  .fp-armed:not(.visible) .fp-chips :global(.tz-chip) {
+    opacity: 0;
+    animation: none;
+  }
+
+  .fp-play .fp-a-print,
+  .fp-armed.visible .fp-a-print {
+    animation: pin-drop 0.7s var(--ease-out-back) 0.05s backwards;
+  }
+
+  .fp-play .fp-a-stamp,
+  .fp-armed.visible .fp-a-stamp {
+    animation: stamp-in 0.45s var(--ease-out-back) 0.2s backwards;
+  }
+
+  .fp-play .fp-a-l1,
+  .fp-armed.visible .fp-a-l1 {
+    animation: fp-punch 0.5s var(--ease-out-back) 0.35s backwards;
+  }
+
+  .fp-play .fp-a-l2,
+  .fp-armed.visible .fp-a-l2 {
+    animation: fp-punch 0.5s var(--ease-out-back) 0.5s backwards;
+  }
+
+  .fp-play .fp-a-k,
+  .fp-armed.visible .fp-a-k {
+    animation: fp-land 0.4s var(--ease-out-back) backwards;
+    animation-delay: calc(0.75s + var(--k, 0) * 0.16s);
+  }
+
+  /* Chips: TimeChips flips them on load; home replays it on scroll-in */
+  .fp-armed.visible .fp-chips :global(.tz-chip) {
+    animation-name: tz-flip;
+    animation-duration: 0.5s;
+    animation-timing-function: var(--ease-out-back);
+    animation-fill-mode: backwards;
+    animation-delay: calc(1.15s + var(--i, 0) * 0.09s);
+  }
+
+  .fp-armed.visible .fp-chips :global(.tz-home) {
+    animation:
+      tz-flip 0.5s var(--ease-out-back) calc(1.15s + var(--i, 0) * 0.09s) backwards,
+      tz-home-ring 2.8s ease-in-out 2s infinite;
+  }
+
+  @keyframes fp-punch {
+    from { opacity: 0; translate: 0 0.35em; scale: 0.9; }
+    to { opacity: 1; translate: 0 0; scale: 1; }
+  }
+
+  @keyframes fp-land {
+    from { opacity: 0; translate: 0 10px; scale: 0.94; }
+    to { opacity: 1; translate: 0 0; scale: 1; }
+  }
+
+  /* ---- Tablet and phone: tight stack, stamp beside the print ---- */
+  @media (max-width: 860px) {
+    .fp-field {
+      padding: var(--space-xl) 0 calc(var(--space-xl) + var(--fp-slant));
+    }
+
+    .fp-page .fp-field {
+      padding-top: calc(var(--nav-height) + var(--space-lg));
+    }
+
+    .fp-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      grid-template-areas:
+        'stamp print'
+        'head head'
+        'body body';
+      grid-template-rows: auto;
+      column-gap: var(--space-md);
+      row-gap: var(--space-md);
+    }
+
+    .fp-stamp {
+      align-self: center;
+    }
+
+    .fp-stamp-in {
+      font-size: 0.95rem;
+      white-space: normal;
+      padding: 6px 10px 5px;
+    }
+
+    .fp-print {
+      padding: 8px;
+    }
+
+    .fp-tape {
+      top: -11px;
+      height: 22px;
+    }
+
+    .fp-star {
+      left: -24px;
+      bottom: -18px;
+      width: 34px;
+    }
+
+    .fp-head {
+      margin-top: var(--space-sm);
+    }
+
+    .fp-kick {
+      font-size: var(--text-lg);
+    }
+
+    .fp-actions,
+    .fp-cta {
+      width: 100%;
+    }
+
+    /* Phones: the $0 how-to sits right under the button, calendar after */
+    .fp-cal {
+      order: 2;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fp .fp-a,
+    .fp-armed .fp-a,
+    .fp-armed .fp-chips :global(.tz-chip) {
+      opacity: 1;
+      animation: none !important;
+    }
+  }
+</style>

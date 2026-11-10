@@ -1,0 +1,449 @@
+---
+// Sitewide announcement bar for the Nov 12, 2026 virtual fundraiser.
+// Layout.astro mounts it at the very top of <body> on every public page
+// (not /links, not /fundraiser, and /admin/ does not use Layout).
+//
+// Single source of truth: the events.json entry below (date, start, expiry).
+// The RSVP button leads to the event page, /fundraiser/, in the same tab.
+// If the entry is removed, or the Chicago date at build is
+// past its `expires`, nothing renders. In the browser, the inline script takes
+// the bar down the morning after (Chicago time) and for anyone who dismissed
+// it, before first paint so it never flashes. `data-expires` also lets the
+// site's existing expiry scripts (RoadCTA, NextUp) remove it.
+//
+// Layout: the navbar is position: fixed. This element sits in flow at the top
+// (its height reserves the space) and holds a fixed bar. Its presence turns on
+// --promo-offset (html:has(#bsl-promo)), which the navbar reads as its `top`
+// and the mobile drawer (positioned inside the nav) subtracts from its height.
+// The script measures the bar into
+// --promo-h. Once the reader scrolls, the bar tucks up and the nav slides to
+// top 0, so the fixed chrome below the fold is exactly what it was before.
+//
+// Strings: promo.* in src/i18n/en.json and es.json (English baked in here).
+import { all, stamp, timeRange, todayChicago } from '../data/events.js';
+import en from '../i18n/en.json';
+import es from '../i18n/es.json';
+import TimeChips from './TimeChips.astro';
+import Countdown from './Countdown.astro';
+
+const EVENT_ID = 'meetup-2026-11-12-virtual-fundraiser';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const STORAGE_KEY = 'bsl-promo-vf-2026-11-12';
+
+const ev = all.find((e) => e.id === EVENT_ID);
+const live = Boolean(ev && ev.rsvp && ev.expires && ev.expires >= todayChicago());
+
+// Guard: the baked date and home-zone time must match the entry, so a moved
+// event fails the build instead of showing the wrong day.
+if (live) {
+  const s = { en: stamp(ev, 'en'), es: stamp(ev, 'es') };
+  const ok =
+    en.promo.date === `${s.en.weekday}, ${s.en.day}` &&
+    es.promo.date.toLowerCase() === `${s.es.weekday}, ${s.es.day}`.toLowerCase() &&
+    en.promo.ct.startsWith(timeRange(ev, 'en'));
+  if (!ok) throw new Error(`PromoBanner: promo.date / promo.ct in the i18n files no longer match events.json entry ${EVENT_ID}`);
+}
+---
+
+{live && (
+  <aside id="bsl-promo" class="promo" aria-labelledby="bsl-promo-label" data-expires={ev.expires}>
+    <div class="promo-bar" data-promo-bar>
+      <div class="promo-inner">
+        <p class="promo-info">
+          <svg class="promo-star" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5L7 14.3 1.7 9.3l7.2-.9z" fill="currentColor"/></svg>
+          <span class="promo-text">
+            <strong class="promo-label" id="bsl-promo-label" data-i18n="promo.label">Virtual Fundraiser</strong>
+            <span class="promo-meta"><span data-i18n="promo.date">Thu, Nov 12</span><span class="promo-sep" aria-hidden="true">·</span><span data-i18n="promo.where">On Zoom</span></span>
+            <span class="promo-cd"><Countdown start={ev.start} variant="bar" delay={0.9} /></span>
+          </span>
+        </p>
+        <div class="promo-chips">
+          <TimeChips variant="bar" start={0.45} />
+        </div>
+        <a class="promo-cta" href={`${base}/fundraiser/`}>
+          <span data-i18n="promo.cta">RSVP</span>
+        </a>
+        <button type="button" class="promo-close" data-promo-close>
+          <span class="promo-sr" data-i18n="promo.close">Hide this announcement</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+)}
+
+{live && (
+  <script is:inline define:vars={{ STORAGE_KEY, EXPIRES: ev.expires }}>
+    // Runs synchronously right after the markup, before the navbar is parsed
+    // and before first paint: dismissed or expired bars never flash.
+    var root = document.getElementById('bsl-promo');
+    if (root) {
+      var gone = false;
+      try {
+        gone = localStorage.getItem(STORAGE_KEY) === '1';
+      } catch (e) {
+        gone = false;
+      }
+      // Expired: the Chicago calendar date is past the event day.
+      var today = '';
+      try {
+        today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+      } catch (e) {
+        today = '';
+      }
+      if (/^\d{4}-\d{2}-\d{2}$/.test(today)) {
+        if (today > EXPIRES) gone = true;
+      } else if (Date.now() > new Date(EXPIRES + 'T23:59:59').getTime()) {
+        gone = true; // same local-time rule as data-expires elsewhere on the site
+      }
+
+      if (gone) {
+        root.remove();
+      } else {
+        var html = document.documentElement;
+        var bar = root.querySelector('[data-promo-bar]');
+        var lastH = 0;
+        var size = function () {
+          var h = bar ? bar.offsetHeight : 0;
+          if (h && h !== lastH) {
+            lastH = h;
+            html.style.setProperty('--promo-h', h + 'px');
+          }
+        };
+        size();
+        var ro = 'ResizeObserver' in window && bar ? new ResizeObserver(size) : null;
+        if (ro) ro.observe(bar);
+
+        // Tuck the bar up once the reader scrolls; bring it back at the top.
+        var tucked = false;
+        var onScroll = function () {
+          var next = window.scrollY > 16;
+          if (next !== tucked) {
+            tucked = next;
+            html.classList.toggle('promo-tucked', next);
+          }
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+
+        var close = root.querySelector('[data-promo-close]');
+        if (close) {
+          close.addEventListener('click', function () {
+            try {
+              localStorage.setItem(STORAGE_KEY, '1');
+            } catch (e) {
+              // Storage blocked (private mode): hide for this page view only.
+            }
+            window.removeEventListener('scroll', onScroll);
+            if (ro) ro.disconnect();
+            html.classList.add('promo-tucked');
+            root.classList.add('is-closing');
+            setTimeout(function () {
+              root.remove();
+              html.classList.remove('promo-tucked');
+              html.style.removeProperty('--promo-h');
+            }, 320);
+          });
+        }
+      }
+    }
+  </script>
+)}
+
+<style is:global>
+  /* Offsets exist only while the bar is in the DOM. The navbar reads
+     --promo-offset as its top; the mobile drawer adds it to its own top. */
+  html:has(#bsl-promo) {
+    --promo-h: 50px; /* first-paint guess; the script measures the real height */
+    --promo-offset: var(--promo-h);
+  }
+
+  html.promo-tucked:has(#bsl-promo) {
+    --promo-offset: 0px;
+  }
+
+  @media (max-width: 899px) {
+    html:has(#bsl-promo) {
+      --promo-h: 90px;
+    }
+  }
+</style>
+
+<style>
+  /* In flow: reserves the bar's height above the page so nothing is covered. */
+  .promo {
+    position: relative;
+    height: var(--promo-h, 50px);
+    transition: height var(--duration-normal) var(--ease-default);
+  }
+
+  .promo.is-closing {
+    height: 0;
+  }
+
+  .promo-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9998; /* level with the navbar; under the drawer and petition modal (9999) */
+    overflow: hidden;
+    color: var(--cream-light);
+    background: linear-gradient(100deg, var(--blue-deeper) 0%, #0479ab 55%, var(--blue-dark) 100%);
+    border-bottom: 2px solid var(--orange);
+    box-shadow: 0 2px 12px rgba(3, 109, 153, 0.25);
+    animation: promo-in 0.5s var(--ease-default) 0.05s backwards;
+    transition: transform var(--duration-normal) var(--ease-default);
+  }
+
+  /* The slide-in uses `translate`; tucking uses `transform`, so they never fight. */
+  @keyframes promo-in {
+    from { translate: 0 -100%; }
+    to { translate: 0 0; }
+  }
+
+  html.promo-tucked .promo-bar {
+    transform: translateY(-100%);
+  }
+
+  /* A slow shimmer sweep, now and then */
+  .promo-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 30%;
+    pointer-events: none;
+    background: linear-gradient(100deg, transparent 0%, rgba(254, 245, 230, 0.16) 45%, rgba(254, 245, 230, 0.26) 50%, rgba(254, 245, 230, 0.16) 55%, transparent 100%);
+    transform: translateX(-120%) skewX(-18deg);
+    animation: promo-shimmer 9s ease-in-out 1.6s infinite;
+  }
+
+  @keyframes promo-shimmer {
+    0% { transform: translateX(-120%) skewX(-18deg); }
+    22%, 100% { transform: translateX(420%) skewX(-18deg); }
+  }
+
+  .promo-inner {
+    position: relative;
+    z-index: 1;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    padding: 3px 4px 3px var(--space-lg);
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    grid-template-areas: 'info chips cta close';
+    align-items: center;
+    column-gap: var(--space-md);
+  }
+
+  .promo-info {
+    grid-area: info;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    min-width: 0;
+  }
+
+  .promo-star {
+    flex: none;
+    color: var(--orange);
+    filter: drop-shadow(0 0 4px rgba(230, 136, 28, 0.6));
+    animation: promo-twinkle 3.2s ease-in-out 1s infinite;
+  }
+
+  @keyframes promo-twinkle {
+    0%, 100% { scale: 1; rotate: 0deg; }
+    50% { scale: 1.18; rotate: 14deg; }
+  }
+
+  /* Label on top; date, place and the countdown stamp underneath. */
+  .promo-text {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-areas:
+      'label label'
+      'meta cd';
+    justify-content: start;
+    align-items: center;
+    column-gap: 8px;
+    row-gap: 2px;
+    min-width: 0;
+    font-family: var(--font-display);
+    line-height: 1.15;
+  }
+
+  .promo-label {
+    grid-area: label;
+    font-size: 13px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold-soft);
+    white-space: nowrap;
+  }
+
+  .promo-meta {
+    grid-area: meta;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .promo-cd {
+    grid-area: cd;
+    display: flex;
+    line-height: 1;
+  }
+
+  .promo-sep {
+    margin: 0 6px;
+    opacity: 0.7;
+  }
+
+  .promo-chips {
+    grid-area: chips;
+    min-width: 0;
+  }
+
+  .promo-cta {
+    grid-area: cta;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    padding: 6px 18px;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.1;
+    white-space: nowrap;
+    color: var(--white);
+    background: var(--orange);
+    border-radius: var(--radius-md);
+    animation: pulse-glow 2s ease-in-out infinite;
+    transition: background var(--duration-fast) var(--ease-default), translate var(--duration-fast) var(--ease-default);
+  }
+
+  .promo-cta:hover {
+    background: var(--orange-dark);
+    translate: 0 -1px;
+  }
+
+  .promo-cta:focus-visible,
+  .promo-close:focus-visible {
+    outline: 3px solid var(--gold-soft);
+    outline-offset: 2px;
+  }
+
+  .promo-close {
+    grid-area: close;
+    flex: none;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cream-light);
+    border-radius: 50%;
+    opacity: 0.85;
+    transition: opacity var(--duration-fast) var(--ease-default), background var(--duration-fast) var(--ease-default);
+  }
+
+  .promo-close:hover {
+    opacity: 1;
+    background: rgba(254, 245, 230, 0.14);
+  }
+
+  .promo-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* Narrow screens: two rows. Who/when/where + RSVP + close on top, the four
+     time zones across the full width below. */
+  @media (max-width: 899px) {
+    .promo-inner {
+      grid-template-columns: 1fr auto auto;
+      grid-template-areas:
+        'info cta close'
+        'chips chips chips';
+      column-gap: 6px;
+      row-gap: 2px;
+      padding: 4px 2px 8px 12px;
+    }
+
+    .promo-text {
+      grid-template-columns: auto;
+      grid-template-areas:
+        'label'
+        'meta'
+        'cd';
+      row-gap: 2px;
+    }
+
+    .promo-label,
+    .promo-meta {
+      font-size: 12px;
+    }
+
+    .promo-label {
+      white-space: normal;
+    }
+
+    /* Long labels ("Confirma tu lugar") wrap onto two lines inside the
+       44px button instead of squeezing the date and place. */
+    .promo-cta {
+      min-height: 44px;
+      max-width: 112px;
+      padding: 5px 10px;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      line-height: 1.05;
+      text-align: center;
+      white-space: normal;
+    }
+
+    .promo-chips {
+      padding-right: 10px;
+    }
+
+    .promo-chips :global(.tz) {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 5px;
+    }
+
+    .promo-chips :global(.tz-chip) {
+      padding-left: 2px;
+      padding-right: 2px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .promo-bar,
+    .promo-bar::after,
+    .promo-star,
+    .promo-cta {
+      animation: none;
+    }
+
+    .promo-bar::after {
+      display: none;
+    }
+
+    .promo,
+    .promo-bar {
+      transition: none;
+    }
+  }
+</style>

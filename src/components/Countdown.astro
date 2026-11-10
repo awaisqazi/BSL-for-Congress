@@ -1,0 +1,177 @@
+---
+// Small countdown chip ("In 3 days", "Tomorrow", "Starts in 5 h 12 min",
+// "Starts in 12 min") for the fundraiser surfaces: PromoBanner, /fundraiser
+// and the featured strip on /links. Logic: src/scripts/countdown.js.
+// The server renders the build-time phrase (English, Chicago dates) so the
+// chip is complete without JavaScript; the script re-renders it in the
+// current language and keeps it current (once a minute on event day, at most
+// hourly before). At the start time it hides but keeps its space.
+// Deliberately no data-i18n on the text and no data-days-until.
+import { countdown } from '../scripts/countdown.js';
+
+interface Props {
+  start: string; // ISO start from the events.json entry
+  variant?: 'bar' | 'page' | 'strip';
+  delay?: number; // seconds before the landing spring
+}
+const { start, variant = 'bar', delay = 0.8 } = Astro.props;
+const { text, stage } = countdown(start, Date.now(), 'en');
+const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const html = text
+  .split(/(\d+)/)
+  .filter((p) => p !== '')
+  .map((p) => (/^\d+$/.test(p) ? `<span class="cd-num">${p}</span>` : esc(p)))
+  .join('');
+---
+
+<span
+  class:list={['cd', `cd-${variant}`, { 'is-over': !text }]}
+  data-countdown-start={start}
+  data-stage={stage}
+  aria-live="off"
+  aria-hidden={text ? undefined : 'true'}
+  style={`--cd-delay: ${delay}s`}
+><span class="cd-dot" aria-hidden="true"></span><span class="cd-text" data-countdown-text set:html={html} /></span>
+
+<script>
+  import { mountCountdowns } from '../scripts/countdown.js';
+  mountCountdowns();
+</script>
+
+<style>
+  .cd {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    vertical-align: middle;
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    border-radius: var(--radius-sm);
+    --tilt: -2deg;
+    rotate: var(--tilt);
+    perspective: 300px;
+    /* Lands with a small spring, like a stamp */
+    animation: stamp-in 0.45s var(--ease-out-back) var(--cd-delay, 0.8s) backwards;
+  }
+
+  .cd.is-over {
+    visibility: hidden;
+  }
+
+  .cd-text {
+    display: inline-block;
+  }
+
+  /* Live dot: a soft orange heartbeat */
+  .cd-dot {
+    flex: none;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--orange);
+    animation: cd-beat 2.4s ease-in-out infinite;
+  }
+
+  @keyframes cd-beat {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(230, 136, 28, 0.7); scale: 1; }
+    50% { box-shadow: 0 0 0 4px rgba(230, 136, 28, 0); scale: 1.15; }
+  }
+
+  /* Digits flip like a split-flap board when they change */
+  .cd-text :global(.cd-num) {
+    display: inline-block;
+    transform-origin: 50% 0;
+  }
+
+  .cd-text :global(.cd-num.cd-flip) {
+    animation: cd-flip 0.45s var(--ease-out-back);
+  }
+
+  @keyframes cd-flip {
+    from { opacity: 0.2; transform: rotateX(-90deg); }
+    to { opacity: 1; transform: rotateX(0deg); }
+  }
+
+  .cd-text:global(.cd-swap) {
+    animation: cd-fade 0.35s var(--ease-default);
+  }
+
+  @keyframes cd-fade {
+    from { opacity: 0; translate: 0 3px; }
+    to { opacity: 1; translate: 0 0; }
+  }
+
+  /* Event day steps up: the dot quickens; the final hour goes orange */
+  .cd[data-stage='today'] .cd-dot {
+    animation-duration: 1.6s;
+  }
+
+  .cd[data-stage='final'] .cd-dot {
+    background: var(--white);
+    animation: cd-beat-final 1s ease-in-out infinite;
+  }
+
+  @keyframes cd-beat-final {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.8); scale: 1; }
+    50% { box-shadow: 0 0 0 5px rgba(255, 255, 255, 0); scale: 1.25; }
+  }
+
+  .cd[data-stage='final'] {
+    color: var(--white) !important;
+    background: var(--orange) !important;
+    border-color: var(--orange-dark) !important;
+  }
+
+  /* ---- Bar: a cream stamp on the blue bar ---- */
+  .cd-bar {
+    font-size: 10px;
+    padding: 3px 6px 3px 5px;
+    color: var(--blue-deeper);
+    background: var(--cream-light);
+    border: 1px solid var(--gold-soft);
+  }
+
+  /* ---- Page: navy chip beside the date ---- */
+  .cd-page {
+    font-size: 12px;
+    padding: 5px 9px 5px 7px;
+    letter-spacing: 0.08em;
+    color: var(--cream-light);
+    background: var(--blue-deeper);
+    border: 1px solid var(--blue-deeper);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* ---- Strip: navy chip on the orange flyer ---- */
+  .cd-strip {
+    font-size: 10px;
+    padding: 3px 6px 3px 5px;
+    color: var(--cream-light);
+    background: var(--blue-deeper);
+    border: 1px solid rgba(254, 245, 230, 0.5);
+  }
+
+  .cd-strip[data-stage='final'] {
+    background: var(--white) !important;
+    color: var(--orange-dark) !important;
+  }
+
+  .cd-strip[data-stage='final'] .cd-dot {
+    background: var(--orange);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cd,
+    .cd-dot,
+    .cd[data-stage='final'] .cd-dot,
+    .cd-text:global(.cd-swap),
+    .cd-text :global(.cd-num.cd-flip) {
+      animation: none;
+    }
+  }
+</style>

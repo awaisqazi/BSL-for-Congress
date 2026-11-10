@@ -569,7 +569,10 @@
   },
   "linkspage": {
     "canvass_team": "Únete al equipo de caminatas",
-    "petition_rsvp": "Caminatas para la petición (confirma tu asistencia)"
+    "petition_rsvp": "Caminatas para la petición (confirma tu asistencia)",
+    "fundraiser_stamp": "12 nov",
+    "fundraiser_main": "Recaudación Virtual: Confirma tu lugar",
+    "fundraiser_sub": "Jue, 12 nov · Por Zoom · 7 PM ET · 6 CT · 5 MT · 4 PT"
   },
   "bar": {
     "ask": "Toca puertas con nosotros.",
@@ -672,5 +675,47 @@
     "rsvp_fail": "No se pudo enviar.",
     "rsvp_fail_link": "Inscríbete aquí.",
     "rsvp_consent": "Al compartir tu número aceptas recibir recordatorios de eventos por mensaje de texto de Friends of Byron Sigcho Lopez. Pueden aplicar tarifas de mensajes y datos. Envía STOP para cancelar."
+  },
+  "promo": {
+    "label": "Recaudación Virtual",
+    "date": "Jue, 12 nov",
+    "where": "Por Zoom",
+    "when_sr": "Hora de inicio por zona horaria:",
+    "et": "7 PM ET",
+    "ct": "6 PM CT",
+    "mt": "5 PM MT",
+    "pt": "4 PM PT",
+    "cta": "Confirma tu lugar",
+    "new_tab": "(se abre en una pestaña nueva)",
+    "close": "Ocultar este aviso"
+  },
+  "fundraiser": {
+    "headline": "Apoya a Byron Desde Donde Estés",
+    "kick1": "Sin dinero de desarrolladores.",
+    "kick2": "Sin PAC corporativos.",
+    "kick3": "Solo nosotros.",
+    "date_long": "Jueves, 12 de noviembre",
+    "price": "Boletos desde $25",
+    "how": "Confirma y te enviamos el enlace de Zoom por correo.",
+    "cal_add": "Agregar al calendario",
+    "passed": "Este evento ya pasó. Mira lo que viene.",
+    "head_l1": "Apoya a Byron",
+    "head_l2": "Desde Donde Estés",
+    "why_head": "Por qué sumarte",
+    "why1_title": "Sin dinero de desarrolladores. Sin PAC corporativos.",
+    "why1_body": "Esta campaña la sostienen vecinos como tú. Boletos desde $25. También hay boletos solidarios.",
+    "why2_body": "Más de 800 unidades de vivienda asequible. Noche del Distrito cada martes durante siete años, incluso durante la pandemia. Más de $1 millón para Benito Juarez y otras escuelas del distrito.",
+    "why3_title": "El trabajo no está terminado.",
+    "why4_title": "Súmate desde donde estés",
+    "why4_body": "Una noche por Zoom, en tu zona horaria, vivas donde vivas: 7 PM ET, 6 PM CT, 5 PM MT, 4 PM PT.",
+    "why_chicago": "¿En Chicago? Toca puertas con nosotros",
+    "solidarity": "También hay boletos solidarios",
+    "solidarity_how": "¿No te alcanza para $25? Elige la opción de $0 en el formulario."
+  },
+  "countdown": {
+    "days": "En {n} días",
+    "tomorrow": "Mañana",
+    "hours": "Empieza en {h} h {m} min",
+    "minutes": "Empieza en {m} min"
   }
 }
