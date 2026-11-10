@@ -1,5 +1,5 @@
 ---
-// The Nov 12, 2026 virtual fundraiser in the poster's look
+// The Nov 12, 2026 hybrid fundraiser (in person or on Zoom) in the poster's look
 // (events/virtual-fundraiser-2026-11-12/graphics/feed.png): navy field with a
 // faint sun-ring pattern and a slanted lower edge, the taped and tilted print,
 // the orange dashed stamp, and the varsity headline with stepped extrudes.
@@ -15,7 +15,7 @@
 // Motion: home plays when scrolled into view (motion.js observeNew), page plays
 // on load. Without the script, or under reduced motion, everything is static
 // and complete.
-import { all, icsPath, startDate, todayChicago } from '../data/events.js';
+import { all, icsPath, mapHref, startDate, todayChicago } from '../data/events.js';
 import TimeChips from './TimeChips.astro';
 import Countdown from './Countdown.astro';
 
@@ -31,6 +31,8 @@ const isPage = variant === 'page';
 const render = isPage || live;
 const Head = isPage ? 'h1' : 'h2';
 const headId = `fp-head-${variant}`;
+// Venue map link, built the way EventCard builds its address link.
+const map = ev ? mapHref(ev) : null;
 ---
 
 {render && (
@@ -43,7 +45,7 @@ const headId = `fp-head-${variant}`;
   >
     <div class="fp-field">
       <div class="fp-grid container-wide">
-        <p class="fp-stamp fp-a fp-a-stamp"><span class="fp-stamp-in" data-i18n="promo.label">Virtual Fundraiser</span></p>
+        <p class="fp-stamp fp-a fp-a-stamp"><span class="fp-stamp-in" data-i18n="promo.label">Hybrid Fundraiser</span></p>
 
         <figure class="fp-print fp-a fp-a-print">
           <span class="fp-tape" aria-hidden="true"></span>
@@ -85,10 +87,15 @@ const headId = `fp-head-${variant}`;
                 <TimeChips variant="page" start={isPage ? 1 : 0.15} />
               </div>
               <p class="fp-info">
-                <span data-i18n="promo.where">On Zoom</span><span class="fp-dot" aria-hidden="true">·</span><span data-i18n="fundraiser.price">Tickets from $25</span>
+                <span data-i18n="fundraiser.where">In person or on Zoom</span><span class="fp-dot" aria-hidden="true">·</span><span data-i18n="fundraiser.price">Tickets from $25</span>
               </p>
+              {isPage && map ? (
+                <p class="fp-venue"><a href={map} target="_blank" rel="noopener noreferrer"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span data-i18n="fundraiser.venue">Chicago Liberation Center · 2712 W Cermak Rd, Chicago</span></a></p>
+              ) : (
+                <p class="fp-venue" data-i18n="fundraiser.venue">Chicago Liberation Center · 2712 W Cermak Rd, Chicago</p>
+              )}
               <p class="fp-solid" data-i18n="fundraiser.solidarity">Solidarity tickets also available</p>
-              {isPage && <p class="fp-how" data-i18n="fundraiser.how">RSVP and we email you the Zoom link.</p>}
+              {isPage && <p class="fp-how" data-i18n="fundraiser.how">RSVP either way. Joining on Zoom? We email you the link.</p>}
               <div class="fp-actions">
                 {isPage ? (
                   <a class="btn btn-orange btn-massive fp-cta" href={ev.rsvp} target="_blank" rel="noopener noreferrer">
@@ -415,9 +422,37 @@ const headId = `fp-head-${variant}`;
     color: var(--white);
   }
 
-  /* Sits right under the price line: the gap between them is tightened */
-  .fp-solid {
+  /* Venue and solidarity sit right under the price line: gaps tightened */
+  .fp-venue {
     margin: calc(var(--space-md) * -1 + 2px) 0 0;
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--cream-light);
+  }
+
+  .fp-venue a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--cream-light);
+    text-decoration: underline;
+    text-decoration-color: rgba(254, 245, 230, 0.45);
+    text-underline-offset: 3px;
+  }
+
+  .fp-venue a:hover {
+    color: var(--gold-soft);
+  }
+
+  .fp-venue svg {
+    flex: none;
+    color: var(--orange);
+  }
+
+  .fp-solid {
+    margin: calc(var(--space-md) * -1 + 4px) 0 0;
     font-family: var(--font-display);
     font-size: var(--text-base);
     font-weight: 700;
@@ -432,6 +467,21 @@ const headId = `fp-head-${variant}`;
     font-size: var(--text-sm);
     font-weight: 600;
     color: var(--cream-light);
+  }
+
+  /* Wrap after the dot, never inside "Tickets from $25" */
+  .fp-info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+  }
+
+  .fp-info > span {
+    white-space: nowrap;
+  }
+
+  .fp-venue {
+    text-wrap: balance;
   }
 
   .fp-dot {

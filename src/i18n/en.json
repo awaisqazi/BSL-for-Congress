@@ -571,8 +571,8 @@
     "canvass_team": "Join the Canvass Team",
     "petition_rsvp": "Petition Canvasses (RSVP)",
     "fundraiser_stamp": "Nov 12",
-    "fundraiser_main": "Virtual Fundraiser: RSVP",
-    "fundraiser_sub": "Thu, Nov 12 · On Zoom · 7 PM ET · 6 CT · 5 MT · 4 PT"
+    "fundraiser_main": "Hybrid Fundraiser: RSVP",
+    "fundraiser_sub": "Thu, Nov 12 · In person + Zoom · 7 PM ET · 6 CT · 5 MT · 4 PT"
   },
   "bar": {
     "ask": "Knock doors with us.",
@@ -677,9 +677,9 @@
     "rsvp_consent": "By sharing a phone number you agree to receive event reminders by text from Friends of Byron Sigcho Lopez. Message and data rates may apply. Text STOP to opt out."
   },
   "promo": {
-    "label": "Virtual Fundraiser",
+    "label": "Hybrid Fundraiser",
     "date": "Thu, Nov 12",
-    "where": "On Zoom",
+    "where": "In person + Zoom",
     "when_sr": "Start time by time zone:",
     "et": "7 PM ET",
     "ct": "6 PM CT",
@@ -696,7 +696,7 @@
     "kick3": "Just us.",
     "date_long": "Thursday, November 12",
     "price": "Tickets from $25",
-    "how": "RSVP and we email you the Zoom link.",
+    "how": "RSVP either way. Joining on Zoom? We email you the link.",
     "cal_add": "Add to calendar",
     "passed": "This one has passed. See what is coming up.",
     "head_l1": "Back Byron",
@@ -707,10 +707,12 @@
     "why2_body": "Over 800 units of affordable housing. Ward Night every Tuesday for seven years, including through the pandemic. Over $1 million for Benito Juarez and other ward schools.",
     "why3_title": "The work is not finished.",
     "why4_title": "Join from anywhere",
-    "why4_body": "One evening on Zoom, in your time zone, wherever you live: 7 PM ET, 6 PM CT, 5 PM MT, 4 PM PT.",
+    "why4_body": "Come in person to the Chicago Liberation Center, 2712 W Cermak Rd, or join on Zoom in your time zone, wherever you live: 7 PM ET, 6 PM CT, 5 PM MT, 4 PM PT.",
     "why_chicago": "In Chicago? Knock doors with us",
     "solidarity": "Solidarity tickets also available",
-    "solidarity_how": "Can't do $25? Choose the $0 option on the RSVP form."
+    "solidarity_how": "Can't do $25? Choose the $0 option on the RSVP form.",
+    "where": "In person or on Zoom",
+    "venue": "Chicago Liberation Center · 2712 W Cermak Rd, Chicago"
   },
   "countdown": {
     "days": "In {n} days",

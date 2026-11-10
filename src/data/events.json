@@ -457,16 +457,16 @@
       "es": "Apoya a Byron desde donde estés"
     },
     "line": {
-      "en": "No developer money. No corporate PACs. This campaign runs on neighbors like you. Zoom fundraiser at 7 PM ET, 6 CT, 5 MT, 4 PT. Tickets from $25, and solidarity tickets are available too. RSVP and we email you the link.",
-      "es": "Sin dinero de desarrolladores. Sin PAC corporativos. Esta campaña la sostienen vecinos como tú. Recaudación por Zoom a las 7 PM ET, 6 CT, 5 MT, 4 PT. Boletos desde $25, y también hay boletos solidarios. Confirma y te enviamos el enlace por correo."
+      "en": "No developer money. No corporate PACs. This campaign runs on neighbors like you. Join us in person or on Zoom at 6 PM CT (7 ET, 5 MT, 4 PT). Tickets from $25, and solidarity tickets are available too. RSVP either way.",
+      "es": "Sin dinero de desarrolladores. Sin PAC corporativos. Esta campaña la sostienen vecinos como tú. Acompáñanos en persona o por Zoom a las 6 PM CT (7 ET, 5 MT, 4 PT). Boletos desde $25, y también hay boletos solidarios. Confirma de cualquier forma."
     },
     "start": "2026-11-12T18:00:00-06:00",
     "end": null,
     "location": {
-      "en": "Online, on Zoom",
-      "es": "En línea, por Zoom"
+      "en": "Chicago Liberation Center and on Zoom",
+      "es": "Chicago Liberation Center y por Zoom"
     },
-    "address": null,
+    "address": "2712 W Cermak Rd, Chicago, IL 60608",
     "rsvp": "https://secure.actblue.com/donate/virtualbsl",
     "action": {
       "en": "RSVP",

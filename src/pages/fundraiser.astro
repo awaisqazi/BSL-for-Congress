@@ -1,5 +1,5 @@
 ---
-// /fundraiser/: the shareable page for the Nov 12, 2026 virtual fundraiser,
+// /fundraiser/: the shareable page for the Nov 12, 2026 hybrid fundraiser (in person or on Zoom),
 // with its own link share card (public/images/og-fundraiser.jpg).
 // Facts and copy: events/virtual-fundraiser-2026-11-12/BRIEF.md and existing
 // campaign copy in src/i18n (promise, platform, upnext, meet, hero).
@@ -21,10 +21,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout
-  title="Back Byron From Anywhere: Virtual Fundraiser, Nov 12 | Byron Sigcho-Lopez"
-  description="Thursday, November 12 on Zoom. 7 PM ET, 6 PM CT, 5 PM MT, 4 PM PT. Tickets from $25, solidarity tickets available. RSVP and we email you the Zoom link."
+  title="Back Byron From Anywhere: Hybrid Fundraiser, Nov 12 | Byron Sigcho-Lopez"
+  description="Thursday, November 12 at 6 PM CT. In person at the Chicago Liberation Center, 2712 W Cermak Rd, or on Zoom (7 PM ET, 5 PM MT, 4 PM PT). Tickets from $25, solidarity tickets available."
   image="/images/og-fundraiser.jpg"
-  imageAlt="Back Byron From Anywhere. Virtual fundraiser on Zoom, Thursday, November 12."
+  imageAlt="Back Byron From Anywhere. Hybrid fundraiser, in person and on Zoom, Thursday, November 12."
   promo={false}
 >
   <Navbar />
@@ -64,7 +64,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <li class="why-card why-card-go animate-in anim-pin" style="--tilt: 1deg; --reveal-delay: 0.3s">
             <span class="why-num" aria-hidden="true">4</span>
             <h3 class="why-title" data-i18n="fundraiser.why4_title">Join from anywhere</h3>
-            <p data-i18n="fundraiser.why4_body">One evening on Zoom, in your time zone, wherever you live: 7 PM ET, 6 PM CT, 5 PM MT, 4 PM PT.</p>
+            <p data-i18n="fundraiser.why4_body">Come in person to the Chicago Liberation Center, 2712 W Cermak Rd, or join on Zoom in your time zone, wherever you live: 7 PM ET, 6 PM CT, 5 PM MT, 4 PM PT.</p>
             {live && ev && (
               <a class="btn btn-orange why-cta" href={ev.rsvp} target="_blank" rel="noopener noreferrer" data-why-live>
                 <span data-i18n="promo.cta">RSVP</span>

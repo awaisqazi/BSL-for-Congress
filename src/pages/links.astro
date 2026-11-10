@@ -6,7 +6,7 @@ import Countdown from "../components/Countdown.astro";
 import { feedPath, all as allEvents, todayChicago } from "../data/events.js";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const host = Astro.site ? Astro.site.host : "sigchofor25.com";
-// Featured strip for the Nov 12 virtual fundraiser: leads to /fundraiser/;
+// Featured strip for the Nov 12 hybrid fundraiser: leads to /fundraiser/;
 // start and expiry come from its events.json entry; it stops rendering once the Chicago date is past.
 const fundraiser = allEvents.find((e) => e.id === "meetup-2026-11-12-virtual-fundraiser");
 const showFundraiser = Boolean(fundraiser && fundraiser.rsvp && fundraiser.expires >= todayChicago());
@@ -86,8 +86,8 @@ const showFundraiser = Boolean(fundraiser && fundraiser.rsvp && fundraiser.expir
             <span class="link-feat-stamp" data-i18n="linkspage.fundraiser_stamp">Nov 12</span>
             <span class="link-text link-feat-text">
               <span class="link-feat-cd"><Countdown start={fundraiser.start} variant="strip" delay={0.9} /></span>
-              <span class="link-feat-main" data-i18n="linkspage.fundraiser_main">Virtual Fundraiser: RSVP</span>
-              <span class="link-feat-sub" data-i18n="linkspage.fundraiser_sub">Thu, Nov 12 · On Zoom · 7 PM ET · 6 CT · 5 MT · 4 PT</span>
+              <span class="link-feat-main" data-i18n="linkspage.fundraiser_main">Hybrid Fundraiser: RSVP</span>
+              <span class="link-feat-sub" data-i18n="linkspage.fundraiser_sub">Thu, Nov 12 · In person + Zoom · 7 PM ET · 6 CT · 5 MT · 4 PT</span>
             </span>
             <span class="link-arrow" aria-hidden="true">→</span>
           </a>
