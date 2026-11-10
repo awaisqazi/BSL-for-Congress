@@ -2,7 +2,7 @@
 
 Runbook for the scheduled Claude task. You have no memory of earlier sessions. Follow the steps in order.
 Repo: `/Users/fezqazi/Documents/BSL for Congress` (Astro 6, Byron Sigcho-Lopez's 25th Ward re-election, live at
-https://byronfor25.com, election Feb 23, 2027). Deploy = push to `main`; the GitHub Pages workflow builds it.
+https://sigchofor25.com, election Feb 23, 2027). Deploy = push to `main`; the GitHub Pages workflow builds it.
 
 Read before writing anything: `voice.md`, `src/data/NEWS-README.md`, `src/data/news.json`, `src/data/EVENTS-README.md`,
 `src/data/events.json`, `src/components/NextUp.astro`, `src/i18n/en.json` and `es.json` (namespace `nextup`). Also skim the
@@ -365,14 +365,14 @@ do not retry-push blindly.
 
 Verify live (replace SLUG; allow a minute for the CDN, retry up to 5 times):
 ```
-curl -sL https://byronfor25.com/news/ | grep -c "SLUG"
-curl -sL https://byronfor25.com/news/ | grep -c "—"     # must be 0
+curl -sL https://sigchofor25.com/news/ | grep -c "SLUG"
+curl -sL https://sigchofor25.com/news/ | grep -c "—"     # must be 0
 ```
-Each news post also has its own page: `curl -sL https://byronfor25.com/news/SLUG/ | grep -c SLUG`. For an event, check
-`curl -sL https://byronfor25.com/volunteer/ | grep -c "<event title or address>"` and
-`curl -sI https://byronfor25.com/events/ID.ics | head -1` (expect 200). The home page shows only the next three, so do not
+Each news post also has its own page: `curl -sL https://sigchofor25.com/news/SLUG/ | grep -c SLUG`. For an event, check
+`curl -sL https://sigchofor25.com/volunteer/ | grep -c "<event title or address>"` and
+`curl -sI https://sigchofor25.com/events/ID.ics | head -1` (expect 200). The home page shows only the next three, so do not
 expect a later event there. For a ledger row, also check
-`curl -sL https://byronfor25.com/ | grep -c "d_SLUG\|<the English row text>"`.
+`curl -sL https://sigchofor25.com/ | grep -c "d_SLUG\|<the English row text>"`.
 
 ## 8. Report format (under 18 lines, plain text, no emdashes)
 
@@ -387,7 +387,7 @@ Events added: <id | start | address | source url>   (one line each, or none)
 Ledger rows added: <date, text> (or none)
 Seen, not published: <short item> because <reason>   (one line each)
 Build: pass/fail | /volunteer/ + .ics emitted | parity OK | emdash grep clean | forms frozen
-Deploy: run <id> success | live check: slug found at https://byronfor25.com/news/
+Deploy: run <id> success | live check: slug found at https://sigchofor25.com/news/
 Needs a human: <e.g. RaiseMore org still says Byron for Congress; YouTube handle @BSLforCongress; dead links; blocked sources>
 ```
 If you stopped early (dirty tree, build failure, deploy failure), say which step, paste the key error lines, and say the working

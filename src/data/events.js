@@ -231,7 +231,7 @@ const calHead = (name) => [
   ...(name ? [`X-WR-CALNAME:${icsEscape(name)}`, 'X-WR-TIMEZONE:America/Chicago', 'REFRESH-INTERVAL;VALUE=DURATION:P1D', 'X-PUBLISHED-TTL:P1D'] : []),
 ];
 
-export function ics(e, lang, site = 'https://byronfor25.com') {
+export function ics(e, lang, site = 'https://sigchofor25.com') {
   const lines = [...calHead(null), ...vevent(e, lang, site, utcStamp(new Date().toISOString())), 'END:VCALENDAR'];
   return lines.map(fold).join('\r\n') + '\r\n';
 }
@@ -241,7 +241,7 @@ const RRULE_DAYS = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
 // The whole calendar in one file (/events/all.ics, /events/all-es.ics): every
 // dated entry, plus each weekly standing shift as an all-day event repeating
 // for the next 20 weeks from the build date.
-export function icsFeed(lang, site = 'https://byronfor25.com', today = todayChicago()) {
+export function icsFeed(lang, site = 'https://sigchofor25.com', today = todayChicago()) {
   const now = utcStamp(new Date().toISOString());
   const name = lang === 'es' ? 'Byron Sigcho-Lopez, Distrito 25: fechas' : 'Byron Sigcho-Lopez, 25th Ward: dates';
   const lines = [...calHead(name)];

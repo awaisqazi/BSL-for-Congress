@@ -10,7 +10,7 @@ export function getStaticPaths() {
 }
 
 export function GET({ props, site }) {
-  const origin = (site ? site.origin : 'https://byronfor25.com');
+  const origin = (site ? site.origin : 'https://sigchofor25.com');
   return new Response(ics(props.event, props.lang, origin), {
     headers: { 'Content-Type': 'text/calendar; charset=utf-8' },
   });

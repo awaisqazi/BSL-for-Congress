@@ -92,7 +92,7 @@ Only people invited to the Supabase organization can see the data. Invite
 staff from Organization settings > Team; give the Read-only role to anyone
 who only needs to look.
 
-5. **The campaign desk, `byronfor25.com/admin/`.** A staff-only page with the
+5. **The campaign desk, `sigchofor25.com/admin/`.** A staff-only page with the
    four tables, counts, follow-up status, notes and CSV download. See below.
 
 ## Campaign desk (`/admin/`)
@@ -128,7 +128,7 @@ without a staff login that is also on the admin list.
 
    (Upper or lower case does not matter. Check it with
    `select * from private.campaign_admins;`.)
-3. Open `https://byronfor25.com/admin/` and sign in. (The page goes live with
+3. Open `https://sigchofor25.com/admin/` and sign in. (The page goes live with
    the next deploy.)
 
 ### Adding staff later
