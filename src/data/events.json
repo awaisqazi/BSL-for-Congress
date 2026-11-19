@@ -475,5 +475,32 @@
     "sponsor": null,
     "source": "https://secure.actblue.com/donate/virtualbsl",
     "expires": "2026-11-12"
+  },
+  {
+    "id": "meetup-2026-11-20-peoples-town-hall",
+    "kind": "meetup",
+    "title": {
+      "en": "People's Town Hall: Who Decides Chicago?",
+      "es": "Asamblea Comunitaria: ¿Quién decide en Chicago?"
+    },
+    "line": {
+      "en": "Bring your questions for Byron on housing, development and our schools. Food and drinks, childcare provided, and you can register to vote on site.",
+      "es": "Trae tus preguntas para Byron sobre vivienda, desarrollo y nuestras escuelas. Habrá comida y bebidas, cuidado de niños, y te puedes registrar para votar ahí mismo."
+    },
+    "start": "2026-11-20T18:00:00-06:00",
+    "end": null,
+    "location": {
+      "en": "25th Ward IPO office",
+      "es": "Oficina del 25th Ward IPO"
+    },
+    "address": "2102 W Cermak Rd, Chicago",
+    "rsvp": null,
+    "action": {
+      "en": "Tell us you're coming",
+      "es": "Avísanos que vienes"
+    },
+    "sponsor": null,
+    "source": "https://www.instagram.com/bslfor25/p/Df0ZMamALgT/",
+    "expires": "2026-11-20"
   }
 ]

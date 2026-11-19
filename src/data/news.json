@@ -1,5 +1,41 @@
 [
   {
+    "slug": "2026-11-20-peoples-town-hall",
+    "date": "2026-11-16",
+    "kind": "event",
+    "title": {
+      "en": "People's Town Hall, Friday November 20",
+      "es": "Asamblea Comunitaria, viernes 20 de noviembre"
+    },
+    "summary": {
+      "en": "Bring your questions and your neighbors to a People's Town Hall with Byron on Friday, November 20 at 6 PM at the 25th Ward IPO, 2102 W Cermak Rd.",
+      "es": "Trae tus preguntas y a tus vecinos a la Asamblea Comunitaria con Byron el viernes 20 de noviembre a las 6 de la tarde en el 25th Ward IPO, 2102 W Cermak Rd."
+    },
+    "body": {
+      "en": [
+        "Who decides Chicago? Developers? Billionaires? Or the working families who actually live here?",
+        "On Friday, November 20 at 6 PM we are holding a People's Town Hall at the 25th Ward IPO, 2102 W Cermak Rd. We will talk about the future of our neighborhoods: housing, development and our schools, as Chicago heads toward the February 2027 elections.",
+        "There will be food and drinks, childcare is provided, and you can register to vote on site. Everyone is welcome.",
+        "Bring your questions, your concerns and your neighbors. Then knock doors with us."
+      ],
+      "es": [
+        "¿Quién decide en Chicago? ¿Los desarrolladores? ¿Los multimillonarios? ¿O las familias trabajadoras que vivimos aquí?",
+        "El viernes 20 de noviembre a las 6 de la tarde tenemos una Asamblea Comunitaria en el 25th Ward IPO, 2102 W Cermak Rd. Vamos a hablar del futuro de nuestros barrios: vivienda, desarrollo y nuestras escuelas, de cara a las elecciones de febrero de 2027.",
+        "Habrá comida y bebidas, cuidado de niños, y te puedes registrar para votar ahí mismo. Todos son bienvenidos.",
+        "Trae tus preguntas, tus inquietudes y a tus vecinos. Y después, toca puertas con nosotros."
+      ]
+    },
+    "event": {
+      "start": "2026-11-20T18:00:00-06:00",
+      "location": "25th Ward IPO, 2102 W Cermak Rd"
+    },
+    "source": {
+      "label": "Byron Sigcho Lopez for 25th Ward Alderman, Instagram, November 16, 2026",
+      "href": "https://www.instagram.com/bslfor25/p/Df0ZMamALgT/"
+    },
+    "expires": "2026-11-20"
+  },
+  {
     "slug": "2026-11-05-food-cart-licensing-budget",
     "date": "2026-11-05",
     "kind": "news",
