@@ -502,5 +502,29 @@
     "sponsor": null,
     "source": "https://www.instagram.com/bslfor25/p/Df0ZMamALgT/",
     "expires": "2026-11-20"
+  },
+  {
+    "id": "meetup-2026-11-24-ceda-utility-bill-help",
+    "kind": "meetup",
+    "title": {
+      "en": "CEDA Utility Bill Assistance",
+      "es": "Asistencia de CEDA con facturas de servicios"
+    },
+    "line": {
+      "en": "Get help applying for CEDA utility bill assistance. Bring Social Security numbers or ITINs for your household, proof of the last 30 days of income, and your most recent gas or electric bill.",
+      "es": "Recibe ayuda para solicitar la asistencia de CEDA con tus facturas de servicios públicos. Trae los números de Seguro Social o ITIN de tu hogar, comprobante de ingresos de los últimos 30 días y tu factura más reciente de gas o luz."
+    },
+    "start": "2026-11-24T14:00:00-06:00",
+    "end": "2026-11-24T18:00:00-06:00",
+    "location": "2100 W Cermak Rd",
+    "address": "2100 W Cermak Rd, Chicago",
+    "rsvp": null,
+    "action": {
+      "en": "Tell us you're coming",
+      "es": "Avísanos que vienes"
+    },
+    "sponsor": "25th Ward Office and SGA Youth & Family Services",
+    "source": "https://www.instagram.com/25thwardoffice/p/Df7q7cyDxDN/",
+    "expires": "2026-11-24"
   }
 ]
