@@ -6,10 +6,10 @@ import Countdown from "../components/Countdown.astro";
 import { feedPath, all as allEvents, todayChicago } from "../data/events.js";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const host = Astro.site ? Astro.site.host : "sigchofor25.com";
-// Featured strip for the Nov 12 hybrid fundraiser: leads to /fundraiser/;
+// Featured strip for Springfield Lobby Day (Dec 2): leads to /lobbyday/;
 // start and expiry come from its events.json entry; it stops rendering once the Chicago date is past.
-const fundraiser = allEvents.find((e) => e.id === "meetup-2026-11-12-virtual-fundraiser");
-const showFundraiser = Boolean(fundraiser && fundraiser.rsvp && fundraiser.expires >= todayChicago());
+const lobby = allEvents.find((e) => e.id === "meetup-2026-12-02-springfield-lobby-day");
+const showLobby = Boolean(lobby && lobby.rsvp && lobby.expires >= todayChicago());
 ---
 
 <Layout
@@ -81,18 +81,18 @@ const showFundraiser = Boolean(fundraiser && fundraiser.rsvp && fundraiser.expir
       <!-- Primary Links: taped flyer strips. The body ask first (volunteer,
            canvass, Ward Night), then Donate, then the reading. -->
       <div class="links-list">
-        {showFundraiser && fundraiser && (
-          <a href={`${base}/fundraiser/`} class="link-strip link-strip-featured animate-in anim-pin" style="--tilt: 0.4deg" target="_blank" rel="noopener" data-expires={fundraiser.expires}>
-            <span class="link-feat-stamp" data-i18n="linkspage.fundraiser_stamp">Nov 12</span>
+        {showLobby && lobby && (
+          <a href={`${base}/lobbyday/`} class="link-strip link-strip-featured animate-in anim-pin" style="--tilt: 0.4deg" target="_blank" rel="noopener" data-expires={lobby.expires}>
+            <span class="link-feat-stamp" data-i18n="lobbyday.links_stamp">Dec 2</span>
             <span class="link-text link-feat-text">
-              <span class="link-feat-cd"><Countdown start={fundraiser.start} variant="strip" delay={0.9} /></span>
-              <span class="link-feat-main" data-i18n="linkspage.fundraiser_main">Hybrid Fundraiser: RSVP</span>
-              <span class="link-feat-sub" data-i18n="linkspage.fundraiser_sub">Thu, Nov 12 · In person + Zoom · 7 PM ET · 6 CT · 5 MT · 4 PT</span>
+              <span class="link-feat-cd"><Countdown start={lobby.start} variant="strip" delay={0.9} /></span>
+              <span class="link-feat-main" data-i18n="lobbyday.links_main">Springfield Lobby Day: Save Your Seat</span>
+              <span class="link-feat-sub" data-i18n="lobbyday.links_sub">Wed, Dec 2 · Bus leaves 6:00 AM sharp · 2102 W Cermak Rd</span>
             </span>
             <span class="link-arrow" aria-hidden="true">→</span>
           </a>
         )}
-        {showFundraiser && (
+        {showLobby && (
           <script is:inline>
             // Dated strips (data-expires) come down the morning after, even if
             // nobody redeploys. Separate from the calendar script so neither can break the other.
@@ -565,7 +565,7 @@ const showFundraiser = Boolean(fundraiser && fundraiser.rsvp && fundraiser.expir
     flex: 1;
   }
 
-  /* Featured, dated strip (the Nov 12 fundraiser): bigger orange flyer with a
+  /* Featured, dated strip (Springfield Lobby Day): bigger orange flyer with a
      rotated date stamp and a gentle glow, above everything else. */
   .link-strip-featured {
     padding: 18px 20px 18px 16px;

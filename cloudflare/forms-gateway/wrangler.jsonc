@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "sigchofor25-forms",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": true,
+  "preview_urls": false,
+  // Request logs record method, URL and status only. The Worker never logs
+  // field values; keep it that way.
+  "observability": { "enabled": true },
+  // ALLOW_DEV and DRY_RUN stay unset in production. TURNSTILE_SECRET is a
+  // secret: set it with `npx wrangler secret put TURNSTILE_SECRET`, never here.
+  "vars": {}
+}

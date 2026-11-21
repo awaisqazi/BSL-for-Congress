@@ -120,6 +120,31 @@ export function rsvp(eventId, form) {
   }
 }
 
+// /lobbyday/ registration (frozen Google Form field names), as a "going" RSVP
+// for the Springfield Lobby Day entry in events.json. The caller skips people
+// who picked "I can't go". zip only when the address field is exactly five
+// digits; phone reduced to digits (and a leading +) so the length check holds.
+export function rsvpLobbyDay(form) {
+  if (!enabled) return Promise.resolve({ ok: false, skipped: true });
+  try {
+    const f = fd(form);
+    const addr = one(f, 'entry.1700439271', 200) || '';
+    const digits = (one(f, 'entry.155083142', 40) || '').replace(/[^0-9+]/g, '');
+    return insert('event_rsvps', {
+      event_id: 'meetup-2026-12-02-springfield-lobby-day',
+      name: one(f, 'entry.992725186', 120),
+      email: one(f, 'entry.485612208', 254),
+      phone: digits.length >= 7 && digits.length <= 20 ? digits : null,
+      zip: /^[0-9]{5}$/.test(addr) ? addr : null,
+      bringing_count: 0,
+      honeypot: hp('ld-hp'),
+      ...meta(),
+    });
+  } catch {
+    return Promise.resolve({ ok: false });
+  }
+}
+
 // Generic one-tap action log for future features. Keep PII out of payload.
 export function action(name, payload = {}) {
   const { language, source_page } = meta();

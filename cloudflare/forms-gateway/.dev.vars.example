@@ -1,0 +1,8 @@
+# Copy to .dev.vars for `npx wrangler dev`. Never commit .dev.vars.
+# Cloudflare's published test secret: always passes (pair it with the test
+# site key 1x00000000000000000000AA on the site).
+TURNSTILE_SECRET=1x0000000000000000000000000000000AA
+# Allow http://localhost origins and skip the hostname check.
+ALLOW_DEV=1
+# Do not post to Google: answer with the exact body that would have been sent.
+DRY_RUN=1

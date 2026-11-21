@@ -6,6 +6,8 @@
 // City and ZIP are optional.
 import Layout from "../layouts/Layout.astro";
 import { todayChicago } from "../data/events.js";
+import GuardSlot from "../components/GuardSlot.astro";
+import { enabled as guardOn } from "../scripts/guard.js";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 // Link share card for the Nov 21, 2026 tabling day (Gen-Z for Brandon at
@@ -68,9 +70,9 @@ const ttIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentCol
     <form
       class="genz-card"
       id="genz-form"
-      action="https://docs.google.com/forms/d/e/1FAIpQLSeUKnQVp4auTqHdFZeDrGlAOYAjmOO0sE19Xm11Pee2ayuuWQ/formResponse"
-      method="POST"
-      target="hidden_iframe_genz"
+      {...(guardOn
+        ? { method: "post", "data-guard": "genz" } /* bot check on: posts through the forms gateway Worker */
+        : { action: "https://docs.google.com/forms/d/e/1FAIpQLSeUKnQVp4auTqHdFZeDrGlAOYAjmOO0sE19Xm11Pee2ayuuWQ/formResponse", method: "POST", target: "hidden_iframe_genz" })}
     >
       <div class="genz-row">
         <div class="genz-field">
@@ -204,7 +206,7 @@ const ttIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentCol
         By submitting, you agree to receive periodic campaign updates by email and SMS. Message and data rates may apply. Text STOP to unsubscribe.
       </p>
 
-      <button type="submit" class="btn btn-orange btn-massive genz-submit" id="genz-submit">
+      <GuardSlot /><button type="submit" class="btn btn-orange btn-massive genz-submit" id="genz-submit">
         <span data-i18n="genz.submit">I'm In</span>
       </button>
 
@@ -237,7 +239,7 @@ const ttIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentCol
         <a class="genz-more" href={`${base}/volunteer`}><span data-i18n="genz.more_ways">See every way to show up</span> <span aria-hidden="true">→</span></a>
       </div>
 
-      <iframe name="hidden_iframe_genz" id="hidden_iframe_genz" title="Form submission" tabindex="-1" style="display:none;"></iframe>
+      {!guardOn && <iframe name="hidden_iframe_genz" id="hidden_iframe_genz" title="Form submission" tabindex="-1" style="display:none;"></iframe>}
     </form>
 
     <!-- Who is this -->
@@ -271,6 +273,7 @@ const ttIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentCol
 
 <script>
   import { volunteer as saveVolunteer } from '../scripts/supa.js';
+  import { enabled as guardOn, watch, send } from '../scripts/guard.js';
 
   const form = document.getElementById('genz-form') as HTMLFormElement | null;
   const success = document.getElementById('genz-success');
@@ -279,7 +282,26 @@ const ttIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentCol
   const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const scrollBehavior = (): ScrollBehavior => (reduceMotion() ? 'auto' : 'smooth');
 
-  if (form) {
+  if (form && guardOn) {
+    // Bot check on: the Worker checks the token and posts to Google. The
+    // database copy and the success card wait for its answer.
+    watch(form);
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const data = new FormData(form);
+      const hp = Boolean((document.getElementById('vol-hp') as HTMLInputElement | null)?.value);
+      const res = await send(form, 'genz', { honeypot: hp });
+      if (!res.ok) return;
+      saveVolunteer(data);
+      if (submitBtn) submitBtn.disabled = true;
+      form.reset();
+      form.classList.add('is-submitted');
+      if (success) {
+        success.hidden = false;
+        success.scrollIntoView({ behavior: scrollBehavior(), block: 'center' });
+      }
+    });
+  } else if (form) {
     form.addEventListener('submit', function () {
       // Parallel copy to the campaign database. Not awaited and never throws:
       // the Google Form post goes out through the hidden iframe as usual.

@@ -9,5 +9,8 @@ export default defineConfig({
   // Show Up block; the .ics files under /events/ are real routes and unaffected.
   redirects: {
     '/events': '/volunteer/#show-up',
+    // Short links printed on Springfield Lobby Day graphics (EN and ES).
+    '/springfield': '/lobbyday/',
+    '/cabildeo': '/lobbyday/',
   },
 });

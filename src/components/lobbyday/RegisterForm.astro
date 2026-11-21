@@ -1,0 +1,921 @@
+---
+// /lobbyday/#register: the on-site registration for Springfield Lobby Day.
+// Built like the volunteer form (src/components/volunteer/SignupForm.astro):
+// a plain HTML form whose action is the Google Form's formResponse URL. With
+// the script it posts into a hidden iframe and swaps in the "we got it" state;
+// without the script it posts in the same tab and Google shows its own
+// confirmation, so it works either way.
+//
+// FROZEN: the entry.* names below and every option value. The values are the
+// Google Form's own bilingual option text, copied by script into
+// ./form-options.js; visible labels are per language (lobbyday.f_*).
+// The honeypot has no name, so Google never receives it.
+// A parallel, fire-and-forget copy goes to the campaign database through
+// rsvpLobbyDay() in src/scripts/supa.js (event_rsvps), only for people who
+// did not pick "I can't go".
+// Rendered only while the event is live; the page script removes it the
+// morning after (data-ld-live).
+import { icsPath } from '../../data/events.js';
+import { ev, live, formAction, EVENT_ID } from './facts.js';
+import { OPTIONS } from './form-options.js';
+import GuardSlot from '../GuardSlot.astro';
+import { enabled as guardOn } from '../../scripts/guard.js';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+// Bot check on (src/scripts/guard.js): the form posts through the forms
+// gateway Worker, so the formResponse URL and the hidden iframe stay out of
+// the page. The public Google Form link (ev.rsvp) stays as the fallback.
+const formAttrs = guardOn
+  ? { method: 'post', 'accept-charset': 'UTF-8', 'data-guard': 'lobbyday' }
+  : { action: formAction, method: 'POST', 'accept-charset': 'UTF-8', 'data-iframe': 'hidden_iframe_lobby' };
+if (OPTIONS.seat.length !== 3 || OPTIONS.iam.length !== 5 || OPTIONS.u18.length !== 2 || OPTIONS.chip.length !== 2) {
+  throw new Error('RegisterForm: form-options.js no longer has the expected option counts');
+}
+---
+
+{live && ev && formAction && (
+  <section class="rg" id="register" aria-labelledby="rg-head" data-ld-live>
+    <div class="rg-grid container-wide">
+      <div class="rg-intro">
+        <h2 class="rg-head" id="rg-head"><span data-i18n="lobbyday.form_head">Register</span></h2>
+        <p class="rg-lead" data-i18n="lobbyday.form_intro">Seats are limited, so register now.</p>
+        <p class="rg-note" data-i18n="lobbyday.form_note">The registration form is in English and Spanish.</p>
+      </div>
+
+      <div class="rg-card">
+        <p class="rg-pass" aria-hidden="true">
+          <span data-i18n="lobbyday.route_from">Chicago</span>
+          <span class="rg-pass-arrow">→</span>
+          <span data-i18n="lobbyday.route_to">Springfield</span>
+          <span class="rg-pass-date" data-i18n="lobbyday.bar_date">Wed, Dec 2</span>
+        </p>
+
+        <form
+          class="rg-form"
+          id="lobby-form"
+          data-action-bar-hide
+          {...formAttrs}
+          data-cantgo={OPTIONS.seat[2]}
+        >
+          <div class="rg-field">
+            <label for="ld-name" data-i18n="lobbyday.f_name">Full name</label>
+            <input type="text" id="ld-name" name="entry.992725186" autocomplete="name" required maxlength="120" />
+          </div>
+
+          <div class="rg-row">
+            <div class="rg-field">
+              <label for="ld-phone" data-i18n="lobbyday.f_phone">Phone number</label>
+              <input type="tel" id="ld-phone" name="entry.155083142" autocomplete="tel" inputmode="tel" required maxlength="30" />
+            </div>
+            <div class="rg-field">
+              <label for="ld-email" data-i18n="lobbyday.f_email">Email</label>
+              <input type="email" id="ld-email" name="entry.485612208" autocomplete="email" required maxlength="254" />
+            </div>
+          </div>
+
+          <div class="rg-field">
+            <label for="ld-addr" data-i18n="lobbyday.f_addr">Home address or ZIP code</label>
+            <p class="rg-hint" id="ld-addr-hint" data-i18n="lobbyday.f_addr_hint">So we can match you with your state legislators.</p>
+            <input type="text" id="ld-addr" name="entry.1700439271" autocomplete="street-address" required maxlength="200" aria-describedby="ld-addr-hint" />
+          </div>
+
+          <fieldset class="rg-set">
+            <legend data-i18n="lobbyday.f_seat">Bus seat</legend>
+            <div class="rg-tiles">
+              <label class="rg-tile">
+                <input type="radio" name="entry.159860446" value={OPTIONS.seat[0]} required />
+                <span class="rg-mark" aria-hidden="true"></span>
+                <span data-i18n="lobbyday.f_seat1">Yes, save me a seat on the bus</span>
+              </label>
+              <label class="rg-tile">
+                <input type="radio" name="entry.159860446" value={OPTIONS.seat[1]} required />
+                <span class="rg-mark" aria-hidden="true"></span>
+                <span data-i18n="lobbyday.f_seat2">I'll get to Springfield on my own</span>
+              </label>
+              <label class="rg-tile rg-tile-quiet">
+                <input type="radio" name="entry.159860446" value={OPTIONS.seat[2]} required />
+                <span class="rg-mark" aria-hidden="true"></span>
+                <span data-i18n="lobbyday.f_seat3">I can't go, but keep me updated</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="rg-set" id="ld-iam" aria-describedby="ld-iam-hint">
+            <legend data-i18n="lobbyday.f_iam">I am a...</legend>
+            <p class="rg-hint" id="ld-iam-hint" data-i18n="lobbyday.f_iam_hint">Check all that apply.</p>
+            <div class="rg-chips">
+              <label class="rg-chip">
+                <input type="checkbox" name="entry.708292807" value={OPTIONS.iam[0]} aria-describedby="ld-iam-err" />
+                <span class="rg-box" aria-hidden="true"></span>
+                <span data-i18n="lobbyday.f_iam1">Student</span>
+              </label>
+              <label class="rg-chip">
+                <input type="checkbox" name="entry.708292807" value={OPTIONS.iam[1]} aria-describedby="ld-iam-err" />
+                <span class="rg-box" aria-hidden="true"></span>
+                <span data-i18n="lobbyday.f_iam2">Parent or guardian</span>
+              </label>
+              <label class="rg-chip">
+                <input type="checkbox" name="entry.708292807" value={OPTIONS.iam[2]} aria-describedby="ld-iam-err" />
+                <span class="rg-box" aria-hidden="true"></span>
+                <span data-i18n="lobbyday.f_iam3">Educator or school staff</span>
+              </label>
+              <label class="rg-chip">
+                <input type="checkbox" name="entry.708292807" value={OPTIONS.iam[3]} aria-describedby="ld-iam-err" />
+                <span class="rg-box" aria-hidden="true"></span>
+                <span data-i18n="lobbyday.f_iam4">Union member</span>
+              </label>
+              <label class="rg-chip">
+                <input type="checkbox" name="entry.708292807" value={OPTIONS.iam[4]} aria-describedby="ld-iam-err" />
+                <span class="rg-box" aria-hidden="true"></span>
+                <span data-i18n="lobbyday.f_iam5">Community member</span>
+              </label>
+            </div>
+            <p class="rg-err" id="ld-iam-err" role="alert" hidden><span data-i18n="lobbyday.f_iam_err">Check at least one box.</span></p>
+          </fieldset>
+
+          <fieldset class="rg-set">
+            <legend data-i18n="lobbyday.f_u18">Are you under 18?</legend>
+            <div class="rg-tiles rg-tiles-2 rg-tiles-u18">
+              <label class="rg-tile">
+                <input type="radio" name="entry.1521471241" value={OPTIONS.u18[0]} required />
+                <span class="rg-mark" aria-hidden="true"></span>
+                <span data-i18n="lobbyday.f_u18_no">No</span>
+              </label>
+              <label class="rg-tile">
+                <input type="radio" name="entry.1521471241" value={OPTIONS.u18[1]} required />
+                <span class="rg-mark" aria-hidden="true"></span>
+                <span data-i18n="lobbyday.f_u18_yes">Yes, a parent or guardian will need to sign a permission form</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="rg-set" aria-describedby="ld-chip-hint">
+            <legend><span data-i18n="lobbyday.f_chip">Can you chip in toward the bus?</span> <span class="rg-opt" data-i18n="lobbyday.f_optional">Optional</span></legend>
+            <p class="rg-hint rg-hint-strong" id="ld-chip-hint" data-i18n="lobbyday.f_chip_hint">No one will be turned away.</p>
+            <div class="rg-tiles rg-tiles-2">
+              <label class="rg-tile">
+                <input type="radio" name="entry.1098109836" value={OPTIONS.chip[0]} />
+                <span class="rg-mark" aria-hidden="true"></span>
+                <span data-i18n="lobbyday.f_chip_yes">Yes, I can donate</span>
+              </label>
+              <label class="rg-tile">
+                <input type="radio" name="entry.1098109836" value={OPTIONS.chip[1]} />
+                <span class="rg-mark" aria-hidden="true"></span>
+                <span data-i18n="lobbyday.f_chip_no">Not right now</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="rg-field">
+            <label for="ld-notes"><span data-i18n="lobbyday.f_notes">Anything we should know?</span> <span class="rg-opt" data-i18n="lobbyday.f_optional">Optional</span></label>
+            <p class="rg-hint" id="ld-notes-hint" data-i18n="lobbyday.f_notes_hint">Accessibility needs, dietary needs, interpretation, who you're bringing.</p>
+            <textarea id="ld-notes" name="entry.1696229938" rows="3" maxlength="2000" aria-describedby="ld-notes-hint"></textarea>
+          </div>
+
+          <!-- Honeypot for the campaign database copy. No name attribute, so the Google post never carries it. -->
+          <div class="rg-hp" aria-hidden="true"><input type="text" id="ld-hp" tabindex="-1" autocomplete="off" /></div>
+
+          <GuardSlot /><button type="submit" class="btn btn-orange btn-massive rg-submit"><span data-i18n="lobbyday.f_submit">Send My Registration</span></button>
+
+          {guardOn && <p class="rg-hint" id="ld-guard-fallback" hidden data-i18n="lobbyday.f_guard_fallback">Or register with the Google Form below.</p>}<p class="rg-fallback">
+            <a href={ev.rsvp} target="_blank" rel="noopener noreferrer"><span data-i18n="lobbyday.f_fallback">Prefer the Google Form? Open it here</span><span class="rg-sr" data-i18n="promo.new_tab">(opens in a new tab)</span> <span aria-hidden="true">↗</span></a>
+          </p>
+        </form>
+
+        <div class="rg-ok" id="lobby-ok" hidden>
+          <span class="rg-ok-stamp" aria-hidden="true">✓</span>
+          <h3 class="rg-ok-head" id="lobby-ok-head" tabindex="-1" data-i18n="lobbyday.ok_head">We got your registration.</h3>
+          <p class="rg-ok-body" data-i18n="lobbyday.ok_body">The bus leaves the 25th Ward IPO, 2102 W Cermak Rd, at 6:00 AM sharp on Wednesday, December 2.</p>
+          <p class="rg-ok-cal">
+            <a data-lang="en" href={`${base}${icsPath(ev, 'en')}`}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+              <span data-i18n="fundraiser.cal_add">Add to calendar</span>
+            </a>
+            <a data-lang="es" hidden href={`${base}${icsPath(ev, 'es')}`}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+              <span data-i18n="fundraiser.cal_add">Add to calendar</span>
+            </a>
+          </p>
+          <button type="button" class="btn btn-outline rg-share" id="lobby-share">
+            <span data-i18n="lobbyday.ok_share">Bring someone. Copy the link and send it.</span>
+            <span class="rg-share-check" aria-hidden="true">✓</span>
+          </button>
+        </div>
+        {!guardOn && <iframe name="hidden_iframe_lobby" id="hidden_iframe_lobby" title="" tabindex="-1" aria-hidden="true" style="display:none;"></iframe>}
+      </div>
+
+      <aside class="rg-know" aria-labelledby="rg-know-head">
+        <h3 class="rg-know-head" id="rg-know-head" data-i18n="lobbyday.know_head">Good to Know</h3>
+        <ul class="rg-notes" role="list">
+          <li class="rg-notecard" style="--tilt: -1deg">
+            <h4 data-i18n="lobbyday.know1_title">Under 18?</h4>
+            <p data-i18n="lobbyday.know1_body">A parent or guardian will need to sign a permission form.</p>
+          </li>
+          <li class="rg-notecard" style="--tilt: 0.8deg">
+            <h4 data-i18n="lobbyday.know2_title">No one will be turned away</h4>
+            <p data-i18n="lobbyday.know2_body">The form asks if you can chip in toward the bus. If you cannot right now, register anyway.</p>
+          </li>
+          <li class="rg-notecard" style="--tilt: -0.6deg">
+            <h4 data-i18n="lobbyday.know6_title">Tell us what you need</h4>
+            <p data-i18n="lobbyday.know6_body">The form has a space for accessibility needs, dietary needs, interpretation and who you are bringing.</p>
+          </li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+)}
+
+<script>
+  import en from '../../i18n/en.json';
+  import es from '../../i18n/es.json';
+  import { rsvpLobbyDay } from '../../scripts/supa.js';
+  import { enabled as guardOn, watch, send } from '../../scripts/guard.js';
+
+  const form = document.getElementById('lobby-form') as HTMLFormElement | null;
+  const ok = document.getElementById('lobby-ok');
+
+  const lang = () => {
+    try {
+      return localStorage.getItem('bsl-lang') === 'es' ? 'es' : 'en';
+    } catch {
+      return 'en';
+    }
+  };
+
+  if (form && ok) {
+    // With the script, post into the hidden iframe and stay on the page.
+    // Without it, the form posts in the same tab and Google confirms.
+    if (!guardOn) form.target = form.dataset.iframe || '';
+
+    // "I am a..." needs at least one box: native `required` cannot say that
+    // for a group, so the first box carries a custom validity message.
+    const boxes = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="entry.708292807"]'));
+    const err = document.getElementById('ld-iam-err');
+    let tried = false;
+    const checkBoxes = () => {
+      const any = boxes.some((b) => b.checked);
+      const msg = (lang() === 'es' ? es : en).lobbyday.f_iam_err;
+      boxes[0]?.setCustomValidity(any ? '' : msg);
+      boxes.forEach((b) => b.setAttribute('aria-invalid', String(!any && tried)));
+      if (err) err.hidden = any || !tried;
+      return any;
+    };
+    boxes.forEach((b) => b.addEventListener('change', checkBoxes));
+    boxes[0]?.addEventListener('invalid', () => {
+      tried = true;
+      checkBoxes();
+    });
+    document.addEventListener('bsl:langchange', checkBoxes);
+    checkBoxes();
+
+    // The submit gate: the one place that decides whether this post goes out.
+    // Anything that must pass first (a bot check, say) belongs here.
+    const maySubmit = (f: HTMLFormElement) => {
+      tried = true;
+      return checkBoxes() && f.checkValidity();
+    };
+
+    const done = () => {
+      form.reset();
+      form.hidden = true;
+      ok.hidden = false;
+      document.getElementById('lobby-ok-head')?.focus({ preventScroll: true });
+      ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
+
+    if (guardOn) {
+      // Bot check on: the Worker checks the token and posts to Google. The
+      // database copy and the "we got it" state wait for its answer. If it
+      // fails, the error points at the public Google Form link below.
+      watch(form);
+      const fallback = document.getElementById('ld-guard-fallback');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!maySubmit(form)) {
+          form.reportValidity();
+          return;
+        }
+        const data = new FormData(form);
+        const hp = Boolean((document.getElementById('ld-hp') as HTMLInputElement | null)?.value);
+        const res = await send(form, 'lobbyday', { honeypot: hp });
+        if (res.reason === 'busy') return;
+        if (fallback) fallback.hidden = res.ok;
+        if (!res.ok) return;
+        if (data.get('entry.159860446') !== form.dataset.cantgo) rsvpLobbyDay(data);
+        done();
+      });
+    } else form.addEventListener('submit', (e) => {
+      if (!maySubmit(form)) {
+        e.preventDefault();
+        form.reportValidity();
+        return;
+      }
+      // Parallel copy to the campaign database (not awaited, never throws),
+      // only for people who are coming. The Google post goes out as is.
+      const data = new FormData(form);
+      if (data.get('entry.159860446') !== form.dataset.cantgo) rsvpLobbyDay(data);
+      setTimeout(() => {
+        form.reset();
+        form.hidden = true;
+        ok.hidden = false;
+        document.getElementById('lobby-ok-head')?.focus({ preventScroll: true });
+        ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 500);
+    });
+
+    const share = document.getElementById('lobby-share');
+    share?.addEventListener('click', async () => {
+      const url = location.origin + (document.body.dataset.base || '') + '/lobbyday/';
+      try {
+        await navigator.clipboard.writeText(url);
+        share.classList.add('copied');
+        setTimeout(() => share.classList.remove('copied'), 2000);
+      } catch {
+        window.prompt('Copy this link:', url);
+      }
+    });
+  }
+</script>
+
+<style>
+  .rg {
+    position: relative;
+    padding: var(--space-3xl) 0 var(--space-3xl);
+    background: var(--cream);
+    scroll-margin-top: var(--nav-height);
+  }
+
+  .rg-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    grid-template-areas:
+      'intro card'
+      'know card';
+    grid-template-rows: auto 1fr;
+    gap: var(--space-xl) var(--space-3xl);
+    align-items: start;
+    max-width: 1200px;
+  }
+
+  .rg-intro { grid-area: intro; }
+  .rg-card { grid-area: card; }
+  .rg-know { grid-area: know; }
+
+  .rg-head {
+    margin: 0 0 var(--space-sm);
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #142749;
+    text-shadow: 0.05em 0.05em 0 var(--orange);
+  }
+
+  .rg-lead {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    line-height: 1.25;
+    color: #142749;
+  }
+
+  .rg-note {
+    margin: var(--space-sm) 0 0;
+    font-size: var(--text-sm);
+    color: var(--gray-700);
+  }
+
+  /* ---- The form card: a boarding pass ---- */
+  .rg-card {
+    position: relative;
+    background: var(--white);
+    border-radius: 18px;
+    box-shadow: 0 14px 34px rgba(20, 39, 73, 0.18), 0 2px 4px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+  }
+
+  .rg-pass {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 10px;
+    margin: 0;
+    padding: 14px var(--space-xl);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    background:
+      repeating-linear-gradient(90deg, transparent 0 14px, rgba(255, 255, 255, 0.05) 14px 15px),
+      #142749;
+    border-bottom: 3px dashed var(--orange);
+  }
+
+  .rg-pass-arrow {
+    color: var(--orange);
+  }
+
+  .rg-pass-date {
+    margin-left: auto;
+    color: var(--white);
+  }
+
+  .rg-form,
+  .rg-ok {
+    padding: var(--space-xl);
+  }
+
+  .rg-form[hidden],
+  .rg-ok[hidden] {
+    display: none;
+  }
+
+  .rg-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 var(--space-md);
+  }
+
+  .rg-field {
+    margin-bottom: var(--space-lg);
+  }
+
+  .rg-field label,
+  .rg-set legend {
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 800;
+    color: #142749;
+  }
+
+  .rg-hint {
+    margin: -2px 0 8px;
+    font-size: var(--text-sm);
+    line-height: 1.4;
+    color: var(--gray-700);
+  }
+
+  .rg-hint-strong {
+    font-weight: 700;
+    color: var(--blue-deeper);
+  }
+
+  .rg-opt {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 7px;
+    font-size: 0.72em;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    vertical-align: 0.15em;
+    color: var(--gray-700);
+    border: 1.5px solid var(--gray-300);
+    border-radius: 999px;
+  }
+
+  .rg-field input,
+  .rg-field textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    font-family: var(--font-body);
+    font-size: max(16px, var(--text-base));
+    color: var(--black);
+    background: var(--cream-light);
+    border: 2px solid rgba(20, 39, 73, 0.22);
+    border-radius: var(--radius-md);
+    transition: border-color var(--duration-fast) var(--ease-default), box-shadow var(--duration-fast) var(--ease-default);
+  }
+
+  .rg-field textarea {
+    resize: vertical;
+    line-height: 1.5;
+  }
+
+  .rg-field input:focus-visible,
+  .rg-field textarea:focus-visible {
+    outline: none;
+    border-color: var(--blue-deeper);
+    box-shadow: 0 0 0 3px rgba(3, 109, 153, 0.3);
+  }
+
+  .rg-set {
+    margin: 0 0 var(--space-lg);
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+
+  /* Radio choices as tappable tiles */
+  .rg-tiles {
+    display: grid;
+    gap: 8px;
+  }
+
+  .rg-tiles-2 {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .rg-tiles-u18 {
+    grid-template-columns: minmax(0, 0.55fr) minmax(0, 1.45fr);
+  }
+
+  @media (min-width: 901px) {
+    .rg-know {
+      position: sticky;
+      top: calc(var(--nav-height) + var(--space-xl));
+    }
+  }
+
+  .rg-tile,
+  .rg-chip {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 52px;
+    padding: 10px 14px;
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 700;
+    line-height: 1.25;
+    color: #142749;
+    background: var(--cream-light);
+    border: 2px solid rgba(20, 39, 73, 0.18);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color var(--duration-fast) var(--ease-default), background var(--duration-fast) var(--ease-default), translate var(--duration-fast) var(--ease-default);
+  }
+
+  .rg-tile:hover,
+  .rg-chip:hover {
+    border-color: rgba(20, 39, 73, 0.45);
+  }
+
+  .rg-tile-quiet {
+    font-weight: 600;
+  }
+
+  /* The real input stays in place for focus and validation, just invisible */
+  .rg-tile input,
+  .rg-chip input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .rg-mark,
+  .rg-box {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    background: var(--white);
+    border: 2.5px solid #142749;
+  }
+
+  .rg-mark {
+    border-radius: 50%;
+  }
+
+  .rg-box {
+    border-radius: 6px;
+  }
+
+  .rg-mark::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--white);
+    scale: 0;
+    transition: scale var(--duration-fast) var(--ease-out-back);
+  }
+
+  .rg-box::after {
+    content: '';
+    width: 11px;
+    height: 6px;
+    margin-top: -3px;
+    border-left: 3px solid var(--white);
+    border-bottom: 3px solid var(--white);
+    rotate: -45deg;
+    scale: 0;
+    transition: scale var(--duration-fast) var(--ease-out-back);
+  }
+
+  .rg-tile:has(input:checked),
+  .rg-chip:has(input:checked) {
+    background: #fff1dc;
+    border-color: var(--orange-dark);
+  }
+
+  .rg-tile:has(input:checked) .rg-mark,
+  .rg-chip:has(input:checked) .rg-box {
+    background: var(--orange-dark);
+    border-color: var(--orange-dark);
+  }
+
+  .rg-tile:has(input:checked) .rg-mark::after,
+  .rg-chip:has(input:checked) .rg-box::after {
+    scale: 1;
+  }
+
+  .rg-tile:has(input:focus-visible),
+  .rg-chip:has(input:focus-visible) {
+    outline: 3px solid var(--blue-deeper);
+    outline-offset: 2px;
+  }
+
+  /* Checkboxes as chips that wrap */
+  .rg-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .rg-chip {
+    min-height: 48px;
+    padding: 8px 14px 8px 10px;
+    border-radius: 999px;
+  }
+
+  .rg-chip .rg-box {
+    width: 22px;
+    height: 22px;
+  }
+
+  .rg-err {
+    margin: 8px 0 0;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 800;
+    color: #b42318;
+  }
+
+  .rg-err[hidden] {
+    display: none;
+  }
+
+  .rg-chip:has(input[aria-invalid='true']) {
+    border-color: #b42318;
+  }
+
+  .rg-hp {
+    position: absolute;
+    clip-path: inset(50%);
+    opacity: 0;
+    pointer-events: none;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .rg-submit {
+    width: 100%;
+    min-height: 60px;
+    margin-top: var(--space-sm);
+    padding: var(--space-md) var(--space-lg);
+    background: var(--orange-dark);
+    border: 0;
+    cursor: pointer;
+  }
+
+  .rg-submit:hover {
+    background: #a95f10;
+  }
+
+  .rg-submit:focus-visible,
+  .rg-fallback a:focus-visible,
+  .rg-ok a:focus-visible,
+  .rg-share:focus-visible {
+    outline: 3px solid var(--blue-deeper);
+    outline-offset: 3px;
+  }
+
+  .rg-fallback {
+    margin: var(--space-sm) 0 0;
+    text-align: center;
+  }
+
+  .rg-fallback a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 44px;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--blue-deeper);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .rg-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* ---- After submit ---- */
+  .rg-ok {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    text-align: center;
+    padding-top: var(--space-2xl);
+    padding-bottom: var(--space-2xl);
+  }
+
+  .rg-ok-stamp {
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--white);
+    background: var(--orange-dark);
+    border: 3px dashed #142749;
+    border-radius: 12px;
+    rotate: -8deg;
+    box-shadow: 4px 4px 0 #142749;
+    animation: stamp-in 0.45s var(--ease-out-back) backwards;
+    --tilt: -8deg;
+  }
+
+  .rg-ok-head {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 900;
+    line-height: 1.1;
+    color: #142749;
+  }
+
+  .rg-ok-head:focus {
+    outline: none;
+  }
+
+  .rg-ok-body {
+    max-width: 30em;
+    margin: 0;
+    font-size: var(--text-base);
+    color: var(--gray-700);
+  }
+
+  .rg-ok-cal {
+    margin: 0;
+  }
+
+  .rg-ok-cal a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--blue-deeper);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .rg-ok-cal a[hidden] {
+    display: none;
+  }
+
+  .rg-share {
+    max-width: 100%;
+    font-size: var(--text-sm);
+    white-space: normal;
+    color: var(--blue-deeper);
+    border-color: var(--blue-deeper);
+  }
+
+  .rg-share:hover {
+    color: var(--white);
+    background: var(--blue-deeper);
+  }
+
+  .rg-share-check {
+    display: none;
+    font-weight: 900;
+  }
+
+  .rg-share.copied .rg-share-check {
+    display: inline;
+  }
+
+  /* ---- Good to Know: three taped notes beside the form ---- */
+  .rg-know-head {
+    margin: 0 0 var(--space-lg);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #9a4f08;
+  }
+
+  .rg-notes {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .rg-notecard {
+    position: relative;
+    padding: var(--space-lg) var(--space-lg) var(--space-md);
+    background: var(--cream-light);
+    box-shadow: var(--shadow-md);
+    rotate: var(--tilt, 0deg);
+  }
+
+  .rg-notecard::before {
+    content: '';
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    width: 64px;
+    height: 18px;
+    transform: translateX(-50%) rotate(-3deg);
+    background: rgba(245, 208, 138, 0.85);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+  }
+
+  .rg-notecard h4 {
+    margin: 0 0 4px;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 900;
+    line-height: 1.15;
+    color: #142749;
+  }
+
+  .rg-notecard p {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--gray-700);
+  }
+
+  @media (max-width: 900px) {
+    .rg {
+      padding: var(--space-2xl) 0;
+    }
+
+    .rg-grid {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        'intro'
+        'card'
+        'know';
+      gap: var(--space-xl);
+    }
+
+    .rg-notes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .rg-pass,
+    .rg-form,
+    .rg-ok {
+      padding-left: var(--space-md);
+      padding-right: var(--space-md);
+    }
+
+    .rg-row,
+    .rg-tiles-2,
+    .rg-tiles-u18 {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rg-ok-stamp {
+      animation: none;
+    }
+  }
+</style>

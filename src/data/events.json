@@ -526,5 +526,32 @@
     "sponsor": "25th Ward Office and SGA Youth & Family Services",
     "source": "https://www.instagram.com/25thwardoffice/p/Df7q7cyDxDN/",
     "expires": "2026-11-24"
+  },
+  {
+    "id": "meetup-2026-12-02-springfield-lobby-day",
+    "kind": "meetup",
+    "title": {
+      "en": "Springfield Lobby Day",
+      "es": "Día de Cabildeo en Springfield"
+    },
+    "line": {
+      "en": "Ride the bus to the State Capitol and lobby lawmakers for fully funded schools. The bus leaves at 6:00 AM sharp and returns that evening. Seats are limited, so register now.",
+      "es": "Súbete al autobús al Capitolio estatal y cabildea a los legisladores por escuelas plenamente financiadas. El autobús sale a las 6:00 AM en punto y regresa esa noche. Los asientos son limitados: regístrate ya."
+    },
+    "start": "2026-12-02T06:00:00-06:00",
+    "end": null,
+    "location": {
+      "en": "25th Ward IPO office",
+      "es": "Oficina del 25th Ward IPO"
+    },
+    "address": "2102 W Cermak Rd, Chicago",
+    "rsvp": "https://docs.google.com/forms/d/e/1FAIpQLSduq6GJUMgqyfdRicBZ2Ovgatj63o-hMDKqTizlw7fW2QZQow/viewform",
+    "action": {
+      "en": "RSVP",
+      "es": "Confirmar asistencia"
+    },
+    "sponsor": null,
+    "source": "https://docs.google.com/forms/d/e/1FAIpQLSduq6GJUMgqyfdRicBZ2Ovgatj63o-hMDKqTizlw7fW2QZQow/viewform",
+    "expires": "2026-12-02"
   }
 ]

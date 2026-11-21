@@ -1,0 +1,375 @@
+---
+// /lobbyday/ "How the Day Goes": the route from the 25th Ward IPO to the
+// State Capitol and back, as three stops on a road with a bus that drives it
+// as you scroll. Only stop 1 has a clock time (the source gives no other).
+// Road signs carry the cities (lobbyday.route_from / route_to); stop 1's time
+// sits on a departure-board plate.
+// Layout: three columns on wide screens (road runs left to right), a column on
+// phones (road runs down the left edge). Each stop draws the road segment to
+// the next one, so the road always ends at the last stop.
+// Motion: static by default, with every stop lit and the bus parked at stop 1.
+// The script (not under reduced motion) moves the bus by scroll progress and
+// lights each stop as the bus reaches it.
+import Bus from './Bus.astro';
+---
+
+<section class="lr" id="the-day" aria-labelledby="lr-head">
+  <div class="container-wide lr-wrap">
+    <h2 class="lr-head" id="lr-head"><span data-i18n="lobbyday.day_head">How the Day Goes</span></h2>
+
+    <div class="lr-track" data-lr>
+      <span class="lr-bus" data-lr-bus aria-hidden="true"><Bus width={46} /></span>
+      <ol class="lr-stops" role="list">
+        <li class="lr-stop" data-lr-stop>
+          <span class="lr-node" aria-hidden="true"></span>
+          <div class="lr-body">
+            <p class="lr-sign"><span data-i18n="lobbyday.route_from">Chicago</span></p>
+            <p class="lr-when lr-when-board"><span data-i18n="lobbyday.stop1_when">6:00 AM sharp</span></p>
+            <h3 class="lr-title" data-i18n="lobbyday.stop1_title">The bus leaves the 25th Ward IPO</h3>
+            <p class="lr-text" data-i18n="lobbyday.stop1_body">2102 W Cermak Rd, Chicago. Register first: seats are limited.</p>
+          </div>
+        </li>
+        <li class="lr-stop" data-lr-stop>
+          <span class="lr-node" aria-hidden="true"></span>
+          <div class="lr-body">
+            <p class="lr-sign lr-sign-to"><span data-i18n="lobbyday.route_to">Springfield</span></p>
+            <p class="lr-when"><span data-i18n="lobbyday.stop2_when">At the State Capitol</span></p>
+            <h3 class="lr-title" data-i18n="lobbyday.stop2_title">Educate. Agitate. Lobby.</h3>
+            <p class="lr-text" data-i18n="lobbyday.stop2_body">The veto session is on. We lobby lawmakers for fully funded schools for our students and young people.</p>
+          </div>
+        </li>
+        <li class="lr-stop" data-lr-stop>
+          <span class="lr-node" aria-hidden="true"></span>
+          <div class="lr-body">
+            <p class="lr-sign"><span data-i18n="lobbyday.route_from">Chicago</span></p>
+            <p class="lr-when"><span data-i18n="lobbyday.stop3_when">That evening</span></p>
+            <h3 class="lr-title" data-i18n="lobbyday.stop3_title">The bus comes home</h3>
+            <p class="lr-text" data-i18n="lobbyday.stop3_body">We return to Chicago that evening.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { REDUCED } from '../../scripts/motion.js';
+
+  const track = document.querySelector<HTMLElement>('[data-lr]');
+  const bus = track?.querySelector<HTMLElement>('[data-lr-bus]');
+  const stops = track ? Array.from(track.querySelectorAll<HTMLElement>('[data-lr-stop]')) : [];
+
+  if (track && bus && stops.length > 1 && !REDUCED.matches) {
+    let ticking = false;
+    let points: { x: number; y: number }[] = [];
+
+    // Node centers relative to the track, measured fresh on resize.
+    const measure = () => {
+      const t = track.getBoundingClientRect();
+      points = stops.map((s) => {
+        const n = s.querySelector('.lr-node')!.getBoundingClientRect();
+        return { x: n.left + n.width / 2 - t.left, y: n.top + n.height / 2 - t.top };
+      });
+    };
+
+    const update = () => {
+      ticking = false;
+      const r = track.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const horizontal = points[points.length - 1].y - points[0].y < 20;
+      // Wide: the trip plays while the road crosses the lower half of the
+      // screen. Phone: the bus keeps pace with a line at 60% of the screen.
+      const p = horizontal
+        ? (vh * 0.85 - r.top) / (vh * 0.55)
+        : (vh * 0.6 - (r.top + points[0].y)) / Math.max(1, points[points.length - 1].y - points[0].y);
+      const prog = Math.min(Math.max(p, 0), 1);
+      const seg = prog * (points.length - 1);
+      const i = Math.min(Math.floor(seg), points.length - 2);
+      const f = seg - i;
+      const a = points[i];
+      const b = points[i + 1];
+      bus.style.setProperty('--x', `${a.x + (b.x - a.x) * f}px`);
+      bus.style.setProperty('--y', `${a.y + (b.y - a.y) * f}px`);
+      stops.forEach((s, k) => s.classList.toggle('is-reached', seg >= k - 0.02));
+      bus.classList.toggle('is-moving', prog > 0 && prog < 1);
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+
+    measure();
+    track.classList.add('lr-live');
+    update();
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', () => {
+      measure();
+      onScroll();
+    }, { passive: true });
+    document.addEventListener('bsl:langchange', () => {
+      measure();
+      onScroll();
+    });
+  }
+</script>
+
+<style>
+  .lr {
+    --lr-navy: #142749;
+    --lr-gap: var(--space-xl);
+    --lr-node: 30px;
+    position: relative;
+    padding: var(--space-3xl) 0 var(--space-4xl);
+    background:
+      linear-gradient(rgba(20, 39, 73, 0.045) 1px, transparent 1px) 0 0 / 40px 40px,
+      linear-gradient(90deg, rgba(20, 39, 73, 0.045) 1px, transparent 1px) 0 0 / 40px 40px,
+      var(--cream-light);
+    border-top: 4px solid var(--lr-navy);
+  }
+
+  .lr-wrap {
+    max-width: 1200px;
+  }
+
+  .lr-head {
+    margin: 0 0 var(--space-2xl);
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--lr-navy);
+    text-shadow: 0.05em 0.05em 0 var(--orange);
+  }
+
+  .lr-track {
+    position: relative;
+  }
+
+  .lr-stops {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--lr-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lr-stop {
+    position: relative;
+    padding-top: calc(var(--lr-node) + var(--space-lg));
+  }
+
+  /* The road to the next stop: asphalt with a dashed center line */
+  .lr-stop:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--lr-node) / 2 - 7px);
+    left: calc(var(--lr-node) / 2);
+    width: calc(100% + var(--lr-gap));
+    height: 14px;
+    background:
+      repeating-linear-gradient(90deg, var(--gold-soft) 0 16px, transparent 16px 30px) 0 50% / 100% 2px no-repeat,
+      var(--lr-navy);
+    border-radius: 7px;
+  }
+
+  .lr-node {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: var(--lr-node);
+    height: var(--lr-node);
+    background: var(--orange);
+    border: 4px solid var(--lr-navy);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px var(--cream-light);
+    transition: background var(--duration-normal) var(--ease-default), scale var(--duration-normal) var(--ease-out-back);
+  }
+
+  /* With the script running, stops light up as the bus reaches them */
+  .lr-live .lr-node {
+    background: var(--cream-light);
+  }
+
+  .lr-live .is-reached .lr-node {
+    background: var(--orange);
+    scale: 1.12;
+  }
+
+  .lr-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding-right: var(--space-md);
+  }
+
+  /* Highway sign */
+  .lr-sign {
+    margin: 0;
+    padding: 4px;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--white);
+    background: var(--blue-deeper);
+    border-radius: 8px;
+    box-shadow: 3px 3px 0 var(--lr-navy);
+  }
+
+  .lr-sign span {
+    display: block;
+    padding: 7px 14px 6px;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+  }
+
+  .lr-sign-to {
+    background: var(--lr-navy);
+    box-shadow: 3px 3px 0 var(--orange);
+  }
+
+  .lr-when {
+    margin: var(--space-xs) 0 0;
+    padding: 4px 10px 3px;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--lr-navy);
+    border: 2.5px dashed var(--lr-navy);
+    border-radius: 6px;
+    rotate: -1.5deg;
+  }
+
+  /* Stop 1's time on a departure-board plate */
+  .lr-when-board {
+    padding: 6px 12px 5px;
+    font-size: var(--text-base);
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+    color: var(--gold-soft);
+    background: linear-gradient(180deg, #24385e 0 50%, #1c2f52 50% 100%);
+    border: 0;
+    box-shadow: 3px 3px 0 var(--orange);
+    rotate: 0deg;
+  }
+
+  .lr-title {
+    margin: var(--space-xs) 0 0;
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--lr-navy);
+  }
+
+  .lr-text {
+    margin: 0;
+    max-width: 30em;
+    font-size: var(--text-base);
+    line-height: 1.55;
+    color: var(--gray-700);
+  }
+
+  /* The bus token, parked at stop 1 until the script drives it */
+  .lr-bus {
+    --x: calc(var(--lr-node) / 2);
+    --y: calc(var(--lr-node) / 2);
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 46px;
+    margin: -23px 0 0 -32px;
+    translate: var(--x) var(--y);
+    background: var(--cream-light);
+    border: 3px solid var(--lr-navy);
+    border-radius: 12px;
+    box-shadow: 3px 4px 0 rgba(20, 39, 73, 0.35);
+    pointer-events: none;
+  }
+
+  .lr-live .lr-bus {
+    transition: translate 0.25s linear;
+  }
+
+  .lr-bus :global(svg) {
+    display: block;
+  }
+
+  .lr-bus.is-moving :global(svg) {
+    animation: lr-rumble 0.35s ease-in-out infinite alternate;
+  }
+
+  @keyframes lr-rumble {
+    from { translate: 0 0; }
+    to { translate: 0 -1.5px; }
+  }
+
+  /* Phones: the road runs down the left edge */
+  @media (max-width: 860px) {
+    .lr {
+      padding: var(--space-2xl) 0 var(--space-3xl);
+    }
+
+    .lr-head {
+      margin-bottom: var(--space-xl);
+    }
+
+    .lr-stops {
+      grid-template-columns: minmax(0, 1fr);
+      --lr-gap: var(--space-2xl);
+    }
+
+    .lr-stop {
+      padding-top: 0;
+      padding-left: calc(var(--lr-node) + var(--space-xl) + 8px);
+    }
+
+    .lr-stop:not(:last-child)::before {
+      top: calc(var(--lr-node) / 2);
+      left: calc(var(--lr-node) / 2 - 7px);
+      width: 14px;
+      height: calc(100% + var(--lr-gap));
+      background:
+        repeating-linear-gradient(180deg, var(--gold-soft) 0 16px, transparent 16px 30px) 50% 0 / 2px 100% no-repeat,
+        var(--lr-navy);
+    }
+
+    .lr-bus {
+      width: 50px;
+      height: 38px;
+      margin: -19px 0 0 -25px;
+    }
+
+    .lr-bus :global(svg) {
+      width: 36px;
+      height: auto;
+    }
+
+    .lr-body {
+      padding-right: 0;
+    }
+
+    .lr-title {
+      font-size: var(--text-xl);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lr-bus.is-moving :global(svg) {
+      animation: none;
+    }
+  }
+</style>

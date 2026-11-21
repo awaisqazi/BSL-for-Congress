@@ -1,0 +1,28 @@
+---
+// Bot-check slot for one form: where the Turnstile widget appears (most
+// people never see it), plus the status and error lines. Renders nothing
+// unless the bot check is on at build time (see src/scripts/guard.js), so
+// with the flag off the form markup is exactly what it was.
+// Styles are inline on purpose: with the flag off, no CSS ships for this.
+import { enabled } from '../scripts/guard.js';
+
+interface Props {
+  tone?: 'light' | 'dark';
+}
+const { tone = 'light' } = Astro.props;
+const fg = tone === 'dark' ? 'rgba(251, 226, 186, 0.85)' : 'var(--gray-700, #4a4a4a)';
+const err = tone === 'dark' ? '#ffb4a8' : '#b42318';
+---
+
+{enabled && (
+  <div class="guard-slot" data-guard-slot style="margin: 0 0 12px;">
+    <div data-guard-widget style="max-width: 100%;"></div>
+    <p data-guard-status role="status" style={`margin: 4px 0 0; font-size: 0.875rem; color: ${fg};`}></p>
+    <p data-guard-error role="alert" style={`margin: 4px 0 0; font-size: 0.9375rem; font-weight: 700; color: ${err};`}></p>
+    <span hidden data-guard-msg="checking" data-i18n="guard.checking">Checking that you are a person...</span>
+    <span hidden data-guard-msg="sending" data-i18n="guard.sending">Sending...</span>
+    <span hidden data-guard-msg="failed" data-i18n="guard.failed">We could not send that. Please try again.</span>
+    <span hidden data-guard-msg="captcha_failed" data-i18n="guard.captcha_failed">We could not confirm that you are a person. Reload the page and try again.</span>
+    <noscript><p data-i18n="guard.noscript" style={`margin: 4px 0 0; font-weight: 700; color: ${err};`}>This form needs JavaScript turned on.</p></noscript>
+  </div>
+)}

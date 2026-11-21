@@ -1,0 +1,915 @@
+---
+// Springfield Lobby Day (Wed Dec 2, 2026) as a ticket for the ride: a navy
+// field with a faint highway running through it and a perforated lower edge,
+// the dashed stamp, the varsity headline, and a cream bus ticket that carries
+// the three facts nobody may miss (the day, 6:00 AM sharp, 2102 W Cermak Rd)
+// under a split-flap departure board. A sibling of FundraiserPoster: same
+// craft, its own motif.
+// One component, two places, so the styles are shared, not copied:
+//   variant="home": the home feature under the Hero. Its one button goes to
+//     /lobbyday/. Past the event day it renders nothing (build) and removes
+//     itself (browser, the morning after, Chicago time).
+//   variant="page": the hero of /lobbyday/. The button scrolls to the
+//     registration form (#register), with the calendar links; past the event
+//     day those go and the "has passed" line shows instead. The page script in
+//     src/pages/lobbyday.astro does that swap in the browser.
+// Facts come from the events.json entry through ./facts.js, which also guards
+// the baked copy. Strings: lobbyday.* (and fundraiser.cal_add,
+// fundraiser.passed) in src/i18n/en.json and es.json, English baked in.
+// Motion: the page plays on load (CSS only); home plays when scrolled into view
+// (motion.js observeNew). Without the script, or under reduced motion,
+// everything is static and complete.
+import { icsPath, mapHref, startDate } from '../../data/events.js';
+import { ev, live, guard, departTime } from './facts.js';
+import Countdown from '../Countdown.astro';
+import Bus from './Bus.astro';
+
+interface Props {
+  variant?: 'home' | 'page';
+}
+const { variant = 'home' } = Astro.props;
+guard();
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const isPage = variant === 'page';
+const render = Boolean(ev) && (isPage || live);
+const Head = isPage ? 'h1' : 'h2';
+const headId = `lt-head-${variant}`;
+const map = ev ? mapHref(ev) : null;
+
+// Departure board tiles, from the entry's start ("6:00 AM" -> 0 6 : 0 0 AM).
+const [clock, period] = ev ? departTime(ev).split(' ') : ['', ''];
+const [hh, mm] = clock.split(':');
+const tiles = ev ? [...hh.padStart(2, '0'), ':', ...mm] : [];
+---
+
+{render && ev && (
+  <section
+    class:list={['lt', `lt-${variant}`, { 'lt-play': isPage }]}
+    id={isPage ? undefined : 'lobby-day'}
+    aria-labelledby={headId}
+    data-lt={variant}
+    data-expires={!isPage ? ev.expires : undefined}
+  >
+    <div class="lt-field">
+      <svg class="lt-road" viewBox="0 0 1200 600" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <path class="lt-road-bed" d="M-60 520 C 260 470, 380 250, 640 230 S 1040 120, 1260 40" />
+        <path class="lt-road-dash" d="M-60 520 C 260 470, 380 250, 640 230 S 1040 120, 1260 40" />
+      </svg>
+
+      <div class="lt-grid container-wide">
+        <p class="lt-stamp lt-a lt-a-stamp"><span class="lt-stamp-in" data-i18n="lobbyday.stamp">Springfield Lobby Day</span></p>
+
+        <div class="lt-headwrap">
+          <Head class="lt-head" id={headId}>
+            <span class="lt-l lt-l1 lt-a lt-a-l1" data-i18n="lobbyday.head_l1">Tax the Rich.</span>
+            <span class="lt-l lt-l2 lt-a lt-a-l2" data-i18n="lobbyday.head_l2">Fund Our Schools.</span>
+          </Head>
+        </div>
+
+        {isPage && <p class="lt-lead lt-a lt-a-lead" data-i18n="lobbyday.lead">On Wednesday, December 2, we are taking a bus to the State Capitol during the veto session to educate, agitate and lobby lawmakers for fully funded schools for our students and young people.</p>}
+
+        <div class="lt-ticket lt-a lt-a-ticket">
+          <span class="lt-tape" aria-hidden="true"></span>
+          <div class="lt-main">
+            <p class="lt-route">
+              <span class="lt-city" data-i18n="lobbyday.route_from">Chicago</span>
+              <span class="lt-way" aria-hidden="true"><span class="lt-way-line"></span><Bus class="lt-way-bus" width={40} /></span>
+              <span class="lt-city" data-i18n="lobbyday.route_to">Springfield</span>
+            </p>
+
+            <div class="lt-board" aria-hidden="true">
+              {tiles.map((c, i) => (
+                <span class:list={['lt-tile', { 'lt-colon': c === ':' }]} style={`--t: ${i}`}><span class="lt-tile-in">{c}</span></span>
+              ))}
+              <span class="lt-tile lt-tile-ap" style={`--t: ${tiles.length}`}><span class="lt-tile-in">{period}</span></span>
+            </div>
+
+            <ul class="lt-facts" role="list">
+              <li class="lt-fact lt-fact-date">
+                <svg class="lt-ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+                <span class="lt-fact-text">
+                  <time datetime={startDate(ev)} data-i18n="lobbyday.date_long">Wednesday, December 2</time>
+                  {live && <span class="lt-cd"><Countdown start={ev.start} variant="page" delay={isPage ? 1.3 : 0} /></span>}
+                </span>
+              </li>
+              <li class="lt-fact lt-fact-depart">
+                <svg class="lt-ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+                <span class="lt-fact-text"><span class="lt-hl" data-i18n="lobbyday.depart">Bus leaves at 6:00&nbsp;AM sharp</span></span>
+              </li>
+              <li class="lt-fact lt-fact-venue">
+                <svg class="lt-ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                {isPage && map ? (
+                  <a class="lt-fact-text lt-map" href={map} target="_blank" rel="noopener noreferrer"><span data-i18n="lobbyday.venue">25th Ward IPO · 2102 W Cermak Rd, Chicago</span><span class="lt-sr" data-i18n="promo.new_tab">(opens in a new tab)</span></a>
+                ) : (
+                  <span class="lt-fact-text" data-i18n="lobbyday.venue">25th Ward IPO · 2102 W Cermak Rd, Chicago</span>
+                )}
+              </li>
+              <li class="lt-fact lt-fact-back">
+                <svg class="lt-ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>
+                <span class="lt-fact-text" data-i18n="lobbyday.back">Back that evening</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="lt-perf" aria-hidden="true"></div>
+
+          <div class="lt-stub">
+            {live && (
+              <div class="lt-live" data-ld-live>
+                <p class="lt-seats" data-i18n="lobbyday.seats">Seats are limited. Register now.</p>
+                {isPage ? (
+                  <a class="btn btn-orange btn-massive lt-cta" href="#register"><span data-i18n="lobbyday.cta">Save My Seat</span></a>
+                ) : (
+                  <a class="btn btn-orange btn-massive lt-cta" href={`${base}/lobbyday/`}><span data-i18n="lobbyday.cta_home">Get on the Bus</span></a>
+                )}
+                {isPage && (
+                  <p class="lt-cal">
+                    <a data-lang="en" href={`${base}${icsPath(ev, 'en')}`}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+                      <span data-i18n="fundraiser.cal_add">Add to calendar</span>
+                    </a>
+                    <a data-lang="es" hidden href={`${base}${icsPath(ev, 'es')}`}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+                      <span data-i18n="fundraiser.cal_add">Add to calendar</span>
+                    </a>
+                  </p>
+                )}
+              </div>
+            )}
+            {isPage && (
+              <p class="lt-passed" data-ld-passed hidden={live ? true : undefined}>
+                <a href={`${base}/volunteer/#show-up`}><span data-i18n="fundraiser.passed">This one has passed. See what is coming up.</span> <span aria-hidden="true">→</span></a>
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+{live && ev && !isPage && (
+  <script is:inline define:vars={{ EXPIRES: ev.expires }}>
+    // The morning after (Chicago time) the home feature removes itself, even
+    // with no redeploy.
+    (function () {
+      var root = document.querySelector('[data-lt="home"]');
+      if (!root) return;
+      var today = '';
+      try {
+        today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+      } catch (e) {
+        today = '';
+      }
+      var past = /^\d{4}-\d{2}-\d{2}$/.test(today) ? today > EXPIRES : Date.now() > new Date(EXPIRES + 'T23:59:59').getTime();
+      if (past) root.remove();
+    })();
+  </script>
+)}
+
+{live && !isPage && (
+  <script>
+    // Home: arm the entrance only when the feature starts below the fold, then
+    // play it when it scrolls in (the shared reveal observer in motion.js adds
+    // .visible). Already on screen, reduced motion, or no script: it stays static.
+    import { observeNew, REDUCED } from '../../scripts/motion.js';
+    const root = document.querySelector<HTMLElement>('[data-lt="home"]');
+    if (root && !REDUCED.matches && root.getBoundingClientRect().top > window.innerHeight * 0.85) {
+      root.classList.add('lt-armed');
+      observeNew(root);
+    }
+  </script>
+)}
+
+<style>
+  .lt {
+    --lt-navy: #142749;
+    --lt-ink: #142749;
+    --lt-paper: var(--cream-light);
+    --lt-bite: 11px;
+    position: relative;
+    color: var(--white);
+    background: var(--cream);
+  }
+
+  /* Navy field, a faint highway through it, a perforated (bitten) lower edge */
+  .lt-field {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(120% 90% at 85% 0%, rgba(5, 173, 237, 0.16), transparent 60%),
+      linear-gradient(180deg, #172d55 0%, var(--lt-navy) 70%);
+    padding: var(--space-2xl) 0 calc(var(--space-2xl) + var(--lt-bite));
+  }
+
+  .lt-field::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: calc(var(--lt-bite) + 1px);
+    background: radial-gradient(circle at 50% 100%, var(--cream) calc(var(--lt-bite) - 0.5px), transparent var(--lt-bite)) 0 0 / calc(var(--lt-bite) * 2.6) 100% repeat-x;
+    pointer-events: none;
+  }
+
+  .lt-page .lt-field {
+    padding-top: calc(var(--nav-height) + var(--space-xl));
+  }
+
+  .lt-road {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .lt-road-bed {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.05);
+    stroke-width: 90;
+  }
+
+  .lt-road-dash {
+    fill: none;
+    stroke: rgba(245, 208, 138, 0.22);
+    stroke-width: 4;
+    stroke-dasharray: 26 22;
+  }
+
+  .lt-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    grid-template-areas:
+      '. ticket'
+      'stamp ticket'
+      'head ticket'
+      'lead ticket'
+      '. ticket';
+    grid-template-rows: 1fr auto auto auto 1fr;
+    column-gap: var(--space-3xl);
+    row-gap: var(--space-md);
+    align-items: start;
+  }
+
+  /* ---- Stamp ---- */
+  .lt-stamp {
+    grid-area: stamp;
+    justify-self: start;
+    max-width: 100%;
+    margin: var(--space-md) 0 0;
+    padding: 5px;
+    background: var(--gold-soft);
+    border-radius: 8px;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.35);
+    rotate: -3deg;
+    --tilt: -3deg;
+  }
+
+  .lt-stamp-in {
+    display: block;
+    padding: 7px 14px 6px;
+    border: 3px dashed var(--lt-navy);
+    border-radius: 5px;
+    font-family: var(--font-display);
+    font-size: clamp(0.95rem, 0.8rem + 0.7vw, 1.35rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--lt-navy);
+  }
+
+  /* ---- Varsity headline: may wrap (Spanish is longer), never shrinks to nothing ---- */
+  .lt-headwrap {
+    grid-area: head;
+    container-type: inline-size;
+    min-width: 0;
+  }
+
+  .lt-head {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 900;
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+  }
+
+  .lt-l {
+    display: block;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+
+  .lt-l1 {
+    font-size: clamp(2.6rem, 13cqi, 6.4rem);
+    color: var(--white);
+    text-shadow:
+      0.012em 0.012em 0 var(--orange), 0.024em 0.024em 0 var(--orange), 0.036em 0.036em 0 var(--orange),
+      0.048em 0.048em 0 var(--orange), 0.06em 0.06em 0 var(--orange);
+  }
+
+  .lt-l2 {
+    margin-top: 0.12em;
+    font-size: clamp(2.1rem, 10.2cqi, 5rem);
+    color: var(--blue);
+    text-shadow:
+      0.012em 0.012em 0 var(--cream-light), 0.024em 0.024em 0 var(--cream-light), 0.036em 0.036em 0 var(--cream-light),
+      0.048em 0.048em 0 var(--cream-light), 0.06em 0.06em 0 var(--cream-light);
+  }
+
+  .lt-lead {
+    grid-area: lead;
+    max-width: 36em;
+    margin: var(--space-sm) 0 0;
+    font-size: var(--text-lg);
+    line-height: 1.55;
+    color: var(--cream-light);
+  }
+
+  /* ---- The ticket ---- */
+  .lt-ticket {
+    grid-area: ticket;
+    align-self: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    color: var(--lt-ink);
+    background: var(--lt-paper);
+    border-radius: 18px;
+    box-shadow: 0 22px 44px rgba(0, 0, 0, 0.45), 0 2px 4px rgba(0, 0, 0, 0.3);
+    rotate: 1.5deg;
+    --tilt: 1.5deg;
+  }
+
+  .lt-tape {
+    position: absolute;
+    z-index: 2;
+    top: -13px;
+    left: 18%;
+    width: 30%;
+    height: 28px;
+    rotate: -6deg;
+    background: rgba(245, 208, 138, 0.88);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+  }
+
+  .lt-main {
+    padding: var(--space-xl) var(--space-xl) var(--space-lg);
+  }
+
+  .lt-route {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 var(--space-md);
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--lt-ink);
+  }
+
+  .lt-city {
+    flex: none;
+  }
+
+  .lt-way {
+    position: relative;
+    flex: 1;
+    min-width: 60px;
+    height: 24px;
+  }
+
+  .lt-way-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    border-top: 3px dashed rgba(20, 39, 73, 0.4);
+  }
+
+  .lt-way :global(.lt-way-bus) {
+    position: absolute;
+    top: 50%;
+    left: calc(50% - 20px);
+    translate: 0 -55%;
+  }
+
+  /* Split-flap departure board */
+  .lt-board {
+    display: flex;
+    align-items: stretch;
+    gap: 6px;
+    width: max-content;
+    max-width: 100%;
+    margin: 0 0 var(--space-lg);
+    padding: 10px;
+    background: #0d1a31;
+    border-radius: 12px;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6), 4px 4px 0 var(--orange);
+    perspective: 400px;
+  }
+
+  .lt-tile {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-width: 1.05em;
+    padding: 0.06em 0.12em 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 2rem + 2.6vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+    color: var(--gold-soft);
+    background: linear-gradient(180deg, #24385e 0 50%, #1c2f52 50% 100%);
+    border-radius: 6px;
+  }
+
+  /* The split in the middle of each flap */
+  .lt-tile::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 2px;
+    background: #0d1a31;
+  }
+
+  .lt-tile-in {
+    display: block;
+    transform-origin: 50% 50%;
+  }
+
+  .lt-colon {
+    min-width: 0;
+    padding: 0;
+    background: none;
+  }
+
+  .lt-colon::after {
+    display: none;
+  }
+
+  .lt-tile-ap {
+    align-self: stretch;
+    margin-left: 4px;
+    font-size: clamp(1.3rem, 1rem + 1.2vw, 1.9rem);
+    color: var(--white);
+  }
+
+  .lt-facts {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lt-fact {
+    display: grid;
+    grid-template-columns: 26px minmax(0, 1fr);
+    align-items: start;
+    column-gap: 12px;
+    font-family: var(--font-display);
+    line-height: 1.2;
+  }
+
+  .lt-ico {
+    margin-top: 2px;
+    color: var(--orange-dark);
+  }
+
+  .lt-fact-text {
+    min-width: 0;
+  }
+
+  .lt-fact-date .lt-fact-text {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 12px;
+    font-size: var(--text-2xl);
+    font-weight: 900;
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+
+  .lt-fact-date .lt-ico {
+    margin-top: 4px;
+  }
+
+  /* After the start the chip hides; here it may give its space back */
+  .lt-cd:has(:global(.is-over)) {
+    display: none;
+  }
+
+  .lt-cd {
+    display: inline-flex;
+    font-size: 1rem;
+    line-height: 1;
+    text-transform: none;
+  }
+
+  .lt-fact-depart .lt-fact-text {
+    font-size: var(--text-xl);
+    font-weight: 900;
+  }
+
+  .lt-hl {
+    background: linear-gradient(transparent 60%, rgba(230, 136, 28, 0.38) 60% 94%, transparent 94%);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .lt-fact-venue .lt-fact-text {
+    font-size: var(--text-lg);
+    font-weight: 800;
+  }
+
+  .lt-map {
+    display: inline-block;
+    padding: 10px 0;
+    margin: -10px 0;
+    color: var(--blue-deeper);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: rgba(3, 109, 153, 0.45);
+    text-underline-offset: 4px;
+  }
+
+  .lt-map:hover {
+    color: var(--lt-ink);
+    text-decoration-color: var(--orange);
+  }
+
+  .lt-fact-back .lt-fact-text {
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--gray-700);
+  }
+
+  .lt-fact-back .lt-ico {
+    color: var(--gray-500);
+  }
+
+  /* Perforation with punched notches on both edges */
+  .lt-perf {
+    position: relative;
+    height: 0;
+    margin: 0 18px;
+    border-top: 3px dashed rgba(20, 39, 73, 0.3);
+  }
+
+  .lt-perf::before,
+  .lt-perf::after {
+    content: '';
+    position: absolute;
+    top: -15px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--lt-navy);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.35);
+  }
+
+  .lt-perf::before { left: -33px; }
+  .lt-perf::after { right: -33px; }
+
+  .lt-stub {
+    padding: var(--space-lg) var(--space-xl) var(--space-xl);
+  }
+
+  .lt-live {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-sm);
+  }
+
+  .lt-seats {
+    margin: 0 0 4px;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #9a4f08;
+    text-wrap: balance;
+  }
+
+  /* The darker orange keeps white button text at AA for large type */
+  .lt-cta {
+    width: 100%;
+    text-align: center;
+    text-wrap: balance;
+    min-height: 56px;
+    padding: var(--space-md) var(--space-xl);
+    background: var(--orange-dark);
+  }
+
+  .lt-cta:hover {
+    background: #a95f10;
+  }
+
+  .lt-cta:focus-visible,
+  .lt-map:focus-visible,
+  .lt-cal a:focus-visible,
+  .lt-passed a:focus-visible {
+    outline: 3px solid var(--blue-deeper);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  .lt-cal {
+    margin: 0;
+    text-align: center;
+  }
+
+  .lt-cal a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 0 6px;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--blue-deeper);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .lt-cal a[hidden] {
+    display: none;
+  }
+
+  .lt-cal a:hover {
+    color: var(--orange-dark);
+  }
+
+  .lt-passed {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 800;
+  }
+
+  .lt-passed[hidden] {
+    display: none;
+  }
+
+  .lt-passed a {
+    display: inline-block;
+    padding: 8px 0;
+    color: var(--blue-deeper);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .lt-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* ---- Home: shorter, and on wide screens the ticket lies on its side ---- */
+  .lt-home .lt-grid {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    grid-template-areas:
+      '. ticket'
+      'stamp ticket'
+      'head ticket'
+      '. ticket';
+    grid-template-rows: 1fr auto auto 1fr;
+    column-gap: var(--space-2xl);
+  }
+
+  .lt-home .lt-l1 { font-size: clamp(2.3rem, 12.5cqi, 4.8rem); }
+  .lt-home .lt-l2 { font-size: clamp(1.9rem, 10cqi, 3.9rem); }
+
+  @media (min-width: 1100px) {
+    .lt-home .lt-ticket {
+      flex-direction: row;
+      rotate: -1deg;
+      --tilt: -1deg;
+    }
+
+    .lt-home .lt-main {
+      flex: 1;
+      min-width: 0;
+      padding: var(--space-xl);
+    }
+
+    .lt-home .lt-tile {
+      font-size: 2.6rem;
+    }
+
+    .lt-home .lt-tile-ap {
+      font-size: 1.3rem;
+    }
+
+    .lt-home .lt-perf {
+      width: 0;
+      height: auto;
+      margin: 18px 0;
+      border-top: 0;
+      border-left: 3px dashed rgba(20, 39, 73, 0.3);
+    }
+
+    .lt-home .lt-perf::before,
+    .lt-home .lt-perf::after {
+      top: auto;
+      left: -15px;
+    }
+
+    .lt-home .lt-perf::before { top: -33px; }
+    .lt-home .lt-perf::after { bottom: -33px; right: auto; }
+
+    .lt-home .lt-stub {
+      display: flex;
+      align-items: center;
+      width: 290px;
+      flex: none;
+      padding: var(--space-xl) var(--space-lg);
+    }
+
+    .lt-home .lt-live {
+      width: 100%;
+    }
+
+    .lt-home .lt-cta {
+      font-size: var(--text-lg);
+      padding: var(--space-md) var(--space-sm);
+    }
+  }
+
+  /* ---- Motion ----
+     Static by default. .lt-play (page, on load) or .lt-armed.visible (home, on
+     scroll) runs it; .lt-armed before it is seen holds the pieces back. */
+  .lt-armed:not(.visible) .lt-a,
+  .lt-armed:not(.visible) .lt-tile-in {
+    opacity: 0;
+    animation: none;
+  }
+
+  .lt-play .lt-a-stamp,
+  .lt-armed.visible .lt-a-stamp {
+    animation: stamp-in 0.45s var(--ease-out-back) 0.15s backwards;
+  }
+
+  .lt-play .lt-a-l1,
+  .lt-armed.visible .lt-a-l1 {
+    animation: lt-punch 0.5s var(--ease-out-back) 0.3s backwards;
+  }
+
+  .lt-play .lt-a-l2,
+  .lt-armed.visible .lt-a-l2 {
+    animation: lt-punch 0.5s var(--ease-out-back) 0.45s backwards;
+  }
+
+  .lt-play .lt-a-lead {
+    animation: lt-land 0.5s var(--ease-default) 0.65s backwards;
+  }
+
+  /* The ticket is handed over */
+  .lt-play .lt-a-ticket,
+  .lt-armed.visible .lt-a-ticket {
+    animation: lt-hand 0.7s var(--ease-out-back) 0.1s backwards;
+  }
+
+  /* The board flips into place, one flap at a time */
+  .lt-play .lt-tile-in,
+  .lt-armed.visible .lt-tile-in {
+    animation: lt-flap 0.55s var(--ease-out-back) backwards;
+    animation-delay: calc(0.6s + var(--t, 0) * 0.11s);
+  }
+
+  /* The little bus pulls out across the route line */
+  .lt-play .lt-way :global(.lt-way-bus),
+  .lt-armed.visible .lt-way :global(.lt-way-bus) {
+    animation: lt-drive 1.4s var(--ease-default) 0.9s backwards;
+  }
+
+  @keyframes lt-punch {
+    from { opacity: 0; translate: 0 0.35em; scale: 0.9; }
+    to { opacity: 1; translate: 0 0; scale: 1; }
+  }
+
+  @keyframes lt-land {
+    from { opacity: 0; translate: 0 12px; }
+    to { opacity: 1; translate: 0 0; }
+  }
+
+  @keyframes lt-hand {
+    from { opacity: 0; translate: 40px 24px; rotate: calc(var(--tilt, 0deg) + 6deg); }
+    70% { opacity: 1; }
+    to { opacity: 1; translate: 0 0; rotate: var(--tilt, 0deg); }
+  }
+
+  @keyframes lt-flap {
+    0% { opacity: 0; transform: rotateX(-100deg); }
+    60% { opacity: 1; transform: rotateX(18deg); }
+    100% { opacity: 1; transform: rotateX(0deg); }
+  }
+
+  @keyframes lt-drive {
+    from { left: 0; opacity: 0; }
+    15% { opacity: 1; }
+    to { left: calc(50% - 20px); opacity: 1; }
+  }
+
+  /* ---- Tablet and phone: one column, the ticket right under the headline ---- */
+  @media (max-width: 900px) {
+    .lt-field {
+      padding: var(--space-xl) 0 calc(var(--space-2xl) + var(--lt-bite));
+    }
+
+    .lt-page .lt-field {
+      padding-top: calc(var(--nav-height) + var(--space-lg));
+    }
+
+    .lt-grid,
+    .lt-home .lt-grid {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        'stamp'
+        'head'
+        'ticket'
+        'lead';
+      grid-template-rows: auto;
+      row-gap: var(--space-md);
+    }
+
+    .lt-l1,
+    .lt-home .lt-l1 { font-size: clamp(2.3rem, 14cqi, 4.6rem); }
+
+    .lt-l2,
+    .lt-home .lt-l2 { font-size: clamp(1.9rem, 12cqi, 3.8rem); }
+
+    .lt-ticket {
+      margin-top: var(--space-lg);
+      rotate: 0.8deg;
+      --tilt: 0.8deg;
+    }
+
+    .lt-lead {
+      margin-top: var(--space-lg);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .lt-main {
+      padding: var(--space-lg) var(--space-md) var(--space-md);
+    }
+
+    .lt-stub {
+      padding: var(--space-md) var(--space-md) var(--space-lg);
+    }
+
+    .lt-route {
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      gap: 8px;
+    }
+
+    .lt-board {
+      gap: 4px;
+      padding: 8px;
+    }
+
+    .lt-tile {
+      font-size: 2.6rem;
+    }
+
+    .lt-perf {
+      margin: 0 14px;
+    }
+
+    .lt-perf::before { left: -29px; }
+    .lt-perf::after { right: -29px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lt .lt-a,
+    .lt .lt-tile-in,
+    .lt .lt-way :global(.lt-way-bus),
+    .lt-armed .lt-a,
+    .lt-armed .lt-tile-in {
+      opacity: 1;
+      animation: none !important;
+    }
+  }
+</style>

@@ -637,5 +637,63 @@
       },
       "href": "/#hero"
     }
+  },
+  {
+    "slug": "2026-12-02-springfield-lobby-day",
+    "date": "2026-11-21",
+    "kind": "event",
+    "title": {
+      "en": "Springfield Lobby Day, Wednesday December 2",
+      "es": "Día de Cabildeo en Springfield, miércoles 2 de diciembre"
+    },
+    "summary": {
+      "en": "On Wednesday, December 2 we are taking a bus to the State Capitol to lobby lawmakers for fully funded schools; it leaves the 25th Ward IPO, 2102 W Cermak Rd, at 6:00 AM sharp.",
+      "es": "El miércoles 2 de diciembre viajamos en autobús al Capitolio estatal para cabildear a los legisladores por escuelas plenamente financiadas; sale del 25th Ward IPO, 2102 W Cermak Rd, a las 6:00 AM en punto."
+    },
+    "body": {
+      "en": [
+        "Tax the rich. Fund our schools.",
+        "On Wednesday, December 2, we are taking a bus to the State Capitol during the veto session to educate, agitate and lobby lawmakers for fully funded schools for our students and young people.",
+        "The bus leaves the 25th Ward IPO, 2102 W Cermak Rd, at 6:00 AM sharp and returns that evening. Seats are limited, so register now. Give us your home address or ZIP code on the form and we match you with your state legislators.",
+        "Students, parents and guardians, educators and school staff, union members, community members: the form has a box for each of you. If you are under 18, a parent or guardian will need to sign a permission form. The form asks if you can chip in toward the bus, and no one will be turned away.",
+        "Getting to Springfield on your own? Register and say so. Can't go? Register anyway and we will keep you updated. Then knock doors with us."
+      ],
+      "es": [
+        "Que paguen los ricos. Financien nuestras escuelas.",
+        "El miércoles 2 de diciembre viajamos en autobús al Capitolio estatal durante la sesión de veto para educar, agitar y cabildear a los legisladores por escuelas plenamente financiadas para nuestros estudiantes y jóvenes.",
+        "El autobús sale del 25th Ward IPO, 2102 W Cermak Rd, a las 6:00 AM en punto y regresa esa noche. Los asientos son limitados: regístrate ya. Danos tu dirección o código postal en el formulario y te conectamos con tus legisladores estatales.",
+        "Estudiantes, madres, padres y tutores, educadores y personal escolar, miembros de sindicatos, miembros de la comunidad: el formulario tiene una casilla para cada quien. Si eres menor de 18 años, tu madre, padre o tutor deberá firmar un permiso. El formulario pregunta si puedes aportar para el autobús, y nadie se quedará fuera por falta de dinero.",
+        "¿Llegas a Springfield por tu cuenta? Regístrate y avísanos. ¿No puedes ir? Regístrate de todos modos y te mantenemos al tanto. Y después, toca puertas con nosotros."
+      ]
+    },
+    "event": {
+      "start": "2026-12-02T06:00:00-06:00",
+      "location": "25th Ward IPO, 2102 W Cermak Rd",
+      "rsvp": "https://docs.google.com/forms/d/e/1FAIpQLSduq6GJUMgqyfdRicBZ2Ovgatj63o-hMDKqTizlw7fW2QZQow/viewform"
+    },
+    "links": [
+      {
+        "label": {
+          "en": "See how the day goes",
+          "es": "Mira cómo va el día"
+        },
+        "href": "/lobbyday/"
+      },
+      {
+        "label": {
+          "en": "Knock doors with us",
+          "es": "Toca puertas con nosotros"
+        },
+        "href": "/volunteer#signup"
+      }
+    ],
+    "source": {
+      "label": {
+        "en": "Springfield Lobby Day registration form",
+        "es": "Formulario de registro del Día de Cabildeo en Springfield"
+      },
+      "href": "https://docs.google.com/forms/d/e/1FAIpQLSduq6GJUMgqyfdRicBZ2Ovgatj63o-hMDKqTizlw7fW2QZQow/viewform"
+    },
+    "expires": "2026-12-02"
   }
 ]

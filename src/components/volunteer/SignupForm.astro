@@ -1,4 +1,11 @@
 ---
+import GuardSlot from '../GuardSlot.astro';
+import { enabled as guardOn } from '../../scripts/guard.js';
+// Bot check on: the form posts through the forms gateway Worker, so the
+// Google Form URL and the hidden iframe stay out of the page.
+const formAttrs = guardOn
+  ? { method: 'post', 'data-guard': 'volunteer' }
+  : { action: 'https://docs.google.com/forms/d/e/1FAIpQLSeUKnQVp4auTqHdFZeDrGlAOYAjmOO0sE19Xm11Pee2ayuuWQ/formResponse', method: 'POST', target: 'hidden_iframe_volunteer' };
 ---
 
 <section class="signup-section section-padding" id="signup">
@@ -28,7 +35,7 @@
         <p class="signup-solidarity animate-in" data-i18n="volunteer.signoff">Solidarity!</p>
       </div>
 
-      <form class="signup-form animate-in" id="volunteer-form" data-action-bar-hide action="https://docs.google.com/forms/d/e/1FAIpQLSeUKnQVp4auTqHdFZeDrGlAOYAjmOO0sE19Xm11Pee2ayuuWQ/formResponse" method="POST" target="hidden_iframe_volunteer">
+      <form class="signup-form animate-in" id="volunteer-form" data-action-bar-hide {...formAttrs}>
         <div class="form-row">
           <div class="form-group">
             <label for="first-name" data-i18n="volunteer.label_first">First Name *</label>
@@ -126,7 +133,7 @@
           By submitting, you agree to receive periodic campaign updates via SMS. Message and data rates may apply. Text STOP to unsubscribe.
         </p>
 
-        <button type="submit" class="btn btn-orange btn-massive form-submit" data-i18n="volunteer.submit">
+        <GuardSlot /><button type="submit" class="btn btn-orange btn-massive form-submit" data-i18n="volunteer.submit">
           Count Me In
         </button>
         
@@ -152,7 +159,7 @@
             <span class="share-check" aria-hidden="true">✓</span>
           </button>
         </div>
-        <iframe name="hidden_iframe_volunteer" id="hidden_iframe_volunteer" style="display:none;"></iframe>
+        {!guardOn && <iframe name="hidden_iframe_volunteer" id="hidden_iframe_volunteer" style="display:none;"></iframe>}
       </form>
     </div>
   </div>
@@ -160,11 +167,30 @@
 
 <script>
   import { volunteer as saveVolunteer } from '../../scripts/supa.js';
+  import { enabled as guardOn, watch, send } from '../../scripts/guard.js';
 
   const form = document.getElementById('volunteer-form') as HTMLFormElement | null;
   const successMsg = document.getElementById('volunteer-success');
 
-  if (form) {
+  if (form && guardOn) {
+    // Bot check on: the Worker checks the token and posts to Google. The
+    // database copy and the next steps wait for its answer.
+    watch(form);
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const data = new FormData(form);
+      const hp = Boolean((document.getElementById('vol-hp') as HTMLInputElement | null)?.value);
+      const res = await send(form, 'volunteer', { honeypot: hp });
+      if (!res.ok) return;
+      saveVolunteer(data);
+      form.reset();
+      form.classList.add('is-submitted');
+      if (successMsg) {
+        successMsg.classList.add('visible');
+        successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  } else if (form) {
     form.addEventListener('submit', function () {
       // Parallel copy to the campaign database. Not awaited and never throws:
       // the Google Form post above goes out exactly as before.

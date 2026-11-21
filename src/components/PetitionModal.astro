@@ -1,5 +1,12 @@
 ---
 // Petition Blitz Sign-Up Modal
+import GuardSlot from './GuardSlot.astro';
+import { enabled as guardOn } from '../scripts/guard.js';
+// Bot check on: the form posts through the forms gateway Worker, so the
+// Google Form URL and the hidden iframe stay out of the page.
+const formAttrs = guardOn
+  ? { method: 'post' }
+  : { action: 'https://docs.google.com/forms/d/e/1FAIpQLSeYiVz1TB2tsAFdh1OakH62dM7XGCNBnaJz57Mn1beP0dqE6A/formResponse', method: 'POST', target: 'petition_iframe' };
 ---
 
 <!-- Modal Overlay -->
@@ -17,13 +24,7 @@
       <p class="petition-modal-subtitle" data-i18n="petition_modal.subtitle">Sundays on the doors, Tuesdays at Ward Night, every neighbor we can reach before February 23, 2027. Leave your info and the campaign will place you.</p>
     </div>
 
-    <form 
-      action="https://docs.google.com/forms/d/e/1FAIpQLSeYiVz1TB2tsAFdh1OakH62dM7XGCNBnaJz57Mn1beP0dqE6A/formResponse" 
-      method="POST" 
-      target="petition_iframe" 
-      class="petition-form"
-      id="petitionForm"
-    >
+    <form {...formAttrs} class="petition-form" id="petitionForm" data-guard={guardOn ? 'petition' : undefined}>
       <!-- Contact Fields -->
       <div class="petition-fields">
         <input type="text" name="entry.1710222697" class="petition-input" placeholder="Your name" data-i18n="petition_modal.name" aria-label="Name" required />
@@ -78,7 +79,7 @@
       <!-- Honeypot for the campaign database copy. No name attribute, so the Google post never carries it. -->
       <div class="hp-trap" aria-hidden="true"><input type="text" id="pet-hp" tabindex="-1" autocomplete="off" /></div>
 
-      <button type="submit" class="btn btn-orange petition-submit">
+      <GuardSlot tone="dark" /><button type="submit" class="btn btn-orange petition-submit">
         <span data-i18n="petition_modal.submit">Count Me In</span>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
           <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -95,12 +96,13 @@
         <li><span data-i18n="petition_modal.success_followup">The campaign will follow up to place you at your post.</span></li>
       </ul>
     </div>
-    <iframe name="petition_iframe" id="petition_iframe" style="display:none;"></iframe>
+    {!guardOn && <iframe name="petition_iframe" id="petition_iframe" style="display:none;"></iframe>}
   </div>
 </div>
 
 <script>
   import { petitionRequest } from '../scripts/supa.js';
+  import { enabled as guardOn, watch, prime, send } from '../scripts/guard.js';
 
   document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('petitionModal') as HTMLElement;
@@ -123,6 +125,7 @@
         opener = link as HTMLElement;
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        if (guardOn) prime(form);
         setTimeout(() => (focusables()[1] || focusables()[0])?.focus(), 50);
       });
     });
@@ -165,7 +168,21 @@
 
     // Form submission: swap in the next steps (Ward Night, the canvass map,
     // the follow-up) and leave them up until the neighbor closes the modal.
-    if (form) {
+    if (form && guardOn) {
+      // Bot check on: the Worker checks the token and posts to Google. The
+      // database copy and the next steps wait for its answer.
+      watch(form, { observe: false }); // the overlay is always "in view"; prime() on open
+      form.addEventListener('submit', async (ev) => {
+        ev.preventDefault();
+        const data = new FormData(form);
+        const hp = Boolean((document.getElementById('pet-hp') as HTMLInputElement | null)?.value);
+        const res = await send(form, 'petition', { honeypot: hp });
+        if (!res.ok) return;
+        petitionRequest(data);
+        form.style.display = 'none';
+        if (successMsg) successMsg.classList.add('visible');
+      });
+    } else if (form) {
       form.addEventListener('submit', () => {
         // Parallel copy to the campaign database. Not awaited and never
         // throws: the Google Form post goes out exactly as before.

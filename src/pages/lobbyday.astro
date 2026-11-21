@@ -1,0 +1,421 @@
+---
+// /lobbyday/: the shareable page for Springfield Lobby Day, Wednesday December 2,
+// 2026 (short link printed on graphics: sigchofor25.com/lobbyday), with its own
+// link share card (public/images/og-lobbyday.jpg).
+// Facts, limits and copy: events/springfield-lobby-day-2026-12-02/BRIEF.md.
+// Order: the ticket hero (LobbyTicket, variant "page") > the registration form
+// (#register, posts to the Google Form) with Good to Know beside it > How the
+// Day Goes (the route) > Why We Are Going > the closing call.
+// Expiry: past the event day (Chicago) the build leaves out the form and the
+// closing call and the hero shows the "has passed" line; in the browser the
+// script at the bottom does the same the morning after, with no redeploy.
+// The paid-for line and the State Board notice are in the Footer.
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import LobbyTicket from '../components/lobbyday/LobbyTicket.astro';
+import RegisterForm from '../components/lobbyday/RegisterForm.astro';
+import LobbyRoute from '../components/lobbyday/LobbyRoute.astro';
+import Bus from '../components/lobbyday/Bus.astro';
+import { ev, live } from '../components/lobbyday/facts.js';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout
+  title="Springfield Lobby Day, Wed Dec 2: Get on the Bus | Byron Sigcho-Lopez"
+  description="Tax the rich. Fund our schools. Wednesday, December 2, the bus leaves the 25th Ward IPO, 2102 W Cermak Rd, Chicago, at 6:00 AM sharp for the State Capitol during the veto session, and returns that evening. Seats are limited: register now."
+  image="/images/og-lobbyday.jpg"
+  imageAlt="Springfield Lobby Day. Tax the rich, fund our schools. Wednesday, December 2. The bus leaves 2102 W Cermak Rd at 6:00 AM sharp."
+  promo={false}
+>
+  <Navbar />
+  <main>
+    <LobbyTicket variant="page" />
+    <RegisterForm />
+    <LobbyRoute />
+
+    <section class="why" aria-labelledby="why-head">
+      <div class="container-wide why-grid">
+        <div class="why-text">
+          <h2 class="why-head ld-rv" id="why-head"><span data-i18n="lobbyday.why_head">Why We Are Going</span></h2>
+          <p class="why-lead ld-rv" data-i18n="lobbyday.why_lead">The fight to fund our schools runs through Springfield. So we are getting on a bus.</p>
+          <ul class="why-planks ld-rv" role="list">
+            <li>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+              <span data-i18n="upnext.p2">Unite our community to push Springfield for a millionaire's tax</span>
+            </li>
+            <li>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+              <span data-i18n="upnext.p3">Universal pre-K, and fully fund Chicago Public Schools</span>
+            </li>
+          </ul>
+          <p class="why-record ld-rv" data-i18n="lobbyday.why_record">Over $1 million for Benito Juarez and other ward schools. The work is not finished.</p>
+          <a class="why-link ld-rv" href={`${base}/platform`}><span data-i18n="platform.cta">Read the Full Record</span> <span aria-hidden="true">→</span></a>
+        </div>
+
+        <figure class="why-print ld-rv">
+          <span class="why-tape" aria-hidden="true"></span>
+          <img
+            src={`${base}/images/byron-school-rally.jpg`}
+            width="828"
+            height="794"
+            alt="Byron speaking at a press conference demanding investment in neighborhood schools"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption data-i18n="meet.caption_schools">Fighting for investment in our neighborhood schools</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    {live && ev && (
+      <section class="final" aria-labelledby="final-head" data-ld-live>
+        <div class="container-wide final-in">
+          <span class="final-bus ld-rv" aria-hidden="true"><Bus width={84} /></span>
+          <h2 class="final-head ld-rv" id="final-head"><span data-i18n="lobbyday.final_head">Get on the Bus.</span></h2>
+          <p class="final-body ld-rv" data-i18n="lobbyday.final_body">Wednesday, December 2. 6:00&nbsp;AM sharp. 2102 W Cermak Rd.</p>
+          <a class="btn btn-orange btn-massive final-cta ld-rv" href="#register"><span data-i18n="lobbyday.cta">Save My Seat</span></a>
+          <a class="final-alt ld-rv" href={`${base}/volunteer#signup`}><span data-i18n="lobbyday.cant_go">Staying in Chicago? Knock doors with us</span> <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+    )}
+  </main>
+  <Footer />
+
+  {live && ev && (
+    <script is:inline define:vars={{ EXPIRES: ev.expires }}>
+      // The morning after (Chicago time): the form, the register buttons and the
+      // closing call go, and the hero shows the "has passed" line. No redeploy.
+      (function () {
+        var today = '';
+        try {
+          today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+        } catch (e) {
+          today = '';
+        }
+        var past = /^\d{4}-\d{2}-\d{2}$/.test(today) ? today > EXPIRES : Date.now() > new Date(EXPIRES + 'T23:59:59').getTime();
+        if (!past) return;
+        document.querySelectorAll('[data-ld-live]').forEach(function (el) { el.remove(); });
+        document.querySelectorAll('[data-ld-passed]').forEach(function (el) { el.hidden = false; });
+      })();
+    </script>
+  )}
+
+  <script>
+    // Reveal the lower sections as they scroll in. Only pieces that start
+    // below the fold are held back, and only with the script and without
+    // reduced motion; otherwise everything is simply there.
+    import { observeNew, REDUCED } from '../scripts/motion.js';
+    if (!REDUCED.matches) {
+      document.querySelectorAll<HTMLElement>('.ld-rv').forEach((el) => {
+        if (el.getBoundingClientRect().top > window.innerHeight * 0.95) {
+          el.classList.add('ld-armed');
+          observeNew(el);
+        }
+      });
+    }
+  </script>
+</Layout>
+
+<style>
+  /* ---- Why We Are Going ---- */
+  .why {
+    position: relative;
+    padding: var(--space-4xl) 0;
+    background: var(--cream);
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: var(--space-3xl);
+    align-items: center;
+    max-width: 1200px;
+  }
+
+  .why-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-lg);
+  }
+
+  .why-head {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #142749;
+    text-shadow: 0.05em 0.05em 0 var(--orange);
+  }
+
+  .why-lead {
+    margin: 0;
+    max-width: 22em;
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    line-height: 1.2;
+    color: #142749;
+  }
+
+  .why-planks {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .why-planks li {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--blue-deeper);
+  }
+
+  .why-planks svg {
+    width: 30px;
+    height: 30px;
+    padding: 4px;
+    color: var(--white);
+    background: var(--orange-dark);
+    border-radius: 50%;
+  }
+
+  /* The record as a receipt */
+  .why-record {
+    margin: 0;
+    padding: var(--space-md) var(--space-lg);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 800;
+    line-height: 1.35;
+    color: #142749;
+    background: var(--cream-light);
+    border: 2.5px dashed #142749;
+    border-radius: 10px;
+    rotate: -0.6deg;
+  }
+
+  .why-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--blue-deeper);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .why-link:hover {
+    color: #9a4f08;
+  }
+
+  .why-link:focus-visible,
+  .final-alt:focus-visible,
+  .final-cta:focus-visible {
+    outline: 3px solid var(--blue-deeper);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* Taped archive print (the photo is not from this event; its caption says what it is) */
+  .why-print {
+    position: relative;
+    margin: 0;
+    padding: 12px 12px 0;
+    background: var(--white);
+    box-shadow: 0 16px 36px rgba(20, 39, 73, 0.28), 0 2px 4px rgba(0, 0, 0, 0.15);
+    rotate: 2deg;
+    --tilt: 2deg;
+  }
+
+  .why-print img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 828 / 794;
+    object-fit: cover;
+  }
+
+  .why-print figcaption {
+    padding: 12px 4px 14px;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--gray-700);
+    text-align: center;
+  }
+
+  .why-tape {
+    position: absolute;
+    z-index: 1;
+    top: -14px;
+    left: 50%;
+    width: 36%;
+    height: 30px;
+    translate: -50% 0;
+    rotate: -5deg;
+    background: rgba(245, 208, 138, 0.88);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+  }
+
+  /* ---- Closing call ---- */
+  .final {
+    --bite: 11px;
+    position: relative;
+    padding: calc(var(--space-3xl) + var(--bite)) 0 var(--space-4xl);
+    color: var(--white);
+    background:
+      radial-gradient(90% 120% at 50% 100%, rgba(5, 173, 237, 0.16), transparent 60%),
+      #142749;
+  }
+
+  /* Perforated top edge, the other half of the hero's tear */
+  .final::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -1px;
+    height: calc(var(--bite) + 1px);
+    background: radial-gradient(circle at 50% 0, var(--cream) calc(var(--bite) - 0.5px), transparent var(--bite)) 0 0 / calc(var(--bite) * 2.6) 100% repeat-x;
+  }
+
+  .final-in {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    text-align: center;
+  }
+
+  .final-bus {
+    --tilt: 0deg;
+  }
+
+  .final-head {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-5xl);
+    font-weight: 900;
+    line-height: 0.95;
+    text-transform: uppercase;
+    color: var(--white);
+    text-shadow:
+      0.012em 0.012em 0 var(--orange), 0.024em 0.024em 0 var(--orange), 0.036em 0.036em 0 var(--orange),
+      0.048em 0.048em 0 var(--orange);
+  }
+
+  .final-body {
+    max-width: 30em;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    line-height: 1.3;
+    color: var(--gold-soft);
+  }
+
+  .final-cta {
+    min-width: min(100%, 340px);
+    padding: var(--space-md) var(--space-xl);
+    min-height: 60px;
+    margin-top: var(--space-sm);
+    background: var(--orange-dark);
+  }
+
+  .final-cta:hover {
+    background: #a95f10;
+  }
+
+  .final-cta:focus-visible,
+  .final-alt:focus-visible {
+    outline-color: var(--gold-soft);
+  }
+
+  .final-alt {
+    display: inline-block;
+    padding: 10px 0;
+    text-wrap: balance;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--cream-light);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .final-alt:hover {
+    color: var(--gold-soft);
+  }
+
+  /* ---- Reveal (armed only by the script, below the fold) ---- */
+  .ld-armed:not(.visible) {
+    opacity: 0;
+  }
+
+  .ld-armed.visible {
+    animation: ld-up 0.6s var(--ease-default) backwards;
+  }
+
+  .why-print.ld-armed.visible {
+    animation: pin-drop 0.7s var(--ease-out-back) 0.1s backwards;
+  }
+
+  .final-bus.ld-armed.visible {
+    animation: ld-drive-in 0.9s var(--ease-out-back) backwards;
+  }
+
+  @keyframes ld-up {
+    from { opacity: 0; translate: 0 24px; }
+    to { opacity: 1; translate: 0 0; }
+  }
+
+  @keyframes ld-drive-in {
+    from { opacity: 0; translate: -120px 0; }
+    to { opacity: 1; translate: 0 0; }
+  }
+
+  @media (max-width: 900px) {
+    .why {
+      padding: var(--space-3xl) 0;
+    }
+
+    .why-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-2xl);
+    }
+
+    .why-print {
+      max-width: 440px;
+      justify-self: center;
+      width: 92%;
+    }
+
+    .final-cta {
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ld-armed:not(.visible) {
+      opacity: 1;
+    }
+
+    .ld-armed.visible {
+      animation: none !important;
+    }
+  }
+</style>
