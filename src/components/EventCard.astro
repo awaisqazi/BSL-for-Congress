@@ -5,6 +5,8 @@
 // Both languages ship in the DOM (data-lang); i18n.js shows the current one.
 // data-expires lets the page scripts take it down the morning after.
 import { stamp, timeRange, pick, actionHref, mapHref, startDate, icsPath } from '../data/events.js';
+import GuardSlot from './GuardSlot.astro';
+import { enabled as guardOn } from '../scripts/guard.js';
 
 interface Props {
   event: any;
@@ -96,7 +98,7 @@ const t = { en: timeRange(e, 'en'), es: timeRange(e, 'es') };
         >
           <span data-lang="en">{e.action.en}</span><span data-lang="es" hidden>{e.action.es}</span>
         </button>
-        <form class="ev-rsvp" id={rid} data-ev-rsvp={e.id} hidden novalidate>
+        <form class="ev-rsvp" id={rid} data-ev-rsvp={e.id} data-guard={guardOn ? 'rsvp' : undefined} hidden novalidate>
           <label class="ev-rsvp-field">
             <span data-i18n="events.rsvp_name">Your name</span>
             <input type="text" name="name" autocomplete="name" maxlength="120" required />
@@ -132,7 +134,7 @@ const t = { en: timeRange(e, 'en'), es: timeRange(e, 'es') };
           <div class="ev-rsvp-trap" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off" /></div>
           <p class="ev-rsvp-error" role="alert" hidden data-i18n="events.rsvp_need_contact">Add your name and an email or phone.</p>
           <p class="ev-rsvp-consent" data-i18n="events.rsvp_consent">By sharing a phone number you agree to receive event reminders by text from Friends of Byron Sigcho Lopez. Message and data rates may apply. Text STOP to opt out.</p>
-          <button type="submit" class="btn btn-orange ev-btn ev-rsvp-submit" data-i18n="events.rsvp_submit">I'm coming</button>
+          <GuardSlot /><button type="submit" class="btn btn-orange ev-btn ev-rsvp-submit" data-i18n="events.rsvp_submit">I'm coming</button>
         </form>
         <p class="ev-rsvp-done" role="status" hidden data-i18n="events.rsvp_success">You're on the list. See you there.</p>
         <p class="ev-rsvp-fail" role="status" hidden>
@@ -161,6 +163,16 @@ const t = { en: timeRange(e, 'en'), es: timeRange(e, 'es') };
 
 <script>
   import { rsvp } from '../scripts/supa.js';
+  import { enabled as guardOn, prime, send } from '../scripts/guard.js';
+
+  // Bot check on: several cards can share a page, so the one widget renders
+  // on demand in the card being filled in (first focus inside its form).
+  if (guardOn) {
+    document.addEventListener('focusin', (ev) => {
+      const form = (ev.target as HTMLElement).closest?.<HTMLFormElement>('form[data-ev-rsvp]');
+      if (form) prime(form);
+    });
+  }
 
   // One delegated listener per page, whichever section the card sits in.
   document.addEventListener('click', (ev) => {
@@ -190,6 +202,13 @@ const t = { en: timeRange(e, 'en'), es: timeRange(e, 'es') };
     }
     if (err) err.hidden = true;
     const submit = form.querySelector<HTMLButtonElement>('.ev-rsvp-submit');
+    if (guardOn) {
+      // The Worker only checks the token here (no Google Form); the database
+      // row is written below once it says ok. No personal fields are sent.
+      if (form.dataset.guardBusy === '1') return;
+      const g = await send(form, 'rsvp', { honeypot: Boolean(val('website')), fields: [] });
+      if (!g.ok) return;
+    }
     if (submit) submit.disabled = true;
     const res = await rsvp(form.dataset.evRsvp || '', form);
     form.hidden = true;
@@ -365,8 +384,12 @@ const t = { en: timeRange(e, 'en'), es: timeRange(e, 'es') };
     color: var(--blue-deeper);
   }
 
+  .ev-place > span {
+    min-width: 0;
+  }
+
   .ev-address {
-    white-space: nowrap;
+    overflow-wrap: anywhere;
   }
 
   a.ev-address {
@@ -545,10 +568,6 @@ const t = { en: timeRange(e, 'en'), es: timeRange(e, 'es') };
 
     .ev-stamp {
       min-width: 80px;
-    }
-
-    .ev-address {
-      white-space: normal;
     }
 
     .ev-rsvp-row {
