@@ -1,0 +1,909 @@
+---
+// /genz: quick phone-first volunteer sign-up for tabling. Writes to the same
+// two places as the /volunteer form: the frozen Google Form (action, entry.*
+// names, and checkbox values copied byte for byte from SignupForm.astro) and
+// the campaign database through supa.js, which tags the row by pathname.
+// ZIP is optional. City is not collected here, so its entry.* field is not sent.
+import Layout from "../layouts/Layout.astro";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+const instagram = "https://www.instagram.com/bslfor25/";
+const tiktok = "https://www.tiktok.com/@sigchofor25";
+
+// Icons from links.astro
+const igIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>`;
+const ttIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.71a8.35 8.35 0 0 0 4.76 1.49V6.75a4.84 4.84 0 0 1-1-.06z"></path></svg>`;
+
+// Tap chips are written out in the markup (not mapped) so the i18n parity
+// grep sees each data-i18n key. Values are frozen Google Form values.
+---
+
+<Layout
+  title="Gen Z for Byron | Byron Sigcho-Lopez, 25th Ward Alderman"
+  description="Sign up in a few taps. We send you cool events, campaign updates, and rapid response social media kits. Be part of the movement to pass a progressive agenda in Chicago."
+  actionBar={false}
+  promo={false}
+>
+  <main class="genz">
+    <!-- Top strip: logo home, language toggle -->
+    <header class="genz-top">
+      <a href={`${base}/`} class="genz-logo-link">
+        <img
+          src={`${base}/BSL_Alderman25.png`}
+          alt="Byron Sigcho-Lopez for 25th Ward Alderman"
+          class="genz-logo"
+        />
+      </a>
+      <div class="genz-lang" role="group" aria-label="Language / Idioma">
+        <button type="button" data-lang-toggle="en" class="genz-lang-btn active" aria-pressed="true" aria-label="English">EN</button>
+        <button type="button" data-lang-toggle="es" class="genz-lang-btn" aria-pressed="false" aria-label="Español">ES</button>
+      </div>
+    </header>
+
+    <!-- Intro: kept tight so the first inputs show on a phone screen -->
+    <section class="genz-intro">
+      <p class="genz-badge"><span data-i18n="genz.badge">GEN Z FOR BYRON</span></p>
+      <h1 class="genz-headline" data-i18n="genz.headline">When we fight, we win.</h1>
+      <p class="genz-lead" data-i18n="genz.lead">Be part of the movement to pass a progressive agenda in Chicago. Sign up and we'll send you:</p>
+      <ol class="genz-gets">
+        <li><span class="genz-get-num" aria-hidden="true">1</span><span data-i18n="genz.get1">Cool events</span></li>
+        <li><span class="genz-get-num" aria-hidden="true">2</span><span data-i18n="genz.get2">Campaign updates</span></li>
+        <li><span class="genz-get-num" aria-hidden="true">3</span><span data-i18n="genz.get3">Rapid response social media kits</span></li>
+      </ol>
+    </section>
+
+    <form
+      class="genz-card"
+      id="genz-form"
+      action="https://docs.google.com/forms/d/e/1FAIpQLSeUKnQVp4auTqHdFZeDrGlAOYAjmOO0sE19Xm11Pee2ayuuWQ/formResponse"
+      method="POST"
+      target="hidden_iframe_genz"
+    >
+      <div class="genz-row">
+        <div class="genz-field">
+          <label for="genz-first"><span data-i18n="genz.label_first">First name</span></label>
+          <input
+            type="text"
+            id="genz-first"
+            name="entry.661274230"
+            autocomplete="given-name"
+            autocapitalize="words"
+            enterkeyhint="next"
+            required
+          />
+        </div>
+        <div class="genz-field">
+          <label for="genz-last"><span data-i18n="genz.label_last">Last name</span></label>
+          <input
+            type="text"
+            id="genz-last"
+            name="entry.449873967"
+            autocomplete="family-name"
+            autocapitalize="words"
+            enterkeyhint="next"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="genz-field">
+        <label for="genz-email"><span data-i18n="genz.label_email">Email</span></label>
+        <input
+          type="email"
+          id="genz-email"
+          name="entry.378191335"
+          autocomplete="email"
+          inputmode="email"
+          autocapitalize="off"
+          spellcheck="false"
+          enterkeyhint="next"
+          required
+        />
+      </div>
+
+      <!-- Phone and ZIP share a row. ZIP is optional: it tells the campaign who lives in the ward. -->
+      <div class="genz-row genz-row-phone">
+        <div class="genz-field">
+          <label for="genz-phone"><span data-i18n="genz.label_phone">Mobile phone</span></label>
+          <input
+            type="tel"
+            id="genz-phone"
+            name="entry.763325091"
+            autocomplete="tel"
+            inputmode="tel"
+            minlength="10"
+            maxlength="20"
+            enterkeyhint="next"
+            required
+          />
+        </div>
+        <div class="genz-field">
+          <label for="genz-zip"><span data-i18n="genz.label_zip">ZIP code</span></label>
+          <input
+            type="text"
+            id="genz-zip"
+            name="entry.1587719447"
+            autocomplete="postal-code"
+            inputmode="numeric"
+            pattern="[0-9]{5}"
+            maxlength="5"
+            enterkeyhint="done"
+          />
+        </div>
+      </div>
+
+      <fieldset class="genz-help">
+        <legend><span data-i18n="genz.help_legend">How do you want to help?</span></legend>
+        <p class="genz-help-hint" data-i18n="genz.help_hint">Tap all that fit.</p>
+        <div class="genz-chips">
+          <label class="genz-chip">
+            <input type="checkbox" class="genz-chip-input" name="entry.1014527396" value="Post on Social Media" />
+            <span class="genz-chip-face"><span class="genz-chip-box" aria-hidden="true"></span><span class="genz-chip-text" data-i18n="genz.chip_social">Post and share</span></span>
+          </label>
+          <label class="genz-chip">
+            <input type="checkbox" class="genz-chip-input" name="entry.1014527396" value="Help Create Campaign Videos (Videography / Video Editing)" />
+            <span class="genz-chip-face"><span class="genz-chip-box" aria-hidden="true"></span><span class="genz-chip-text" data-i18n="genz.chip_video">Make videos</span></span>
+          </label>
+          <label class="genz-chip">
+            <input type="checkbox" class="genz-chip-input" name="entry.1014527396" value="Help Create Marketing Collateral (Graphic Design)" />
+            <span class="genz-chip-face"><span class="genz-chip-box" aria-hidden="true"></span><span class="genz-chip-text" data-i18n="genz.chip_design">Design graphics</span></span>
+          </label>
+          <label class="genz-chip">
+            <input type="checkbox" class="genz-chip-input" name="entry.1014527396" value="Knock on Doors" />
+            <span class="genz-chip-face"><span class="genz-chip-box" aria-hidden="true"></span><span class="genz-chip-text" data-i18n="genz.chip_doors">Knock doors</span></span>
+          </label>
+          <label class="genz-chip">
+            <input type="checkbox" class="genz-chip-input" name="entry.1014527396" value="Phone/Text Banking" />
+            <span class="genz-chip-face"><span class="genz-chip-box" aria-hidden="true"></span><span class="genz-chip-text" data-i18n="genz.chip_text">Text and call voters</span></span>
+          </label>
+          <label class="genz-chip">
+            <input type="checkbox" class="genz-chip-input" name="entry.1014527396" value="College Campus Captain / Volunteer" />
+            <span class="genz-chip-face"><span class="genz-chip-box" aria-hidden="true"></span><span class="genz-chip-text" data-i18n="genz.chip_campus">Organize my campus</span></span>
+          </label>
+          <label class="genz-chip">
+            <input type="checkbox" class="genz-chip-input" name="entry.1014527396" value="High School Ambassador" />
+            <span class="genz-chip-face"><span class="genz-chip-box" aria-hidden="true"></span><span class="genz-chip-text" data-i18n="genz.chip_hs">Organize my high school</span></span>
+          </label>
+          <label class="genz-chip">
+            <input type="checkbox" class="genz-chip-input" name="entry.1014527396" value="Bilingual Outreach (I speak Spanish / Yo hablo español)" />
+            <span class="genz-chip-face"><span class="genz-chip-box" aria-hidden="true"></span><span class="genz-chip-text" data-i18n="genz.chip_espanol">Hablo español</span></span>
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Honeypot for the campaign database copy. No name attribute, so the Google post never carries it. -->
+      <div class="hp-trap" aria-hidden="true"><input type="text" id="vol-hp" tabindex="-1" autocomplete="off" /></div>
+
+      <p class="genz-compliance" data-i18n="genz.compliance">
+        By submitting, you agree to receive periodic campaign updates by email and SMS. Message and data rates may apply. Text STOP to unsubscribe.
+      </p>
+
+      <button type="submit" class="btn btn-orange btn-massive genz-submit" id="genz-submit">
+        <span data-i18n="genz.submit">I'm In</span>
+      </button>
+
+      <!-- Success: replaces the fields and stays up until "next person" -->
+      <div class="genz-success" id="genz-success" role="status" hidden>
+        <p class="genz-success-head" data-i18n="genz.success_head">You're in.</p>
+        <p class="genz-success-body" data-i18n="genz.success_body">Events, campaign updates, and rapid response social media kits are headed to your phone and inbox.</p>
+
+        <p class="genz-success-follow" data-i18n="genz.success_follow">Follow along while you wait:</p>
+        <div class="genz-follow-btns">
+          <a href={instagram} class="genz-follow-btn" target="_blank" rel="noopener">
+            <Fragment set:html={igIcon} />
+            <span>Instagram</span>
+          </a>
+          <a href={tiktok} class="genz-follow-btn" target="_blank" rel="noopener">
+            <Fragment set:html={ttIcon} />
+            <span>TikTok</span>
+          </a>
+        </div>
+
+        <button type="button" class="btn btn-outline genz-share" id="genz-share">
+          <span data-i18n="genz.share_btn">Copy the link, send it to a friend</span>
+          <span class="genz-share-check" aria-hidden="true">✓</span>
+        </button>
+
+        <button type="button" class="btn btn-orange genz-next" id="genz-next">
+          <span data-i18n="genz.next_person">Sign up the next person</span>
+        </button>
+
+        <a class="genz-more" href={`${base}/volunteer`}><span data-i18n="genz.more_ways">See every way to show up</span> <span aria-hidden="true">→</span></a>
+      </div>
+
+      <iframe name="hidden_iframe_genz" id="hidden_iframe_genz" title="Form submission" tabindex="-1" style="display:none;"></iframe>
+    </form>
+
+    <!-- Who is this -->
+    <section class="genz-who">
+      <p class="genz-who-label" data-i18n="genz.who_label">Who is Byron?</p>
+      <p class="genz-who-body" data-i18n="genz.who_body">Byron Sigcho-Lopez is a teacher, an organizer, and the Alderman of Chicago's 25th Ward. He has not taken one dollar of developer money since 2015.</p>
+      <p class="genz-who-body" data-i18n="fundraiser.why2_body">Over 800 units of affordable housing. Ward Night every Tuesday for seven years, including through the pandemic. Over $1 million for Benito Juarez and other ward schools.</p>
+      <p class="genz-planks" data-i18n="genz.planks">Tax the rich. Fund the schools. Property tax relief.</p>
+      <p class="genz-date"><span data-i18n="meet.road_ward">25th Ward: February 23, 2027</span></p>
+      <a class="genz-record" href={`${base}/platform`}><span data-i18n="platform.cta">Read the Full Record</span> <span aria-hidden="true">→</span></a>
+    </section>
+
+    <!-- Socials -->
+    <section class="genz-socials">
+      <p class="genz-socials-label" data-i18n="genz.follow">Follow the campaign</p>
+      <div class="genz-socials-row">
+        <a href={instagram} class="genz-social" target="_blank" rel="noopener" aria-label="Instagram">
+          <Fragment set:html={igIcon} />
+        </a>
+        <a href={tiktok} class="genz-social" target="_blank" rel="noopener" aria-label="TikTok">
+          <Fragment set:html={ttIcon} />
+        </a>
+      </div>
+    </section>
+
+    <footer class="genz-foot">
+      <p class="genz-paid">Paid for by Friends of Byron Sigcho Lopez</p>
+    </footer>
+  </main>
+</Layout>
+
+<script>
+  import { volunteer as saveVolunteer } from '../scripts/supa.js';
+
+  const form = document.getElementById('genz-form') as HTMLFormElement | null;
+  const success = document.getElementById('genz-success');
+  const submitBtn = document.getElementById('genz-submit') as HTMLButtonElement | null;
+  const firstInput = document.getElementById('genz-first') as HTMLInputElement | null;
+  const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const scrollBehavior = (): ScrollBehavior => (reduceMotion() ? 'auto' : 'smooth');
+
+  if (form) {
+    form.addEventListener('submit', function () {
+      // Parallel copy to the campaign database. Not awaited and never throws:
+      // the Google Form post goes out through the hidden iframe as usual.
+      saveVolunteer(new FormData(form));
+      // Stop double taps. The button has no name, so the post is unchanged.
+      if (submitBtn) submitBtn.disabled = true;
+      setTimeout(function () {
+        form.reset();
+        form.classList.add('is-submitted');
+        if (success) {
+          success.hidden = false;
+          success.scrollIntoView({ behavior: scrollBehavior(), block: 'center' });
+        }
+      }, 500);
+    });
+  }
+
+  // Shared tablet: clear the success state for the next sign-up.
+  document.getElementById('genz-next')?.addEventListener('click', () => {
+    if (!form) return;
+    if (success) success.hidden = true;
+    form.classList.remove('is-submitted');
+    if (submitBtn) submitBtn.disabled = false;
+    form.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
+    firstInput?.focus({ preventScroll: true });
+  });
+
+  const shareBtn = document.getElementById('genz-share');
+  shareBtn?.addEventListener('click', async () => {
+    const url = location.origin + (document.body.dataset.base || '') + '/genz/';
+    try {
+      await navigator.clipboard.writeText(url);
+      shareBtn.classList.add('copied');
+      setTimeout(() => shareBtn.classList.remove('copied'), 2000);
+    } catch {
+      // Clipboard unavailable: show the URL via prompt
+      window.prompt('Copy this link:', url);
+    }
+  });
+</script>
+
+<style>
+  .genz {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: var(--space-sm) var(--space-md) var(--space-xl);
+    overflow-x: clip;
+  }
+
+  /* Shared focus ring for every control on the page */
+  .genz :is(a, button, input):focus-visible {
+    outline: 3px solid var(--blue-deeper);
+    outline-offset: 2px;
+  }
+
+  /* ── Top strip ── */
+  .genz-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    min-height: 60px;
+  }
+
+  .genz-logo-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    border-radius: var(--radius-sm);
+  }
+
+  .genz-logo {
+    height: 48px;
+    width: auto;
+  }
+
+  .genz-lang {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    background: rgba(5, 173, 237, 0.1);
+    border-radius: var(--radius-md);
+    padding: 3px;
+  }
+
+  .genz-lang-btn {
+    min-width: 44px;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    color: var(--blue);
+    border-radius: var(--radius-sm);
+    transition: background var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
+  }
+
+  .genz-lang-btn.active {
+    background: var(--blue);
+    color: var(--white);
+  }
+
+  .genz-lang-btn:hover:not(.active) {
+    background: rgba(5, 173, 237, 0.15);
+  }
+
+  /* ── Intro ── */
+  .genz-intro {
+    margin-top: var(--space-xs);
+  }
+
+  .genz-badge {
+    display: inline-block;
+    margin: 0 0 var(--space-sm);
+    rotate: -2deg;
+  }
+
+  .genz-badge span {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream-light);
+    background: var(--blue-deeper);
+    padding: 0.25em 0.7em;
+    box-shadow: 3px 3px 0 var(--orange);
+  }
+
+  .genz-headline {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2.25rem, 1.6rem + 3.4vw, 3.25rem);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    color: var(--blue-deeper);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .genz-lead {
+    margin-top: var(--space-sm);
+    font-size: var(--text-base);
+    line-height: 1.45;
+    color: var(--gray-700);
+  }
+
+  .genz-gets {
+    list-style: none;
+    margin: var(--space-sm) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .genz-gets li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--text-base);
+    line-height: 1.25;
+    color: var(--black);
+  }
+
+  .genz-get-num {
+    flex: none;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 900;
+    color: var(--white);
+    background: var(--orange);
+    border-radius: 50%;
+    rotate: -4deg;
+  }
+
+  /* ── Form card: white paper, taped ── */
+  .genz-card {
+    position: relative;
+    margin-top: var(--space-lg);
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg) var(--space-md) var(--space-md);
+    box-shadow: var(--shadow-md);
+    border: 2px solid rgba(5, 173, 237, 0.1);
+  }
+
+  .genz-card::before {
+    content: '';
+    position: absolute;
+    width: 72px;
+    height: 22px;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    background: rgba(245, 208, 138, 0.75);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+  }
+
+  .genz-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .genz-row > .genz-field {
+    min-width: 0;
+  }
+
+  .genz-row-phone {
+    grid-template-columns: 1.7fr 1fr;
+  }
+
+  .genz-field {
+    margin-bottom: var(--space-md);
+  }
+
+  .genz-field label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 4px;
+  }
+
+  .genz-field input {
+    display: block;
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 14px;
+    font-family: var(--font-body);
+    font-size: max(16px, var(--text-base));
+    border: 2px solid rgba(5, 173, 237, 0.25);
+    border-radius: var(--radius-md);
+    background: var(--cream-light);
+    color: var(--black);
+    transition: border-color var(--duration-fast) var(--ease-default), box-shadow var(--duration-fast) var(--ease-default);
+  }
+
+  .genz-field input:focus {
+    border-color: var(--blue);
+  }
+
+  .genz-field input:focus-visible {
+    outline: none;
+    border-color: var(--blue-deeper);
+    box-shadow: 0 0 0 3px rgba(5, 173, 237, 0.35);
+  }
+
+  /* ── Help chips ── */
+  .genz-help {
+    border: none;
+    padding: 0;
+    margin: var(--space-xs) 0 var(--space-md);
+    min-width: 0;
+  }
+
+  .genz-help legend {
+    padding: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--blue);
+  }
+
+  .genz-help-hint {
+    font-size: var(--text-xs);
+    color: var(--gray-500);
+    margin: 2px 0 var(--space-sm);
+  }
+
+  .genz-chips {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .genz-chip {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    cursor: pointer;
+  }
+
+  /* Real checkbox, visually hidden but focusable */
+  .genz-chip-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .genz-chip-face {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 8px 10px;
+    border: 2px solid rgba(5, 173, 237, 0.3);
+    border-radius: var(--radius-md);
+    background: var(--cream-light);
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--blue-deeper);
+    transition: background var(--duration-fast) var(--ease-default), border-color var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
+  }
+
+  .genz-chip-text {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .genz-chip:hover .genz-chip-face {
+    border-color: var(--orange);
+  }
+
+  .genz-chip-box {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(5, 173, 237, 0.5);
+    border-radius: 4px;
+    background: var(--white);
+    font-size: 14px;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--orange-dark);
+  }
+
+  .genz-chip-input:checked + .genz-chip-face {
+    background: var(--orange);
+    border-color: var(--orange-dark);
+    color: var(--white);
+  }
+
+  .genz-chip-input:checked + .genz-chip-face .genz-chip-box {
+    border-color: var(--white);
+  }
+
+  .genz-chip-input:checked + .genz-chip-face .genz-chip-box::after {
+    content: '✓';
+  }
+
+  .genz-chip-input:focus-visible + .genz-chip-face {
+    outline: 3px solid var(--blue-deeper);
+    outline-offset: 2px;
+  }
+
+  .hp-trap {
+    position: absolute;
+    clip-path: inset(50%);
+    opacity: 0;
+    pointer-events: none;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .genz-compliance {
+    font-size: var(--text-xs);
+    line-height: 1.45;
+    color: var(--gray-500);
+    margin-bottom: var(--space-md);
+  }
+
+  .genz-submit {
+    width: 100%;
+    min-height: 60px;
+    font-size: var(--text-xl);
+    padding: var(--space-md) var(--space-lg);
+    border: none;
+  }
+
+  .genz-submit:disabled {
+    opacity: 0.7;
+    cursor: default;
+    transform: none;
+  }
+
+  /* ── Success: after submit only this stays on the card ── */
+  .genz-card.is-submitted > :not(.genz-success) {
+    display: none;
+  }
+
+  .genz-success {
+    text-align: center;
+  }
+
+  .genz-success[hidden] {
+    display: none;
+  }
+
+  .genz-success-head {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--orange-dark);
+    rotate: -1.5deg;
+    margin-bottom: var(--space-sm);
+  }
+
+  .genz-success-body {
+    font-size: var(--text-base);
+    line-height: 1.5;
+    color: var(--gray-700);
+    margin-bottom: var(--space-lg);
+  }
+
+  .genz-success-follow {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: var(--space-sm);
+  }
+
+  .genz-follow-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: var(--space-lg);
+  }
+
+  .genz-follow-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 8px 12px;
+    border-radius: var(--radius-md);
+    background: var(--blue-deeper);
+    color: var(--white);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-sm);
+    transition: background var(--duration-fast) var(--ease-default);
+  }
+
+  .genz-follow-btn:hover {
+    background: var(--blue-dark);
+  }
+
+  .genz-share,
+  .genz-next {
+    width: 100%;
+    min-height: 52px;
+    font-size: var(--text-base);
+    padding: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-sm);
+    text-align: center;
+  }
+
+  .genz-next {
+    border: none;
+  }
+
+  .genz-share-check {
+    display: none;
+    color: #1b7a3d;
+    font-weight: 900;
+  }
+
+  .genz-share.copied .genz-share-check {
+    display: inline;
+  }
+
+  .genz-share.copied:hover .genz-share-check {
+    color: var(--white);
+  }
+
+  .genz-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    margin-top: var(--space-xs);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--blue-dark);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .genz-more:hover {
+    color: var(--orange-dark);
+  }
+
+  /* ── Who is Byron ── */
+  .genz-who {
+    margin-top: var(--space-2xl);
+  }
+
+  .genz-who-label {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--orange-dark);
+    margin-bottom: var(--space-sm);
+  }
+
+  .genz-who-body {
+    font-size: var(--text-base);
+    line-height: 1.6;
+    color: var(--gray-700);
+    margin-bottom: var(--space-md);
+  }
+
+  .genz-planks {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 900;
+    line-height: 1.15;
+    color: var(--blue-deeper);
+    margin: var(--space-lg) 0 var(--space-md);
+    text-wrap: balance;
+  }
+
+  .genz-date {
+    margin-bottom: var(--space-md);
+  }
+
+  .genz-date span {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--orange-dark);
+    border: 2px dashed rgba(230, 136, 28, 0.55);
+    border-radius: 3px;
+    padding: 3px 10px;
+    rotate: -1deg;
+  }
+
+  .genz-record {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--text-base);
+    color: var(--blue-deeper);
+    text-decoration: underline;
+    text-decoration-color: var(--orange);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+
+  .genz-record:hover {
+    color: var(--orange-dark);
+  }
+
+  /* ── Socials ── */
+  .genz-socials {
+    margin-top: var(--space-xl);
+    text-align: center;
+  }
+
+  .genz-socials-label {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: var(--space-sm);
+  }
+
+  .genz-socials-row {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+  }
+
+  .genz-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+    border: 2px dashed rgba(3, 109, 153, 0.45);
+    color: var(--blue-deeper);
+    rotate: -1.5deg;
+    transition: background var(--duration-normal) var(--ease-default), color var(--duration-normal) var(--ease-default), rotate var(--duration-normal) var(--ease-default);
+  }
+
+  .genz-social:nth-child(even) {
+    rotate: 1.5deg;
+  }
+
+  .genz-social:hover {
+    background: var(--orange);
+    border-color: var(--orange-dark);
+    border-style: solid;
+    color: var(--white);
+    rotate: 0deg;
+  }
+
+  /* ── Paid for ── */
+  .genz-foot {
+    margin-top: var(--space-xl);
+    text-align: center;
+  }
+
+  .genz-paid {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+  }
+
+  /* Tablet and up: a little more room inside the card */
+  @media (min-width: 560px) {
+    .genz {
+      padding-top: var(--space-md);
+    }
+
+    .genz-card {
+      padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .genz-submit {
+      animation: none;
+    }
+  }
+</style>
