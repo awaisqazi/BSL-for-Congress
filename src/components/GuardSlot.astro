@@ -1,6 +1,6 @@
 ---
-// Bot-check slot for one form: where the Turnstile widget appears (most
-// people never see it), plus the status and error lines. Renders nothing
+// Bot-check slot for one form: where the Turnstile widget appears (always
+// visible once the form is on screen), plus the status and error lines. Renders nothing
 // unless the bot check is on at build time (see src/scripts/guard.js), so
 // with the flag off the form markup is exactly what it was.
 // Styles are inline on purpose: with the flag off, no CSS ships for this.
@@ -15,8 +15,8 @@ const err = tone === 'dark' ? '#ffb4a8' : '#b42318';
 ---
 
 {enabled && (
-  <div class="guard-slot" data-guard-slot style="margin: 0 0 12px;">
-    <div data-guard-widget style="max-width: 100%;"></div>
+  <div class="guard-slot" data-guard-slot data-guard-tone={tone} style="margin: 0 0 12px;">
+    <div data-guard-widget style="width: 100%; max-width: 340px;"></div>
     <p data-guard-status role="status" style={`margin: 4px 0 0; font-size: 0.875rem; color: ${fg};`}></p>
     <p data-guard-error role="alert" style={`margin: 4px 0 0; font-size: 0.9375rem; font-weight: 700; color: ${err};`}></p>
     <span hidden data-guard-msg="checking" data-i18n="guard.checking">Checking that you are a person...</span>

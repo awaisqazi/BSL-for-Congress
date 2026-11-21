@@ -62,6 +62,7 @@ function unmount() {
   try {
     window.turnstile?.remove(w.id);
   } catch {}
+  if (w.el) w.el.style.minHeight = '';
   settle(w, false, 'gone');
 }
 
@@ -74,11 +75,17 @@ async function mount(form) {
   unmount();
   const w = { form, el, id: null, lang: lang(), token: '', waiters: [], busy: false };
   active = w;
+  // Always visible: people see the check before they press submit. The box
+  // fills the slot (capped by the slot's own max-width); a slot narrower than
+  // Turnstile's 300px minimum gets the compact box instead.
+  const narrow = el.clientWidth > 0 && el.clientWidth < 300;
+  el.style.minHeight = narrow ? '140px' : '65px'; // hold the room while it loads
   w.id = ts.render(el, {
     sitekey: SITEKEY,
     action: form.dataset.guard || 'form',
-    appearance: 'interaction-only',
-    size: 'flexible',
+    appearance: 'always',
+    size: narrow ? 'compact' : 'flexible',
+    theme: slot(form)?.dataset.guardTone === 'dark' ? 'dark' : 'light',
     language: w.lang,
     'response-field': false, // the token goes in the JSON body, not the form
     'refresh-expired': 'auto',
@@ -164,9 +171,10 @@ function buttons(form) {
   return [...form.querySelectorAll('button[type="submit"], button:not([type]), input[type="submit"]')];
 }
 
-// Load the Turnstile script once a form comes near the viewport, and render
-// the widget on first focus inside it. observe:false for forms that are
-// always "in view" but invisible (the petition modal): call prime() instead.
+// When a form comes near the viewport, load the Turnstile script and show the
+// widget in it, unless another form on the page already has it; focusing a
+// form always brings the widget to that form. observe:false for forms that
+// are always "in view" but invisible (the petition modal): call prime().
 export function watch(form, { observe = true } = {}) {
   if (!enabled || !form) return;
   form.addEventListener('focusin', () => prime(form));
@@ -175,7 +183,8 @@ export function watch(form, { observe = true } = {}) {
       (entries) => {
         if (entries.some((e) => e.isIntersecting)) {
           io.disconnect();
-          loadApi().catch(() => {});
+          if (active) loadApi().catch(() => {});
+          else prime(form);
         }
       },
       { rootMargin: '400px 0px' },

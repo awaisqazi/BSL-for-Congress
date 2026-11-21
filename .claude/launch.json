@@ -7,6 +7,13 @@
       "runtimeArgs": ["run", "dev", "--", "--port", "4399"],
       "port": 4399,
       "autoPort": false
+    },
+    {
+      "name": "astro-dev-turnstile-test",
+      "runtimeExecutable": "env",
+      "runtimeArgs": ["PUBLIC_TURNSTILE_SITEKEY=1x00000000000000000000AA", "PUBLIC_FORMS_ENDPOINT=http://localhost:8787", "npm", "run", "dev", "--", "--port", "4411"],
+      "port": 4411,
+      "autoPort": false
     }
   ]
 }
