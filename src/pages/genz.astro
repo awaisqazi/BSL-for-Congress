@@ -3,7 +3,7 @@
 // two places as the /volunteer form: the frozen Google Form (action, entry.*
 // names, and checkbox values copied byte for byte from SignupForm.astro) and
 // the campaign database through supa.js, which tags the row by pathname.
-// ZIP is optional. City is not collected here, so its entry.* field is not sent.
+// City and ZIP are optional.
 import Layout from "../layouts/Layout.astro";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
@@ -101,24 +101,37 @@ const ttIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentCol
         />
       </div>
 
-      <!-- Phone and ZIP share a row. ZIP is optional: it tells the campaign who lives in the ward. -->
-      <div class="genz-row genz-row-phone">
+      <div class="genz-field">
+        <label for="genz-phone"><span data-i18n="genz.label_phone">Mobile phone</span></label>
+        <input
+          type="tel"
+          id="genz-phone"
+          name="entry.763325091"
+          autocomplete="tel"
+          inputmode="tel"
+          minlength="10"
+          maxlength="20"
+          enterkeyhint="next"
+          required
+        />
+      </div>
+
+      <!-- City and ZIP are optional: they tell the campaign who lives in the ward. -->
+      <div class="genz-row genz-row-place">
         <div class="genz-field">
-          <label for="genz-phone"><span data-i18n="genz.label_phone">Mobile phone</span></label>
+          <label for="genz-city"><span data-i18n="genz.label_city">City</span> <span class="genz-optional" data-i18n="genz.optional">(optional)</span></label>
           <input
-            type="tel"
-            id="genz-phone"
-            name="entry.763325091"
-            autocomplete="tel"
-            inputmode="tel"
-            minlength="10"
-            maxlength="20"
+            type="text"
+            id="genz-city"
+            name="entry.113002180"
+            autocomplete="address-level2"
+            autocapitalize="words"
+            maxlength="80"
             enterkeyhint="next"
-            required
           />
         </div>
         <div class="genz-field">
-          <label for="genz-zip"><span data-i18n="genz.label_zip">ZIP code</span></label>
+          <label for="genz-zip"><span data-i18n="genz.label_zip">ZIP code</span> <span class="genz-optional" data-i18n="genz.optional">(optional)</span></label>
           <input
             type="text"
             id="genz-zip"
@@ -471,8 +484,15 @@ const ttIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentCol
     min-width: 0;
   }
 
-  .genz-row-phone {
-    grid-template-columns: 1.7fr 1fr;
+  .genz-row-place {
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+  }
+
+  .genz-optional {
+    font-family: var(--font-body);
+    font-weight: 400;
+    color: var(--gray-500);
   }
 
   .genz-field {
