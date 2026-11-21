@@ -9,9 +9,24 @@
       "autoPort": false
     },
     {
-      "name": "astro-dev-turnstile-test",
+      "name": "forms-gateway-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "cloudflare/forms-gateway", "run", "dev", "--", "--port", "8799"],
+      "port": 8799,
+      "autoPort": false
+    },
+    {
+      "name": "astro-dev-guard",
       "runtimeExecutable": "env",
-      "runtimeArgs": ["PUBLIC_TURNSTILE_SITEKEY=1x00000000000000000000AA", "PUBLIC_FORMS_ENDPOINT=http://localhost:8787", "npm", "run", "dev", "--", "--port", "4411"],
+      "runtimeArgs": [
+        "PUBLIC_TURNSTILE_SITEKEY=1x00000000000000000000AA",
+        "PUBLIC_FORMS_ENDPOINT=http://127.0.0.1:8799",
+        "npx",
+        "astro",
+        "dev",
+        "--port",
+        "4411"
+      ],
       "port": 4411,
       "autoPort": false
     }

@@ -145,6 +145,33 @@ export function rsvpLobbyDay(form) {
   }
 }
 
+// /canvass/ team form (frozen Google Form field names, see
+// src/components/canvass/form-options.js), as a volunteer who knocks doors:
+// "Knock on Doors" is the frozen interest value of the /volunteer form, so the
+// admin desk lists them with the door knockers. Names, email and phone only;
+// address and availability stay in the Google sheet. Phone reduced to digits
+// (and a leading +) so the 7 to 20 length check holds; email only when it
+// passes the table's pattern.
+export function canvassTeam(form) {
+  if (!enabled) return Promise.resolve({ ok: false, skipped: true });
+  try {
+    const f = fd(form);
+    const digits = (one(f, 'entry.722306715', 40) || '').replace(/[^0-9+]/g, '');
+    const email = one(f, 'entry.1585328537', 254);
+    return insert('volunteers', {
+      first_name: one(f, 'entry.2027931053', 80),
+      last_name: one(f, 'entry.463614577', 80),
+      email: email && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) ? email : null,
+      phone: digits.length >= 7 && digits.length <= 20 ? digits : null,
+      interests: ['Knock on Doors'],
+      honeypot: hp('cv-hp'),
+      ...meta(),
+    });
+  } catch {
+    return Promise.resolve({ ok: false });
+  }
+}
+
 // Generic one-tap action log for future features. Keep PII out of payload.
 export function action(name, payload = {}) {
   const { language, source_page } = meta();

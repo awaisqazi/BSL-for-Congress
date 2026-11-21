@@ -21,8 +21,12 @@ Worker (`src/index.js`).
 ```
 
 - `form`: `volunteer`, `genz` (same Google Form as volunteer), `petition`,
-  `lobbyday`, or `rsvp` (event-card "I'm coming": token check only, the
-  browser then writes its row to Supabase).
+  `lobbyday`, `canvass` (the `/canvass/` team form), or `rsvp` (event-card
+  "I'm coming": token check only, the browser then writes its row to
+  Supabase).
+- `canvass` days use Google's "Other": `entry.N=__other_option__` plus
+  `entry.N.other_option_response=<text>`. The Worker keeps the two only
+  together and only with text; a lone half is dropped.
 - `fields`: `[name, value]` pairs, so repeated checkbox values survive.
   Unknown names are dropped, values are trimmed and capped per field.
 - `hp`: the honeypot was filled. Answer `{ ok: true }`, forward nothing.

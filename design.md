@@ -373,6 +373,7 @@ Each page (except `links.astro`) imports `Layout`, `Navbar`, page-specific compo
 | `/events/<id>.ics`, `/events/<id>-es.ics` | [src/pages/events/[file].ics.js](src/pages/events/[file].ics.js) | Calendar files built per dated entry and language; see 7a |
 | `/events/all.ics`, `/events/all-es.ics` | [src/pages/events/all.ics.js](src/pages/events/all.ics.js), [all-es.ics.js](src/pages/events/all-es.ics.js) | One feed per language: every dated entry plus the next 20 weeks of the weekly shifts (subscribe link in MiniCalendar) |
 | `/volunteer` | [src/pages/volunteer.astro](src/pages/volunteer.astro) | The one action page: VolunteerHero (short) → ShowUp `full` (`#show-up`: MiniCalendar `#calendar` beside the filtered shift list `#this-week`, Every Week `#every-week`, Dates That Matter `#dates`, canvass team `#canvass-team`) → RolePicker + ActionBlocks (one "Ways to Help" unit) → PetitionBlitz (`#sign-petition`) → SignupForm (`#signup`) → FundCTA → SolidarityTicker |
+| `/canvass/` | [src/pages/canvass.astro](src/pages/canvass.astro) | Short intro (the campaign's "Not me, but we") > the canvass team form (`canvass/TeamForm.astro`). See [Canvass Team](#canvass-team-canvassteamformastro-on-canvass) |
 | `/links` | [src/pages/links.astro](src/pages/links.astro) | Linktree-style; uses Layout but **omits** Navbar/Footer |
 | `/admin/` | [src/pages/admin/index.astro](src/pages/admin/index.astro) | Staff-only Admin desk. Standalone page (no Layout, Navbar, Footer, PetitionModal or i18n), `noindex,nofollow`, not linked anywhere. See [Admin desk](#admin-desk) |
 
@@ -872,6 +873,41 @@ If you add/remove/reorder a field, **the `entry.NNNN` name must match the Google
 
 After submit, the form resets, gets `.is-submitted` (fields hidden), and the next-steps block (Ward Night, canvass map, follow-up, share link) stays up with no timer. The `<form>` carries `data-action-bar-hide` so the mobile action bar steps aside while it is on screen. `.signup-section` has `scroll-margin-top: var(--nav-height)` because `#signup` is the sitewide deep-link target for the volunteer ask (navbar pill, hero, RoadCTA, links page, mobile bar).
 
+#### Canvass Team: `canvass/TeamForm.astro` on `/canvass/`
+
+For people who cannot make the dated shifts and tell us when they are free. It replaced the link out to the Google Form `https://forms.gle/aBc3EsoUhraW2A4Q8`; every response still lands in that form's sheet, the intake of record. Show Up (`#canvass-team` card, the home "Can't make these?" line), `/links` and the Oct 2026 news post all point at `/canvass/`.
+
+| Property | Value |
+|---|---|
+| **Form ID** | `1FAIpQLScAARbEDt10UH1OwzxUdR-_Cc6hqjORGj8ATl-ZU1FHbo0PLw` |
+| **Hidden iframe** | `hidden_iframe_canvass` (bot check off only) |
+| **Worker form name** | `canvass` (`cloudflare/forms-gateway/src/index.js`) |
+| **i18n keys** | `canvass.*`, plus `volunteer.compliance`, `volunteer.success_canvass`, `volunteer.share_btn`, `meet.road_ward` |
+| **Database copy** | `canvassTeam()` in `src/scripts/supa.js`: `volunteers` row with names, email, phone and `interests: ['Knock on Doors']`. Address and availability stay in the sheet |
+
+Fields, all FROZEN and read from [src/components/canvass/form-options.js](src/components/canvass/form-options.js), never typed by hand: first name `entry.2027931053`, last name `entry.463614577`, phone `entry.722306715`, email `entry.1585328537`, address `entry.427732593`, seven day checkboxes (Monday `entry.1807340006` through Sunday `entry.1077743271`) each with the six values `8:00 - 10:00 AM` … `6:00 - 8:00 PM`, host a neighbor connection `entry.908618572` (`Yes! I would` / `No, I would not` / `Not sure, tell me more`), languages `entry.1892928530` (`Spanish` / `English` / `Both`). Google requires none of them; the page requires names and phone.
+
+"Other" per day posts as two pairs, `entry.N=__other_option__` and `entry.N.other_option_response=<text>`. The page ships a hidden `__other_option__` box per day that its script checks only while that day's text input has text, and it never posts an empty text input. The Worker drops a lone half too.
+
+To regenerate `form-options.js` after the Google Form changes: extract the form's public `FB_PUBLIC_LOAD_DATA_` into a spec JSON of the shape `{ formResponse, questions: [{ googleTitle, type: short|paragraph|checkbox|radio, entry, options, hasOther }] }` (questions in form order), then run the generator below and paste the output over the file. It refuses a form whose shape changed (not 5 text, 7 day checkboxes with the same options and Other, 2 radios); then update the Worker whitelist and this table. The component also fails the build if the option counts drift.
+
+```bash
+node --input-type=module -e "
+import fs from 'fs';
+const q = JSON.parse(fs.readFileSync(process.argv[1], 'utf8')).questions;
+const days = q.filter((x) => x.type === 'checkbox'), radios = q.filter((x) => x.type === 'radio');
+const text = q.filter((x) => x.type === 'short' || x.type === 'paragraph');
+if (days.length !== 7 || radios.length !== 2 || text.length !== 5) throw new Error('unexpected form shape');
+const slots = days[0].options;
+if (!days.every((d) => d.hasOther && JSON.stringify(d.options) === JSON.stringify(slots))) throw new Error('day options differ');
+const out = { text: { first: text[0].entry, last: text[1].entry, phone: text[2].entry, email: text[3].entry, address: text[4].entry },
+  days: days.map((d, i) => ({ key: ['mon','tue','wed','thu','fri','sat','sun'][i], entry: d.entry })), slots,
+  host: { entry: radios[0].entry, options: radios[0].options }, lang: { entry: radios[1].entry, options: radios[1].options } };
+console.log(JSON.stringify(out, null, 2));" path/to/canvass-form.json
+```
+
+Layout: at 720 px and up, one grid with days as rows and slots as columns; tapping a day name toggles the row, tapping a column head toggles that slot all week. Below 720 px the column heads hide and each day stacks (3 by 2 slots, 2 by 3 below 480 px). The day names, column heads and Other inputs are written out in the markup so the parity grep sees every `canvass.*` key.
+
 ### 2. RaiseMore Iframe — Footer & Links Page
 
 A pre-built signup form from RaiseMore, embedded as an `<iframe>` inside the clipboard component. **Not a Google Form.**
@@ -890,6 +926,7 @@ To swap, change the `src` attribute on both iframes (Footer + Links). The clipbo
 |---|---|---|---|
 | Petition Blitz Modal | Google Form | `PetitionModal.astro` | All pages (global, modal) |
 | Volunteer Signup | Google Form | `volunteer/SignupForm.astro` | `/volunteer` only |
+| Canvass Team | Google Form | `canvass/TeamForm.astro` | `/canvass/` |
 | Newsletter / Volunteer Sign-Up | RaiseMore iframe | `Footer.astro` + `links.astro` | Every page footer + `/links` |
 
 ---

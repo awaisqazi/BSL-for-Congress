@@ -76,6 +76,46 @@ const FORMS = {
       'entry.1696229938': { cap: 1000 },
     },
   },
+  // /canvass/ team form. Each day is a checkbox with Google's "Other": the
+  // pair entry.N=__other_option__ and entry.N.other_option_response. `others`
+  // lists those days, so a text without its marker (or a marker without
+  // text) is dropped. Worst case 5 + 7 * 6 + 7 + 7 + 2 = 63 pairs, under
+  // MAX_PAIRS; 7 values per day (6 slots and the marker), under MAX_REPEAT.
+  canvass: {
+    url: 'https://docs.google.com/forms/d/e/1FAIpQLScAARbEDt10UH1OwzxUdR-_Cc6hqjORGj8ATl-ZU1FHbo0PLw/formResponse',
+    fields: {
+      'entry.2027931053': { cap: 80 }, // first name
+      'entry.463614577': { cap: 80 }, // last name
+      'entry.722306715': { cap: 40 }, // phone
+      'entry.1585328537': { cap: 254 }, // email
+      'entry.427732593': { cap: 300 }, // address
+      'entry.1807340006': { cap: 40, repeat: true }, // Mondays
+      'entry.1372365725': { cap: 40, repeat: true }, // Tuesdays
+      'entry.867678201': { cap: 40, repeat: true }, // Wednesdays
+      'entry.1194690713': { cap: 40, repeat: true }, // Thursdays
+      'entry.1499989121': { cap: 40, repeat: true }, // Fridays
+      'entry.1805610797': { cap: 40, repeat: true }, // Saturdays
+      'entry.1077743271': { cap: 40, repeat: true }, // Sundays
+      'entry.1807340006.other_option_response': { cap: 120 },
+      'entry.1372365725.other_option_response': { cap: 120 },
+      'entry.867678201.other_option_response': { cap: 120 },
+      'entry.1194690713.other_option_response': { cap: 120 },
+      'entry.1499989121.other_option_response': { cap: 120 },
+      'entry.1805610797.other_option_response': { cap: 120 },
+      'entry.1077743271.other_option_response': { cap: 120 },
+      'entry.908618572': { cap: 40 }, // host a neighbor connection
+      'entry.1892928530': { cap: 40 }, // Spanish, English, Both
+    },
+    others: [
+      'entry.1807340006',
+      'entry.1372365725',
+      'entry.867678201',
+      'entry.1194690713',
+      'entry.1499989121',
+      'entry.1805610797',
+      'entry.1077743271',
+    ],
+  },
   // Event-card "I'm coming" form: no Google Form. The Worker only checks the
   // token; the browser then writes its row to the campaign database.
   rsvp: { url: null, fields: {} },
@@ -117,7 +157,26 @@ export function cleanFields(config, pairs) {
     seen.set(name, count + 1);
     out.push([name, value.trim().slice(0, rule.cap)]);
   }
-  return out;
+  return config.others ? pairOthers(config.others, out) : out;
+}
+
+// Google's "Other" on a checkbox question is two pairs: name=__other_option__
+// and name.other_option_response=<text>. Keep them only together, and only
+// with some text; drop a lone half. Forms without `others` never get here.
+const OTHER = '__other_option__';
+function pairOthers(names, pairs) {
+  const whole = new Set(
+    names.filter(
+      (n) =>
+        pairs.some(([k, v]) => k === n && v === OTHER) &&
+        pairs.some(([k, v]) => k === `${n}.other_option_response` && v !== ''),
+    ),
+  );
+  return pairs.filter(([k, v]) => {
+    if (k.endsWith('.other_option_response')) return whole.has(k.slice(0, -'.other_option_response'.length));
+    if (v === OTHER && names.includes(k)) return whole.has(k);
+    return true;
+  });
 }
 
 async function verifyToken(token, ip, env) {

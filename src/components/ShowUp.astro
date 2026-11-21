@@ -25,7 +25,8 @@ const candidates = upcoming().slice(0, 6);
 const tilts = ['-0.6deg', '0.5deg', '-0.4deg'];
 const wardNight = recurring.find((e) => e.kind === 'wardnight');
 const sundays = recurring.find((e) => e.kind === 'canvass');
-const TEAM_FORM = 'https://forms.gle/aBc3EsoUhraW2A4Q8';
+// The canvass team form lives on the site (src/pages/canvass.astro).
+const TEAM_FORM = `${base}/canvass/`;
 
 // Full variant: every upcoming dated shift ships in one list (plus the
 // deadline ledger lines and the weekly cards as a template); MiniCalendar's
@@ -146,7 +147,7 @@ const DOW = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
           <h3 class="ev-team-title" data-i18n="events.team_title">Can't make these dates?</h3>
           <p class="ev-team-desc" data-i18n="events.team_desc">Join the canvass team and tell us when you can go out.</p>
         </div>
-        <a class="btn btn-orange ev-team-btn" href={TEAM_FORM} target="_blank" rel="noopener" data-i18n="events.team_cta">Join the Canvass Team</a>
+        <a class="btn btn-orange ev-team-btn" href={TEAM_FORM} data-i18n="events.team_cta">Join the Canvass Team</a>
       </div>
     </div>
   </div>
@@ -194,7 +195,7 @@ const DOW = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
     </div>
 
     <p class="showup-team animate-in">
-      <a href={TEAM_FORM} target="_blank" rel="noopener" data-i18n="events.team_link">Can't make these? Join the canvass team</a>
+      <a href={TEAM_FORM} data-i18n="events.team_link">Can't make these? Join the canvass team</a>
     </p>
   </div>
 </section>
