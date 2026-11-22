@@ -7,7 +7,8 @@
     "volunteer_cta": "Sign Up",
     "donate": "Donate",
     "latest": "Latest",
-    "events": "Show Up"
+    "events": "Show Up",
+    "news": "News"
   },
   "hero": {
     "badge": "RE-ELECT BYRON SIGCHO-LOPEZ • THE PEOPLE'S FIGHTER",
@@ -595,7 +596,15 @@
     "where": "Where",
     "links_label": "Next steps",
     "join_lead": "Every story here ends the same way: come knock doors with us.",
-    "join": "Knock Doors With Us"
+    "join": "Knock Doors With Us",
+    "search_label": "Search our posts",
+    "search_placeholder": "Try a word, a place or a month",
+    "search_clear": "Clear search",
+    "search_one": "1 post matches \"{q}\".",
+    "search_many": "{n} posts match \"{q}\".",
+    "search_none": "Nothing matches \"{q}\" yet.",
+    "search_none_tip": "Try a shorter word or check the spelling. Every post is still here.",
+    "search_none_cta": "Show every post"
   },
   "events": {
     "label": "Show Up",
@@ -890,5 +899,12 @@
     "ok_head": "You're on the canvass team list.",
     "ok_body": "The campaign will follow up with you. Until then, two ways to get on the doors:",
     "ok_shifts": "See the dated shifts on the calendar"
+  },
+  "rapid": {
+    "label": "Rapid Response Team",
+    "headline": "Help Share Our Posts",
+    "body": "Every share puts our posts in front of more neighbors. Join our social media rapid response team and help us get the word out across the ward.",
+    "how": "To join, sign up and check Post on Social Media.",
+    "cta": "Join the Team"
   }
 }

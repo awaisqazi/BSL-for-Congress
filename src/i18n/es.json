@@ -7,7 +7,8 @@
     "volunteer_cta": "Inscríbete",
     "donate": "Donar",
     "latest": "Lo último",
-    "events": "Preséntate"
+    "events": "Preséntate",
+    "news": "Noticias"
   },
   "hero": {
     "badge": "REELIGE A BYRON SIGCHO-LOPEZ • EL LUCHADOR DEL PUEBLO",
@@ -595,7 +596,15 @@
     "where": "Dónde",
     "links_label": "Próximos pasos",
     "join_lead": "Cada historia aquí termina igual: ven a tocar puertas con nosotros.",
-    "join": "Toca Puertas con Nosotros"
+    "join": "Toca Puertas con Nosotros",
+    "search_label": "Busca en nuestras publicaciones",
+    "search_placeholder": "Prueba una palabra, un lugar o un mes",
+    "search_clear": "Borrar búsqueda",
+    "search_one": "1 publicación coincide con \"{q}\".",
+    "search_many": "{n} publicaciones coinciden con \"{q}\".",
+    "search_none": "Todavía no hay nada con \"{q}\".",
+    "search_none_tip": "Prueba con una palabra más corta o revisa cómo la escribiste. Todas las publicaciones siguen aquí.",
+    "search_none_cta": "Ver todas las publicaciones"
   },
   "events": {
     "label": "Preséntate",
@@ -890,5 +899,12 @@
     "ok_head": "Ya estás en la lista del equipo de puertas.",
     "ok_body": "La campaña se pondrá en contacto contigo. Mientras tanto, dos formas de salir a tocar puertas:",
     "ok_shifts": "Mira los turnos con fecha en el calendario"
+  },
+  "rapid": {
+    "label": "Equipo de Respuesta Rápida",
+    "headline": "Ayúdanos a Correr la Voz",
+    "body": "Cada vez que compartes, nuestras publicaciones llegan a más vecinos. Únete a nuestro equipo de respuesta rápida en redes sociales y ayúdanos a correr la voz por todo el distrito.",
+    "how": "Para unirte, inscríbete y marca Publicar en Redes Sociales.",
+    "cta": "Únete al Equipo"
   }
 }

@@ -20,6 +20,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <li><a href={`${base}/meet`} data-i18n="nav.meet">Meet Byron</a></li>
       <li><a href={`${base}/platform`} data-i18n="nav.platform">The Record</a></li>
       <li><a href={`${base}/movement`} data-i18n="nav.movement">Machine vs. Movement</a></li>
+      <li><a href={`${base}/news/`} data-i18n="nav.news">News</a></li>
       <li class="nav-cal-item" data-navcal>
         <a href={`${base}/volunteer/`} data-i18n="nav.events">Show Up</a>
         <button type="button" class="nav-cal-btn" data-navcal-trigger aria-expanded="false" aria-controls="nav-cal-pop" aria-haspopup="dialog">
@@ -69,6 +70,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <li><a href={`${base}/meet`} data-i18n="nav.meet">Meet Byron</a></li>
       <li><a href={`${base}/platform`} data-i18n="nav.platform">The Record</a></li>
       <li><a href={`${base}/movement`} data-i18n="nav.movement">Machine vs. Movement</a></li>
+      <li><a href={`${base}/news/`} data-i18n="nav.news">News</a></li>
       <li><a href={`${base}/volunteer/`} data-i18n="nav.events">Show Up</a></li>
       <li>
         <a href={`${base}/volunteer/#signup`} class="btn btn-orange mobile-volunteer" data-i18n="nav.volunteer_cta">Sign Up</a>
@@ -462,6 +464,36 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   .nav-donate {
     padding: 6px 18px !important;
+  }
+
+  /* Small laptops (1025 to 1279 px): five links, the language toggle and
+     both pills share one bar, so tighten the spacing instead of letting the
+     Spanish labels push the pills off the edge. */
+  @media (min-width: 1025px) and (max-width: 1279px) {
+    .logo-img {
+      height: 54px;
+    }
+
+    .nav-links {
+      gap: 0.9rem;
+    }
+
+    .nav-links > li > a {
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-actions {
+      gap: 0.6rem;
+    }
+
+    .nav-pill {
+      padding: 8px 14px !important;
+    }
+
+    .nav-donate {
+      padding: 6px 12px !important;
+    }
   }
 
   /* Phones: the bar only has room for the logo, the language toggle and the

@@ -76,7 +76,7 @@ BSL-for-Congress/
 │   └── images/                 # See "Image Assets Reference" below
 ├── src/
 │   ├── components/
-│   │   ├── Navbar.astro        # Fixed top nav + lang toggle + mobile drawer (Meet Byron, The Record, Machine vs. Movement, Show Up); Show Up calendar popover, drawer calendar, inlines #bsl-cal-data
+│   │   ├── Navbar.astro        # Fixed top nav + lang toggle + mobile drawer (Meet Byron, The Record, Machine vs. Movement, News, Show Up; tighter spacing at 1025 to 1279 px so the Spanish labels fit); Show Up calendar popover, drawer calendar, inlines #bsl-cal-data
 │   │   ├── Hero.astro          # Homepage hero: self-hosted <video> bg + sound toggle
 │   │   ├── ShowUp.astro        # Home (next three shifts + standing chips) and, with `full`, the /volunteer Show Up block
 │   │   ├── MiniCalendar.astro  # "Plan your month" calendar that filters the /volunteer shift list (#calendar, #cal-/#week- hashes)
@@ -202,7 +202,7 @@ If you add a new paragraph to one of these blocks, **also add the matching `_des
 ### i18n Key Naming Conventions (Top-Level Sections)
 
 ```
-nav.*                  → Navigation labels (also used in Footer + Mobile drawer); includes nav.events ("Show Up", main nav, to /volunteer/), nav.volunteer_cta ("Sign Up" / "Inscríbete", orange pill, to /volunteer/#signup) and nav.latest ("Latest", footer only)
+nav.*                  → Navigation labels (also used in Footer + Mobile drawer); includes nav.events ("Show Up", main nav, to /volunteer/), nav.volunteer_cta ("Sign Up" / "Inscríbete", orange pill, to /volunteer/#signup) nav.news ("News" / "Noticias", main nav and drawer, to /news/) and nav.latest ("Latest", footer only)
 hero.*                 → Homepage hero (Hero.astro)
 bio.*                  → Homepage "Meet Byron" bio block (MeetOrganizer.astro)
 platform.*             → Homepage "Byron Gets Results" (PlatformGrid.astro): label, headline, sub, cta, r1..r9 (each {title, desc})
@@ -216,7 +216,8 @@ volunteer.*            → /volunteer page — hero, blitz, action cards, signup
 petition_modal.*       → Global petition modal overlay
 bar.*                  → Mobile action bar (MobileActionBar.astro): ask, signup, canvass, showup, dismiss
 linkspage.*            → The only i18n keys on /links: canvass_team, petition_rsvp
-latest.*               → Latest strip (home) + /news pages: UI labels only (label, headline, sub, cta, read, receipt, past, rsvp, ...). Post copy is NOT here; see 7b
+latest.*               → Latest strip (home) + /news pages: UI labels only (label, headline, sub, cta, read, receipt, past, rsvp, search_*, ...). Post copy is NOT here; see 7b
+rapid.*                → RapidResponse.astro: the social media rapid response team card on /news/ and /volunteer
 events.*               → Show Up block (home and /volunteer), MiniCalendar (`events.cal_*`), /news pointer
 ```
 
@@ -368,11 +369,11 @@ Each page (except `links.astro`) imports `Layout`, `Navbar`, page-specific compo
 | `/meet` | [src/pages/meet.astro](src/pages/meet.astro) | MeetHero → EarlyLife → WardRecord → SocialistValues |
 | `/movement` | [src/pages/movement.astro](src/pages/movement.astro) | MachineHero → MovementSection → MachineSection → BallotFight |
 | `/events/` | `redirects` in [astro.config.mjs](astro.config.mjs) | Static redirect page (meta refresh) to `/volunteer/#show-up`. Show Up was merged into /volunteer in Oct 2026 |
-| `/news/` | [src/pages/news/index.astro](src/pages/news/index.astro) | One-line pointer to /volunteer/#show-up > every post in news.json, newest first |
+| `/news/` | [src/pages/news/index.astro](src/pages/news/index.astro) | One-line pointer to /volunteer/#show-up > search box (filters the cards in place using /news/search.json, built by src/pages/news/search.json.js; ?q= prefills it) > every post in news.json, newest first > RapidResponse (#rapid-response) |
 | `/news/<slug>/` | [src/pages/news/[slug].astro](src/pages/news/[slug].astro) | One page per post: stamp, kind, title, summary, event flyer, paragraphs, link strips, the receipt, the Knock Doors pill. Details in 7b |
 | `/events/<id>.ics`, `/events/<id>-es.ics` | [src/pages/events/[file].ics.js](src/pages/events/[file].ics.js) | Calendar files built per dated entry and language; see 7a |
 | `/events/all.ics`, `/events/all-es.ics` | [src/pages/events/all.ics.js](src/pages/events/all.ics.js), [all-es.ics.js](src/pages/events/all-es.ics.js) | One feed per language: every dated entry plus the next 20 weeks of the weekly shifts (subscribe link in MiniCalendar) |
-| `/volunteer` | [src/pages/volunteer.astro](src/pages/volunteer.astro) | The one action page: VolunteerHero (short) → ShowUp `full` (`#show-up`: MiniCalendar `#calendar` beside the filtered shift list `#this-week`, Every Week `#every-week`, Dates That Matter `#dates`, canvass team `#canvass-team`) → RolePicker + ActionBlocks (one "Ways to Help" unit) → PetitionBlitz (`#sign-petition`) → SignupForm (`#signup`) → FundCTA → SolidarityTicker |
+| `/volunteer` | [src/pages/volunteer.astro](src/pages/volunteer.astro) | The one action page: VolunteerHero (short) → ShowUp `full` (`#show-up`: MiniCalendar `#calendar` beside the filtered shift list `#this-week`, Every Week `#every-week`, Dates That Matter `#dates`, canvass team `#canvass-team`) → RolePicker + ActionBlocks (one "Ways to Help" unit) → RapidResponse (`#rapid-response`; its button goes to `#signup` and ticks "Post on Social Media") → PetitionBlitz (`#sign-petition`) → SignupForm (`#signup`) → FundCTA → SolidarityTicker |
 | `/canvass/` | [src/pages/canvass.astro](src/pages/canvass.astro) | Short intro (the campaign's "Not me, but we") > the canvass team form (`canvass/TeamForm.astro`). See [Canvass Team](#canvass-team-canvassteamformastro-on-canvass) |
 | `/links` | [src/pages/links.astro](src/pages/links.astro) | Linktree-style; uses Layout but **omits** Navbar/Footer |
 | `/admin/` | [src/pages/admin/index.astro](src/pages/admin/index.astro) | Staff-only Admin desk. Standalone page (no Layout, Navbar, Footer, PetitionModal or i18n), `noindex,nofollow`, not linked anywhere. See [Admin desk](#admin-desk) |

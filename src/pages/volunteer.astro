@@ -1,14 +1,16 @@
 ---
 // The one action page. Show Up (every dated shift, the month calendar, the
 // standing shifts and the official dates) comes right after a short hero;
-// /events/ redirects here (#show-up). Then the ways to help, the petition,
-// the sign-up form (#signup) and the donate ask.
+// /events/ redirects here (#show-up). Then the ways to help, the social
+// media rapid response ask (#rapid-response), the petition, the sign-up
+// form (#signup) and the donate ask.
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import VolunteerHero from '../components/volunteer/VolunteerHero.astro';
 import ShowUp from '../components/ShowUp.astro';
 import RolePicker from '../components/volunteer/RolePicker.astro';
 import ActionBlocks from '../components/volunteer/ActionBlocks.astro';
+import RapidResponse from '../components/RapidResponse.astro';
 import PetitionBlitz from '../components/volunteer/PetitionBlitz.astro';
 import SignupForm from '../components/volunteer/SignupForm.astro';
 import FundCTA from '../components/volunteer/FundCTA.astro';
@@ -23,6 +25,7 @@ import Footer from '../components/Footer.astro';
     <ShowUp full />
     <RolePicker />
     <ActionBlocks />
+    <RapidResponse />
     <PetitionBlitz />
     <SignupForm />
     <FundCTA />
