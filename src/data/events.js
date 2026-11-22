@@ -53,6 +53,7 @@ function validate(list) {
     if (!labelOk(e.location)) errors.push(`${at}: location is required`);
     if (!url(e.source)) errors.push(`${at}: every entry needs a source URL`);
     if ('slate' in e && typeof e.slate !== 'boolean') errors.push(`${at}: slate must be true or false`);
+    if ('geo' in e && !(e.geo && Math.abs(e.geo.lat - 41.85) < 1 && Math.abs(e.geo.lng + 87.68) < 1)) errors.push(`${at}: geo must be {lat, lng} near Chicago (run node ops/geocode-events.mjs)`);
     if (e.recurring) {
       if (!RULE_RE.test(e.rule || '')) errors.push(`${at}: rule must look like weekly:TU`);
       if (!bilingual(e.when)) errors.push(`${at}: when needs en and es`);

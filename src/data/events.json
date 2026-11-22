@@ -14,6 +14,10 @@
     "end": "2026-10-11T14:00:00-05:00",
     "location": "Anticonquista Cafe",
     "address": "952 W 18th St, Chicago",
+    "geo": {
+      "lat": 41.85809,
+      "lng": -87.65073
+    },
     "rsvp": "https://actionnetwork.org/events/byronfor25-1025-signature-collection-canvass-2",
     "action": {
       "en": "RSVP",
@@ -41,6 +45,10 @@
       "es": "Oficina del 25th Ward IPO"
     },
     "address": "2102 W Cermak Rd, Chicago",
+    "geo": {
+      "lat": 41.85219,
+      "lng": -87.67842
+    },
     "rsvp": "https://actionnetwork.org/events/byronfor25-1010-signature-collection-canvass-2/",
     "action": {
       "en": "RSVP",
@@ -68,6 +76,10 @@
       "es": "Oficina del 25th Ward IPO"
     },
     "address": "2102 W Cermak Rd, Chicago",
+    "geo": {
+      "lat": 41.85219,
+      "lng": -87.67842
+    },
     "rsvp": "https://actionnetwork.org/events/byronfor25-1021-signature-collection-canvass/",
     "action": {
       "en": "RSVP",
@@ -92,6 +104,10 @@
     "end": "2026-10-25T13:00:00-05:00",
     "location": "Cafe Latteaa",
     "address": "3536 W 26th St, Chicago",
+    "geo": {
+      "lat": 41.84445,
+      "lng": -87.71378
+    },
     "rsvp": "https://actionnetwork.org/events/byronfor25-1025-signature-collection-canvass/",
     "action": {
       "en": "RSVP",
@@ -338,6 +354,10 @@
     "end": null,
     "location": "Skylark",
     "address": "2149 S Halsted St, Chicago",
+    "geo": {
+      "lat": 41.85295,
+      "lng": -87.64643
+    },
     "rsvp": null,
     "action": {
       "en": "Tell us you're coming",
@@ -365,6 +385,10 @@
       "es": "Oficina del Distrito 25"
     },
     "address": "2100 W Cermak Rd, Chicago",
+    "geo": {
+      "lat": 41.85219,
+      "lng": -87.67837
+    },
     "rsvp": null,
     "action": {
       "en": "Tell us you're coming",
@@ -392,6 +416,10 @@
       "es": "Oficina del Distrito 25"
     },
     "address": "2100 W Cermak Rd, Chicago",
+    "geo": {
+      "lat": 41.85219,
+      "lng": -87.67837
+    },
     "rsvp": "https://www.getcitykey.com",
     "action": {
       "en": "RSVP",
@@ -416,6 +444,10 @@
     "end": "2026-12-05T21:00:00-06:00",
     "location": "Hairpin Arts Center",
     "address": "2810 N Milwaukee Ave, 2nd Floor, Chicago",
+    "geo": {
+      "lat": 41.9323,
+      "lng": -87.71283
+    },
     "rsvp": "https://actionnetwork.org/events/art-auction-cdsa-socialist-slate-fundraiser",
     "action": {
       "en": "RSVP",
@@ -440,6 +472,10 @@
     "end": null,
     "location": "Holy Ground",
     "address": "2242 S Damen Ave, Chicago",
+    "geo": {
+      "lat": 41.85121,
+      "lng": -87.67589
+    },
     "rsvp": null,
     "action": {
       "en": "Tell us you're coming",
@@ -467,6 +503,10 @@
       "es": "Chicago Liberation Center y por Zoom"
     },
     "address": "2712 W Cermak Rd, Chicago, IL 60608",
+    "geo": {
+      "lat": 41.85198,
+      "lng": -87.69353
+    },
     "rsvp": "https://secure.actblue.com/donate/virtualbsl",
     "action": {
       "en": "RSVP",
@@ -494,6 +534,10 @@
       "es": "Oficina del 25th Ward IPO"
     },
     "address": "2102 W Cermak Rd, Chicago",
+    "geo": {
+      "lat": 41.85219,
+      "lng": -87.67842
+    },
     "rsvp": null,
     "action": {
       "en": "Tell us you're coming",
@@ -518,6 +562,10 @@
     "end": "2026-11-24T18:00:00-06:00",
     "location": "2100 W Cermak Rd",
     "address": "2100 W Cermak Rd, Chicago",
+    "geo": {
+      "lat": 41.85219,
+      "lng": -87.67837
+    },
     "rsvp": null,
     "action": {
       "en": "Tell us you're coming",
@@ -545,6 +593,10 @@
       "es": "Oficina del 25th Ward IPO"
     },
     "address": "2102 W Cermak Rd, Chicago",
+    "geo": {
+      "lat": 41.85219,
+      "lng": -87.67842
+    },
     "rsvp": "https://docs.google.com/forms/d/e/1FAIpQLSduq6GJUMgqyfdRicBZ2Ovgatj63o-hMDKqTizlw7fW2QZQow/viewform",
     "action": {
       "en": "RSVP",
@@ -570,6 +622,10 @@
     "end": "2026-11-22T14:00:00-06:00",
     "location": "Sweet Bean",
     "address": "1152 S Wabash Ave, Chicago",
+    "geo": {
+      "lat": 41.86842,
+      "lng": -87.62592
+    },
     "rsvp": "https://canvass.chicagodsa.org/?date=upcoming&event=an.aacd4be3-b6df-4bf3-b0f5-da88ec3b52af",
     "action": {
       "en": "RSVP",
@@ -595,6 +651,10 @@
     "end": "2026-11-22T17:00:00-06:00",
     "location": "Hotel Chocolat",
     "address": "3334 N Southport Ave, Chicago",
+    "geo": {
+      "lat": 41.94256,
+      "lng": -87.66397
+    },
     "rsvp": "https://canvass.chicagodsa.org/?date=upcoming&event=an.25edf023-a1cf-4545-b8b0-37661b2031d2",
     "action": {
       "en": "RSVP",
@@ -620,6 +680,10 @@
     "end": "2026-11-22T17:00:00-06:00",
     "location": "Mariano's",
     "address": "3857 S Martin Luther King Dr, Chicago",
+    "geo": {
+      "lat": 41.82464,
+      "lng": -87.61667
+    },
     "rsvp": "https://canvass.chicagodsa.org/?date=upcoming&event=an.0f31f0ad-d303-49d0-b029-d133c1751b4b",
     "action": {
       "en": "RSVP",
@@ -645,6 +709,10 @@
     "end": "2026-11-28T17:00:00-06:00",
     "location": "Dark Matter Coffee, Osmium Coffee Bar",
     "address": "1117 W Belmont Ave, Chicago",
+    "geo": {
+      "lat": 41.93981,
+      "lng": -87.65727
+    },
     "rsvp": "https://www.mobilize.us/palsinforkalen/event/1081253/?timeslot=6678211",
     "action": {
       "en": "RSVP",
@@ -670,6 +738,10 @@
     "end": "2026-11-28T17:00:00-06:00",
     "location": "Overflow Coffee",
     "address": "1449 S Michigan Ave, Chicago",
+    "geo": {
+      "lat": 41.86317,
+      "lng": -87.62398
+    },
     "rsvp": "https://canvass.chicagodsa.org/?date=upcoming&event=an.2c87d786-133d-4dff-aef0-6483b0d6d021",
     "action": {
       "en": "RSVP",
@@ -695,6 +767,10 @@
     "end": "2026-11-29T17:00:00-06:00",
     "location": "Aura Coffee & Roastery",
     "address": "2833 N Broadway, Chicago",
+    "geo": {
+      "lat": 41.9338,
+      "lng": -87.64446
+    },
     "rsvp": "https://www.mobilize.us/palsinforkalen/event/1081254/?timeslot=6678236",
     "action": {
       "en": "RSVP",

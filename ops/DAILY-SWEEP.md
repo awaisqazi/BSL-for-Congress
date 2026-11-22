@@ -261,6 +261,11 @@ with open(path, 'w', encoding='utf-8') as f:
 PY
 ```
 
+Map pins: after adding any entry with an `address`, run `node ops/geocode-events.mjs` from the repo root. It writes
+`geo` into `src/data/events.json` for each new address (US Census geocoder; only the public event address is sent). A line
+starting `NO MATCH` means that event will be missing from the /volunteer map: check the address against the source, and
+list it under "Needs a human" if it still fails. Never type coordinates by hand.
+
 ## 5a. Socialist Slate canvasses (every run)
 
 Fez asked (Nov 21, 2026) that the site promote the whole slate. The slate, per Chicago DSA's endorsement page

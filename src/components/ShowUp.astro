@@ -12,6 +12,7 @@
 // Calendar files come from pages/events/[file].ics.js.
 import EventCard from './EventCard.astro';
 import MiniCalendar from './MiniCalendar.astro';
+import ShiftMap from './ShiftMap.astro';
 import { upcoming, recurring, deadlines, ledgerDate, pick, icsPath, todayChicago, startDate } from '../data/events.js';
 import { RUNOFF_DAY } from '../data/calendar-data.js';
 
@@ -107,6 +108,8 @@ const DOW = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
         <p class="cal-note" data-cal-note hidden><a href="#every-week" data-i18n="events.cal_weekly_note">Ward Night every Tuesday and Sunday canvasses most Sundays: see Every Week below.</a></p>
       </div>
     </div>
+
+    <ShiftMap />
 
     <div class="ev-weekly" id="every-week">
       <h3 class="ev-group-title animate-in"><span data-i18n="events.every_week">Every Week</span></h3>

@@ -1,0 +1,500 @@
+---
+// "Shift Map" on /volunteer (#map), under the calendar: every upcoming dated
+// shift that has a geocoded address (events.json "geo", filled by
+// ops/geocode-events.mjs), one pin per address. "Show distances from me" asks
+// the browser for the visitor's location and works out straight-line miles
+// right there: the location is never sent to us or stored, and the map does
+// not move to it (so the tile server only sees the same view as everyone).
+// Distances also land on every shift card on the page ([data-ev-distance]).
+// Leaflet and the OpenStreetMap tiles load only when the map scrolls near.
+import { upcoming, stamp, timeRange, pick, actionHref, mapHref } from '../data/events.js';
+
+const points = upcoming()
+  .filter((e) => e.geo)
+  .map((e) => ({
+    id: e.id,
+    expires: e.expires,
+    slate: Boolean(e.slate),
+    lat: e.geo.lat,
+    lng: e.geo.lng,
+    title: e.title,
+    when: {
+      en: [`${stamp(e, 'en').weekdayLong}, ${stamp(e, 'en').day}`, timeRange(e, 'en')].filter(Boolean).join(' · '),
+      es: [`${stamp(e, 'es').weekdayLong} ${stamp(e, 'es').day}`, timeRange(e, 'es')].filter(Boolean).join(' · '),
+    },
+    place: { en: pick(e.location, 'en'), es: pick(e.location, 'es') },
+    address: e.address,
+    href: actionHref(e, '#signup'),
+    action: e.action,
+    directions: mapHref(e),
+  }));
+---
+
+{points.length > 0 && (
+<div class="smap" id="map" data-smap>
+  <div class="smap-head">
+    <div>
+      <span class="section-label" data-i18n="events.map_label">Shift Map</span>
+      <h3 class="smap-title" data-i18n="events.map_headline">How Far Is the Next Shift?</h3>
+      <p class="smap-sub" data-i18n="events.map_sub">Every upcoming shift with an address, on one map. Tap a pin for the time and the RSVP.</p>
+    </div>
+    <div class="smap-locate">
+      <button type="button" class="btn btn-orange smap-btn" data-smap-locate>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="7"/></svg>
+        <span data-i18n="events.map_locate">Show distances from me</span>
+      </button>
+      <p class="smap-privacy" data-i18n="events.map_privacy">Straight-line distance, worked out in your browser. We never see or store your location.</p>
+    </div>
+  </div>
+
+  <p class="smap-status" data-smap-status aria-live="polite"></p>
+
+  <div class="smap-frame">
+    <div class="smap-canvas" data-smap-canvas role="region" aria-label="Map of upcoming shifts"></div>
+    <ul class="smap-legend">
+      <li><span class="smap-dot smap-dot-ward" aria-hidden="true"></span><span data-i18n="events.map_legend_ward">25th Ward shift</span></li>
+      <li><span class="smap-dot smap-dot-slate" aria-hidden="true"></span><span data-i18n="events.map_legend_slate">Socialist Slate canvass</span></li>
+    </ul>
+  </div>
+
+  <div class="smap-nearest" data-smap-nearest hidden>
+    <h4 class="smap-nearest-title" data-i18n="events.map_nearest">Closest to you</h4>
+    <ol class="smap-nearest-list" data-smap-nearest-list></ol>
+  </div>
+
+  <script type="application/json" data-smap-data set:html={JSON.stringify(points)} />
+</div>
+)}
+
+<script>
+  import en from '../i18n/en.json';
+  import es from '../i18n/es.json';
+  import { isPast } from '../scripts/events-client.js';
+
+  const root = document.querySelector('[data-smap]');
+  if (root) init(root);
+
+  function init(root) {
+    const lang = () => {
+      try { return localStorage.getItem('bsl-lang') === 'es' ? 'es' : 'en'; } catch { return 'en'; }
+    };
+    const tr = (key) => (lang() === 'es' ? es : en).events[key] || en.events[key];
+    const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
+    const all = JSON.parse(root.querySelector('[data-smap-data]').textContent || '[]');
+    const points = all.filter((p) => !isPast(p.expires));
+    if (!points.length) { root.hidden = true; return; }
+
+    // One pin per address; several shifts at the same door share it.
+    const groups = [];
+    const byKey = new Map();
+    points.forEach((p) => {
+      // About 100 m: 2100 and 2102 W Cermak share one pin.
+      const key = `${p.lat.toFixed(3)},${p.lng.toFixed(3)}`;
+      if (!byKey.has(key)) { const g = { lat: p.lat, lng: p.lng, items: [] }; byKey.set(key, g); groups.push(g); }
+      byKey.get(key).items.push(p);
+    });
+
+    const canvas = root.querySelector('[data-smap-canvas]');
+    const status = root.querySelector('[data-smap-status]');
+    const btn = root.querySelector('[data-smap-locate]');
+    const nearest = root.querySelector('[data-smap-nearest]');
+    const nearestList = root.querySelector('[data-smap-nearest-list]');
+    let L = null;
+    let map = null;
+    let me = null; // { lat, lng } once the visitor shares it
+    const markers = new Map();
+    let statusKey = null;
+
+    // Straight-line distance in miles.
+    function miles(a, b) {
+      const R = 3958.8;
+      const rad = (d) => (d * Math.PI) / 180;
+      const dLat = rad(b.lat - a.lat);
+      const dLng = rad(b.lng - a.lng);
+      const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLng / 2) ** 2;
+      return 2 * R * Math.asin(Math.sqrt(h));
+    }
+    function fmt(mi) {
+      const n = mi < 10 ? (Math.round(mi * 10) / 10).toFixed(1) : String(Math.round(mi));
+      return tr('map_mi').replace('{d}', n);
+    }
+
+    // "Sweet Bean, 1152 S Wabash Ave, Chicago"; just the address when the place name is the address.
+    function where(p, l) {
+      if (!p.address) return p.place[l];
+      return p.address.startsWith(p.place[l]) ? p.address : `${p.place[l]}, ${p.address}`;
+    }
+
+    function popupHtml(g) {
+      const l = lang();
+      const dist = me ? `<p class="smap-pop-dist">${esc(fmt(miles(me, g)))}</p>` : '';
+      const first = g.items[0];
+      // One door: place in the header. Neighbouring doors: place on each shift.
+      const onePlace = g.items.every((p) => p.address === first.address && p.place[l] === first.place[l]);
+      const items = g.items.map((p) => {
+        const ext = /^https?:/.test(p.href);
+        return `<li class="smap-pop-item">
+          ${onePlace ? '' : `<span class="smap-pop-where">${esc(where(p, l))}</span>`}
+          ${p.slate ? `<span class="smap-pop-tag">${esc(tr('slate_tag'))}</span>` : ''}
+          <strong class="smap-pop-title">${esc(p.title[l])}</strong>
+          <span class="smap-pop-when">${esc(p.when[l])}</span>
+          <a class="smap-pop-btn" href="${esc(p.href)}"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>${esc(p.action[l])}</a>
+        </li>`;
+      }).join('');
+      const dir = first.directions
+        ? `<a class="smap-pop-dir" href="${esc(first.directions)}" target="_blank" rel="noopener noreferrer">${esc(tr('map_directions'))}</a>`
+        : '';
+      return `<div class="smap-pop">
+        ${onePlace ? `<p class="smap-pop-place">${esc(first.place[l])}</p>
+        ${first.address && !first.address.startsWith(first.place[l]) ? `<p class="smap-pop-addr">${esc(first.address)}</p>` : ''}` : ''}
+        ${dist}
+        <ul class="smap-pop-items">${items}</ul>
+        ${dir}
+      </div>`;
+    }
+
+    function pinIcon(g) {
+      const slate = g.items.every((p) => p.slate);
+      const n = g.items.length;
+      return L.divIcon({
+        className: 'smap-pin-wrap',
+        html: `<span class="smap-pin ${slate ? 'smap-pin-slate' : 'smap-pin-ward'}">${n > 1 ? `<b>${n}</b>` : ''}</span>`,
+        iconSize: [30, 30],
+        iconAnchor: [15, 30],
+        popupAnchor: [0, -28],
+      });
+    }
+
+    async function build() {
+      if (map) return;
+      const [mod] = await Promise.all([import('leaflet'), import('leaflet/dist/leaflet.css')]);
+      L = mod.default || mod;
+      map = L.map(canvas, { scrollWheelZoom: false, zoomControl: true });
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>',
+      }).addTo(map);
+      groups.forEach((g) => {
+        const m = L.marker([g.lat, g.lng], {
+          icon: pinIcon(g),
+          title: g.items[0].place[lang()],
+          alt: g.items[0].place[lang()],
+          keyboard: true,
+        }).addTo(map);
+        m.bindPopup(() => popupHtml(g), { maxWidth: 280 });
+        markers.set(g, m);
+      });
+      map.fitBounds(L.latLngBounds(groups.map((g) => [g.lat, g.lng])), { padding: [36, 36], maxZoom: 14 });
+      if (me) addMe();
+    }
+
+    function addMe() {
+      if (!map || !me || map._smapMe) return;
+      map._smapMe = L.circleMarker([me.lat, me.lng], {
+        radius: 8, color: '#ffffff', weight: 3, fillColor: '#036d99', fillOpacity: 1,
+      }).addTo(map).bindTooltip(tr('map_you'));
+    }
+
+    // Load the map library and tiles only when the map comes near the screen.
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        if (entries.some((x) => x.isIntersecting)) { io.disconnect(); build(); }
+      }, { rootMargin: '400px' });
+      io.observe(canvas);
+    } else {
+      build();
+    }
+
+    function setStatus(key) {
+      statusKey = key;
+      status.textContent = key ? tr(key) : '';
+    }
+
+    function paintDistances() {
+      if (!me) return;
+      // Every shift card on the page.
+      document.querySelectorAll('.ev-card[data-event-id]').forEach((card) => {
+        const p = points.find((x) => x.id === card.getAttribute('data-event-id'));
+        const chip = card.querySelector('[data-ev-distance]');
+        if (!p || !chip) return;
+        chip.textContent = fmt(miles(me, p));
+        chip.hidden = false;
+      });
+      // The closest five shifts, nearest first.
+      const l = lang();
+      const ranked = points.map((p) => ({ p, d: miles(me, p) })).sort((a, b) => a.d - b.d).slice(0, 5);
+      nearestList.innerHTML = ranked.map(({ p, d }) => `<li>
+        <button type="button" class="smap-near-btn" data-smap-open="${esc(p.id)}">
+          <span class="smap-near-dist">${esc(fmt(d))}</span>
+          <span class="smap-near-title">${p.slate ? `<span class="smap-pop-tag">${esc(tr('slate_tag'))}</span> ` : ''}${esc(p.title[l])}</span>
+          <span class="smap-near-when">${esc(p.when[l])} · ${esc(p.place[l])}</span>
+        </button>
+      </li>`).join('');
+      nearest.hidden = false;
+      if (map) groups.forEach((g) => { const m = markers.get(g); if (m && m.isPopupOpen()) m.setPopupContent(popupHtml(g)); });
+    }
+
+    nearestList.addEventListener('click', async (ev) => {
+      const b = ev.target.closest('[data-smap-open]');
+      if (!b) return;
+      await build();
+      const g = groups.find((x) => x.items.some((p) => p.id === b.getAttribute('data-smap-open')));
+      const m = g && markers.get(g);
+      if (!m) return;
+      canvas.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      map.setView(m.getLatLng(), Math.max(map.getZoom(), 14));
+      m.openPopup();
+    });
+
+    btn.addEventListener('click', () => {
+      if (!('geolocation' in navigator)) { setStatus('map_unsupported'); return; }
+      btn.disabled = true;
+      setStatus('map_locating');
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          btn.disabled = false;
+          me = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+          addMe();
+          paintDistances();
+          setStatus('map_done');
+        },
+        () => {
+          btn.disabled = false;
+          setStatus('map_denied');
+        },
+        { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 },
+      );
+    });
+
+    document.addEventListener('bsl:langchange', () => setTimeout(() => {
+      if (statusKey) setStatus(statusKey);
+      canvas.setAttribute('aria-label', tr('map_region'));
+      if (me) paintDistances();
+      if (map) groups.forEach((g) => { const m = markers.get(g); if (m && m.isPopupOpen()) m.setPopupContent(popupHtml(g)); });
+    }, 0));
+    canvas.setAttribute('aria-label', tr('map_region'));
+  }
+</script>
+
+<style is:global>
+  .smap {
+    margin-top: var(--space-2xl, 48px);
+    scroll-margin-top: 90px;
+  }
+  .smap-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-md, 16px) var(--space-lg, 24px);
+    margin-bottom: var(--space-md, 16px);
+  }
+  .smap-head .section-label {
+    display: block;
+  }
+  .smap-title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    color: var(--blue-deeper);
+    margin: 4px 0 6px;
+  }
+  .smap-sub {
+    max-width: 560px;
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--gray-700);
+  }
+  .smap-locate {
+    max-width: 340px;
+  }
+  .smap-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .smap-btn[disabled] {
+    opacity: 0.7;
+    cursor: progress;
+  }
+  .smap-privacy {
+    margin-top: 8px;
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    color: var(--gray-500);
+  }
+  .smap-status {
+    min-height: 1.4em;
+    margin-bottom: 8px;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--blue-deeper);
+  }
+  .smap-frame {
+    position: relative;
+    border: 3px solid var(--black);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--cream-light);
+    box-shadow: 6px 6px 0 rgba(26, 26, 26, 0.12);
+  }
+  .smap-canvas {
+    height: clamp(320px, 52vh, 480px);
+    z-index: 0;
+  }
+  .smap-canvas .leaflet-tile-pane {
+    filter: sepia(0.22) saturate(0.85);
+  }
+  .smap-legend {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    z-index: 500;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    margin: 0;
+    padding: 6px 10px;
+    list-style: none;
+    background: rgba(254, 245, 230, 0.94);
+    border-radius: 4px;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--gray-700);
+  }
+  .smap-legend li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .smap-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+  }
+  .smap-dot-ward, .smap-pin-ward { background: var(--orange-dark); }
+  .smap-dot-slate, .smap-pin-slate { background: var(--blue-deeper); }
+
+  .smap-pin-wrap {
+    background: none;
+    border: 0;
+  }
+  .smap-pin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    border: 3px solid #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 800;
+  }
+  .smap-pin:empty::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #fff;
+  }
+  /* Keep the count upright inside the rotated pin. */
+  .smap-pin b { transform: rotate(45deg); line-height: 1; }
+
+  .smap-pop { font-family: var(--font-body); color: var(--black); }
+  .smap-pop p { margin: 0; }
+  .smap-pop-place { font-family: var(--font-display); font-weight: 800; font-size: 15px; }
+  .smap-pop-addr { font-size: 12px; color: var(--gray-500); }
+  .smap-pop-dist { margin-top: 4px !important; font-size: 13px; font-weight: 700; color: var(--blue-deeper); }
+  .smap-pop-items { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 10px; }
+  .smap-pop-item { display: grid; gap: 2px; padding-top: 8px; border-top: 1px dashed var(--gray-300); }
+  .smap-pop-tag {
+    justify-self: start;
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: var(--blue-deeper);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .smap-pop-title { font-size: 14px; }
+  .smap-pop-where { font-size: 12px; font-weight: 700; color: var(--gray-700); }
+  .smap-pop-when { font-size: 12px; color: var(--gray-700); }
+  .smap-pop a.smap-pop-btn {
+    justify-self: start;
+    margin-top: 4px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--orange);
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+    text-decoration: none;
+  }
+  .smap-pop a.smap-pop-dir {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--blue-deeper);
+  }
+
+  .smap-nearest { margin-top: var(--space-md, 16px); }
+  .smap-nearest-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--text-lg);
+    margin-bottom: 8px;
+  }
+  .smap-nearest-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+  }
+  .smap-near-btn {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: 'dist title' 'dist when';
+    gap: 2px 14px;
+    align-items: center;
+    padding: 10px 14px;
+    text-align: left;
+    background: var(--cream-light);
+    border: 2px solid var(--black);
+    border-radius: 6px;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+  .smap-near-btn:hover, .smap-near-btn:focus-visible { background: #fff; }
+  .smap-near-dist {
+    grid-area: dist;
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--blue-deeper);
+    white-space: nowrap;
+  }
+  .smap-near-title { grid-area: title; font-weight: 700; }
+  .smap-near-when { grid-area: when; font-size: var(--text-xs); color: var(--gray-700); }
+
+  .ev-distance {
+    display: inline-block;
+    margin: -4px 0 var(--space-sm, 8px);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--blue-deeper);
+  }
+</style>
