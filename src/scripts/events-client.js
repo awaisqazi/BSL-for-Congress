@@ -18,16 +18,26 @@ export function isPast(iso) {
 // Remove past cards inside `list`, show the first `limit` (all when null).
 // Returns how many cards remain. Other components' scripts may already have
 // removed an expired card (they key off data-expires too); that is fine.
-export function pruneList(list, limit = null) {
+// maxSlate: at most this many Socialist Slate cards (other wards) among the
+// visible ones, so the 25th Ward's own shifts keep their place on the home page.
+export function pruneList(list, limit = null, { maxSlate = null } = {}) {
   if (!list) return 0;
   list.querySelectorAll('[data-expires]').forEach((el) => {
     if (isPast(el.getAttribute('data-expires'))) el.remove();
   });
   const cards = Array.from(list.querySelectorAll('.ev-card'));
-  cards.forEach((el, i) => {
-    el.hidden = limit != null && i >= limit;
+  let shown = 0;
+  let slate = 0;
+  cards.forEach((el) => {
+    const isSlate = el.hasAttribute('data-slate');
+    const fits = (limit == null || shown < limit) && !(isSlate && maxSlate != null && slate >= maxSlate);
+    el.hidden = !fits;
+    if (fits) {
+      shown += 1;
+      if (isSlate) slate += 1;
+    }
   });
-  return cards.length;
+  return shown;
 }
 
 function lang() {

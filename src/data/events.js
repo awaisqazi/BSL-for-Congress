@@ -52,6 +52,7 @@ function validate(list) {
     if (!bilingual(e.action)) errors.push(`${at}: action needs en and es`);
     if (!labelOk(e.location)) errors.push(`${at}: location is required`);
     if (!url(e.source)) errors.push(`${at}: every entry needs a source URL`);
+    if ('slate' in e && typeof e.slate !== 'boolean') errors.push(`${at}: slate must be true or false`);
     if (e.recurring) {
       if (!RULE_RE.test(e.rule || '')) errors.push(`${at}: rule must look like weekly:TU`);
       if (!bilingual(e.when)) errors.push(`${at}: when needs en and es`);

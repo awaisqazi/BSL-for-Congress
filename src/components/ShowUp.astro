@@ -21,7 +21,18 @@ interface Props {
 const { full = false } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const candidates = upcoming().slice(0, 6);
+// Ship up to six of our own shifts plus up to three Socialist Slate canvasses
+// (other wards); the script shows three, at most one of them a slate card.
+const soon = upcoming();
+const candidates = [...soon.filter((e) => !e.slate).slice(0, 6), ...soon.filter((e) => e.slate).slice(0, 3)]
+  .sort((a, b) => soon.indexOf(a) - soon.indexOf(b));
+// Same rule before the script runs: the first three, skipping a second slate card.
+const firstThree = new Set();
+for (const e of candidates) {
+  if (firstThree.size >= 3) break;
+  if (e.slate && [...firstThree].some((x) => x.slate)) continue;
+  firstThree.add(e);
+}
 const tilts = ['-0.6deg', '0.5deg', '-0.4deg'];
 const wardNight = recurring.find((e) => e.kind === 'wardnight');
 const sundays = recurring.find((e) => e.kind === 'canvass');
@@ -168,7 +179,7 @@ const DOW = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
 
     <ul class="showup-grid" data-showup-list>
       {candidates.map((e, i) => (
-        <EventCard event={e} signupHref={`${base}/volunteer#signup`} tilt={tilts[i % 3]} delay={i * 0.08} hidden={i >= 3} pulse={i === 0} />
+        <EventCard event={e} signupHref={`${base}/volunteer#signup`} tilt={tilts[i % 3]} delay={i * 0.08} hidden={!firstThree.has(e)} pulse={i === 0} />
       ))}
     </ul>
     <p class="showup-empty" data-showup-empty hidden={candidates.length > 0 ? true : undefined} data-i18n="events.empty">No dated shifts are posted right now. The standing shifts below keep going.</p>
@@ -207,7 +218,7 @@ const DOW = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
   // Home: drop past cards, show the first three.
   const list = document.querySelector('[data-showup-list]');
   if (list) {
-    const left = pruneList(list, 3);
+    const left = pruneList(list, 3, { maxSlate: 1 });
     if (!left) {
       list.remove();
       const empty = document.querySelector('[data-showup-empty]');

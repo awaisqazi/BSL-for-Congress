@@ -30,6 +30,7 @@ fails and nothing deploys. Always run `npm run build` after editing and fix what
 | `action` | yes | The one button label. With an RSVP: `{ "en": "RSVP", "es": "Confirmar asistencia" }`. With no RSVP: `{ "en": "Tell us you're coming", "es": "Avísanos que vienes" }`, which goes to the sign-up form (`/volunteer#signup`, or `#signup` on /events). Deadlines: `{ "en": "Add to calendar", "es": "Agregar al calendario" }`. |
 | `sponsor` | yes | Who hosts it, as the source names it (e.g. `"Chicago DSA Southside Branch"`), or `null`. |
 | `source` | yes | The receipt: a full `https://` URL where every detail of the entry can be checked (the RSVP page, the organizer's post or map, the Board of Elections calendar). |
+| `slate` | no | `true` for a canvass for a Socialist Slate partner in another ward (source: canvass.chicagodsa.org). The card gets a "Socialist Slate" tag, and the home page shows at most one slate card among its three so our own shifts keep their place. Name the candidate and their ward in `title` and `line`. |
 | `expires` | yes | `YYYY-MM-DD`, the event day (the last day for a window). The morning after, the card takes itself off the page, even if nobody redeploys; ledger rows gray out instead. |
 
 ## Weekly entries

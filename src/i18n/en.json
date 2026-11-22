@@ -683,7 +683,8 @@
     "rsvp_success": "You're on the list. See you there.",
     "rsvp_fail": "That did not go through.",
     "rsvp_fail_link": "Sign up here instead.",
-    "rsvp_consent": "By sharing a phone number you agree to receive event reminders by text from Friends of Byron Sigcho Lopez. Message and data rates may apply. Text STOP to opt out."
+    "rsvp_consent": "By sharing a phone number you agree to receive event reminders by text from Friends of Byron Sigcho Lopez. Message and data rates may apply. Text STOP to opt out.",
+    "slate_tag": "Socialist Slate"
   },
   "promo": {
     "label": "Hybrid Fundraiser",

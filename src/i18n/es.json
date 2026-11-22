@@ -683,7 +683,8 @@
     "rsvp_success": "Ya estás en la lista. Nos vemos ahí.",
     "rsvp_fail": "No se pudo enviar.",
     "rsvp_fail_link": "Inscríbete aquí.",
-    "rsvp_consent": "Al compartir tu número aceptas recibir recordatorios de eventos por mensaje de texto de Friends of Byron Sigcho Lopez. Pueden aplicar tarifas de mensajes y datos. Envía STOP para cancelar."
+    "rsvp_consent": "Al compartir tu número aceptas recibir recordatorios de eventos por mensaje de texto de Friends of Byron Sigcho Lopez. Pueden aplicar tarifas de mensajes y datos. Envía STOP para cancelar.",
+    "slate_tag": "Planilla Socialista"
   },
   "promo": {
     "label": "Recaudación Híbrida",

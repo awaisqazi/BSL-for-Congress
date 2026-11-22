@@ -553,5 +553,155 @@
     "sponsor": null,
     "source": "https://docs.google.com/forms/d/e/1FAIpQLSduq6GJUMgqyfdRicBZ2Ovgatj63o-hMDKqTizlw7fW2QZQow/viewform",
     "expires": "2026-12-02"
+  },
+  {
+    "id": "canvass-2026-11-22-sweet-bean",
+    "kind": "canvass",
+    "slate": true,
+    "title": {
+      "en": "Canvass for Raheem Uqdah",
+      "es": "Caminata por Raheem Uqdah"
+    },
+    "line": {
+      "en": "Knock doors for Raheem Uqdah, 3rd Ward, who runs with Byron on the Socialist Slate.",
+      "es": "Toca puertas por Raheem Uqdah, Distrito 3, que va con Byron en la Planilla Socialista."
+    },
+    "start": "2026-11-22T11:00:00-06:00",
+    "end": "2026-11-22T14:00:00-06:00",
+    "location": "Sweet Bean",
+    "address": "1152 S Wabash Ave, Chicago",
+    "rsvp": "https://canvass.chicagodsa.org/?date=upcoming&event=an.aacd4be3-b6df-4bf3-b0f5-da88ec3b52af",
+    "action": {
+      "en": "RSVP",
+      "es": "Confirmar asistencia"
+    },
+    "sponsor": "Chicago DSA Southside Branch and Friends of Raheem Uqdah",
+    "source": "https://canvass.chicagodsa.org/?date=upcoming&event=an.aacd4be3-b6df-4bf3-b0f5-da88ec3b52af",
+    "expires": "2026-11-22"
+  },
+  {
+    "id": "canvass-2026-11-22-hotel-chocolat",
+    "kind": "canvass",
+    "slate": true,
+    "title": {
+      "en": "Canvass for Kalen Luciano",
+      "es": "Caminata por Kalen Luciano"
+    },
+    "line": {
+      "en": "Knock doors for Kalen Luciano, 44th Ward, who runs with Byron on the Socialist Slate.",
+      "es": "Toca puertas por Kalen Luciano, Distrito 44, que va con Byron en la Planilla Socialista."
+    },
+    "start": "2026-11-22T14:00:00-06:00",
+    "end": "2026-11-22T17:00:00-06:00",
+    "location": "Hotel Chocolat",
+    "address": "3334 N Southport Ave, Chicago",
+    "rsvp": "https://canvass.chicagodsa.org/?date=upcoming&event=an.25edf023-a1cf-4545-b8b0-37661b2031d2",
+    "action": {
+      "en": "RSVP",
+      "es": "Confirmar asistencia"
+    },
+    "sponsor": "Chicago DSA North Side Red Line Branch",
+    "source": "https://canvass.chicagodsa.org/?date=upcoming&event=an.25edf023-a1cf-4545-b8b0-37661b2031d2",
+    "expires": "2026-11-22"
+  },
+  {
+    "id": "canvass-2026-11-22-marianos",
+    "kind": "canvass",
+    "slate": true,
+    "title": {
+      "en": "Canvass for Raheem Uqdah",
+      "es": "Caminata por Raheem Uqdah"
+    },
+    "line": {
+      "en": "Knock doors for Raheem Uqdah, 3rd Ward, who runs with Byron on the Socialist Slate.",
+      "es": "Toca puertas por Raheem Uqdah, Distrito 3, que va con Byron en la Planilla Socialista."
+    },
+    "start": "2026-11-22T14:00:00-06:00",
+    "end": "2026-11-22T17:00:00-06:00",
+    "location": "Mariano's",
+    "address": "3857 S Martin Luther King Dr, Chicago",
+    "rsvp": "https://canvass.chicagodsa.org/?date=upcoming&event=an.0f31f0ad-d303-49d0-b029-d133c1751b4b",
+    "action": {
+      "en": "RSVP",
+      "es": "Confirmar asistencia"
+    },
+    "sponsor": "Chicago DSA Southside Branch and Friends of Raheem Uqdah",
+    "source": "https://canvass.chicagodsa.org/?date=upcoming&event=an.0f31f0ad-d303-49d0-b029-d133c1751b4b",
+    "expires": "2026-11-22"
+  },
+  {
+    "id": "canvass-2026-11-28-dark-matter-osmium",
+    "kind": "canvass",
+    "slate": true,
+    "title": {
+      "en": "Canvass for Kalen Luciano",
+      "es": "Caminata por Kalen Luciano"
+    },
+    "line": {
+      "en": "Knock doors for Kalen Luciano, 44th Ward, who runs with Byron on the Socialist Slate.",
+      "es": "Toca puertas por Kalen Luciano, Distrito 44, que va con Byron en la Planilla Socialista."
+    },
+    "start": "2026-11-28T14:00:00-06:00",
+    "end": "2026-11-28T17:00:00-06:00",
+    "location": "Dark Matter Coffee, Osmium Coffee Bar",
+    "address": "1117 W Belmont Ave, Chicago",
+    "rsvp": "https://www.mobilize.us/palsinforkalen/event/1081253/?timeslot=6678211",
+    "action": {
+      "en": "RSVP",
+      "es": "Confirmar asistencia"
+    },
+    "sponsor": "Kalen Luciano for 44th Ward",
+    "source": "https://canvass.chicagodsa.org/?date=upcoming&event=mb.6678211",
+    "expires": "2026-11-28"
+  },
+  {
+    "id": "canvass-2026-11-28-overflow-coffee",
+    "kind": "canvass",
+    "slate": true,
+    "title": {
+      "en": "Canvass for Raheem Uqdah",
+      "es": "Caminata por Raheem Uqdah"
+    },
+    "line": {
+      "en": "Knock doors for Raheem Uqdah, 3rd Ward, who runs with Byron on the Socialist Slate.",
+      "es": "Toca puertas por Raheem Uqdah, Distrito 3, que va con Byron en la Planilla Socialista."
+    },
+    "start": "2026-11-28T14:00:00-06:00",
+    "end": "2026-11-28T17:00:00-06:00",
+    "location": "Overflow Coffee",
+    "address": "1449 S Michigan Ave, Chicago",
+    "rsvp": "https://canvass.chicagodsa.org/?date=upcoming&event=an.2c87d786-133d-4dff-aef0-6483b0d6d021",
+    "action": {
+      "en": "RSVP",
+      "es": "Confirmar asistencia"
+    },
+    "sponsor": "Chicago DSA Southside Branch",
+    "source": "https://canvass.chicagodsa.org/?date=upcoming&event=an.2c87d786-133d-4dff-aef0-6483b0d6d021",
+    "expires": "2026-11-28"
+  },
+  {
+    "id": "canvass-2026-11-29-aura-coffee",
+    "kind": "canvass",
+    "slate": true,
+    "title": {
+      "en": "Canvass for Kalen Luciano",
+      "es": "Caminata por Kalen Luciano"
+    },
+    "line": {
+      "en": "Knock doors for Kalen Luciano, 44th Ward, who runs with Byron on the Socialist Slate.",
+      "es": "Toca puertas por Kalen Luciano, Distrito 44, que va con Byron en la Planilla Socialista."
+    },
+    "start": "2026-11-29T14:00:00-06:00",
+    "end": "2026-11-29T17:00:00-06:00",
+    "location": "Aura Coffee & Roastery",
+    "address": "2833 N Broadway, Chicago",
+    "rsvp": "https://www.mobilize.us/palsinforkalen/event/1081254/?timeslot=6678236",
+    "action": {
+      "en": "RSVP",
+      "es": "Confirmar asistencia"
+    },
+    "sponsor": "Kalen Luciano for 44th Ward",
+    "source": "https://canvass.chicagodsa.org/?date=upcoming&event=mb.6678236",
+    "expires": "2026-11-29"
   }
 ]
