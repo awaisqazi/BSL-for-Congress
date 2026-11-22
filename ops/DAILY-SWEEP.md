@@ -44,8 +44,8 @@ Two files, two jobs:
 | 5 | Chicago DSA events | https://chicagodsa.org (find its Events/Calendar page), plus any Action Network or Mobilize feed it links to |
 
 Do not assume a URL for the Action Network or Mobilize feed. Open chicagodsa.org, follow its own Events or Calendar link, and
-verify the URL loads before relying on it. Record in your notes which URLs loaded. Also useful context: the canvass hub
-https://canvass.chicagodsa.org (already linked on the site; treat as a source only for dated shifts that name the 25th Ward or Byron).
+verify the URL loads before relying on it. Record in your notes which URLs loaded. Also read the canvass hub
+https://canvass.chicagodsa.org every run: it is the source for 25th Ward shifts AND for Socialist Slate canvasses (section 5a).
 
 How to read:
 1. `mcp__Claude_Browser__preview_start` with `url` set to the page, then `mcp__Claude_Browser__get_page_text`, then
@@ -83,6 +83,7 @@ Stories disappear after 24 hours and are where the campaign posts most same-week
 Publish only if the item states a verifiable fact AND you have a source link a reader can open. Qualifying:
 - A dated event with place and an RSVP link (canvass, Ward Night change, town hall, screening, DSA event naming the 25th Ward or Byron).
   These go in `events.json` (section 5); add a news post too only if it is also news (a rally, a screening, a changed Ward Night).
+- A door-knocking canvass for any Socialist Slate candidate, listed on canvass.chicagodsa.org (section 5a). Events only, no news post.
 - A filing or official deadline (Chicago Board of Elections; confirm on chicagoelections.gov or the campaign post citing it).
 - An endorsement announced by the endorsing organization itself (link their announcement, not just our repost).
 - A press piece about the campaign (link the piece itself).
@@ -260,6 +261,37 @@ with open(path, 'w', encoding='utf-8') as f:
 PY
 ```
 
+## 5a. Socialist Slate canvasses (every run)
+
+Fez asked (Nov 21, 2026) that the site promote the whole slate. The slate, per Chicago DSA's endorsement page
+(https://chicagodsa.org/2026/08/15/announcing-chicago-dsas-2027-endorsements/): Byron Sigcho-Lopez (25th Ward),
+Rossana Rodriguez-Sanchez (33rd Ward), Anthony Quezada (35th Ward), Angela Clay (46th Ward), Raheem Uqdah (3rd Ward),
+Kalen Luciano (44th Ward). Spell names exactly as the source spells them. Do not add or drop a candidate unless that page changes.
+
+How to read the hub: open https://canvass.chicagodsa.org/?date=upcoming in the in-app Browser pane, then click each event
+in the list. The URL gains `&event=an.<uuid>` (Action Network) or `&event=mb.<number>` (Mobilize) and a detail panel shows
+the start and end, the place name and full street address, the description, the sponsor and, for Mobilize, an
+"RSVP on Mobilize" link. Read every field from that panel; never fill or submit its form.
+
+Add a dated `events.json` entry (section 5 rules apply) for each upcoming slate event that is door knocking: a canvass,
+"Canvass with X", "X for Ward N Canvass". Skip phone banks, work meetings, socials, trainings and fundraisers.
+Byron's own canvasses are ordinary entries without `slate`. For every other candidate:
+- `"slate": true` (the card gets the Socialist Slate tag; the home page shows at most one slate card, so nothing else to do).
+- `id`: `canvass-YYYY-MM-DD-<place>`, e.g. `canvass-2026-11-28-overflow-coffee`.
+- `kind`: `canvass`. `action`: `{"en": "RSVP", "es": "Confirmar asistencia"}`.
+- `title`: `{"en": "Canvass for <Name>", "es": "Caminata por <Name>"}`.
+- `line`: `{"en": "Knock doors for <Name>, <Nth> Ward, who runs with Byron on the Socialist Slate.",
+  "es": "Toca puertas por <Name>, Distrito <N>, que va con Byron en la Planilla Socialista."}`
+- `location`: the place name as a plain string; `address`: street and "Chicago" (e.g. `1449 S Michigan Ave, Chicago`).
+  Never say whether the place is in any ward.
+- `start`/`end`: from the panel, with the Chicago offset; `expires`: the event day.
+- `rsvp`: the Mobilize link for `mb.` events (keep `?timeslot=`, drop `&source=canvass`); the canvass-map deep link
+  `https://canvass.chicagodsa.org/?date=upcoming&event=an.<uuid>` for `an.` events.
+- `source`: the canvass-map deep link for that event, in both cases.
+- `sponsor`: as the panel names it (`SPONSORED BY` plus `ADDITIONAL SPONSORS` joined with "and", or Mobilize's "Hosted by").
+- Dedupe exactly as section 5 (same `start` + same `address` = skip). No news post and no ledger row for slate canvasses.
+- If the hub lists none for a candidate, add nothing for them; never fill gaps from Instagram flyers without a date, time and address.
+
 ## 5b. Spanish terms (fixed)
 
 - caminata = canvass (never "jornada de puertas")
@@ -383,7 +415,7 @@ Daily sweep <YYYY-MM-DD>
 Checked: IG @bslfor25, @bsigcho, @chicagodsa; FB bslfor25; Chicago DSA events (unreadable: <list or none>)
 Published: <title> | <slug> | <source url>   (one line each, or "nothing new")
 Corrected: <slug>: <fact fixed>               (only if any)
-Events added: <id | start | address | source url>   (one line each, or none)
+Events added: <id | start | address | source url>   (one line each, or none; slate canvasses may share one line per candidate)
 Ledger rows added: <date, text> (or none)
 Seen, not published: <short item> because <reason>   (one line each)
 Build: pass/fail | /volunteer/ + .ics emitted | parity OK | emdash grep clean | forms frozen
