@@ -700,7 +700,8 @@
     "map_you": "Estás aquí",
     "map_directions": "Cómo llegar",
     "map_mi": "a {d} millas de ti",
-    "map_region": "Mapa de los próximos turnos"
+    "map_region": "Mapa de los próximos turnos",
+    "near_link": "Encuentra un turno cerca de ti"
   },
   "promo": {
     "label": "Recaudación Híbrida",

@@ -1,5 +1,6 @@
 ---
-// "Shift Map" on /volunteer (#map), under the calendar: every upcoming dated
+// "Shift Map" on /volunteer (#map), first in Show Up, above the calendar
+// (the home Show Up block links here with "Find a shift near you"): every upcoming dated
 // shift that has a geocoded address (events.json "geo", filled by
 // ops/geocode-events.mjs), one pin per address. "Show distances from me" asks
 // the browser for the visitor's location and works out straight-line miles
@@ -170,7 +171,7 @@ const points = upcoming()
       if (map) return;
       const [mod] = await Promise.all([import('leaflet'), import('leaflet/dist/leaflet.css')]);
       L = mod.default || mod;
-      map = L.map(canvas, { scrollWheelZoom: false, zoomControl: true });
+      map = L.map(canvas, { scrollWheelZoom: false, zoomControl: true, zoomSnap: 0.25, zoomDelta: 0.5 });
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>',
@@ -185,7 +186,7 @@ const points = upcoming()
         m.bindPopup(() => popupHtml(g), { maxWidth: 280 });
         markers.set(g, m);
       });
-      map.fitBounds(L.latLngBounds(groups.map((g) => [g.lat, g.lng])), { padding: [36, 36], maxZoom: 14 });
+      map.fitBounds(L.latLngBounds(groups.map((g) => [g.lat, g.lng])), { padding: [28, 28], maxZoom: 14 });
       if (me) addMe();
     }
 
@@ -278,8 +279,9 @@ const points = upcoming()
 </script>
 
 <style is:global>
+  /* First block of the /volunteer Show Up section, above the calendar. */
   .smap {
-    margin-top: var(--space-2xl, 48px);
+    margin: var(--space-lg, 24px) 0 var(--space-2xl, 48px);
     scroll-margin-top: 90px;
   }
   .smap-head {
@@ -340,7 +342,7 @@ const points = upcoming()
     box-shadow: 6px 6px 0 rgba(26, 26, 26, 0.12);
   }
   .smap-canvas {
-    height: clamp(320px, 52vh, 480px);
+    height: clamp(340px, 62vh, 560px);
     z-index: 0;
   }
   .smap-canvas .leaflet-tile-pane {

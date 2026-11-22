@@ -700,7 +700,8 @@
     "map_you": "You are here",
     "map_directions": "Directions",
     "map_mi": "{d} mi from you",
-    "map_region": "Map of upcoming shifts"
+    "map_region": "Map of upcoming shifts",
+    "near_link": "Find a shift near you"
   },
   "promo": {
     "label": "Hybrid Fundraiser",

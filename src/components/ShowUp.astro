@@ -4,7 +4,7 @@
 // flyers with one orange button each, then the two standing shifts and the
 // canvass team form. Up to six upcoming cards ship; the script drops any that
 // passed since the last deploy and shows the first three.
-// /volunteer (full): the calendar first. "Plan your month" (#calendar,
+// /volunteer (full): the shift map first (ShiftMap, #map), then the calendar. "Plan your month" (#calendar,
 // MiniCalendar) beside the shift list it filters (#this-week): sticky on the
 // left from 1024 px, stacked above the list below that. Then the standing
 // weekly flyers (#every-week), the official dates as a ledger (#dates) and
@@ -55,6 +55,8 @@ const DOW = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
       <span class="section-label animate-in" data-i18n="events.label">Show Up</span>
       <h2 class="section-title animate-in" data-i18n="events.page_headline">Find a Shift. Bring a Neighbor.</h2>
     </div>
+
+    <ShiftMap />
 
     <div class="cal-layout" data-cal-layout>
       <div class="cal-aside">
@@ -108,8 +110,6 @@ const DOW = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
         <p class="cal-note" data-cal-note hidden><a href="#every-week" data-i18n="events.cal_weekly_note">Ward Night every Tuesday and Sunday canvasses most Sundays: see Every Week below.</a></p>
       </div>
     </div>
-
-    <ShiftMap />
 
     <div class="ev-weekly" id="every-week">
       <h3 class="ev-group-title animate-in"><span data-i18n="events.every_week">Every Week</span></h3>
@@ -175,9 +175,15 @@ const DOW = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
         <h2 class="section-title animate-in" data-i18n="events.headline">The Next Doors We Knock</h2>
         <p class="showup-sub animate-in" data-i18n="events.sub">Pick a shift and bring a neighbor. Every signature on the petition is a neighbor's name.</p>
       </div>
-      <a href={`${base}/volunteer/#calendar`} class="showup-all animate-in">
-        <span data-i18n="events.all_link">See every date</span> <span class="showup-all-arrow" aria-hidden="true">→</span>
-      </a>
+      <div class="showup-links">
+        <a href={`${base}/volunteer/#map`} class="btn btn-orange showup-near animate-in">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+          <span data-i18n="events.near_link">Find a shift near you</span>
+        </a>
+        <a href={`${base}/volunteer/#calendar`} class="showup-all animate-in">
+          <span data-i18n="events.all_link">See every date</span> <span class="showup-all-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
     </div>
 
     <ul class="showup-grid" data-showup-list>
@@ -269,6 +275,17 @@ const DOW = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
     color: var(--gray-700);
   }
 
+  .showup-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 24px;
+  }
+  .showup-near {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
   .showup-all {
     display: inline-flex;
     align-items: center;
