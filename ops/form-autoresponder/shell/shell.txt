@@ -1,0 +1,125 @@
+BYRON SIGCHO LOPEZ, ALDERMAN 25TH WARD
+https://sigchofor25.com/
+<!-- IF lang_note -->
+
+{{lang_note}}
+<!-- ENDIF lang_note -->
+<!-- BEGIN lang_block -->
+<!-- IF lang_divider -->
+
+==============================
+{{divider_label}}
+==============================
+<!-- ENDIF lang_divider -->
+
+{{headline_caps}}
+
+{{greeting}}
+
+<!-- BEGIN paragraph -->
+{{paragraph}}
+
+<!-- END paragraph -->
+<!-- IF event_card -->
+------------------------------
+{{ev_title_caps}}
+{{ev_when_label}}: {{ev_when_text}}
+{{ev_where_label}}: {{ev_where_text}}
+<!-- IF ev_map -->
+{{ev_map_label}}:
+{{ev_map_url}}
+<!-- ENDIF ev_map -->
+<!-- IF ev_note -->
+{{ev_note}}
+<!-- ENDIF ev_note -->
+<!-- IF ev_host -->
+{{ev_host}}
+<!-- ENDIF ev_host -->
+------------------------------
+
+<!-- ENDIF event_card -->
+<!-- IF calendar -->
+{{cal_google_label}}:
+{{cal_google_url}}
+
+{{cal_ics_label}}:
+{{cal_ics_url}}
+
+<!-- ENDIF calendar -->
+<!-- IF also -->
+{{also_heading}}
+<!-- BEGIN also_item -->
+- {{also_item}}
+<!-- END also_item -->
+
+<!-- ENDIF also -->
+<!-- BEGIN know -->
+{{know}}
+
+<!-- END know -->
+<!-- IF told -->
+<!-- IF told_intro -->
+{{told_intro}}
+<!-- ENDIF told_intro -->
+<!-- BEGIN told_item -->
+- {{told_item}}
+<!-- END told_item -->
+<!-- BEGIN told_after -->
+{{told_after}}
+<!-- END told_after -->
+
+<!-- ENDIF told -->
+<!-- IF button_top -->
+{{bt_label}}:
+{{bt_url}}
+<!-- IF bt_caption -->
+{{bt_caption}}
+<!-- ENDIF bt_caption -->
+
+<!-- ENDIF button_top -->
+<!-- IF other_events -->
+{{other_events_heading}}
+<!-- BEGIN other_event -->
+
+<!-- IF oe_tag -->
+[{{oe_tag}}]
+<!-- ENDIF oe_tag -->
+* {{oe_weekday}} {{oe_day}}, {{oe_time}}: {{oe_title}}
+  {{oe_place}}
+  {{oe_link_label}}: {{oe_url}}
+<!-- END other_event -->
+
+<!-- ENDIF other_events -->
+<!-- IF other_events_empty -->
+{{oe_empty}}
+
+<!-- ENDIF other_events_empty -->
+<!-- IF button_bottom -->
+{{bb_label}}:
+{{bb_url}}
+
+<!-- ENDIF button_bottom -->
+<!-- BEGIN after -->
+{{after}}
+
+<!-- END after -->
+{{signoff}}
+{{signoff_name}}
+{{signoff_quote}}
+<!-- END lang_block -->
+
+------------------------------
+sigchofor25.com
+Instagram and Facebook @bslfor25, TikTok @sigchofor25, YouTube @BSLforCongress, X @ByronSigcho
+<!-- BEGIN footer_group -->
+<!-- IF group_divider -->
+------------------------------
+<!-- ENDIF group_divider -->
+
+{{paid_for}}
+
+<!-- BEGIN footer_line -->
+{{footer_text}}
+
+<!-- END footer_line -->
+<!-- END footer_group -->
