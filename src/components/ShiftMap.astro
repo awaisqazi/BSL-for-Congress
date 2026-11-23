@@ -8,7 +8,7 @@
 // not move to it (so the tile server only sees the same view as everyone).
 // Distances also land on every shift card on the page ([data-ev-distance]).
 // Leaflet and the OpenStreetMap tiles load only when the map scrolls near.
-import { upcoming, stamp, timeRange, pick, actionHref, mapHref } from '../data/events.js';
+import { upcoming, stamp, timeRange, pick, actionHref, mapHref, startDate } from '../data/events.js';
 
 const points = upcoming()
   .filter((e) => e.geo)
@@ -25,7 +25,9 @@ const points = upcoming()
     },
     place: { en: pick(e.location, 'en'), es: pick(e.location, 'es') },
     address: e.address,
-    href: actionHref(e, '#signup'),
+    // No outside RSVP page: that day in the list below, where the card's own
+    // "I'm coming" form takes the sign-up.
+    href: actionHref(e, `#cal-${startDate(e)}`),
     action: e.action,
     directions: mapHref(e),
   }));

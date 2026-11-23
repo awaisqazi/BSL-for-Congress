@@ -21,9 +21,11 @@ Worker (`src/index.js`).
 ```
 
 - `form`: `volunteer`, `genz` (same Google Form as volunteer), `petition`,
-  `lobbyday`, `canvass` (the `/canvass/` team form), or `rsvp` (event-card
-  "I'm coming": token check only, the browser then writes its row to
-  Supabase).
+  `lobbyday`, `canvass` (the `/canvass/` team form), or `rsvp` (the
+  event-card "I'm coming" form, posted to the event sign-up Google Form:
+  name, phone, email, ZIP, event, date, bringing; same entry names as
+  `src/components/rsvp/form-options.js`). Every form forwards to Google;
+  none is token-check only.
 - `canvass` days use Google's "Other": `entry.N=__other_option__` plus
   `entry.N.other_option_response=<text>`. The Worker keeps the two only
   together and only with text; a lone half is dropped.

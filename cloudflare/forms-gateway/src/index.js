@@ -116,9 +116,21 @@ const FORMS = {
       'entry.1077743271',
     ],
   },
-  // Event-card "I'm coming" form: no Google Form. The Worker only checks the
-  // token; the browser then writes its row to the campaign database.
-  rsvp: { url: null, fields: {} },
+  // Event-card "I'm coming" form (EventCard.astro, no outside RSVP page). Same
+  // URL and entry names as src/components/rsvp/form-options.js. `event` and
+  // `date` are English labels the site builds from events.json.
+  rsvp: {
+    url: 'https://docs.google.com/forms/d/e/1FAIpQLSf4yKsLO6OZM1fDQJ8JwKkGxTX9NTuKbtIErtIAAhd-LFQF5w/formResponse',
+    fields: {
+      'entry.783290040': { cap: 120 }, // name
+      'entry.1595512013': { cap: 40 }, // phone
+      'entry.1391027563': { cap: 254 }, // email
+      'entry.1004175083': { cap: 10 }, // ZIP
+      'entry.26680022': { cap: 200 }, // event: title, place [id]
+      'entry.959474185': { cap: 40 }, // date and time
+      'entry.1855129845': { cap: 4 }, // bringing, 0 to 5
+    },
+  },
 };
 
 const isDev = (env) => env.ALLOW_DEV === '1';
@@ -249,8 +261,6 @@ async function handleSubmit(request, env, origin) {
     console.log(JSON.stringify({ form, outcome: 'captcha', codes: check.codes }));
     return json(403, { ok: false, reason: 'captcha' }, origin);
   }
-
-  if (!config.url) return json(200, { ok: true }, origin);
 
   const clean = cleanFields(config, fields);
   const payload = new URLSearchParams(clean).toString();

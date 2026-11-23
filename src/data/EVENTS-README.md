@@ -26,13 +26,16 @@ fails and nothing deploys. Always run `npm run build` after editing and fix what
 | `end` | no | Same format as `start`, or `null`. For a window of days (filing week) use the last day, `YYYY-MM-DD`. |
 | `location` | yes | The place name. A plain string for a proper name (`"Cafe Latteaa"`), or `{ "en", "es" }` when it translates (`"25th Ward office"` / `"Oficina del Distrito 25"`). |
 | `address` | no | Street address, or `null`. When present, it links to a map. State the address only; never claim a place is or is not in the ward unless a source says so. |
-| `rsvp` | yes | The RSVP page URL, or `null` when there is none. |
-| `action` | yes | The one button label. With an RSVP: `{ "en": "RSVP", "es": "Confirmar asistencia" }`. With no RSVP: `{ "en": "Tell us you're coming", "es": "Avísanos que vienes" }`, which goes to the sign-up form (`/volunteer#signup`, or `#signup` on /events). Deadlines: `{ "en": "Add to calendar", "es": "Agregar al calendario" }`. |
+| `rsvp` | yes | The RSVP page URL, or `null` when there is none (`null` means the card takes the sign-up itself). |
+| `action` | yes | The one button label. With an RSVP: `{ "en": "RSVP", "es": "Confirmar asistencia" }`. With no RSVP: `{ "en": "Tell us you're coming", "es": "Avísanos que vienes" }`; for our own canvass shifts with no outside RSVP page: `{ "en": "Sign up", "es": "Apúntate" }`. With no RSVP the button opens the card's own sign-up form (name, phone or email, ZIP, how many they bring), which saves to the campaign's event sign-up Google Form (field ids in `src/components/rsvp/form-options.js`) with the event's title, place, id and date; with an RSVP it links out to that page. Deadlines: `{ "en": "Add to calendar", "es": "Agregar al calendario" }`. |
 | `sponsor` | yes | Who hosts it, as the source names it (e.g. `"Chicago DSA Southside Branch"`), or `null`. |
 | `source` | yes | The receipt: a full `https://` URL where every detail of the entry can be checked (the RSVP page, the organizer's post or map, the Board of Elections calendar). |
 | `geo` | no | `{ "lat": 41.85219, "lng": -87.67842 }`, the map pin on /volunteer (#map). Do not type it by hand: after adding entries with an `address`, run `node ops/geocode-events.mjs`, which looks up every address that has no `geo` yet (US Census geocoder, public addresses only). An entry without `geo` still shows everywhere except the map. |
 | `slate` | no | `true` for a canvass for a Socialist Slate partner in another ward (source: canvass.chicagodsa.org). The card gets a "Socialist Slate" tag, and the home page shows at most one slate card among its three so our own shifts keep their place. Name the candidate and their ward in `title` and `line`. |
+| `host` | no | Overrides the "Hosted by" group the /volunteer filters put a shift in: `campaign`, `ward`, `dsa` or `partner`. Leave it out almost always: `src/data/events.js` (`hostOf()`) derives it, in this order: Ward Night or a sponsor naming the 25th Ward Office is `ward`; `"slate": true` or a sponsor naming DSA is `dsa`; no sponsor on a canvass or meetup is `campaign` (our own shift); any other named sponsor is `partner`. Set it only when that rule puts a shift in the wrong group, and only on a `canvass`, `meetup` or `wardnight` (the build rejects anything else). Deadlines and the election have no host group. |
 | `expires` | yes | `YYYY-MM-DD`, the event day (the last day for a window). The morning after, the card takes itself off the page, even if nobody redeploys; ledger rows gray out instead. |
+
+The /volunteer search box reads each entry's `title`, `line`, `location`, `address` and `sponsor` in both languages, plus its host group, its type and its date words, so plain, specific wording there is what makes a shift easy to find. Nothing extra needs to be filled in for search.
 
 ## Weekly entries
 
@@ -44,6 +47,7 @@ Standing shifts carry `"recurring": true` and a `rule` instead of `start`/`end`/
 | `when` | `{ "en": "Every Tuesday", "es": "Cada martes" }`, the stamp on the card. Say "Most Sundays" when it is not every week. |
 | `link` | Where the card goes: `https://25thward.org/` for Ward Night, `https://canvass.chicagodsa.org` for the Sunday canvass map. |
 | `title`, `line`, `location`, `address`, `action`, `sponsor`, `source` | As above. |
+| `host` | Optional, as above. Today Ward Night derives to `ward` and the Sunday canvasses (sponsor Chicago DSA) to `dsa`. |
 
 ## Example
 
@@ -81,7 +85,7 @@ Standing shifts carry `"recurring": true` and a `rule` instead of `start`/`end`/
 5. **Spanish is real Spanish,** written for neighbors in Pilsen and La Villita. Same facts in both
    languages. Fixed phrases: "Noche del Distrito" (Ward Night), "Toca Puertas con Nosotros",
    "Distrito 25", "Caminata para la petición" (petition canvass), "mapa de caminatas" (canvass map).
-6. **One action per card.** The button is the RSVP, or the sign-up form when there is no RSVP.
+6. **One action per card.** The button is the RSVP, or the card's own sign-up form when there is no RSVP.
 7. **Do not duplicate.** Check existing ids and dates first. When an event is also news, it can have
    a post in `news.json` too, but the shift itself lives here.
 8. Past entries can stay in the file; the site hides them. Clean them out now and then.

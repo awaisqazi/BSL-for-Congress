@@ -779,5 +779,342 @@
     "sponsor": "Kalen Luciano for 44th Ward",
     "source": "https://canvass.chicagodsa.org/?date=upcoming&event=mb.6678236",
     "expires": "2026-11-29"
+  },
+  {
+    "id": "canvass-2026-12-05-phase-2-launch",
+    "kind": "canvass",
+    "title": {
+      "en": "Canvass for Byron: Phase 2 Launch",
+      "es": "Caminata por Byron: lanzamiento de la fase 2"
+    },
+    "line": {
+      "en": "Phase 2 of our canvass starts here. Knock doors with neighbors, then join the post-canvass social at New Rose, 2058 W Cermak Rd.",
+      "es": "Aquí arranca la fase 2 de nuestras caminatas. Toca puertas con tus vecinos y después acompáñanos en la convivencia en New Rose, 2058 W Cermak Rd."
+    },
+    "start": "2026-12-05T12:00:00-06:00",
+    "end": "2026-12-05T15:00:00-06:00",
+    "location": {
+      "en": "25th Ward IPO office",
+      "es": "Oficina del 25th Ward IPO"
+    },
+    "address": "2102 W Cermak Rd, Chicago",
+    "geo": {
+      "lat": 41.85219,
+      "lng": -87.67842
+    },
+    "rsvp": null,
+    "action": {
+      "en": "Sign up",
+      "es": "Apúntate"
+    },
+    "sponsor": null,
+    "source": "https://docs.google.com/forms/d/e/1FAIpQLSf4yKsLO6OZM1fDQJ8JwKkGxTX9NTuKbtIErtIAAhd-LFQF5w/viewform",
+    "expires": "2026-12-05"
+  },
+  {
+    "id": "canvass-2026-12-06-ipo",
+    "kind": "canvass",
+    "title": {
+      "en": "Canvass for Byron",
+      "es": "Caminata por Byron"
+    },
+    "line": {
+      "en": "Knock doors with neighbors and talk with them about the ward. Afterward, join the post-canvass social at New Rose, 2058 W Cermak Rd.",
+      "es": "Toca puertas con tus vecinos y platica con ellos sobre el distrito. Después, acompáñanos en la convivencia en New Rose, 2058 W Cermak Rd."
+    },
+    "start": "2026-12-06T12:00:00-06:00",
+    "end": "2026-12-06T15:00:00-06:00",
+    "location": {
+      "en": "25th Ward IPO office",
+      "es": "Oficina del 25th Ward IPO"
+    },
+    "address": "2102 W Cermak Rd, Chicago",
+    "geo": {
+      "lat": 41.85219,
+      "lng": -87.67842
+    },
+    "rsvp": null,
+    "action": {
+      "en": "Sign up",
+      "es": "Apúntate"
+    },
+    "sponsor": null,
+    "source": "https://docs.google.com/forms/d/e/1FAIpQLSf4yKsLO6OZM1fDQJ8JwKkGxTX9NTuKbtIErtIAAhd-LFQF5w/viewform",
+    "expires": "2026-12-06"
+  },
+  {
+    "id": "canvass-2026-12-12-ipo",
+    "kind": "canvass",
+    "title": {
+      "en": "Canvass for Byron",
+      "es": "Caminata por Byron"
+    },
+    "line": {
+      "en": "Knock doors with neighbors and talk with them about the ward. Afterward, join the post-canvass social at New Rose, 2058 W Cermak Rd.",
+      "es": "Toca puertas con tus vecinos y platica con ellos sobre el distrito. Después, acompáñanos en la convivencia en New Rose, 2058 W Cermak Rd."
+    },
+    "start": "2026-12-12T12:00:00-06:00",
+    "end": "2026-12-12T15:00:00-06:00",
+    "location": {
+      "en": "25th Ward IPO office",
+      "es": "Oficina del 25th Ward IPO"
+    },
+    "address": "2102 W Cermak Rd, Chicago",
+    "geo": {
+      "lat": 41.85219,
+      "lng": -87.67842
+    },
+    "rsvp": null,
+    "action": {
+      "en": "Sign up",
+      "es": "Apúntate"
+    },
+    "sponsor": null,
+    "source": "https://docs.google.com/forms/d/e/1FAIpQLSf4yKsLO6OZM1fDQJ8JwKkGxTX9NTuKbtIErtIAAhd-LFQF5w/viewform",
+    "expires": "2026-12-12"
+  },
+  {
+    "id": "canvass-2026-12-13-ipo",
+    "kind": "canvass",
+    "title": {
+      "en": "Canvass for Byron",
+      "es": "Caminata por Byron"
+    },
+    "line": {
+      "en": "Knock doors with neighbors and talk with them about the ward. Afterward, join the post-canvass social at New Rose, 2058 W Cermak Rd.",
+      "es": "Toca puertas con tus vecinos y platica con ellos sobre el distrito. Después, acompáñanos en la convivencia en New Rose, 2058 W Cermak Rd."
+    },
+    "start": "2026-12-13T12:00:00-06:00",
+    "end": "2026-12-13T15:00:00-06:00",
+    "location": {
+      "en": "25th Ward IPO office",
+      "es": "Oficina del 25th Ward IPO"
+    },
+    "address": "2102 W Cermak Rd, Chicago",
+    "geo": {
+      "lat": 41.85219,
+      "lng": -87.67842
+    },
+    "rsvp": null,
+    "action": {
+      "en": "Sign up",
+      "es": "Apúntate"
+    },
+    "sponsor": null,
+    "source": "https://docs.google.com/forms/d/e/1FAIpQLSf4yKsLO6OZM1fDQJ8JwKkGxTX9NTuKbtIErtIAAhd-LFQF5w/viewform",
+    "expires": "2026-12-13"
+  },
+  {
+    "id": "canvass-2026-12-19-ipo",
+    "kind": "canvass",
+    "title": {
+      "en": "Canvass for Byron",
+      "es": "Caminata por Byron"
+    },
+    "line": {
+      "en": "Knock doors with neighbors and talk with them about the ward. Afterward, join the post-canvass social at New Rose, 2058 W Cermak Rd.",
+      "es": "Toca puertas con tus vecinos y platica con ellos sobre el distrito. Después, acompáñanos en la convivencia en New Rose, 2058 W Cermak Rd."
+    },
+    "start": "2026-12-19T12:00:00-06:00",
+    "end": "2026-12-19T15:00:00-06:00",
+    "location": {
+      "en": "25th Ward IPO office",
+      "es": "Oficina del 25th Ward IPO"
+    },
+    "address": "2102 W Cermak Rd, Chicago",
+    "geo": {
+      "lat": 41.85219,
+      "lng": -87.67842
+    },
+    "rsvp": null,
+    "action": {
+      "en": "Sign up",
+      "es": "Apúntate"
+    },
+    "sponsor": null,
+    "source": "https://docs.google.com/forms/d/e/1FAIpQLSf4yKsLO6OZM1fDQJ8JwKkGxTX9NTuKbtIErtIAAhd-LFQF5w/viewform",
+    "expires": "2026-12-19"
+  },
+  {
+    "id": "canvass-2026-12-20-ipo",
+    "kind": "canvass",
+    "title": {
+      "en": "Canvass for Byron",
+      "es": "Caminata por Byron"
+    },
+    "line": {
+      "en": "Knock doors with neighbors and talk with them about the ward. Afterward, join the post-canvass social at New Rose, 2058 W Cermak Rd.",
+      "es": "Toca puertas con tus vecinos y platica con ellos sobre el distrito. Después, acompáñanos en la convivencia en New Rose, 2058 W Cermak Rd."
+    },
+    "start": "2026-12-20T12:00:00-06:00",
+    "end": "2026-12-20T15:00:00-06:00",
+    "location": {
+      "en": "25th Ward IPO office",
+      "es": "Oficina del 25th Ward IPO"
+    },
+    "address": "2102 W Cermak Rd, Chicago",
+    "geo": {
+      "lat": 41.85219,
+      "lng": -87.67842
+    },
+    "rsvp": null,
+    "action": {
+      "en": "Sign up",
+      "es": "Apúntate"
+    },
+    "sponsor": null,
+    "source": "https://docs.google.com/forms/d/e/1FAIpQLSf4yKsLO6OZM1fDQJ8JwKkGxTX9NTuKbtIErtIAAhd-LFQF5w/viewform",
+    "expires": "2026-12-20"
+  },
+  {
+    "id": "wardnight-2026-11-24",
+    "kind": "wardnight",
+    "title": {
+      "en": "Ward Night",
+      "es": "Noche del Distrito"
+    },
+    "line": {
+      "en": "Every Tuesday since 2019. Bring a question or come to help.",
+      "es": "Cada martes desde 2019. Trae una pregunta o ven a ayudar."
+    },
+    "start": "2026-11-24T18:00:00-06:00",
+    "end": "2026-11-24T21:00:00-06:00",
+    "location": {
+      "en": "25th Ward office",
+      "es": "Oficina del Distrito 25"
+    },
+    "address": "2100 W Cermak Rd, Chicago",
+    "geo": {
+      "lat": 41.85219,
+      "lng": -87.67837
+    },
+    "rsvp": null,
+    "action": {
+      "en": "Tell us you're coming",
+      "es": "Avísanos que vienes"
+    },
+    "sponsor": null,
+    "source": "https://docs.google.com/forms/d/e/1FAIpQLSf4yKsLO6OZM1fDQJ8JwKkGxTX9NTuKbtIErtIAAhd-LFQF5w/viewform",
+    "expires": "2026-11-24"
+  },
+  {
+    "id": "wardnight-2026-12-01",
+    "kind": "wardnight",
+    "title": {
+      "en": "Ward Night",
+      "es": "Noche del Distrito"
+    },
+    "line": {
+      "en": "Every Tuesday since 2019. Bring a question or come to help.",
+      "es": "Cada martes desde 2019. Trae una pregunta o ven a ayudar."
+    },
+    "start": "2026-12-01T18:00:00-06:00",
+    "end": "2026-12-01T21:00:00-06:00",
+    "location": {
+      "en": "25th Ward office",
+      "es": "Oficina del Distrito 25"
+    },
+    "address": "2100 W Cermak Rd, Chicago",
+    "geo": {
+      "lat": 41.85219,
+      "lng": -87.67837
+    },
+    "rsvp": null,
+    "action": {
+      "en": "Tell us you're coming",
+      "es": "Avísanos que vienes"
+    },
+    "sponsor": null,
+    "source": "https://docs.google.com/forms/d/e/1FAIpQLSf4yKsLO6OZM1fDQJ8JwKkGxTX9NTuKbtIErtIAAhd-LFQF5w/viewform",
+    "expires": "2026-12-01"
+  },
+  {
+    "id": "wardnight-2026-12-08",
+    "kind": "wardnight",
+    "title": {
+      "en": "Ward Night",
+      "es": "Noche del Distrito"
+    },
+    "line": {
+      "en": "Every Tuesday since 2019. Bring a question or come to help.",
+      "es": "Cada martes desde 2019. Trae una pregunta o ven a ayudar."
+    },
+    "start": "2026-12-08T18:00:00-06:00",
+    "end": "2026-12-08T21:00:00-06:00",
+    "location": {
+      "en": "25th Ward office",
+      "es": "Oficina del Distrito 25"
+    },
+    "address": "2100 W Cermak Rd, Chicago",
+    "geo": {
+      "lat": 41.85219,
+      "lng": -87.67837
+    },
+    "rsvp": null,
+    "action": {
+      "en": "Tell us you're coming",
+      "es": "Avísanos que vienes"
+    },
+    "sponsor": null,
+    "source": "https://docs.google.com/forms/d/e/1FAIpQLSf4yKsLO6OZM1fDQJ8JwKkGxTX9NTuKbtIErtIAAhd-LFQF5w/viewform",
+    "expires": "2026-12-08"
+  },
+  {
+    "id": "wardnight-2026-12-15",
+    "kind": "wardnight",
+    "title": {
+      "en": "Ward Night",
+      "es": "Noche del Distrito"
+    },
+    "line": {
+      "en": "Every Tuesday since 2019. Bring a question or come to help.",
+      "es": "Cada martes desde 2019. Trae una pregunta o ven a ayudar."
+    },
+    "start": "2026-12-15T18:00:00-06:00",
+    "end": "2026-12-15T21:00:00-06:00",
+    "location": {
+      "en": "25th Ward office",
+      "es": "Oficina del Distrito 25"
+    },
+    "address": "2100 W Cermak Rd, Chicago",
+    "geo": {
+      "lat": 41.85219,
+      "lng": -87.67837
+    },
+    "rsvp": null,
+    "action": {
+      "en": "Tell us you're coming",
+      "es": "Avísanos que vienes"
+    },
+    "sponsor": null,
+    "source": "https://docs.google.com/forms/d/e/1FAIpQLSf4yKsLO6OZM1fDQJ8JwKkGxTX9NTuKbtIErtIAAhd-LFQF5w/viewform",
+    "expires": "2026-12-15"
+  },
+  {
+    "id": "meetup-2026-12-11-ward-town-hall",
+    "kind": "meetup",
+    "title": {
+      "en": "25th Ward Town Hall",
+      "es": "Asamblea Comunitaria del Distrito 25"
+    },
+    "line": {
+      "en": "A town hall for neighbors of the 25th Ward. The location will be announced.",
+      "es": "Una asamblea para los vecinos del Distrito 25. El lugar está por anunciarse."
+    },
+    "start": "2026-12-11T18:00:00-06:00",
+    "end": "2026-12-11T21:00:00-06:00",
+    "location": {
+      "en": "Location to be announced",
+      "es": "Lugar por anunciar"
+    },
+    "address": null,
+    "rsvp": null,
+    "action": {
+      "en": "Tell us you're coming",
+      "es": "Avísanos que vienes"
+    },
+    "sponsor": null,
+    "source": "https://docs.google.com/forms/d/e/1FAIpQLSf4yKsLO6OZM1fDQJ8JwKkGxTX9NTuKbtIErtIAAhd-LFQF5w/viewform",
+    "expires": "2026-12-11"
   }
 ]

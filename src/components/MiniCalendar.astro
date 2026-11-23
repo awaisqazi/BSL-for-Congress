@@ -2,8 +2,10 @@
 // "Plan your month": the calendar column of the /volunteer Show Up block
 // (#calendar). It drives the shift list next to it (#this-week, rendered in
 // ShowUp.astro): tap a day for that day's shifts, a week chip for a week,
-// "All upcoming" to clear. The selection goes in the URL as #cal-YYYY-MM-DD,
-// #week-YYYY-MM-DD (the Sunday) or #cal-all, and is read back on load.
+// "All upcoming" to clear; the month arrows show that whole month. The
+// selection goes in the URL as #cal-YYYY-MM-DD, #week-YYYY-MM-DD (the
+// Sunday), #month-YYYY-MM or #cal-all; the search box and the Type / Hosted
+// by chips (ShowUp.astro) add ?q=, ?type= and ?host=. All read back on load.
 // Grid, data and dates come from src/scripts/calendar-core.js, the same
 // module the nav popover and the mobile drawer use; the data is the compact
 // JSON Navbar.astro inlines once per page (#bsl-cal-data).
@@ -23,6 +25,7 @@ const host = (Astro.site ? Astro.site.host : 'sigchofor25.com');
       <button type="button" class="mcal-chip" data-mcal-pick="this" aria-pressed="false"><span data-i18n="events.cal_this_week">This week</span></button>
       <button type="button" class="mcal-chip" data-mcal-pick="next" aria-pressed="false"><span data-i18n="events.cal_next_week">Next week</span></button>
       <button type="button" class="mcal-chip" data-mcal-pick="whole" aria-pressed="false" hidden><span data-i18n="events.cal_whole_week">Whole week</span></button>
+      <button type="button" class="mcal-chip" data-mcal-pick="month" aria-pressed="false" hidden><span data-i18n="events.cal_whole_month">Whole month</span></button>
       <button type="button" class="mcal-chip" data-mcal-pick="all" aria-pressed="false"><span data-i18n="events.cal_all">All upcoming</span></button>
     </div>
 
@@ -68,11 +71,20 @@ const host = (Astro.site ? Astro.site.host : 'sigchofor25.com');
 <script>
   import {
     readData, buildIndex, bounds, inBounds, renderMonth, keyTarget, monthTitle, dayLabel,
-    weekStart, addDays, monthOf, todayISO, t, lang, nextShiftDay, shiftCount, esc,
+    weekStart, addDays, monthOf, todayISO, t, lang, shiftCount, isShift, esc, parse, iso,
   } from '../scripts/calendar-core.js';
   import { pruneList, paintCountdowns } from '../scripts/events-client.js';
+  import { words, matches } from '../scripts/search-norm.js';
 
-  type Sel = { mode: 'day'; day: string } | { mode: 'week'; week: string } | { mode: 'all' };
+  type Sel =
+    | { mode: 'day'; day: string }
+    | { mode: 'week'; week: string }
+    | { mode: 'month'; month: string }
+    | { mode: 'all' };
+  type Rec = { type: string; host: string; words: string[] };
+
+  const TYPES = ['canvass', 'wardnight', 'meetup', 'dates'];
+  const HOSTS = ['campaign', 'ward', 'dsa', 'partner'];
 
   const root = document.querySelector<HTMLElement>('[data-mcal]');
   const data = readData();
@@ -82,51 +94,142 @@ const host = (Astro.site ? Astro.site.host : 'sigchofor25.com');
     const byDay = buildIndex(data, today);
     const b = bounds(data, today);
     const thisWeek = weekStart(today);
+    const $ = <T extends HTMLElement>(scope: ParentNode, sel: string) => scope.querySelector<T>(sel)!;
 
-    const gridHost = root.querySelector<HTMLElement>('[data-mcal-grid]')!;
-    const monthEl = root.querySelector<HTMLElement>('[data-mcal-month]')!;
-    const prev = root.querySelector<HTMLButtonElement>('[data-mcal-prev]')!;
-    const next = root.querySelector<HTMLButtonElement>('[data-mcal-next]')!;
+    const gridHost = $(root, '[data-mcal-grid]');
+    const monthEl = $(root, '[data-mcal-month]');
+    const prev = $<HTMLButtonElement>(root, '[data-mcal-prev]');
+    const next = $<HTMLButtonElement>(root, '[data-mcal-next]');
     const chips = [...root.querySelectorAll<HTMLButtonElement>('[data-mcal-pick]')];
-    const jumpText = root.querySelector<HTMLElement>('[data-mcal-jump-text]')!;
+    const jumpText = $(root, '[data-mcal-jump-text]');
 
     const wrap = list.closest<HTMLElement>('[data-cal-wrap]')!;
-    const titleEl = wrap.querySelector<HTMLElement>('[data-cal-title]')!;
-    const countEl = wrap.querySelector<HTMLElement>('[data-cal-count]')!;
-    const emptyEl = wrap.querySelector<HTMLElement>('[data-cal-empty]')!;
-    const emptyText = wrap.querySelector<HTMLElement>('[data-cal-empty-text]')!;
-    const nextBtn = wrap.querySelector<HTMLButtonElement>('[data-cal-next]')!;
-    const noteEl = wrap.querySelector<HTMLElement>('[data-cal-note]')!;
+    const heading = $(wrap, '[data-cal-heading]');
+    const titleEl = $(wrap, '[data-cal-title]');
+    const countEl = $(wrap, '[data-cal-count]');
+    const emptyEl = $(wrap, '[data-cal-empty]');
+    const emptyText = $(wrap, '[data-cal-empty-text]');
+    const nextBtn = $<HTMLButtonElement>(wrap, '[data-cal-next]');
+    const nextText = $(wrap, '[data-cal-next-text]');
+    const emptyClear = $<HTMLButtonElement>(wrap, '[data-cal-empty-clear]');
+    const moreEl = $(wrap, '[data-cal-more]');
+    const moreNext = $<HTMLButtonElement>(wrap, '[data-cal-more-next]');
+    const moreNextText = $(wrap, '[data-cal-more-next-text]');
+    const moreAll = $<HTMLButtonElement>(wrap, '[data-cal-more-all]');
+    const moreAllText = $(wrap, '[data-cal-more-all-text]');
+    const moreEnd = $(wrap, '[data-cal-more-end]');
     const tpl = wrap.querySelector<HTMLTemplateElement>('[data-cal-weekly]');
-    titleEl.removeAttribute('data-i18n');
-    emptyText.removeAttribute('data-i18n');
+    // Search and filters (ShowUp.astro, above the list).
+    const filt = $(wrap, '[data-calf]');
+    const qInput = $<HTMLInputElement>(filt, '[data-calf-q]');
+    const clearQ = $<HTMLButtonElement>(filt, '[data-calf-clear-q]');
+    const toggle = $<HTMLButtonElement>(filt, '[data-calf-toggle]');
+    const badge = $(filt, '[data-calf-badge]');
+    const typeChips = [...filt.querySelectorAll<HTMLButtonElement>('[data-calf-type]')];
+    const hostChips = [...filt.querySelectorAll<HTMLButtonElement>('[data-calf-host]')];
+    const fCount = $(filt, '[data-calf-count]');
+    const fReset = $<HTMLButtonElement>(filt, '[data-calf-reset]');
+    // Text the script writes stays out of the i18n swap.
+    [titleEl, emptyText, nextText, moreAllText].forEach((el) => el.removeAttribute('data-i18n'));
 
     // Past shifts come off the wall first (the page was built days ago).
     pruneList(list);
     const cards = [...list.querySelectorAll<HTMLElement>(':scope > .ev-card')];
     const ledgers = [...list.querySelectorAll<HTMLElement>(':scope > .cal-ledger')];
-    const weeklyTpl = new Map<number, HTMLElement>();
-    tpl?.content.querySelectorAll<HTMLElement>('[data-dow]').forEach((el) => weeklyTpl.set(Number(el.dataset.dow), el));
+    const weeklyTpl = new Map<string, HTMLElement>();
+    tpl?.content.querySelectorAll<HTMLElement>('[data-filter-id]').forEach((el) => weeklyTpl.set(el.dataset.filterId!, el));
+
+    // What the filters match: type, host group and the folded search words
+    // (both languages) that the build wrote on each card, ledger line and
+    // weekly card. The calendar payload carries the same ids.
+    const recs = new Map<string, Rec>();
+    const recOf = (el: HTMLElement): Rec => ({
+      type: el.dataset.type || '',
+      host: el.dataset.host || '',
+      words: (el.dataset.search || '').split(' ').filter(Boolean),
+    });
+    [...cards, ...ledgers, ...weeklyTpl.values()].forEach((el) => recs.set(el.dataset.filterId!, recOf(el)));
+
+    const F = { types: new Set<string>(), hosts: new Set<string>(), q: '' };
+    let qWords: string[] = [];
+    const active = () => F.types.size > 0 || F.hosts.size > 0 || qWords.length > 0;
+    const ok = (r: Rec | undefined) =>
+      !!r && (!F.types.size || F.types.has(r.type)) && (!F.hosts.size || F.hosts.has(r.host)) && matches(r.words, qWords);
+    const okEl = (el: HTMLElement) => ok(recs.get(el.dataset.filterId || ''));
+
+    // The day index the grid, the counts and the "next" buttons read: all of
+    // it, or only the matching items while a filter or search is on.
+    let index: Map<string, any[]> = byDay;
+    const reindex = () => {
+      if (!active()) {
+        index = byDay;
+        return;
+      }
+      index = new Map();
+      byDay.forEach((items: any[], day: string) => {
+        const keep = items.filter((it) => ok(recs.get(it.id)));
+        if (keep.length) index.set(day, keep);
+      });
+    };
 
     let sel: Sel = { mode: 'all' };
     let view = new Date(b.first);
     let focusDay: string | null = null;
 
+    const monthKey = (d: Date) => iso(d).slice(0, 7);
+    const monthEnd = (m: string) => {
+      const [y, mo] = m.split('-').map(Number);
+      return iso(new Date(y, mo, 0));
+    };
     const rangeOf = (s: Sel): [string, string] | null =>
-      s.mode === 'day' ? [s.day, s.day] : s.mode === 'week' ? [s.week, addDays(s.week, 6)] : null;
+      s.mode === 'day' ? [s.day, s.day]
+        : s.mode === 'week' ? [s.week, addDays(s.week, 6)]
+          : s.mode === 'month' ? [`${s.month}-01`, monthEnd(s.month)]
+            : null;
+    const hashFor = (s: Sel) =>
+      s.mode === 'day' ? `#cal-${s.day}` : s.mode === 'week' ? `#week-${s.week}` : s.mode === 'month' ? `#month-${s.month}` : '#cal-all';
 
+    // Shifts on a day; while a filter or search is on, every matching item
+    // (so "Election dates" alone still finds its next date).
+    const countDay = (day: string) => (active() ? (index.get(day) || []).length : shiftCount(index, day));
     const shiftsIn = (from: string, to: string) => {
       let n = 0;
-      for (let d = from; d <= to; d = addDays(d, 1)) n += shiftCount(byDay, d);
-      return n;
+      const seen = new Set<string>(); // a Board window spanning days counts once
+      for (let d = from; d <= to; d = addDays(d, 1)) {
+        if (!active()) n += shiftCount(index, d);
+        else (index.get(d) || []).forEach((it: any) => seen.add(isShift(it) ? `${it.id}@${d}` : it.id));
+      }
+      return active() ? seen.size : n;
     };
+    const nextDay = (from: string) => {
+      const keys = [...index.keys()].filter((k) => k >= from && k <= data.until && countDay(k) > 0).sort();
+      return keys[0] || null;
+    };
+    const shiftsLabel = (n: number) => (n === 1 ? t().cal_shift_one : t().cal_shift_many).replace('{n}', String(n));
+    const periodLabel = (n: number) => (active() ? (n === 1 ? t().cal_match_one : t().cal_match_many).replace('{n}', String(n)) : shiftsLabel(n));
+    const monthName = (m: string) => {
+      const d = parse(`${m}-01`);
+      const name = t().cal_months.split(',')[d.getMonth()];
+      return d.getFullYear() === parse(today).getFullYear() ? name : `${name} ${d.getFullYear()}`;
+    };
+
+    // Chips for a type or host group with nothing upcoming stay hidden.
+    const present = { types: new Set<string>(), hosts: new Set<string>() };
+    const live = [...cards, ...ledgers.filter((l) => l.dataset.to! >= today), ...(data.weekly.length ? weeklyTpl.values() : [])];
+    live.forEach((el) => {
+      const r = recs.get(el.dataset.filterId!)!;
+      present.types.add(r.type);
+      if (r.host) present.hosts.add(r.host);
+    });
+    typeChips.forEach((c) => (c.hidden = !present.types.has(c.dataset.calfType!)));
+    hostChips.forEach((c) => (c.hidden = !present.hosts.has(c.dataset.calfHost!)));
 
     function renderGrid() {
       monthEl.textContent = monthTitle(view);
       prev.disabled = view <= b.first;
       next.disabled = view >= b.last;
       renderMonth(gridHost, {
-        view, size: 'full', byDay, today, focusDay,
+        view, size: 'full', byDay: index, today, focusDay,
         selected: sel.mode === 'day' ? sel.day : null,
         range: sel.mode === 'week' ? rangeOf(sel) : null,
       });
@@ -137,25 +240,49 @@ const host = (Astro.site ? Astro.site.host : 'sigchofor25.com');
         this: sel.mode === 'week' && sel.week === thisWeek,
         next: sel.mode === 'week' && sel.week === addDays(thisWeek, 7),
         whole: false,
+        month: false,
         all: sel.mode === 'all',
       };
       chips.forEach((c) => {
         const k = c.dataset.mcalPick!;
         c.setAttribute('aria-pressed', String(on[k]));
         if (k === 'whole') c.hidden = sel.mode !== 'day';
+        if (k === 'month') c.hidden = sel.mode !== 'day' && sel.mode !== 'week';
       });
     }
 
-    function dayHead(day: string) {
+    function renderFilters(matchCount: number) {
+      const d = t();
+      typeChips.forEach((c) => c.setAttribute('aria-pressed', String(F.types.has(c.dataset.calfType!))));
+      hostChips.forEach((c) => c.setAttribute('aria-pressed', String(F.hosts.has(c.dataset.calfHost!))));
+      clearQ.hidden = !qInput.value;
+      const n = F.types.size + F.hosts.size;
+      badge.hidden = n === 0;
+      badge.textContent = String(n);
+      if (n) toggle.setAttribute('aria-label', `${d.cal_filter_toggle}, ${d.cal_filter_active.replace('{n}', String(n))}`);
+      else toggle.removeAttribute('aria-label');
+      fReset.hidden = !active();
+      fCount.textContent = active() ? (matchCount === 1 ? d.cal_match_one : d.cal_match_many).replace('{n}', String(matchCount)) : '';
+    }
+
+    function dayHead(day: string, tag = 'h4') {
       const li = document.createElement('li');
       li.className = 'cal-dayhead';
       li.dataset.calGen = '';
-      li.innerHTML = `<h4>${esc(dayLabel(day, true))}${day === today ? ` <span class="cal-today">${esc(t().today)}</span>` : ''}</h4>`;
+      li.innerHTML = `<${tag}>${esc(dayLabel(day, true))}${day === today ? ` <span class="cal-today">${esc(t().today)}</span>` : ''}</${tag}>`;
       return li;
     }
 
-    function weeklyClone(dow: number) {
-      const src = weeklyTpl.get(dow);
+    function monthHead(m: string) {
+      const li = document.createElement('li');
+      li.className = 'cal-monthhead';
+      li.dataset.calGen = '';
+      li.innerHTML = `<h4>${esc(monthTitle(parse(`${m}-01`)))}</h4>`;
+      return li;
+    }
+
+    function weeklyClone(id: string) {
+      const src = weeklyTpl.get(id);
       if (!src) return null;
       const li = src.cloneNode(true) as HTMLElement;
       li.dataset.calGen = '';
@@ -164,6 +291,55 @@ const host = (Astro.site ? Astro.site.host : 'sigchofor25.com');
       return li;
     }
 
+    // A dated shift of the same kind that day is the specific shift, so the
+    // weekly card stays out (whatever the filters hide).
+    const datedKind = (day: string, k: string) => cards.some((c) => c.dataset.date === day && c.classList.contains(`ev-kind-${k}`));
+
+    // Put the wanted items in order, moving as few nodes as possible: a card
+    // that moves is re-inserted, which would reset an open sign-up form's
+    // bot check, so cards already in order stay where they are.
+    function place(out: HTMLElement[]) {
+      const want = new Set(out);
+      let ref = list!.firstElementChild as HTMLElement | null;
+      for (const el of out) {
+        while (ref && !want.has(ref)) ref = ref.nextElementSibling as HTMLElement | null;
+        if (el === ref) {
+          ref = ref.nextElementSibling as HTMLElement | null;
+          continue;
+        }
+        list!.insertBefore(el, ref);
+      }
+    }
+
+    // The next period after the selection that has a (matching) shift.
+    function nextPeriod(): { sel: Sel; text: string } | null {
+      const d = t();
+      if (sel.mode === 'day') {
+        const from = addDays(sel.day, 1);
+        const nd = nextDay(from > today ? from : today);
+        return nd ? { sel: { mode: 'day', day: nd }, text: d.cal_more_day.replace('{d}', dayLabel(nd, true)).replace('{n}', periodLabel(countDay(nd))) } : null;
+      }
+      if (sel.mode === 'week') {
+        for (let w = addDays(sel.week, 7); w <= data.until; w = addDays(w, 7)) {
+          const n = shiftsIn(w < today ? today : w, addDays(w, 6));
+          if (n) return { sel: { mode: 'week', week: w }, text: d.cal_more_week.replace('{d}', dayLabel(w)).replace('{n}', periodLabel(n)) };
+        }
+        return null;
+      }
+      if (sel.mode === 'month') {
+        const [y, mo] = sel.month.split('-').map(Number);
+        for (let i = 1; ; i++) {
+          const m = monthKey(new Date(y, mo - 1 + i, 1));
+          if (`${m}-01` > data.until) return null;
+          const n = shiftsIn(`${m}-01`, monthEnd(m));
+          if (n) return { sel: { mode: 'month', month: m }, text: d.cal_more_month.replace('{m}', monthName(m)).replace('{n}', periodLabel(n)) };
+        }
+      }
+      return null;
+    }
+
+    let pending: Sel | null = null;
+
     function renderList() {
       list!.querySelectorAll('[data-cal-gen]').forEach((el) => el.remove());
       cards.forEach((c) => (c.hidden = true));
@@ -171,28 +347,42 @@ const host = (Astro.site ? Astro.site.host : 'sigchofor25.com');
       const out: HTMLElement[] = [];
       let shifts = 0;
       const d = t();
+      const searching = qWords.length > 0;
+      const mode = searching ? 'all' : sel.mode;
 
-      if (sel.mode === 'all') {
-        const days = [...new Set(cards.map((c) => c.dataset.date!))].sort();
-        days.forEach((day) => {
-          out.push(dayHead(day));
-          cards.filter((c) => c.dataset.date === day).forEach((c) => out.push(c));
+      if (mode === 'all') {
+        // Every upcoming shift (and Board date) under day heads, with a month
+        // band before each month's first day.
+        const byD = new Map<string, HTMLElement[]>();
+        const add = (day: string, el: HTMLElement) => {
+          if (!byD.has(day)) byD.set(day, []);
+          byD.get(day)!.push(el);
+        };
+        cards.filter(okEl).forEach((c) => {
+          add(c.dataset.date!, c);
+          shifts++;
         });
-        shifts = cards.length;
-        titleEl.textContent = d.cal_all_title;
+        ledgers.filter((l) => l.dataset.to! >= today && okEl(l)).forEach((l) => add(l.dataset.from! > today ? l.dataset.from! : today, l));
+        let lastMonth = '';
+        [...byD.keys()].sort().forEach((day) => {
+          if (day.slice(0, 7) !== lastMonth) {
+            lastMonth = day.slice(0, 7);
+            out.push(monthHead(lastMonth));
+          }
+          out.push(dayHead(day, 'h5'), ...byD.get(day)!);
+        });
+        titleEl.textContent = searching ? d.cal_results.replace('{q}', F.q.trim()) : d.cal_all_title;
       } else {
         const [from, to] = rangeOf(sel)!;
         for (let day = from; day <= to; day = addDays(day, 1)) {
-          const items: HTMLElement[] = cards.filter((c) => c.dataset.date === day);
+          const items: HTMLElement[] = cards.filter((c) => c.dataset.date === day && okEl(c));
           shifts += items.length;
           if (day >= today && day <= data.until) {
-            const dow = new Date(day + 'T12:00:00').getDay();
-            // Same rule as the "next up" rows: a dated shift of the same kind
-            // on this day is the specific shift, so its weekly card stays out.
+            const dow = parse(day).getDay();
             data.weekly
-              .filter((w: any) => w.dow === dow && !items.some((c) => c.classList.contains(`ev-kind-${w.k}`)))
+              .filter((w: any) => w.dow === dow && !datedKind(day, w.k) && ok(recs.get(w.id)))
               .forEach((w: any) => {
-                const li = weeklyClone(w.dow);
+                const li = weeklyClone(w.id);
                 if (li) {
                   items.push(li);
                   shifts++;
@@ -202,38 +392,57 @@ const host = (Astro.site ? Astro.site.host : 'sigchofor25.com');
           ledgers.forEach((l) => {
             const lf = l.dataset.from!;
             const lt = l.dataset.to!;
-            if (lt >= from && lf <= to && (lf > from ? lf : from) === day) items.push(l);
+            if (okEl(l) && lt >= from && lf <= to && (lf > from ? lf : from) === day) items.push(l);
           });
-          if (items.length && sel.mode === 'week') out.push(dayHead(day));
+          if (items.length && mode !== 'day') out.push(dayHead(day));
           out.push(...items);
         }
         titleEl.textContent = sel.mode === 'day'
           ? dayLabel(sel.day, true)
-          : d.cal_week_of.replace('{d}', dayLabel(sel.week));
+          : sel.mode === 'week'
+            ? d.cal_week_of.replace('{d}', dayLabel(sel.week))
+            : monthTitle(parse(`${(sel as any).month}-01`));
       }
 
-      out.forEach((el) => {
-        el.hidden = false;
-        list!.appendChild(el);
-      });
+      place(out);
+      out.forEach((el) => (el.hidden = false));
       list!.hidden = out.length === 0;
-      countEl.textContent = shifts ? (shifts === 1 ? d.cal_shift_one : d.cal_shift_many).replace('{n}', String(shifts)) : '';
-      noteEl.hidden = sel.mode !== 'all';
+      countEl.textContent = shifts ? shiftsLabel(shifts) : '';
+      const matchCount = out.filter((el) => !el.matches('.cal-dayhead, .cal-monthhead')).length;
+      renderFilters(matchCount);
 
-      // Empty state: say so, and offer the next day that has a shift.
-      emptyEl.hidden = shifts > 0;
-      if (!shifts) {
-        if (sel.mode === 'all') {
-          emptyText.textContent = d.empty;
-          nextBtn.hidden = true;
+      // Empty state: say so, offer the next day that has a (matching) shift,
+      // and a way out of the filters.
+      const empty = active() ? matchCount === 0 : shifts === 0;
+      emptyEl.hidden = !empty;
+      emptyClear.hidden = !(empty && active());
+      nextBtn.hidden = true;
+      if (empty) {
+        nextText.textContent = active() ? d.cal_next_match : d.cal_next_shift;
+        if (mode === 'all') {
+          emptyText.textContent = active() ? d.cal_no_match : d.empty;
         } else {
-          emptyText.textContent = sel.mode === 'day' ? d.cal_empty : d.cal_empty_week;
+          emptyText.textContent = active() ? d.cal_no_match : mode === 'day' ? d.cal_empty : mode === 'week' ? d.cal_empty_week : d.cal_empty_month;
           const after = addDays(rangeOf(sel)![1], 1);
-          const nd = nextShiftDay(byDay, after > today ? after : today, data.until);
+          const nd = nextDay(after > today ? after : today);
           nextBtn.hidden = !nd;
           if (nd) nextBtn.dataset.day = nd;
         }
       }
+
+      // Keep going: the next period with shifts, then everything; or say
+      // plainly that nothing later is posted.
+      const np = mode === 'all' ? null : nextPeriod();
+      pending = np ? np.sel : null;
+      moreNext.hidden = !np;
+      moreNextText.textContent = np ? np.text : '';
+      const total = cards.filter(okEl).length;
+      moreAll.hidden = mode === 'all' || total === 0;
+      moreAllText.textContent = d.cal_more_all.replace('{n}', String(total));
+      // "Nothing else is posted" is about the calendar, not about a search
+      // or filter with few matches, so it stays out of a filtered All view.
+      moreEnd.hidden = !!np || (mode === 'all' && active());
+      moreEl.hidden = moreNext.hidden && moreAll.hidden && moreEnd.hidden;
 
       jumpText.textContent = `${titleEl.textContent}: ${countEl.textContent || d.cal_none}`;
       paintCountdowns(list!);
@@ -243,6 +452,23 @@ const host = (Astro.site ? Astro.site.host : 'sigchofor25.com');
       renderGrid();
       renderChips();
       renderList();
+    }
+
+    // The address keeps the selection (#cal-, #week-, #month-) and the
+    // filters (?type=, ?host=, ?q=), so a filtered view can be shared.
+    function syncUrl(hash?: string) {
+      try {
+        const u = new URL(location.href);
+        const p = u.searchParams;
+        if (F.types.size) p.set('type', [...F.types].join(','));
+        else p.delete('type');
+        if (F.hosts.size) p.set('host', [...F.hosts].join(','));
+        else p.delete('host');
+        if (F.q.trim()) p.set('q', F.q.trim());
+        else p.delete('q');
+        const qs = p.toString();
+        history.replaceState(history.state, '', `${u.pathname}${qs ? `?${qs}` : ''}${hash ?? location.hash}`);
+      } catch {}
     }
 
     function apply(s: Sel, opts: { share?: boolean; focus?: boolean } = {}) {
@@ -256,13 +482,21 @@ const host = (Astro.site ? Astro.site.host : 'sigchofor25.com');
         focusDay = s.mode === 'day' ? s.day : null;
       }
       render();
-      if (opts.share) {
-        const hash = s.mode === 'day' ? `#cal-${s.day}` : s.mode === 'week' ? `#week-${s.week}` : '#cal-all';
-        try {
-          history.replaceState(null, '', hash);
-        } catch {}
-      }
+      if (opts.share) syncUrl(hashFor(s));
       if (opts.focus && s.mode === 'day') gridHost.querySelector<HTMLElement>(`[data-day="${s.day}"]`)?.focus();
+    }
+
+    // After a "next" button: back to the top of the list, focus on its title.
+    function toTop() {
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      wrap.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
+      heading.focus({ preventScroll: true });
+    }
+
+    function refilter() {
+      reindex();
+      render();
+      syncUrl();
     }
 
     gridHost.addEventListener('click', (ev) => {
@@ -285,6 +519,7 @@ const host = (Astro.site ? Astro.site.host : 'sigchofor25.com');
         if (k === 'this') apply({ mode: 'week', week: thisWeek }, { share: true });
         if (k === 'next') apply({ mode: 'week', week: addDays(thisWeek, 7) }, { share: true });
         if (k === 'whole' && sel.mode === 'day') apply({ mode: 'week', week: weekStart(sel.day) }, { share: true });
+        if (k === 'month') apply({ mode: 'month', month: monthKey(view) }, { share: true });
         if (k === 'all') apply({ mode: 'all' }, { share: true });
       }),
     );
@@ -299,13 +534,76 @@ const host = (Astro.site ? Astro.site.host : 'sigchofor25.com');
       if (nextBtn.dataset.day) apply({ mode: 'day', day: nextBtn.dataset.day }, { focus: true, share: true });
     });
 
+    moreNext.addEventListener('click', () => {
+      if (!pending) return;
+      apply(pending, { share: true });
+      toTop();
+    });
+
+    moreAll.addEventListener('click', () => {
+      apply({ mode: 'all' }, { share: true });
+      toTop();
+    });
+
+    // The month arrows move the grid and the list together.
     const shiftMonth = (n: number) => {
-      view = new Date(view.getFullYear(), view.getMonth() + n, 1);
-      focusDay = null;
-      renderGrid();
+      const v = new Date(view.getFullYear(), view.getMonth() + n, 1);
+      if (v < b.first || v > b.last) return;
+      apply({ mode: 'month', month: monthKey(v) }, { share: true });
     };
     prev.addEventListener('click', () => shiftMonth(-1));
     next.addEventListener('click', () => shiftMonth(1));
+
+    // Filters: OR inside a group, AND across groups and with the search.
+    const chipToggle = (set: Set<string>, key: string) => {
+      if (set.has(key)) set.delete(key);
+      else set.add(key);
+      refilter();
+    };
+    typeChips.forEach((c) => c.addEventListener('click', () => chipToggle(F.types, c.dataset.calfType!)));
+    hostChips.forEach((c) => c.addEventListener('click', () => chipToggle(F.hosts, c.dataset.calfHost!)));
+
+    qInput.addEventListener('input', () => {
+      F.q = qInput.value;
+      qWords = words(F.q);
+      refilter();
+    });
+    qInput.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Escape' && qInput.value) {
+        ev.preventDefault();
+        clearQ.click();
+      }
+    });
+    clearQ.addEventListener('click', () => {
+      qInput.value = '';
+      F.q = '';
+      qWords = [];
+      refilter();
+      qInput.focus();
+    });
+
+    const clearAll = () => {
+      F.types.clear();
+      F.hosts.clear();
+      qInput.value = '';
+      F.q = '';
+      qWords = [];
+      refilter();
+    };
+    fReset.addEventListener('click', () => {
+      clearAll();
+      qInput.focus();
+    });
+    emptyClear.addEventListener('click', () => {
+      clearAll();
+      heading.focus({ preventScroll: true });
+    });
+
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') !== 'true';
+      toggle.setAttribute('aria-expanded', String(open));
+      filt.classList.toggle('is-open', open);
+    });
 
     document.addEventListener('bsl:langchange', () => render());
 
@@ -313,7 +611,7 @@ const host = (Astro.site ? Astro.site.host : 'sigchofor25.com');
     // shift, else every upcoming shift.
     function fallback(): Sel {
       if (shiftsIn(today, addDays(thisWeek, 6))) return { mode: 'week', week: thisWeek };
-      const nd = nextShiftDay(byDay, today, data.until);
+      const nd = nextDay(today);
       return nd ? { mode: 'week', week: weekStart(nd) } : { mode: 'all' };
     }
 
@@ -324,8 +622,10 @@ const host = (Astro.site ? Astro.site.host : 'sigchofor25.com');
       let s: Sel | null = null;
       const day = h.match(/^#cal-(\d{4}-\d{2}-\d{2})$/);
       const week = h.match(/^#week-(\d{4}-\d{2}-\d{2})$/);
+      const month = h.match(/^#month-(\d{4}-\d{2})$/);
       if (day && inBounds(day[1], b)) s = { mode: 'day', day: day[1] };
       else if (week && inBounds(week[1], b)) s = { mode: 'week', week: weekStart(week[1]) };
+      else if (month && inBounds(`${month[1]}-01`, b)) s = { mode: 'month', month: month[1] };
       else if (h === '#cal-all') s = { mode: 'all' };
       if (!s) return false;
       apply(s);
@@ -336,7 +636,25 @@ const host = (Astro.site ? Astro.site.host : 'sigchofor25.com');
       return true;
     }
 
-    if (!fromHash(true)) apply(fallback());
+    // Filters from a shared link: ?type=canvass,meetup&host=campaign&q=cermak
+    const params = new URLSearchParams(location.search);
+    const fromParam = (name: string, allowed: string[], chipsOf: HTMLButtonElement[], attr: string, set: Set<string>) =>
+      (params.get(name) || '').split(',').forEach((k) => {
+        if (allowed.includes(k) && chipsOf.some((c) => c.dataset[attr] === k && !c.hidden)) set.add(k);
+      });
+    fromParam('type', TYPES, typeChips, 'calfType', F.types);
+    fromParam('host', HOSTS, hostChips, 'calfHost', F.hosts);
+    F.q = (params.get('q') || '').slice(0, 100);
+    qInput.value = F.q;
+    qWords = words(F.q);
+    if (F.types.size || F.hosts.size) {
+      toggle.setAttribute('aria-expanded', 'true');
+      filt.classList.add('is-open');
+    }
+    reindex();
+    filt.hidden = false;
+
+    if (!fromHash(Boolean(location.hash))) apply(fallback());
     window.addEventListener('hashchange', () => fromHash(true));
   }
 </script>

@@ -61,8 +61,9 @@ see below), runs values through `clean()`, and returns the promise from
 `insert`. Callers never `await` it before letting the Google post go.
 
 If `PUBLIC_SUPABASE_URL` or `PUBLIC_SUPABASE_ANON_KEY` is missing at build
-time, `enabled` is false: helpers return immediately and any Supabase-only UI
-(the "I'm coming" form) is not rendered, so the site looks exactly like today.
+time, `enabled` is false: helpers return immediately, so the site looks
+exactly like today. (The "I'm coming" card form no longer depends on this:
+since Nov 2026 it posts to its own Google Form, see section 4.)
 Astro inlines `import.meta.env.PUBLIC_*` at build, so this is decided per
 deploy.
 
@@ -89,6 +90,15 @@ collect them today and should not claim to until the campaign confirms that
 offer.
 
 ## 4. "I'm coming" mini-form on event cards (`EventCard.astro`)
+
+> **Updated Nov 2026.** The form now shows on every dated shift with
+> `rsvp: null`, whether or not Supabase is configured, and its intake of
+> record is the event sign-up Google Form (`src/components/rsvp/form-options.js`,
+> Worker form `rsvp`; see design.md, Forms & Embeds, Event sign-ups). The
+> inputs carry that form's `entry.*` names, the honeypot is nameless
+> (`data-ev-hp`), and `rsvp()` gets a FormData rebuilt with the column names
+> below as a fire-and-forget copy after the Google path succeeds. The plan
+> below is the original Supabase-only design; where it differs, design.md wins.
 
 Shown only when `enabled` is true and the event has no external RSVP page
 (`rsvp: null` in `events.json`, e.g. the cafe meetup whose action reads "Tell
@@ -145,4 +155,5 @@ For local dev: `cp supabase/config.example.env .env` and fill in the values
   from `rsvps_by_event`.
 - From devtools, try `fetch(URL + '/rest/v1/volunteers', {headers:{apikey:KEY}})`:
   must return a permission error, never rows.
-- Build with the variables unset: no "I'm coming" form, no Supabase requests.
+- Build with the variables unset: no Supabase requests (the "I'm coming"
+  form still shows and posts to its Google Form).

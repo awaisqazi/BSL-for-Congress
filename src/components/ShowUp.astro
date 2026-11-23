@@ -8,13 +8,16 @@
 // MiniCalendar) beside the shift list it filters (#this-week): sticky on the
 // left from 1024 px, stacked above the list below that. Then the standing
 // weekly flyers (#every-week), the official dates as a ledger (#dates) and
-// the canvass team card. No-RSVP buttons go to #signup on the same page.
+// the canvass team card. No-RSVP cards take the sign-up in their own
+// "I'm coming" form (EventCard); #signup is only the fallback link.
 // Calendar files come from pages/events/[file].ics.js.
 import EventCard from './EventCard.astro';
 import MiniCalendar from './MiniCalendar.astro';
 import ShiftMap from './ShiftMap.astro';
-import { upcoming, recurring, deadlines, ledgerDate, pick, icsPath, todayChicago, startDate } from '../data/events.js';
+import { upcoming, recurring, deadlines, ledgerDate, pick, icsPath, todayChicago, startDate, hostOf, typeOf, searchText, weekdayWords, dateSearch } from '../data/events.js';
 import { RUNOFF_DAY } from '../data/calendar-data.js';
+import enI18n from '../i18n/en.json';
+import esI18n from '../i18n/es.json';
 
 interface Props {
   full?: boolean;
@@ -46,6 +49,21 @@ const TEAM_FORM = `${base}/canvass/`;
 const list = full ? upcoming(todayChicago()) : [];
 const fullTilts = ['-0.6deg', '0.5deg', '-0.4deg', '0.6deg'];
 const DOW = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
+// Filter chips over the list (MiniCalendar's script hides a chip with
+// nothing upcoming behind it). Labels are events.cal_type_* / cal_host_*.
+const typeChips = [
+  { key: 'canvass', en: 'Canvasses' },
+  { key: 'wardnight', en: 'Ward Night' },
+  { key: 'meetup', en: 'Events' },
+  { key: 'dates', en: 'Election dates' },
+];
+const hostChips = [
+  { key: 'campaign', en: "Byron's campaign" },
+  { key: 'ward', en: '25th Ward office' },
+  { key: 'dsa', en: 'Socialist Slate and DSA' },
+  { key: 'partner', en: 'Community partners' },
+];
+const runoffSearch = dateSearch(RUNOFF_DAY, enI18n.events.cal_runoff_title, esI18n.events.cal_runoff_title, enI18n.events.cal_runoff_line, esI18n.events.cal_runoff_line);
 ---
 
 {full ? (
@@ -64,8 +82,48 @@ const DOW = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
       </div>
 
       <div class="cal-list" id="this-week" data-cal-wrap>
+        <!-- Search and filters: shown once the calendar script runs. -->
+        <div class="calf" data-calf hidden>
+          <div class="calf-search" role="search">
+            <label class="calf-label" for="calf-q" data-i18n="events.cal_search_label">Search shifts</label>
+            <div class="calf-field">
+              <svg class="calf-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+              <input type="search" id="calf-q" class="calf-input" autocomplete="off" spellcheck="false" enterkeyhint="search" aria-describedby="calf-count" placeholder="e.g. Cermak, Saturday, DSA" data-i18n="events.cal_search_placeholder" data-calf-q />
+              <button type="button" class="calf-clear-q" data-calf-clear-q hidden>
+                <span aria-hidden="true">×</span>
+                <span class="calf-sr" data-i18n="events.cal_search_clear">Clear search</span>
+              </button>
+            </div>
+          </div>
+
+          <button type="button" class="calf-toggle" data-calf-toggle aria-expanded="false" aria-controls="calf-groups">
+            <span data-i18n="events.cal_filter_toggle">Filter</span>
+            <span class="calf-badge" data-calf-badge hidden></span>
+          </button>
+
+          <div class="calf-groups" id="calf-groups" data-calf-groups>
+            <div class="calf-group" role="group" aria-labelledby="calf-type-label">
+              <span class="calf-group-label" id="calf-type-label" data-i18n="events.cal_type_label">Type</span>
+              {typeChips.map((c) => (
+                <button type="button" class="calf-chip" data-calf-type={c.key} aria-pressed="false"><span data-i18n={`events.cal_type_${c.key}`}>{c.en}</span></button>
+              ))}
+            </div>
+            <div class="calf-group" role="group" aria-labelledby="calf-host-label">
+              <span class="calf-group-label" id="calf-host-label" data-i18n="events.cal_host_label">Hosted by</span>
+              {hostChips.map((c) => (
+                <button type="button" class="calf-chip" data-calf-host={c.key} aria-pressed="false"><span data-i18n={`events.cal_host_${c.key}`}>{c.en}</span></button>
+              ))}
+            </div>
+          </div>
+
+          <div class="calf-status">
+            <p class="calf-count" id="calf-count" data-calf-count aria-live="polite" aria-atomic="true"></p>
+            <button type="button" class="calf-reset" data-calf-reset hidden><span data-i18n="events.cal_clear_filters">Clear filters</span></button>
+          </div>
+        </div>
+
         <div class="cal-list-head">
-          <h3 class="ev-group-title cal-list-title"><span data-cal-title data-i18n="events.cal_all_title">Every upcoming shift</span></h3>
+          <h3 class="ev-group-title cal-list-title" tabindex="-1" data-cal-heading><span data-cal-title data-i18n="events.cal_all_title">Every upcoming shift</span></h3>
           <p class="cal-list-count" data-cal-count aria-live="polite"></p>
         </div>
 
@@ -74,14 +132,14 @@ const DOW = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
             <EventCard event={e} signupHref="#signup" tilt={fullTilts[i % 4]} pulse={i === 0} calendar />
           ))}
           {deadlines.map((e) => (
-            <li class:list={['cal-ledger', { 'cal-ledger-eday': e.kind === 'election' }]} data-from={startDate(e)} data-to={e.end ? startDate({ start: e.end }) : startDate(e)} hidden>
+            <li class:list={['cal-ledger', { 'cal-ledger-eday': e.kind === 'election' }]} data-from={startDate(e)} data-to={e.end ? startDate({ start: e.end }) : startDate(e)} data-filter-id={e.id} data-type={typeOf(e)} data-host="" data-search={searchText(e)} hidden>
               <span class="cal-ledger-date"><span data-lang="en">{ledgerDate(e, 'en')}</span><span data-lang="es" hidden>{ledgerDate(e, 'es')}</span></span>
               <span class="cal-ledger-title"><span data-lang="en">{e.title.en}</span><span data-lang="es" hidden>{e.title.es}</span></span>
               <a class="cal-ledger-cal" data-lang="en" href={`${base}${icsPath(e, 'en')}`} download><span data-i18n="events.add_calendar">Add to calendar</span></a>
               <a class="cal-ledger-cal" data-lang="es" hidden href={`${base}${icsPath(e, 'es')}`} download><span data-i18n="events.add_calendar">Agregar al calendario</span></a>
             </li>
           ))}
-          <li class="cal-ledger" data-from={RUNOFF_DAY} data-to={RUNOFF_DAY} hidden>
+          <li class="cal-ledger" data-from={RUNOFF_DAY} data-to={RUNOFF_DAY} data-filter-id="runoff" data-type="dates" data-host="" data-search={runoffSearch} hidden>
             <span class="cal-ledger-title" data-i18n="events.cal_runoff_title">Runoff, if needed</span>
             <span class="cal-ledger-line" data-i18n="events.cal_runoff_line">If no candidate wins a majority on February 23, the top two meet again on April 6.</span>
           </li>
@@ -89,7 +147,7 @@ const DOW = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
 
         <template data-cal-weekly>
           {recurring.map((e, i) => (
-            <li class="ev-weekly-card cal-weekly" data-dow={DOW[e.rule.split(':')[1]]} style={`--tilt: ${i % 2 ? '0.5deg' : '-0.5deg'}`}>
+            <li class="ev-weekly-card cal-weekly" data-dow={DOW[e.rule.split(':')[1]]} data-filter-id={e.id} data-type={typeOf(e)} data-host={hostOf(e) || ''} data-search={searchText(e, weekdayWords(DOW[e.rule.split(':')[1]]))} style={`--tilt: ${i % 2 ? '0.5deg' : '-0.5deg'}`}>
               <span class="ev-weekly-when"><span data-lang="en">{e.when.en}</span><span data-lang="es" hidden>{e.when.es}</span></span>
               <h4 class="ev-weekly-title-wrap"><span class="ev-weekly-title"><span data-lang="en">{e.title.en}</span><span data-lang="es" hidden>{e.title.es}</span></span></h4>
               <p class="ev-weekly-place"><span data-lang="en">{pick(e.location, 'en')}</span><span data-lang="es" hidden>{pick(e.location, 'es')}</span></p>
@@ -104,10 +162,19 @@ const DOW = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
 
         <div class="cal-empty" data-cal-empty hidden>
           <p class="cal-empty-text" data-cal-empty-text data-i18n="events.empty">No dated shifts are posted right now. The standing shifts below keep going.</p>
-          <button type="button" class="cal-empty-btn" data-cal-next hidden><span data-i18n="events.cal_next_shift">Next day with a shift</span> <span aria-hidden="true">→</span></button>
+          <button type="button" class="cal-empty-btn" data-cal-next hidden><span data-cal-next-text data-i18n="events.cal_next_shift">Next day with a shift</span> <span aria-hidden="true">→</span></button>
+          <button type="button" class="cal-empty-btn cal-empty-clear" data-cal-empty-clear hidden><span data-i18n="events.cal_clear_filters">Clear filters</span></button>
         </div>
 
-        <p class="cal-note" data-cal-note hidden><a href="#every-week" data-i18n="events.cal_weekly_note">Ward Night every Tuesday and Sunday canvasses most Sundays: see Every Week below.</a></p>
+        <!-- Keep going: always at the bottom of the list (MiniCalendar fills it). -->
+        <div class="cal-more" data-cal-more hidden>
+          <button type="button" class="btn btn-orange cal-more-next" data-cal-more-next hidden><span data-cal-more-next-text></span> <span aria-hidden="true">→</span></button>
+          <button type="button" class="cal-more-all" data-cal-more-all hidden><span data-cal-more-all-text data-i18n="events.cal_all">All upcoming</span></button>
+          <p class="cal-more-end" data-cal-more-end hidden>
+            <span data-i18n="events.cal_end">Nothing else is posted after this yet.</span>
+            <a href="#every-week" data-i18n="events.cal_weekly_note">Ward Night every Tuesday and Sunday canvasses most Sundays: see Every Week below.</a>
+          </p>
+        </div>
       </div>
     </div>
 
@@ -630,8 +697,7 @@ const DOW = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
   }
 
   .cal-empty[hidden],
-  .cal-empty-btn[hidden],
-  .cal-note[hidden] {
+  .cal-empty-btn[hidden] {
     display: none;
   }
 
@@ -664,21 +730,369 @@ const DOW = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
     color: var(--blue-deeper);
   }
 
-  .cal-note {
-    margin-top: var(--space-xl);
+  .cal-empty-btn + .cal-empty-btn {
+    margin-left: var(--space-sm);
+  }
+
+  .cal-empty-btn:focus-visible,
+  .cal-more-all:focus-visible,
+  .cal-more-next:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 2px;
+  }
+
+  .cal-list-title:focus {
+    outline: none;
+  }
+
+  .cal-list-title:focus-visible {
+    outline: 3px dashed var(--orange-dark);
+    outline-offset: 4px;
+  }
+
+  /* All upcoming: a month band before each month's first day */
+  .cal-items :global(.cal-monthhead) {
+    grid-column: 1 / -1;
+    list-style: none;
+    margin-bottom: calc(var(--space-md) * -1);
+  }
+
+  .cal-items :global(.cal-monthhead:not(:first-child)) {
+    margin-top: var(--space-lg);
+  }
+
+  .cal-items :global(.cal-monthhead h4) {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--cream-light);
+    background: var(--blue-deeper);
+    padding: 0.1em 0.5em;
+    rotate: -0.8deg;
+  }
+
+  .cal-items :global(.cal-dayhead h5) {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue-deeper);
+    padding-bottom: 6px;
+    border-bottom: 2px dashed rgba(27, 54, 93, 0.2);
+  }
+
+  /* Keep going: the next period with shifts, then everything */
+  .cal-more {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-2xl);
+    padding: var(--space-lg) var(--space-md);
+    border-top: 2px dashed rgba(27, 54, 93, 0.25);
     text-align: center;
   }
 
-  .cal-note a {
+  .cal-more[hidden],
+  .cal-more > [hidden] {
+    display: none;
+  }
+
+  .cal-more-next {
+    min-height: 52px;
+    max-width: 100%;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    font-size: var(--text-base);
+    line-height: 1.25;
+    white-space: normal;
+  }
+
+  .cal-more-all {
+    min-height: 44px;
+    padding: 0 6px;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--blue-dark);
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: 4px;
+    cursor: pointer;
+  }
+
+  .cal-more-all:hover {
+    color: var(--orange-dark);
+  }
+
+  .cal-more-end {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 800;
+    color: var(--blue-deeper);
+  }
+
+  .cal-more-end a {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
-    font-size: var(--text-sm);
+    font-family: var(--font-body);
     font-weight: 700;
     color: var(--blue-dark);
     text-decoration: underline;
     text-decoration-style: dashed;
     text-underline-offset: 4px;
+  }
+
+  /* Search and filters over the list (same taped-stamp look as the week chips) */
+  .calf {
+    margin-bottom: var(--space-xl);
+    padding: var(--space-md);
+    background: var(--cream-light);
+    box-shadow: var(--shadow-sm);
+    border-top: 4px solid var(--blue-deeper);
+  }
+
+  .calf[hidden],
+  .calf [hidden] {
+    display: none;
+  }
+
+  .calf-label,
+  .calf-group-label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--blue-deeper);
+    margin-bottom: 6px;
+  }
+
+  .calf-field {
+    position: relative;
+  }
+
+  .calf-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    translate: 0 -50%;
+    color: var(--blue-deeper);
+    pointer-events: none;
+  }
+
+  .calf-input {
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 52px 10px 44px;
+    font-family: var(--font-body);
+    font-size: max(16px, var(--text-base));
+    color: var(--black);
+    background: var(--white);
+    border: 2px solid var(--blue-deeper);
+    border-radius: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .calf-input::placeholder {
+    color: var(--gray-500);
+    opacity: 1;
+  }
+
+  .calf-input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    display: none;
+  }
+
+  .calf-input:focus-visible {
+    outline: 3px solid var(--orange);
+    outline-offset: 2px;
+  }
+
+  .calf-clear-q {
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    translate: 0 -50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--blue-deeper);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .calf-clear-q:hover {
+    color: var(--orange-dark);
+  }
+
+  .calf-clear-q:focus-visible {
+    outline: 3px solid var(--orange);
+    outline-offset: -3px;
+  }
+
+  .calf-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .calf-toggle {
+    display: none;
+  }
+
+  .calf-groups {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+
+  .calf-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 8px;
+  }
+
+  .calf-group-label {
+    flex: 0 0 100%;
+    margin-bottom: 0;
+  }
+
+  .calf-chip {
+    min-height: 44px;
+    padding: 0 12px;
+    border: 2px dashed rgba(230, 136, 28, 0.6);
+    border-radius: 4px;
+    background: var(--white);
+    color: var(--orange-dark);
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: border-color var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
+  }
+
+  .calf-chip:nth-of-type(odd) {
+    rotate: -1deg;
+  }
+
+  .calf-chip:nth-of-type(even) {
+    rotate: 0.8deg;
+  }
+
+  .calf-chip:hover {
+    border-color: var(--blue-deeper);
+    color: var(--blue-deeper);
+  }
+
+  .calf-chip:focus-visible,
+  .calf-toggle:focus-visible,
+  .calf-reset:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 2px;
+  }
+
+  .calf-chip[aria-pressed='true'] {
+    background: var(--blue-deeper);
+    border: 2px solid var(--blue-deeper);
+    color: var(--cream-light);
+  }
+
+  .calf-status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0 var(--space-md);
+    margin-top: var(--space-sm);
+  }
+
+  .calf-count {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 800;
+    color: var(--gray-700);
+  }
+
+  .calf-count:empty {
+    display: none;
+  }
+
+  .calf-reset {
+    min-height: 44px;
+    padding: 0 4px;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--orange-dark);
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: 4px;
+    cursor: pointer;
+  }
+
+  /* Phones: the chips fold behind one Filter button; search stays open */
+  @media (max-width: 767px) {
+    .calf-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      margin-top: var(--space-sm);
+      padding: 0 14px;
+      border: 2px dashed rgba(27, 54, 93, 0.45);
+      border-radius: 4px;
+      background: var(--white);
+      color: var(--blue-deeper);
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+    }
+
+    .calf-toggle[aria-expanded='true'] {
+      border-style: solid;
+    }
+
+    .calf-badge {
+      min-width: 22px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: var(--orange-dark);
+      color: var(--white);
+      text-align: center;
+    }
+
+    .calf:not(.is-open) .calf-groups {
+      display: none;
+    }
   }
 
   @media (min-width: 1024px) {

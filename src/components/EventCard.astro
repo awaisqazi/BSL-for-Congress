@@ -4,9 +4,10 @@
 // Used by ShowUp (home), the /events page and the volunteer ThisWeek strip.
 // Both languages ship in the DOM (data-lang); i18n.js shows the current one.
 // data-expires lets the page scripts take it down the morning after.
-import { stamp, timeRange, pick, actionHref, mapHref, startDate, icsPath } from '../data/events.js';
+import { stamp, timeRange, pick, actionHref, mapHref, startDate, icsPath, hostOf, typeOf, searchText } from '../data/events.js';
 import GuardSlot from './GuardSlot.astro';
 import { enabled as guardOn } from '../scripts/guard.js';
+import { FORM, FIELDS } from './rsvp/form-options.js';
 
 interface Props {
   event: any;
@@ -26,13 +27,26 @@ const external = /^https?:\/\//.test(href);
 const map = mapHref(e);
 const Tag = tag;
 const s = { en: stamp(e, 'en'), es: stamp(e, 'es') };
-// "I'm coming" mini-form: only when the campaign database is configured at
-// build time AND the event has no outside RSVP page. Otherwise the button
-// stays a plain link (rsvp page, or the sign-up form as the fallback).
-const supaOn = Boolean(import.meta.env.PUBLIC_SUPABASE_URL && import.meta.env.PUBLIC_SUPABASE_ANON_KEY);
-const inlineRsvp = supaOn && !e.rsvp;
-const rid = `rsvp-${e.id}-${Math.random().toString(36).slice(2, 7)}`;
 const t = { en: timeRange(e, 'en'), es: timeRange(e, 'es') };
+// "I'm coming" mini-form on every dated shift with no outside RSVP page. It
+// feeds the event sign-up Google Form (src/components/rsvp/form-options.js),
+// the intake of record: through the forms gateway Worker when the bot check
+// is on (no formResponse URL in the page), else a direct post into a hidden
+// iframe. The Supabase row (rsvp() in supa.js) is a fire-and-forget copy.
+const inlineRsvp = !e.rsvp;
+const rid = `rsvp-${e.id}-${Math.random().toString(36).slice(2, 7)}`;
+// What staff read in the sheet, always English: "Title, Place [id]" and
+// "Sat Dec 5, 2026, 12 to 3 PM".
+const eventLabel = `${[e.title.en, pick(e.location, 'en')].filter(Boolean).join(', ')} [${e.id}]`;
+const dateLabel = [`${s.en.weekday} ${s.en.day}, ${startDate(e).slice(0, 4)}`, t.en].filter(Boolean).join(', ');
+// /volunteer list only (the `calendar` prop): what its Type / Hosted by
+// chips and search box match against (MiniCalendar.astro).
+const filterAttrs = calendar
+  ? { 'data-filter-id': e.id, 'data-type': typeOf(e), 'data-host': hostOf(e) || '', 'data-search': searchText(e) }
+  : {};
+const formAttrs = guardOn
+  ? { 'data-guard': 'rsvp' }
+  : { action: FORM.formResponse, method: 'POST', 'accept-charset': 'UTF-8' };
 ---
 
 <Tag
@@ -42,6 +56,7 @@ const t = { en: timeRange(e, 'en'), es: timeRange(e, 'es') };
   data-date={startDate(e)}
   data-event-id={e.id}
   data-slate={e.slate ? '' : undefined}
+  {...filterAttrs}
   hidden={hidden ? true : undefined}
 >
   <div class="ev-top">
@@ -105,30 +120,32 @@ const t = { en: timeRange(e, 'en'), es: timeRange(e, 'es') };
         >
           <span data-lang="en">{e.action.en}</span><span data-lang="es" hidden>{e.action.es}</span>
         </button>
-        <form class="ev-rsvp" id={rid} data-ev-rsvp={e.id} data-guard={guardOn ? 'rsvp' : undefined} hidden novalidate>
+        <form class="ev-rsvp" id={rid} data-ev-rsvp={e.id} {...formAttrs} hidden novalidate>
+          <input type="hidden" name={FIELDS.event} value={eventLabel} />
+          <input type="hidden" name={FIELDS.date} value={dateLabel} />
           <label class="ev-rsvp-field">
             <span data-i18n="events.rsvp_name">Your name</span>
-            <input type="text" name="name" autocomplete="name" maxlength="120" required />
+            <input type="text" name={FIELDS.name} data-rsvp-key="name" autocomplete="name" maxlength="120" required />
           </label>
           <div class="ev-rsvp-row">
             <label class="ev-rsvp-field">
               <span data-i18n="events.rsvp_email">Email</span>
-              <input type="email" name="email" autocomplete="email" maxlength="254" />
+              <input type="email" name={FIELDS.email} data-rsvp-key="email" autocomplete="email" maxlength="254" />
             </label>
             <label class="ev-rsvp-field">
               <span data-i18n="events.rsvp_phone">Mobile phone</span>
-              <input type="tel" name="phone" autocomplete="tel" maxlength="20" />
+              <input type="tel" name={FIELDS.phone} data-rsvp-key="phone" autocomplete="tel" maxlength="20" />
             </label>
           </div>
           <p class="ev-rsvp-hint" data-i18n="events.rsvp_contact_hint">Email or phone, one is enough.</p>
           <div class="ev-rsvp-row">
             <label class="ev-rsvp-field">
               <span data-i18n="events.rsvp_zip">ZIP code</span>
-              <input type="text" name="zip" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" autocomplete="postal-code" />
+              <input type="text" name={FIELDS.zip} data-rsvp-key="zip" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" autocomplete="postal-code" />
             </label>
             <label class="ev-rsvp-field">
               <span data-i18n="events.rsvp_bringing">Bringing anyone?</span>
-              <select name="bringing">
+              <select name={FIELDS.bringing} data-rsvp-key="bringing">
                 <option value="0" data-i18n="events.rsvp_just_me">Just me</option>
                 <option value="1">+1</option>
                 <option value="2">+2</option>
@@ -138,7 +155,7 @@ const t = { en: timeRange(e, 'en'), es: timeRange(e, 'es') };
               </select>
             </label>
           </div>
-          <div class="ev-rsvp-trap" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off" /></div>
+          <div class="ev-rsvp-trap" aria-hidden="true"><input type="text" data-ev-hp tabindex="-1" autocomplete="off" /></div>
           <p class="ev-rsvp-error" role="alert" hidden data-i18n="events.rsvp_need_contact">Add your name and an email or phone.</p>
           <p class="ev-rsvp-consent" data-i18n="events.rsvp_consent">By sharing a phone number you agree to receive event reminders by text from Friends of Byron Sigcho Lopez. Message and data rates may apply. Text STOP to opt out.</p>
           <GuardSlot /><button type="submit" class="btn btn-orange ev-btn ev-rsvp-submit" data-i18n="events.rsvp_submit">I'm coming</button>
@@ -173,7 +190,8 @@ const t = { en: timeRange(e, 'en'), es: timeRange(e, 'es') };
   import { enabled as guardOn, prime, send } from '../scripts/guard.js';
 
   // Bot check on: several cards can share a page, so the one widget renders
-  // on demand in the card being filled in (first focus inside its form).
+  // on demand in the card being filled in (when its form opens, and again on
+  // focus inside it, so the widget follows the card in use).
   if (guardOn) {
     document.addEventListener('focusin', (ev) => {
       const form = (ev.target as HTMLElement).closest?.<HTMLFormElement>('form[data-ev-rsvp]');
@@ -181,46 +199,119 @@ const t = { en: timeRange(e, 'en'), es: timeRange(e, 'es') };
     });
   }
 
+  // Contact details from this page's last sign-up, so a second card takes one
+  // tap. In memory only: gone on reload, never written to the browser.
+  const KEYS = ['name', 'phone', 'email', 'zip'];
+  let last: Record<string, string> | null = null;
+  const input = (form: HTMLFormElement, key: string) =>
+    form.querySelector<HTMLInputElement | HTMLSelectElement>(`[data-rsvp-key="${key}"]`);
+
+  // Bot check off: the form posts straight to Google into one hidden iframe
+  // shared by every card on the page (Google's answer lands there, the page
+  // stays put).
+  const IFRAME = 'hidden_iframe_rsvp';
+  const ensureIframe = () => {
+    if (document.querySelector(`iframe[name="${IFRAME}"]`)) return;
+    const f = document.createElement('iframe');
+    f.name = IFRAME;
+    f.title = '';
+    f.tabIndex = -1;
+    f.setAttribute('aria-hidden', 'true');
+    f.style.display = 'none';
+    document.body.appendChild(f);
+  };
+
   // One delegated listener per page, whichever section the card sits in.
   document.addEventListener('click', (ev) => {
     const btn = (ev.target as HTMLElement).closest<HTMLButtonElement>('[data-ev-rsvp-open]');
     if (!btn) return;
     const form = document.getElementById(btn.getAttribute('aria-controls') || '') as HTMLFormElement | null;
     if (!form) return;
+    if (!guardOn) ensureIframe();
+    if (last) {
+      for (const k of KEYS) {
+        const el = input(form, k);
+        if (el && !el.value && last[k]) el.value = last[k];
+      }
+    }
     form.hidden = false;
     btn.setAttribute('aria-expanded', 'true');
     btn.hidden = true;
-    form.querySelector<HTMLInputElement>('input[name="name"]')?.focus();
+    // Show the check as soon as the form opens (focus may not fire focusin,
+    // e.g. when the window is in the background); it then moves with focus.
+    if (guardOn) prime(form);
+    const name = input(form, 'name');
+    (name && name.value ? form.querySelector<HTMLButtonElement>('.ev-rsvp-submit') : name)?.focus();
   });
 
   document.addEventListener('submit', async (ev) => {
     const form = ev.target as HTMLFormElement;
     if (!form.matches?.('form[data-ev-rsvp]')) return;
-    ev.preventDefault();
     const box = form.closest('.ev-actions');
     const err = form.querySelector<HTMLElement>('.ev-rsvp-error');
-    const val = (n: string) => (form.elements.namedItem(n) as HTMLInputElement | null)?.value.trim() || '';
-    const email = form.elements.namedItem('email') as HTMLInputElement;
-    const zip = form.elements.namedItem('zip') as HTMLInputElement;
-    const ok = val('name') && (val('email') || val('phone')) && email.checkValidity() && zip.checkValidity();
+    const fail = box?.querySelector<HTMLElement>('.ev-rsvp-fail');
+    const val = (k: string) => input(form, k)?.value.trim() || '';
+    const email = input(form, 'email') as HTMLInputElement | null;
+    const zip = input(form, 'zip') as HTMLInputElement | null;
+    const ok = val('name') && (val('email') || val('phone')) && email?.checkValidity() && zip?.checkValidity();
     if (!ok) {
+      ev.preventDefault();
       if (err) err.hidden = false;
       return;
     }
     if (err) err.hidden = true;
-    const submit = form.querySelector<HTMLButtonElement>('.ev-rsvp-submit');
+    const honeypot = Boolean(form.querySelector<HTMLInputElement>('[data-ev-hp]')?.value);
+
+    // Exactly what Google gets: the named fields, minus empty optional ones.
+    const fields = [...new FormData(form)].filter(
+      ([k, v]) => typeof v === 'string' && v.trim() !== '' && k !== 'cf-turnstile-response',
+    ) as [string, string][];
+    // The database copy uses its own column names.
+    const copy = new FormData();
+    KEYS.concat('bringing').forEach((k) => copy.set(k, val(k)));
+    if (honeypot) copy.set('website', '1');
+
+    const done = () => {
+      last = Object.fromEntries(KEYS.map((k) => [k, val(k)]));
+      // Fire and forget: never awaited, never changes what the visitor sees.
+      rsvp(form.dataset.evRsvp || '', copy);
+      form.hidden = true;
+      if (fail) fail.hidden = true;
+      const out = box?.querySelector<HTMLElement>('.ev-rsvp-done');
+      if (out) out.hidden = false;
+    };
+
     if (guardOn) {
-      // The Worker only checks the token here (no Google Form); the database
-      // row is written below once it says ok. No personal fields are sent.
-      if (form.dataset.guardBusy === '1') return;
-      const g = await send(form, 'rsvp', { honeypot: Boolean(val('website')), fields: [] });
-      if (!g.ok) return;
+      // The Worker checks the token and posts to the Google Form. Success
+      // waits for its answer; on failure the slot shows why and the sign-up
+      // form link stays as the way through.
+      ev.preventDefault();
+      const g = await send(form, 'rsvp', { honeypot, fields });
+      if (g.reason === 'busy') return;
+      if (!g.ok) {
+        if (fail) fail.hidden = false;
+        return;
+      }
+      done();
+      return;
     }
-    if (submit) submit.disabled = true;
-    const res = await rsvp(form.dataset.evRsvp || '', form);
-    form.hidden = true;
-    const out = box?.querySelector<HTMLElement>(res.ok ? '.ev-rsvp-done' : '.ev-rsvp-fail');
-    if (out) out.hidden = false;
+
+    // Bot check off: a bot that filled the trap gets the thank-you, no post.
+    if (honeypot) {
+      ev.preventDefault();
+      done();
+      return;
+    }
+    // Native post into the hidden iframe. Empty optional inputs are disabled
+    // for this one post so they are not sent, then come back on.
+    ensureIframe();
+    form.target = IFRAME;
+    const empty = [...form.querySelectorAll<HTMLInputElement>('input[name]')].filter((i) => i.value.trim() === '');
+    empty.forEach((i) => (i.disabled = true));
+    setTimeout(() => {
+      empty.forEach((i) => (i.disabled = false));
+      done();
+    }, 500);
   });
 </script>
 

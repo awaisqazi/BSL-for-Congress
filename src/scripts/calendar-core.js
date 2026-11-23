@@ -80,7 +80,7 @@ export function buildIndex(data, today = todayISO()) {
       put(d, { ...w, weekly: true });
     }
   }
-  put(data.last, { k: 'runoff' });
+  put(data.last, { k: 'runoff', id: 'runoff' });
   byDay.forEach((items) => items.sort((a, b) => Number(!!a.weekly) - Number(!!b.weekly)));
   return byDay;
 }

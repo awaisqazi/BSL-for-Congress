@@ -397,7 +397,7 @@ The site's job is to turn a reader into a body on a shift, so the next place to 
 
 ### The card: `EventCard.astro`
 
-One dated shift as a taped paper flyer: a dashed date stamp (weekday over month and day), a Today / Tomorrow / In N days chip (filled in the browser, only within 14 days), the time, a blue placard title (orange for meetups), the place with the address linked to a map, the one-line from the data, the host, then **one** orange pill button: "RSVP" / "Confirmar asistencia" to the Action Network page, or "Tell us you're coming" / "Avísanos que vienes" to the sign-up form when there is no RSVP page. Never a second competing button; the optional "Add to calendar" is a quiet text link under it (on /volunteer only, via the `calendar` prop). The button is full width, at least 48 px tall (52 px min-height), and the first card's button carries the `pulse-glow` breathing. Event copy ships in both languages with `data-lang` wrappers; short labels go through `events.*` keys.
+One dated shift as a taped paper flyer: a dashed date stamp (weekday over month and day), a Today / Tomorrow / In N days chip (filled in the browser, only within 14 days), the time, a blue placard title (orange for meetups), the place with the address linked to a map, the one-line from the data, the host, then **one** orange pill button: "RSVP" / "Confirmar asistencia" to the Action Network page, or, when there is no RSVP page, the event's own label ("Tell us you're coming" / "Avísanos que vienes", "Sign up" / "Apúntate" for our canvasses), which opens the card's own "I'm coming" form in place (see [Event sign-ups](#event-sign-ups-eventcardastro-on-every-no-rsvp-card)). Never a second competing button; the optional "Add to calendar" is a quiet text link under it (on /volunteer only, via the `calendar` prop). The button is full width, at least 48 px tall (52 px min-height), and the first card's button carries the `pulse-glow` breathing. Event copy ships in both languages with `data-lang` wrappers; short labels go through `events.*` keys.
 
 ### Expiry between deploys
 
@@ -418,7 +418,7 @@ Placed directly after the Hero, before ThePromise. Label "Show Up" / "Preséntat
 
 1. **VolunteerHero**: badge, headline, one line (`volunteer.hero_sub`). No CTA pill and a short height, so the first card shows sooner.
 2. **Show Up** (`<ShowUp full />`, `#show-up`): label "Show Up" / "Preséntate", headline `events.page_headline`, then:
-   - **The calendar and the shift list, first** (`[data-cal-layout]`): "Plan your month" (`#calendar`, `MiniCalendar.astro`) beside the list it filters (`#this-week`). From 1024 px: two columns, calendar about 40 percent on the left and sticky under the nav (only when the screen is at least 800 px tall, so the card always fits), list on the right (one column of cards, two from 1280 px). Below 1024 px the calendar stacks above the list. Every upcoming dated shift is rendered once at build time as an EventCard (with "Add to calendar"; no-RSVP buttons go to `#signup`); the calendar script shows only the picked day or week. See below.
+   - **The calendar and the shift list, first** (`[data-cal-layout]`): "Plan your month" (`#calendar`, `MiniCalendar.astro`) beside the list it filters (`#this-week`). From 1024 px: two columns, calendar about 40 percent on the left and sticky under the nav (only when the screen is at least 800 px tall, so the card always fits), list on the right (one column of cards, two from 1280 px). Below 1024 px the calendar stacks above the list. Every upcoming dated shift is rendered once at build time as an EventCard (with "Add to calendar"; no-RSVP buttons open the card's own sign-up form); the calendar script shows only the picked day or week. See below.
    - **Every Week** (`#every-week`): the two recurring entries as white taped cards.
    - **Dates That Matter** (`#dates`): the deadlines as a ruled ledger with "Add to calendar" per row and the Board of Elections receipt. This replaces the NextUp ledger on /volunteer (NextUp stays on the home page).
    - **Canvass team card** (`#canvass-team`, blue-deeper) with the Google Form button.
@@ -433,11 +433,21 @@ A taped, ruled card with the placard "Plan Your Month" / "Planea Tu Mes", first 
 
 - Month grid, Sunday first, prev/next arrows (from the current month to April 2027), today with a dashed orange outline, days outside the month dimmed. The picked day is filled brand blue (`--blue-deeper`) with cream text; a picked week is a pale blue band across its row.
 - Dots: orange for canvasses and meetups (including the Sunday canvasses), blue for Ward Night, cream with an orange ring (outlined) for Board deadlines and the election. Multi-day windows mark every day. Weekly shifts are expanded in the browser from today through Election Day, except on a day that already has a dated shift of the same kind (Sun Oct 18 has the dated petition canvass, so it shows one orange dot, not two; same for a dated `wardnight` on a Tuesday). The rule lives in `buildIndex()`, so the dots, the aria counts, the "next up" rows and the list all agree; April 6, 2027 carries a runoff marker only (`events.cal_runoff_*`). Expired dated shifts drop off.
-- Week selector: a row of dashed stamp chips above the grid, "This week", "Next week", "All upcoming", plus "Whole week" that appears once a day is picked and widens the pick to that day's Sunday to Saturday week. Chosen over a clickable left gutter on the grid rows because the chips keep 44 px targets on a 390 px phone and say what they do. The active chip is filled brand blue.
-- The list (`#this-week`, in ShowUp.astro): every upcoming EventCard plus one ruled ledger line per deadline (and the runoff), all rendered at build time, plus the two weekly cards in a `<template>`. The script prunes expired cards (`pruneList`), then shows only the selection: a day shows that day's dated shifts, the weekly card if it is a Tuesday or Sunday and no dated shift of the same kind is on that day, and a ledger line with "Add to calendar" when a Board date covers it; a week shows the same grouped under day headings; "All upcoming" shows every dated shift under day headings plus a pointer to Every Week. The heading names the selection ("Sunday, October 18", "Week of October 18", "Every upcoming shift") with a shift count. The old day panel is gone; nothing renders twice.
-- Empty state: "No shifts that day. Try the next dot." (`events.cal_empty`, week: `cal_empty_week`) with a "Next day with a shift" button that picks the next day that has one.
+- Week selector: a row of dashed stamp chips above the grid, "This week", "Next week", "All upcoming", plus "Whole week" that appears once a day is picked and widens the pick to that day's Sunday to Saturday week, and "Whole month" (`events.cal_whole_month`) that appears with a day or week picked and shows the month on the grid. Chosen over a clickable left gutter on the grid rows because the chips keep 44 px targets on a 390 px phone and say what they do. The active chip is filled brand blue.
+- Month selection: the grid's previous and next arrows now switch the list too, to that whole month (`{ mode: 'month' }`, hash `#month-YYYY-MM`, title "December 2026" / "Diciembre de 2026", day headings like the week view, weekly cards cloned onto each Tuesday and Sunday).
+- The list (`#this-week`, in ShowUp.astro): every upcoming EventCard plus one ruled ledger line per deadline (and the runoff), all rendered at build time, plus the two weekly cards in a `<template>`. The script prunes expired cards (`pruneList`), then shows only the selection: a day shows that day's dated shifts, the weekly card if it is a Tuesday or Sunday and no dated shift of the same kind is on that day, and a ledger line with "Add to calendar" when a Board date covers it; a week or a month shows the same grouped under day headings; "All upcoming" shows every dated shift and every upcoming Board date under day headings, with a blue month band (`.cal-monthhead`) before each month's first day. The heading names the selection ("Sunday, October 18", "Week of October 18", "December 2026", "Every upcoming shift") with a shift count. The old day panel is gone; nothing renders twice. Cards are put in order with as few DOM moves as possible (`place()`), so an open sign-up form keeps its Turnstile widget through a re-render.
+- **Keep going footer** (`[data-cal-more]`, always at the bottom of the list): an orange button to the next period that has shifts, with its count ("Next: week of November 29, 5 shifts", "Next: December, 15 shifts", "Next: Saturday, December 5, 2 shifts"; `events.cal_more_week` / `cal_more_month` / `cal_more_day`), skipping empty periods, plus "See everything coming up (N)" (`cal_more_all`) that switches to All upcoming. When nothing later is posted it says so (`cal_end`) and points at Every Week (`cal_weekly_note`). After either button the page scrolls to the top of the list and focus moves to the list title (`tabindex="-1"`).
+- **Search and filters** (`[data-calf]`, above the list, shown once the script runs; styles in ShowUp.astro, prefix `calf-`):
+  - A labelled search box (`events.cal_search_*`, the /news search look). Matching ignores case, accents and punctuation, every word must match, a number must equal a word ("5" finds Dec 5, not 15) and other words match the start of a word. Each card, ledger line and weekly card carries `data-search`, written at build time by `searchText()` in `src/data/events.js`: title, line, place, address, sponsor, host and type labels and the date words (weekday, month, short forms, day, year) in both languages, folded by `src/scripts/search-norm.js` (shared with the browser), so "sabado", "dic 5", "dec 5", "cermak", "ward night" and "dsa" all work whatever the page language. While there is search text the list searches every upcoming shift and Board date and the title says `Results for "cermak"` (`cal_results`); clearing the box (× or Escape) returns to the previous selection.
+  - Two chip groups in the mcal-chip stamp look: **Type** (Canvasses, Ward Night, Events, Election dates: `canvass`, `wardnight`, `meetup`, `dates` = deadlines, the election and the runoff) and **Hosted by** (Byron's campaign, 25th Ward office, Socialist Slate and DSA, Community partners: `campaign`, `ward`, `dsa`, `partner`, from `hostOf()` in events.js, see EVENTS-README.md). OR inside a group, AND across groups and with the search. A chip with nothing upcoming behind it is hidden. Buttons with `aria-pressed`.
+  - Filters apply to whatever range is picked, to the cloned weekly cards (Ward Night = `wardnight` / `ward`, Sunday canvasses = `canvass` / `dsa`) and to the ledger lines. The grid follows: while anything is active it is drawn from a filtered day index, so a day with nothing matching has no dot, and the "next" buttons and counts skip to days with a match (counted as matches, not shifts, while a filter is on).
+  - A status line under the chips: "3 matches" (`cal_match_*`, `aria-live`) and "Clear filters" whenever anything is active. Empty state with filters: "Nothing matches these filters." (`cal_no_match`), "Next day with a match" when there is one, and "Clear filters".
+  - Phones (under 768 px): the two chip groups fold behind one "Filter" button (`aria-expanded`) with an orange badge counting active chips; the search box stays open. A shared link with filters opens it.
+  - URL: the selection keeps its hash and the filters ride as query parameters, `?type=canvass,meetup&host=campaign&q=cermak`, written with `replaceState` and read back on load. `#signup`, `#show-up`, `#map`, `#calendar` and `#this-week` are untouched.
+  - Ids: the calendar payload (`calendar-data.js`) carries each entry's `id` (the runoff marker is `runoff`) so a grid dot is matched to its card's filter record.
+- Empty state: "No shifts that day. Try the next dot." (`events.cal_empty`, week: `cal_empty_week`, month: `cal_empty_month`) with a "Next day with a shift" button that picks the next day that has one.
 - Default on load: this week (Sunday to Saturday) if a shift is still ahead in it, else the week of the next shift, else All upcoming.
-- URL: picking writes `#cal-YYYY-MM-DD`, `#week-YYYY-MM-DD` (the Sunday; any day of the week is normalized) or `#cal-all` with replaceState. Opening such a link (or a hashchange from the nav) applies it and scrolls: to the two-column block from 1024 px, straight to the list below that. `#calendar`, `#this-week` and `#show-up` load the default.
+- URL: picking writes `#cal-YYYY-MM-DD`, `#week-YYYY-MM-DD` (the Sunday; any day of the week is normalized), `#month-YYYY-MM` or `#cal-all` with replaceState, keeping any `?type=` / `?host=` / `?q=`. Opening such a link (or a hashchange from the nav) applies it and scrolls: to the two-column block from 1024 px, straight to the list below that. `#calendar`, `#this-week` and `#show-up` load the default.
 - Stacked layouts (under 1024 px) add a blue strip under the grid ("Sunday, October 18: 2 shifts, See the shifts") that scrolls to the list without touching the hash.
 - Days are buttons with aria-labels like "October 18, 2 events" and `aria-pressed`; roving tabindex; arrow keys move a day or a week, Home/End jump to the week's ends.
 - Under it: "Subscribe to all dates" (`webcal://` to the feed), a one-line hint, a Google Calendar subscribe link, and "Add all upcoming" (download of `/events/all.ics`; Spanish uses `all-es.ics`).
@@ -909,6 +919,38 @@ console.log(JSON.stringify(out, null, 2));" path/to/canvass-form.json
 
 Layout: at 720 px and up, one grid with days as rows and slots as columns; tapping a day name toggles the row, tapping a column head toggles that slot all week. Below 720 px the column heads hide and each day stacks (3 by 2 slots, 2 by 3 below 480 px). The day names, column heads and Other inputs are written out in the markup so the parity grep sees every `canvass.*` key.
 
+#### Event sign-ups: `EventCard.astro` on every no-RSVP card
+
+Every dated shift with `"rsvp": null` in events.json gets an "I'm coming" mini-form on its card (home Show Up cards and the /volunteer list alike), with or without Supabase. The card's button opens it in place. Every response lands in the event sign-up Google Form's sheet, the intake of record (same Google account as the Lobby Day form). Outside links to a no-RSVP shift reach that card: the calendar payload ([calendar-data.js](src/data/calendar-data.js): nav popover, drawer, /links, "next up" rows) and the Shift Map popups point at `/volunteer/#cal-YYYY-MM-DD`, the day the card is listed on. `#signup` is only the fallback link in the card's failure line.
+
+| Property | Value |
+|---|---|
+| **Form ID** | `1FAIpQLSf4yKsLO6OZM1fDQJ8JwKkGxTX9NTuKbtIErtIAAhd-LFQF5w` |
+| **Hidden iframe** | `hidden_iframe_rsvp`, one per page, created by the card script on first use (bot check off only) |
+| **Worker form name** | `rsvp` (`cloudflare/forms-gateway/src/index.js`) |
+| **i18n keys** | `events.rsvp_*` |
+| **Database copy** | `rsvp()` in `src/scripts/supa.js`: `event_rsvps` row (event id, name, email, phone, zip, bringing), fire-and-forget after the Google path succeeds; never awaited, no-op when Supabase is unset or paused, 409 (already RSVPed) counts as fine |
+
+Fields, read from [src/components/rsvp/form-options.js](src/components/rsvp/form-options.js) (copied by script from the form's public `FB_PUBLIC_LOAD_DATA_`, never typed by hand), seven short answers in form order. Google requires only the name; the page requires name plus an email or a phone, a valid email shape and a 5-digit ZIP if given.
+
+| Field | `name` | Worker cap | What the site sends |
+|---|---|---|---|
+| Name | `entry.783290040` | 120 | what they typed |
+| Mobile phone | `entry.1595512013` | 40 | what they typed |
+| Email | `entry.1391027563` | 254 | what they typed |
+| ZIP | `entry.1004175083` | 10 | what they typed |
+| Event | `entry.26680022` | 200 | built at build time, English: `Title, Place [event-id]`, e.g. `Canvass: Phase 2 Launch, 25th Ward IPO office [canvass-2026-12-05-phase-2-launch]` |
+| Date | `entry.959474185` | 40 | English, from `stamp()` and `timeRange()`: `Sat Dec 5, 2026, 12 to 3 PM` |
+| Bringing | `entry.1855129845` | 4 | the select, `0` to `5` |
+
+Empty optional fields are never posted (bot check on: filtered out of the pairs; off: disabled for the one post). The honeypot is a nameless input (`data-ev-hp`), so it never reaches Google: with the bot check on it goes as `hp` (the Worker thanks and drops); off, a filled trap shows the thank-you and posts nothing. Both paths flag the database copy.
+
+Bot check on: the form has no `action` and the formResponse URL is not in the page; the GuardSlot under the fields shows the Turnstile widget in whichever card was focused last (one widget per page, it moves with focus) and the card waits for the Worker's `ok` before showing `events.rsvp_success`. On a failure the slot says why and the card adds `events.rsvp_fail` with the link to `#signup`; the form stays filled for a retry. Bot check off: the form posts natively into the hidden iframe and shows the success line after 500 ms, like the other forms.
+
+After a sign-up, name, phone, email and ZIP prefill the other cards' forms on the same page (an in-memory variable only, gone on reload; nothing goes to localStorage, sessionStorage or cookies), so several canvass dates take one tap each.
+
+To regenerate `form-options.js` after the Google Form changes: extract `FB_PUBLIC_LOAD_DATA_` into `{ viewform, formResponse, questions: [{ key, googleTitle, type, entry, required }] }` (seven short answers in the order above), write the values over the file mechanically, and update the Worker's `rsvp` entry and this table in the same change.
+
 ### 2. RaiseMore Iframe — Footer & Links Page
 
 A pre-built signup form from RaiseMore, embedded as an `<iframe>` inside the clipboard component. **Not a Google Form.**
@@ -928,6 +970,7 @@ To swap, change the `src` attribute on both iframes (Footer + Links). The clipbo
 | Petition Blitz Modal | Google Form | `PetitionModal.astro` | All pages (global, modal) |
 | Volunteer Signup | Google Form | `volunteer/SignupForm.astro` | `/volunteer` only |
 | Canvass Team | Google Form | `canvass/TeamForm.astro` | `/canvass/` |
+| Event sign-ups ("I'm coming") | Google Form | `EventCard.astro` (`rsvp/form-options.js`) | Every no-RSVP card: home Show Up, `/volunteer` |
 | Newsletter / Volunteer Sign-Up | RaiseMore iframe | `Footer.astro` + `links.astro` | Every page footer + `/links` |
 
 ---
@@ -1115,6 +1158,7 @@ Five icons, in the order of this table (Instagram, Facebook, TikTok, YouTube, X)
 | RaiseMore signup form | `https://www.raisemore.app/forms/signup/org_3CzwGfMfnK1106k0fBTvwYbnDKI?horizontal=false` | Footer + Links clipboards |
 | Google Form (Petition) | ID `1FAIpQLSeYiVz1TB2tsAFdh1OakH62dM7XGCNBnaJz57Mn1beP0dqE6A` | PetitionModal |
 | Google Form (Volunteer) | ID `1FAIpQLSeUKnQVp4auTqHdFZeDrGlAOYAjmOO0sE19Xm11Pee2ayuuWQ` | volunteer/SignupForm |
+| Google Form (Event sign-ups) | ID `1FAIpQLSf4yKsLO6OZM1fDQJ8JwKkGxTX9NTuKbtIErtIAAhd-LFQF5w` | EventCard "I'm coming" form (`rsvp/form-options.js`, Worker `rsvp`) |
 | Hero / links video | Self-hosted `public/video/hero-loop.mp4`, `hero-sound.mp4`, `hero-poster.jpg` | Hero (muted loop + sound toggle) + Links page (sound copy) |
 | Supabase | Project `byronfor25` (ref `rsxddnoymkebahumcfnc`), region `us-east-2` | Form dual-writes (`src/scripts/supa.js`) and the Admin desk; see [Backend](#backend-supabase-and-the-admin-desk) |
 | supabase-js (CDN) | `https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js`, pinned with an SRI hash | `/admin/` only. The only external script on the site |

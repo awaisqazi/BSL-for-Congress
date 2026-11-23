@@ -2,10 +2,18 @@
 // dates, times and calendar files in both languages. A bad entry fails the
 // build on purpose. Schema and rules: src/data/EVENTS-README.md.
 import raw from './events.json';
+import en from '../i18n/en.json';
+import es from '../i18n/es.json';
+import { norm } from '../scripts/search-norm.js';
 
 export const KINDS = ['canvass', 'wardnight', 'meetup', 'deadline', 'election'];
 // Kinds a neighbor shows up to (cards); the rest are dates on the ledger.
 export const SHOWUP_KINDS = ['canvass', 'wardnight', 'meetup'];
+// Who hosts a shift, for the /volunteer "Hosted by" filter. Derived by
+// hostOf(); an entry may set "host" to one of these to override it.
+export const HOSTS = ['campaign', 'ward', 'dsa', 'partner'];
+// The "Type" filter: the shift kinds, plus "dates" for deadlines and the election.
+export const TYPES = ['canvass', 'wardnight', 'meetup', 'dates'];
 
 const MONTHS = {
   en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -52,6 +60,8 @@ function validate(list) {
     if (!bilingual(e.action)) errors.push(`${at}: action needs en and es`);
     if (!labelOk(e.location)) errors.push(`${at}: location is required`);
     if (!url(e.source)) errors.push(`${at}: every entry needs a source URL`);
+    if ('host' in e && e.host !== null && !HOSTS.includes(e.host)) errors.push(`${at}: host must be one of ${HOSTS.join(', ')} (or leave it out)`);
+    if (e.host && !SHOWUP_KINDS.includes(e.kind)) errors.push(`${at}: host is only for shifts (canvass, wardnight, meetup)`);
     if ('slate' in e && typeof e.slate !== 'boolean') errors.push(`${at}: slate must be true or false`);
     if ('geo' in e && !(e.geo && Math.abs(e.geo.lat - 41.85) < 1 && Math.abs(e.geo.lng + 87.68) < 1)) errors.push(`${at}: geo must be {lat, lng} near Chicago (run node ops/geocode-events.mjs)`);
     if (e.recurring) {
@@ -272,3 +282,63 @@ export function icsFeed(lang, site = 'https://sigchofor25.com', today = todayChi
 
 export const icsPath = (e, lang) => `/events/${e.id}${lang === 'es' ? '-es' : ''}.ics`;
 export const feedPath = (lang) => `/events/all${lang === 'es' ? '-es' : ''}.ics`;
+
+// ---------- Filters and search on /volunteer ----------
+
+// Host group of a shift; null for deadlines and the election. Order matters:
+// an explicit "host" wins, then Ward Night or the 25th Ward Office as a
+// sponsor, then the Socialist Slate or a DSA sponsor, then no sponsor (our
+// own canvasses and meetups), then any other named sponsor.
+export function hostOf(e) {
+  if (!SHOWUP_KINDS.includes(e.kind)) return null;
+  if (e.host) return e.host;
+  const sp = typeof e.sponsor === 'string' ? e.sponsor : '';
+  if (e.kind === 'wardnight' || /25th Ward Office/i.test(sp)) return 'ward';
+  if (e.slate || /\bDSA\b/.test(sp)) return 'dsa';
+  if (!sp) return 'campaign';
+  return 'partner';
+}
+
+export const typeOf = (e) => (SHOWUP_KINDS.includes(e.kind) ? e.kind : 'dates');
+
+const I18N = { en: en.events, es: es.events };
+const label = (key) => [I18N.en[key], I18N.es[key]];
+
+// Date words in both languages: weekday (long and short), month (long and
+// short), day number and year, so "sabado", "dic 5" and "Dec 5" all match.
+function dateWords(iso) {
+  const [y, m, d] = parts(iso);
+  const w = weekdayIndex(iso);
+  return [WEEKDAYS.en[w], WEEKDAYS.es[w], WEEKDAYS.en[w].slice(0, 3), WEEKDAYS.es[w].slice(0, 3),
+    MONTHS.en[m - 1], MONTHS.es[m - 1], SHORT.en[m - 1], SHORT.es[m - 1], String(d), String(y)];
+}
+
+// Weekday words only, for a weekly shift (every Tuesday, every Sunday).
+export function weekdayWords(dow) {
+  return [WEEKDAYS.en[dow], WEEKDAYS.es[dow], WEEKDAYS.en[dow].slice(0, 3), WEEKDAYS.es[dow].slice(0, 3)];
+}
+
+// The folded search text for one entry (both languages, whatever the page
+// language): title, line, place, address, sponsor, host and type labels and
+// the date words. The browser only folds the query (src/scripts/search-norm.js).
+export function searchText(e, extra = []) {
+  const host = hostOf(e);
+  const type = typeOf(e);
+  const days = [];
+  if (!e.recurring) {
+    const from = split(e.start).date;
+    const to = e.end ? split(e.end).date : from;
+    days.push(...dateWords(from));
+    if (to !== from) days.push(...dateWords(to));
+  }
+  return norm([
+    pick(e.title, 'en'), pick(e.title, 'es'), pick(e.line, 'en'), pick(e.line, 'es'),
+    pick(e.location, 'en'), pick(e.location, 'es'), e.address, e.sponsor,
+    e.recurring ? [pick(e.when, 'en'), pick(e.when, 'es')] : [],
+    host ? label(`cal_host_${host}`) : [], label(`cal_type_${type}`),
+    days, extra,
+  ].flat(2).filter(Boolean).join(' '));
+}
+
+// Search text for a date with no entry (the runoff line).
+export const dateSearch = (iso, ...text) => norm([...dateWords(iso), ...text, ...label('cal_type_dates')].join(' '));
