@@ -283,6 +283,84 @@ export function icsFeed(lang, site = 'https://sigchofor25.com', today = todayChi
 export const icsPath = (e, lang) => `/events/${e.id}${lang === 'es' ? '-es' : ''}.ics`;
 export const feedPath = (lang) => `/events/all${lang === 'es' ? '-es' : ''}.ics`;
 
+// Long date: "Saturday, December 5, 2026" / "sábado 5 de diciembre de 2026"
+export function dateLong(e, lang) {
+  const iso = startDate(e);
+  const [y, m, d] = parts(iso);
+  const w = WEEKDAYS[lang][weekdayIndex(iso)];
+  return lang === 'es' ? `${w} ${d} de ${MONTHS.es[m - 1]} de ${y}` : `${w}, ${MONTHS.en[m - 1]} ${d}, ${y}`;
+}
+
+// The end a Google Calendar link uses: the entry's own end, or start plus 2
+// hours for a timed entry without one (assumed true then). Date-only entries
+// are all-day. Returns { dates, endAssumed }.
+function gcalWindow(e) {
+  if (DATE_RE.test(e.start)) {
+    const last = e.end && DATE_RE.test(e.end) ? e.end : e.start;
+    return { dates: `${e.start.replace(/-/g, '')}/${addDays(last, 1).replace(/-/g, '')}`, endAssumed: false };
+  }
+  const assumed = !e.end;
+  const endMs = assumed ? new Date(e.start).getTime() + 2 * 3600 * 1000 : new Date(e.end).getTime();
+  return { dates: `${utcStamp(e.start)}/${utcStamp(new Date(endMs).toISOString())}`, endAssumed: assumed };
+}
+
+// "Add to Google Calendar" template link for one dated entry.
+export function gcalHref(e, lang, site = 'https://sigchofor25.com') {
+  const loc = [pick(e.location, lang), e.address].filter(Boolean).join(', ');
+  const details = [pick(e.line, lang), `${site}/volunteer/#cal-${startDate(e)}`].join('\n');
+  const q = { action: 'TEMPLATE', text: pick(e.title, lang), dates: gcalWindow(e).dates, details, location: loc, ctz: 'America/Chicago' };
+  return 'https://calendar.google.com/calendar/render?' + Object.entries(q).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&');
+}
+
+// The public JSON feed (/events/feed.json), read by the sign-up auto-responder.
+// Field names are a contract: add fields, never rename or remove them.
+export function jsonFeed(site = 'https://sigchofor25.com') {
+  const events = showUps.map((e) => {
+    const { endAssumed } = gcalWindow(e);
+    const words = (lang) => ({
+      title: pick(e.title, lang),
+      line: pick(e.line, lang),
+      weekday: stamp(e, lang).weekdayLong,
+      day: stamp(e, lang).day,
+      dateLong: dateLong(e, lang),
+      time: timeRange(e, lang),
+      place: pick(e.location, lang),
+      sponsor: e.sponsor || null,
+      action: pick(e.action, lang),
+    });
+    return {
+      id: e.id,
+      kind: e.kind,
+      host: hostOf(e),
+      slate: !!e.slate,
+      start: e.start,
+      end: e.end || null,
+      ...(endAssumed ? { endAssumed: true } : {}),
+      date: startDate(e),
+      expires: e.expires,
+      takesSignups: e.rsvp === null,
+      en: words('en'),
+      es: words('es'),
+      address: e.address || null,
+      mapUrl: mapHref(e),
+      url: `${site}/volunteer/#cal-${startDate(e)}`,
+      rsvpUrl: e.rsvp || null,
+      ics: { en: site + icsPath(e, 'en'), es: site + icsPath(e, 'es') },
+      gcal: { en: gcalHref(e, 'en', site), es: gcalHref(e, 'es', site) },
+    };
+  });
+  const weekly = recurring.map((e) => ({
+    id: e.id,
+    kind: e.kind,
+    host: hostOf(e),
+    rule: e.rule,
+    en: { title: pick(e.title, 'en'), line: pick(e.line, 'en'), when: pick(e.when, 'en'), place: pick(e.location, 'en'), action: pick(e.action, 'en') },
+    es: { title: pick(e.title, 'es'), line: pick(e.line, 'es'), when: pick(e.when, 'es'), place: pick(e.location, 'es'), action: pick(e.action, 'es') },
+    link: e.link,
+  }));
+  return { generated: new Date().toISOString(), site, tz: 'America/Chicago', events, weekly };
+}
+
 // ---------- Filters and search on /volunteer ----------
 
 // Host group of a shift; null for deadlines and the election. Order matters:

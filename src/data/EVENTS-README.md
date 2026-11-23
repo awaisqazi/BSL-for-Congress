@@ -6,13 +6,27 @@ up to. It feeds:
 - the **Show Up** block on the home page (the next three dated shifts, right under the hero),
 - the **/events/** page (This Week, Coming Up, Every Week, Dates That Matter),
 - the dated cards at the top of the volunteer page's **This Week** strip,
-- one calendar file per dated entry and language, built at `/events/<id>.ics` and `/events/<id>-es.ics`.
+- one calendar file per dated entry and language, built at `/events/<id>.ics` and `/events/<id>-es.ics`,
+- the public JSON feed at `/events/feed.json` (see below).
 
 It is a JSON array. Add an entry by appending one object (order in the file does not matter; the
 site sorts by `start`). Never change a published `id`; calendar files and links use it.
 
 The build checks every entry (`src/data/events.js`). If an entry is malformed, `npm run build`
 fails and nothing deploys. Always run `npm run build` after editing and fix whatever it reports.
+
+## The JSON feed
+
+`/events/feed.json` (built by `src/pages/events/feed.json.js` from `jsonFeed()` in `src/data/events.js`)
+lists every dated show-up entry (canvass, Ward Night, meetup), past ones included, sorted by start, plus
+the weekly standing shifts. It exists for the form auto-responder: the Google Apps Script that emails
+people after they sign up looks the event up by `id`, reads the wording in both languages, and filters
+out anything whose `expires` has passed (the site only rebuilds on a push, so old entries linger). Each
+event carries ready-made `ics` and Google Calendar (`gcal`) links; `endAssumed: true` means the entry has
+no `end` and the calendar link used start plus 2 hours.
+
+Field names are a contract: add fields, never rename or remove them. It holds only what is already
+public on the site.
 
 ## Dated entries
 
