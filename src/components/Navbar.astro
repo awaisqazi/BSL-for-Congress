@@ -217,12 +217,24 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         clearTimeout(timer);
         timer = window.setTimeout(() => close(false), 220);
       });
+      // Outside click closes. "Inside" comes from the event's path, fixed at
+      // dispatch: a day click redraws the grid with innerHTML, so by the time
+      // the click reaches document its target is detached and
+      // item.contains(target) is false. A detached target never counts as outside.
       document.addEventListener('click', (ev) => {
-        if (isOpen() && ev.target instanceof Node && !item.contains(ev.target)) close(false);
+        if (!isOpen() || !(ev.target instanceof Node)) return;
+        const inside = ev.composedPath().includes(item) || item.contains(ev.target) || !ev.target.isConnected;
+        if (!inside) close(false);
       });
       // A See more, action or "See the full calendar" link: close on the way out.
+      // Any other click inside (a day, a month arrow) pins it, like the glyph,
+      // but leaves focus where the click put it.
       pop.addEventListener('click', (ev) => {
         if (ev.target instanceof Element && ev.target.closest('a')) close(false);
+        else if (isOpen()) {
+          clearTimeout(timer);
+          pinned = true;
+        }
       });
       pop.addEventListener('keydown', (ev) => {
         if (ev.key !== 'Tab' || !pinned) return;

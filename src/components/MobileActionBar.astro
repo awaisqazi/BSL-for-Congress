@@ -2,7 +2,8 @@
 // Mobile-only standing ask, pinned to the bottom of the screen like a strip
 // of paper taped to the wall: "Knock doors with us." plus the three links that
 // turn a reader into a body on a shift (the Show Up list of dated shifts on
-// /volunteer from src/data/events.json, the sign-up form, the canvass map).
+// /volunteer from src/data/events.json, the sign-up form, our Shift Map at
+// /volunteer/#map).
 // Slides in after the first scroll, steps aside while the signup form or the
 // footer's paid-for banner is on screen, and stays dismissed via localStorage.
 // Layout.astro injects it on every page except /links (actionBar={false}).
@@ -22,7 +23,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <div class="action-bar-links">
     <a href={`${base}/volunteer/#show-up`} class="action-bar-primary" data-i18n="bar.showup">Show up</a>
     <a href={`${base}/volunteer/#signup`} class="action-bar-signup" data-i18n="bar.signup">Sign up</a>
-    <a href="https://canvass.chicagodsa.org" class="action-bar-secondary" target="_blank" rel="noopener" data-i18n="bar.canvass">Find a canvass</a>
+    <a href={`${base}/volunteer/#map`} class="action-bar-secondary" data-i18n="bar.canvass">Find a canvass</a>
   </div>
 </div>
 
