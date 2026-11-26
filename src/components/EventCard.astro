@@ -27,7 +27,11 @@ const external = /^https?:\/\//.test(href);
 const map = mapHref(e);
 const Tag = tag;
 const s = { en: stamp(e, 'en'), es: stamp(e, 'es') };
+// "9:30 AM" never splits: when a narrow card wraps a long range, it breaks at "to".
+// Shown on the card only; the form's date field below keeps plain spaces.
+const noSplit = (v) => v.replace(/ (AM|PM)/g, '\u00a0$1');
 const t = { en: timeRange(e, 'en'), es: timeRange(e, 'es') };
+const tShow = { en: noSplit(t.en), es: noSplit(t.es) };
 // "I'm coming" mini-form on every dated shift with no outside RSVP page. It
 // feeds the event sign-up Google Form (src/components/rsvp/form-options.js),
 // the intake of record: through the forms gateway Worker when the bot check
@@ -69,7 +73,7 @@ const formAttrs = guardOn
       {t.en && (
         <span class="ev-time">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-          <span data-lang="en">{t.en}</span><span data-lang="es" hidden>{t.es}</span>
+          <span data-lang="en">{tShow.en}</span><span data-lang="es" hidden>{tShow.es}</span>
         </span>
       )}
     </div>
@@ -398,7 +402,12 @@ const formAttrs = guardOn
     white-space: nowrap;
   }
 
+  /* Takes the room left beside the date stamp and no more, so a long time
+     range ("9:30 AM to 12:30 PM") wraps inside a narrow card instead of
+     running past its edge. */
   .ev-top-right {
+    flex: 1 1 0;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -431,7 +440,8 @@ const formAttrs = guardOn
     font-size: var(--text-sm);
     font-weight: 900;
     color: var(--blue-deeper);
-    white-space: nowrap;
+    line-height: 1.2;
+    text-wrap: balance;
   }
 
   .ev-time svg,
