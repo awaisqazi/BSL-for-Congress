@@ -636,6 +636,39 @@ const host = (Astro.site ? Astro.site.host : 'sigchofor25.com');
       return true;
     }
 
+    // A direct sign-up link, #rsvp-<event id> (the /rsvp short link and the
+    // strip on /links use it): show that shift's day, bring its card into
+    // view and open its sign-up form. An id that is past or unknown returns
+    // false, so the reader gets the default view instead.
+    function fromRsvpHash() {
+      const m = location.hash.match(/^#rsvp-([a-z0-9-]+)$/);
+      const card = m ? cards.find((c) => c.dataset.eventId === m[1]) : undefined;
+      const day = (card?.dataset.date || '').slice(0, 10);
+      if (!card || !day || !inBounds(day, b)) return false;
+      apply({ mode: 'day', day });
+      const open = () => {
+        if (card.hidden) return;
+        // The click runs EventCard's own opener (prefill, bot check, focus).
+        const btn = card.querySelector<HTMLButtonElement>('[data-ev-rsvp-open]');
+        if (btn && !btn.hidden) btn.click();
+        requestAnimationFrame(() => card.scrollIntoView({ block: 'start' }));
+      };
+      // EventCard's script comes after this one in the page, so on first load
+      // wait until every script has run before pressing its button.
+      if (document.readyState === 'complete') open();
+      else {
+        let done = false;
+        const once = () => {
+          if (done) return;
+          done = true;
+          open();
+        };
+        document.addEventListener('DOMContentLoaded', once, { once: true });
+        window.addEventListener('load', once, { once: true });
+      }
+      return true;
+    }
+
     // Filters from a shared link: ?type=canvass,meetup&host=campaign&q=cermak
     const params = new URLSearchParams(location.search);
     const fromParam = (name: string, allowed: string[], chipsOf: HTMLButtonElement[], attr: string, set: Set<string>) =>
@@ -654,8 +687,10 @@ const host = (Astro.site ? Astro.site.host : 'sigchofor25.com');
     reindex();
     filt.hidden = false;
 
-    if (!fromHash(Boolean(location.hash))) apply(fallback());
-    window.addEventListener('hashchange', () => fromHash(true));
+    if (!fromRsvpHash() && !fromHash(Boolean(location.hash))) apply(fallback());
+    window.addEventListener('hashchange', () => {
+      if (!fromRsvpHash()) fromHash(true);
+    });
   }
 </script>
 

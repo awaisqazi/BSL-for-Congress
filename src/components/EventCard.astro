@@ -335,6 +335,8 @@ const formAttrs = guardOn
     box-shadow: var(--shadow-md);
     rotate: var(--tilt, 0deg);
     list-style: none;
+    /* A direct sign-up link (#rsvp-<id>) scrolls the card to the top: clear the fixed nav. */
+    scroll-margin-top: calc(var(--nav-height) + var(--space-lg));
     transition: rotate var(--duration-normal) var(--ease-default), translate var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
   }
 

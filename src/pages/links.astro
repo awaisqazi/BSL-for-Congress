@@ -3,13 +3,24 @@ import Layout from "../layouts/Layout.astro";
 import "../styles/calendar.css";
 import { payloadJson } from "../data/calendar-data.js";
 import Countdown from "../components/Countdown.astro";
-import { feedPath, all as allEvents, todayChicago } from "../data/events.js";
+import { feedPath, all as allEvents, todayChicago, stamp, timeRange } from "../data/events.js";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const host = Astro.site ? Astro.site.host : "sigchofor25.com";
 // Featured strip for Springfield Lobby Day (Dec 2): leads to /lobbyday/;
 // start and expiry come from its events.json entry; it stops rendering once the Chicago date is past.
 const lobby = allEvents.find((e) => e.id === "meetup-2026-12-02-springfield-lobby-day");
 const showLobby = Boolean(lobby && lobby.rsvp && lobby.expires >= todayChicago());
+// Featured strip for the canvass on the flyer in circulation ("RSVP: link in
+// bio"): leads straight to that shift's sign-up form on /volunteer
+// (#rsvp-<id>, MiniCalendar.astro). Every word comes from its events.json
+// entry, both languages; it comes down with the entry's expiry. For the next
+// flyer, change the id here and in the /rsvp redirect (astro.config.mjs).
+const knock = allEvents.find((e) => e.id === "canvass-2026-11-28-ipo");
+const showKnock = Boolean(knock && knock.expires >= todayChicago());
+// "Sat, Nov 28 · 9:30 AM to 12:30 PM · 2102 W Cermak Rd" / "Sáb, 28 nov · ..."
+const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+const knockSub = (lang) =>
+  knock ? [cap(`${stamp(knock, lang).weekday}, ${stamp(knock, lang).day}`), timeRange(knock, lang), (knock.address || "").replace(/, Chicago$/, "")].filter(Boolean).join(" · ") : "";
 ---
 
 <Layout
@@ -81,6 +92,17 @@ const showLobby = Boolean(lobby && lobby.rsvp && lobby.expires >= todayChicago()
       <!-- Primary Links: taped flyer strips. The body ask first (volunteer,
            canvass, Ward Night), then Donate, then the reading. -->
       <div class="links-list">
+        {showKnock && knock && (
+          <a href={`${base}/volunteer/#rsvp-${knock.id}`} class="link-strip link-strip-featured animate-in anim-pin" style="--tilt: -0.4deg" target="_blank" rel="noopener" data-expires={knock.expires}>
+            <span class="link-feat-stamp"><span data-lang="en">{stamp(knock, "en").day}</span><span data-lang="es" hidden>{stamp(knock, "es").day}</span></span>
+            <span class="link-text link-feat-text">
+              <span class="link-feat-cd"><Countdown start={knock.start} variant="strip" delay={0.9} /></span>
+              <span class="link-feat-main"><span data-lang="en">{knock.title.en}: {knock.action.en}</span><span data-lang="es" hidden>{knock.title.es}: {knock.action.es}</span></span>
+              <span class="link-feat-sub"><span data-lang="en">{knockSub("en")}</span><span data-lang="es" hidden>{knockSub("es")}</span></span>
+            </span>
+            <span class="link-arrow" aria-hidden="true">→</span>
+          </a>
+        )}
         {showLobby && lobby && (
           <a href={`${base}/lobbyday/`} class="link-strip link-strip-featured animate-in anim-pin" style="--tilt: 0.4deg" target="_blank" rel="noopener" data-expires={lobby.expires}>
             <span class="link-feat-stamp" data-i18n="lobbyday.links_stamp">Dec 2</span>
@@ -92,7 +114,7 @@ const showLobby = Boolean(lobby && lobby.rsvp && lobby.expires >= todayChicago()
             <span class="link-arrow" aria-hidden="true">→</span>
           </a>
         )}
-        {showLobby && (
+        {(showLobby || showKnock) && (
           <script is:inline>
             // Dated strips (data-expires) come down the morning after, even if
             // nobody redeploys. Separate from the calendar script so neither can break the other.

@@ -28,6 +28,16 @@ no `end` and the calendar link used start plus 2 hours.
 Field names are a contract: add fields, never rename or remove them. It holds only what is already
 public on the site.
 
+## A direct sign-up link for one shift
+
+`/volunteer/#rsvp-<id>` opens /volunteer on that shift's day with its card in view and its sign-up
+form already open (`fromRsvpHash()` in `src/components/MiniCalendar.astro`). Once the shift has
+passed, the same link shows the upcoming shifts instead.
+
+The short link `sigchofor25.com/rsvp` (a redirect in `astro.config.mjs`) and the first orange strip
+on /links (`src/pages/links.astro`) both point at the shift on the flyer in circulation, for "RSVP:
+link in bio". When a new flyer goes out, change the event id in those two places.
+
 ## Dated entries
 
 | Field | Required | What it is |

@@ -781,6 +781,37 @@
     "expires": "2026-11-29"
   },
   {
+    "id": "canvass-2026-11-28-ipo",
+    "kind": "canvass",
+    "title": {
+      "en": "Knock Doors for Byron & Brandon",
+      "es": "Toquemos puertas por Byron y Brandon"
+    },
+    "line": {
+      "en": "Knock doors to re-elect Ald. Byron Sigcho-Lopez and Mayor Brandon Johnson. Bring walking shoes, a jacket and a neighbor. First time knocking doors? We'll train you on the spot.",
+      "es": "Toca puertas para reelegir al concejal Byron Sigcho-Lopez y al alcalde Brandon Johnson. Trae zapatos cómodos, una chamarra y a un vecino. ¿Es tu primera vez tocando puertas? Te capacitamos ahí mismo."
+    },
+    "start": "2026-11-28T09:30:00-06:00",
+    "end": "2026-11-28T12:30:00-06:00",
+    "location": {
+      "en": "25th Ward IPO office",
+      "es": "Oficina del 25th Ward IPO"
+    },
+    "address": "2102 W Cermak Rd, Chicago",
+    "geo": {
+      "lat": 41.85219,
+      "lng": -87.67842
+    },
+    "rsvp": null,
+    "action": {
+      "en": "Sign up",
+      "es": "Apúntate"
+    },
+    "sponsor": null,
+    "source": "https://sigchofor25.com/images/flyer-canvass-2026-11-28.jpg",
+    "expires": "2026-11-28"
+  },
+  {
     "id": "canvass-2026-12-05-phase-2-launch",
     "kind": "canvass",
     "title": {

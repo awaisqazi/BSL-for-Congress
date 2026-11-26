@@ -12,5 +12,10 @@ export default defineConfig({
     // Short links printed on Springfield Lobby Day graphics (EN and ES).
     '/springfield': '/lobbyday/',
     '/cabildeo': '/lobbyday/',
+    // Short RSVP link for the flyer in circulation (link in bio): opens that
+    // shift's own sign-up form on /volunteer. Once the shift has passed, the
+    // link lands on the upcoming shifts instead. Point it at the next flyer's
+    // event id when a new one goes out.
+    '/rsvp': '/volunteer/#rsvp-canvass-2026-11-28-ipo',
   },
 });
