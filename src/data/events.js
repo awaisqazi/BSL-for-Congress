@@ -63,6 +63,7 @@ function validate(list) {
     if ('host' in e && e.host !== null && !HOSTS.includes(e.host)) errors.push(`${at}: host must be one of ${HOSTS.join(', ')} (or leave it out)`);
     if (e.host && !SHOWUP_KINDS.includes(e.kind)) errors.push(`${at}: host is only for shifts (canvass, wardnight, meetup)`);
     if ('slate' in e && typeof e.slate !== 'boolean') errors.push(`${at}: slate must be true or false`);
+    if ('image' in e && !(e.image && /^\/images\/[\w./-]+\.(jpg|jpeg|png|webp)$/.test(e.image.src || '') && bilingual(e.image.alt))) errors.push(`${at}: image must be { src: "/images/....jpg", alt: { en, es } }`);
     if ('geo' in e && !(e.geo && Math.abs(e.geo.lat - 41.85) < 1 && Math.abs(e.geo.lng + 87.68) < 1)) errors.push(`${at}: geo must be {lat, lng} near Chicago (run node ops/geocode-events.mjs)`);
     if (e.recurring) {
       if (!RULE_RE.test(e.rule || '')) errors.push(`${at}: rule must look like weekly:TU`);
@@ -347,6 +348,7 @@ export function jsonFeed(site = 'https://sigchofor25.com') {
       rsvpUrl: e.rsvp || null,
       ics: { en: site + icsPath(e, 'en'), es: site + icsPath(e, 'es') },
       gcal: { en: gcalHref(e, 'en', site), es: gcalHref(e, 'es', site) },
+      image: e.image ? { url: site + e.image.src, alt: { en: e.image.alt.en, es: e.image.alt.es } } : null,
     };
   });
   const weekly = recurring.map((e) => ({

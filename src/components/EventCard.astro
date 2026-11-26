@@ -18,9 +18,12 @@ interface Props {
   pulse?: boolean;
   calendar?: boolean;
   tag?: 'li' | 'div';
+  photo?: boolean;
 }
 
-const { event: e, signupHref, tilt = '0deg', delay = 0, hidden = false, pulse = false, calendar = false, tag = 'li' } = Astro.props;
+// `photo`: show the entry's `image` (when it has one) as a print at the top
+// of the card. /rsvp/ turns it off because the page shows the photo large.
+const { event: e, signupHref, tilt = '0deg', delay = 0, hidden = false, pulse = false, calendar = false, tag = 'li', photo = true } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const href = actionHref(e, signupHref);
 const external = /^https?:\/\//.test(href);
@@ -63,6 +66,13 @@ const formAttrs = guardOn
   {...filterAttrs}
   hidden={hidden ? true : undefined}
 >
+  {photo && e.image && (
+    <figure class="ev-photo">
+      <img data-lang="en" src={`${base}${e.image.src}`} alt={e.image.alt.en} loading="lazy" decoding="async" />
+      <img data-lang="es" hidden src={`${base}${e.image.src}`} alt={e.image.alt.es} loading="lazy" decoding="async" />
+    </figure>
+  )}
+
   <div class="ev-top">
     <span class="ev-stamp">
       <span class="ev-stamp-wd"><span data-lang="en">{s.en.weekday}</span><span data-lang="es" hidden>{s.es.weekday}</span></span>
@@ -244,6 +254,9 @@ const formAttrs = guardOn
     // Show the check as soon as the form opens (focus may not fire focusin,
     // e.g. when the window is in the background); it then moves with focus.
     if (guardOn) prime(form);
+    // A page that opens the form for the visitor (/rsvp/) marks the button
+    // data-ev-quiet: no focus, so the page does not jump down to the form.
+    if (btn.hasAttribute('data-ev-quiet')) return;
     const name = input(form, 'name');
     (name && name.value ? form.querySelector<HTMLButtonElement>('.ev-rsvp-submit') : name)?.focus();
   });
@@ -361,6 +374,23 @@ const formAttrs = guardOn
     rotate: 0deg;
     translate: 0 -4px;
     box-shadow: var(--shadow-lg);
+  }
+
+  /* Optional photo (events.json `image`): a white-framed print at the top */
+  .ev-photo {
+    margin: 0 0 var(--space-md);
+    padding: 6px;
+    background: var(--white);
+    box-shadow: var(--shadow-md);
+    rotate: 0.8deg;
+  }
+
+  .ev-photo img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    object-position: center top;
   }
 
   .ev-top {

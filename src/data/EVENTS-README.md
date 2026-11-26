@@ -34,9 +34,13 @@ public on the site.
 form already open (`fromRsvpHash()` in `src/components/MiniCalendar.astro`). Once the shift has
 passed, the same link shows the upcoming shifts instead.
 
-The short link `sigchofor25.com/rsvp` (a redirect in `astro.config.mjs`) and the first orange strip
-on /links (`src/pages/links.astro`) both point at the shift on the flyer in circulation, for "RSVP:
-link in bio". When a new flyer goes out, change the event id in those two places.
+## The featured shift: sigchofor25.com/rsvp
+
+`src/data/featured.js` names the one shift on the flyer in circulation ("RSVP: link in bio"). That
+shift gets the page `/rsvp/` (`src/pages/rsvp.astro`): its photo, its facts and its sign-up form
+already open, with its own link share card. The first orange strip on /links leads there too. When
+a new flyer goes out, change `id` (and `share`, the 1200x630 card in `public/images`) in that one
+file. The morning after the shift, `/rsvp/` sends people on to the upcoming shifts.
 
 ## Dated entries
 
@@ -55,6 +59,7 @@ link in bio". When a new flyer goes out, change the event id in those two places
 | `sponsor` | yes | Who hosts it, as the source names it (e.g. `"Chicago DSA Southside Branch"`), or `null`. |
 | `source` | yes | The receipt: a full `https://` URL where every detail of the entry can be checked (the RSVP page, the organizer's post or map, the Board of Elections calendar). |
 | `geo` | no | `{ "lat": 41.85219, "lng": -87.67842 }`, the map pin on /volunteer (#map). Do not type it by hand: after adding entries with an `address`, run `node ops/geocode-events.mjs`, which looks up every address that has no `geo` yet (US Census geocoder, public addresses only). An entry without `geo` still shows everywhere except the map. |
+| `image` | no | A photo for the card: `{ "src": "/images/name.jpg", "alt": { "en": "...", "es": "..." } }`. The file lives in `public/images`, about 3:2 and at least 800 px wide (the card crops to 3:2 from the top). Only a photo the campaign may publish, and say plainly in `alt` who is in it. Most shifts have none. |
 | `slate` | no | `true` for a canvass for a Socialist Slate partner in another ward (source: canvass.chicagodsa.org). The card gets a "Socialist Slate" tag, and the home page shows at most one slate card among its three so our own shifts keep their place. Name the candidate and their ward in `title` and `line`. |
 | `host` | no | Overrides the "Hosted by" group the /volunteer filters put a shift in: `campaign`, `ward`, `dsa` or `partner`. Leave it out almost always: `src/data/events.js` (`hostOf()`) derives it, in this order: Ward Night or a sponsor naming the 25th Ward Office is `ward`; `"slate": true` or a sponsor naming DSA is `dsa`; no sponsor on a canvass or meetup is `campaign` (our own shift); any other named sponsor is `partner`. Set it only when that rule puts a shift in the wrong group, and only on a `canvass`, `meetup` or `wardnight` (the build rejects anything else). Deadlines and the election have no host group. |
 | `expires` | yes | `YYYY-MM-DD`, the event day (the last day for a window). The morning after, the card takes itself off the page, even if nobody redeploys; ledger rows gray out instead. |

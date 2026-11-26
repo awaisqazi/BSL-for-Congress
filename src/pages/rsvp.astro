@@ -1,0 +1,230 @@
+---
+// /rsvp/: the shareable sign-up page for the shift on the flyer in circulation
+// (short link printed on graphics and used for "RSVP: link in bio":
+// sigchofor25.com/rsvp), with its own link share card.
+// Which shift, and its share card: src/data/featured.js. Every word on the
+// page comes from that shift's events.json entry, both languages; the photo
+// is the entry's `image`.
+// The sign-up is the event card's own form (EventCard), opened for the
+// visitor by the script at the bottom, so it saves to the same event sign-up
+// Google Form as every other card.
+// Expiry: past the event day (Chicago) the build turns this page into a
+// redirect to the upcoming shifts on /volunteer; in the browser the script
+// does the same the morning after, with no redeploy.
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import EventCard from '../components/EventCard.astro';
+import { all, todayChicago, stamp, timeRange, dateLong, pick } from '../data/events.js';
+import { FEATURED } from '../data/featured.js';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const NEXT = `${base}/volunteer/#show-up`;
+const ev = all.find((e) => e.id === FEATURED.id);
+const live = Boolean(ev && ev.expires && ev.expires >= todayChicago());
+if (!live) return Astro.redirect(NEXT);
+
+const s = stamp(ev, 'en');
+const noYear = (v) => v.replace(/,? (de )?\d{4}$/, '');
+// "Saturday, November 28 · 9:30 AM to 12:30 PM" / "sábado 28 de noviembre · 9:30 AM a 12:30 PM"
+const when = (lang) => [noYear(dateLong(ev, lang)), timeRange(ev, lang)].filter(Boolean).join(' · ');
+const cap = (v) => v.charAt(0).toUpperCase() + v.slice(1);
+const place = [pick(ev.location, 'en'), ev.address].filter(Boolean).join(', ');
+---
+
+<Layout
+  title={`${ev.title.en}, ${s.weekday} ${s.day}: RSVP | Byron Sigcho-Lopez`}
+  description={`${when('en')}. ${place}. ${ev.line.en}`}
+  image={FEATURED.share}
+  imageAlt={FEATURED.shareAlt}
+  promo={false}
+>
+  <Navbar />
+  <main>
+    <section class="rv" aria-labelledby="rv-head">
+      <div class="container rv-in">
+        <header class="rv-intro">
+          <p class="rv-motto"><span data-i18n="hero.cta">Knock Doors With Us</span></p>
+          <h1 class="rv-head" id="rv-head">
+            <span data-lang="en">{ev.title.en}</span><span data-lang="es" hidden>{ev.title.es}</span>
+          </h1>
+          <p class="rv-when">
+            <span data-lang="en">{when('en')}</span><span data-lang="es" hidden>{cap(when('es'))}</span>
+          </p>
+          {ev.image && (
+            <figure class="rv-print">
+              <span class="rv-tape" aria-hidden="true"></span>
+              <img data-lang="en" src={`${base}${ev.image.src}`} alt={ev.image.alt.en} width="875" height="588" />
+              <img data-lang="es" hidden src={`${base}${ev.image.src}`} alt={ev.image.alt.es} width="875" height="588" />
+            </figure>
+          )}
+        </header>
+
+        <div class="rv-side">
+          <ul class="rv-card" role="list">
+            <EventCard event={ev} signupHref={`${base}/volunteer#signup`} photo={false} />
+          </ul>
+          <a class="rv-more" href={`${base}/volunteer/#calendar`}><span data-i18n="events.cal_full">See the full calendar</span> <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<script is:inline define:vars={{ expires: ev.expires, next: NEXT }}>
+  (function () {
+    // The morning after (Chicago): on to the upcoming shifts.
+    try {
+      var today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Chicago' }).format(new Date());
+      if (today > expires) {
+        location.replace(next);
+        return;
+      }
+    } catch (e) {}
+    // Open the card's sign-up form for the visitor. EventCard's own click
+    // handler does the work; data-ev-quiet keeps the page from jumping to it.
+    function open() {
+      var btn = document.querySelector('.rv-card [data-ev-rsvp-open]');
+      if (!btn || btn.hidden) return;
+      btn.setAttribute('data-ev-quiet', '');
+      btn.click();
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', open);
+    else open();
+  })();
+</script>
+
+<script>
+  import { watchCountdowns } from '../scripts/events-client.js';
+  watchCountdowns();
+</script>
+
+<style>
+  .rv {
+    padding: calc(var(--nav-height) + var(--space-2xl)) 0 var(--space-4xl);
+    background: var(--cream);
+    overflow-x: clip;
+  }
+
+  .rv-in {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2xl);
+    align-items: start;
+    max-width: 1080px;
+  }
+
+  .rv-intro {
+    min-width: 0;
+  }
+
+  .rv-motto {
+    display: inline-block;
+    margin: 0 0 var(--space-md);
+    rotate: -2deg;
+  }
+
+  .rv-motto span {
+    display: inline-block;
+    padding: 0.25em 0.7em;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream-light);
+    background: var(--blue-deeper);
+    box-shadow: 3px 3px 0 var(--orange);
+  }
+
+  .rv-head {
+    margin: 0 0 var(--space-md);
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #142749;
+    text-shadow: 0.05em 0.05em 0 var(--orange);
+    text-wrap: balance;
+  }
+
+  .rv-when {
+    margin: 0 0 var(--space-xl);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--blue-deeper);
+  }
+
+  /* The photo as a taped print, like the prints on /lobbyday and /fundraiser */
+  .rv-print {
+    position: relative;
+    margin: 0;
+    padding: 10px;
+    background: var(--white);
+    box-shadow: var(--shadow-md);
+    rotate: -1.5deg;
+  }
+
+  .rv-print img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .rv-tape {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    width: 110px;
+    height: 28px;
+    transform: translateX(-50%) rotate(3deg);
+    background: rgba(245, 208, 138, 0.8);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+
+  .rv-side {
+    min-width: 0;
+  }
+
+  .rv-card {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .rv-more {
+    display: inline-block;
+    margin-top: var(--space-lg);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--blue-deeper);
+    text-decoration: none;
+    border-bottom: 2px dashed rgba(3, 109, 153, 0.4);
+  }
+
+  .rv-more:hover,
+  .rv-more:focus-visible {
+    color: var(--orange-dark);
+    border-bottom-color: var(--orange-dark);
+  }
+
+  @media (min-width: 900px) {
+    .rv-in {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: var(--space-3xl);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .rv {
+      padding-top: calc(var(--nav-height) + var(--space-xl));
+    }
+  }
+</style>

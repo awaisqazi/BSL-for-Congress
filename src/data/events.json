@@ -809,6 +809,13 @@
     },
     "sponsor": null,
     "source": "https://sigchofor25.com/images/flyer-canvass-2026-11-28.jpg",
+    "image": {
+      "src": "/images/byron-brandon-canvass.jpg",
+      "alt": {
+        "en": "Alderman Byron Sigcho-Lopez and Mayor Brandon Johnson, smiling side by side outdoors.",
+        "es": "El concejal Byron Sigcho-Lopez y el alcalde Brandon Johnson, sonrientes, uno junto al otro al aire libre."
+      }
+    },
     "expires": "2026-11-28"
   },
   {
